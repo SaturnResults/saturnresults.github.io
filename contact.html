@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Free Demo · Saturn Results</title>
+<meta name="theme-color" content="#08070d">
 <meta name="description" content="Claim your free demo site. Tell us about your business and chat with our team." />
 <link rel="icon" href="SRWHITELOGO.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -272,9 +273,6 @@ footer{
   background:linear-gradient(180deg,var(--bg) 0%,#120a1f 100%);
   z-index:5;margin-top:80px;
 }
-#footer-canvas{
-  position:absolute;inset:0;width:100%;height:100%;z-index:0;cursor:none;
-}
 .footer-content{
   position:relative;z-index:2;max-width:1400px;margin:0 auto;
   display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:50px;
@@ -331,7 +329,7 @@ footer{
     <section class="panel">
       <div class="eyebrow"><span class="dot"></span> Free Demo · No Commitment</div>
       <h1 class="headline">Tell us about your <em>business.</em></h1>
-      <p class="lede">Share a few details and we'll build a tailored preview of your future site — yours to keep, even if you don't move forward. We typically respond within one business day.</p>
+      <p class="lede">Share a few details and we'll build a tailored preview of your future site, yours to keep even if you don't move forward. We typically respond within one business day.</p>
 
       <form id="leadForm" novalidate>
         <div class="row">
@@ -377,7 +375,7 @@ footer{
         </button>
         <div class="fineprint">By submitting, you agree to be contacted by Saturn Results regarding your demo. We never share your details.</div>
         <div class="success" id="success">
-          ✦ Thank you — your request is in. We'll be in touch within 24 hours with your demo brief.
+          ✦ Thank you, your request is in. We'll be in touch within 24 hours with your demo brief.
         </div>
       </form>
 
@@ -403,21 +401,21 @@ footer{
         <div class="avatar">S</div>
         <div class="meta">
           <div class="name">Saturn Studio</div>
-          <div class="status"><span class="live">●</span> Online — typically replies in minutes</div>
+          <div class="status"><span class="live">●</span> Online · typically replies in minutes</div>
         </div>
       </div>
       <div class="chat-body" id="chatBody">
         <div class="bubble them">
           <small>Saturn Studio</small>
-          Hey there ✦ Thanks for stopping by. Got a quick question about your demo? Ask away.
+          Hey there ✦ Thanks for stopping by. Got a quick question about your free demo? Ask away.
         </div>
         <div class="typing" id="typing"><span></span><span></span><span></span></div>
       </div>
       <div class="suggestions" id="suggestions">
         <div class="chip" data-q="How long does the demo take?">How long does it take?</div>
         <div class="chip" data-q="What's the catch with the free demo?">What's the catch?</div>
-        <div class="chip" data-q="What does it cost to launch?">Pricing?</div>
-        <div class="chip" data-q="Can I see examples?">See examples</div>
+        <div class="chip" data-q="What's the next step?">Next steps?</div>
+        <div class="chip" data-q="Where are you based?">Where are you based?</div>
       </div>
       <form class="chat-input" id="chatInput">
         <input type="text" id="chatField" placeholder="Type your message…" autocomplete="off"/>
@@ -430,13 +428,12 @@ footer{
   </div>
 </main>
 
-<!-- FOOTER w/ interactive particles -->
+<!-- FOOTER -->
 <footer>
-  <canvas id="footer-canvas"></canvas>
   <div class="footer-content">
     <div class="footer-brand">
       <h3>Build something <em>orbital.</em></h3>
-      <p>A digital studio engineering premium websites, brands, and growth systems. Move your cursor — the stars listen.</p>
+      <p>A digital studio engineering premium websites, brands, and growth systems. Based at Venospace, Exeter.</p>
     </div>
     <div class="footer-col">
       <h4>Studio</h4>
@@ -575,10 +572,10 @@ form.addEventListener('submit',async e=>{
     });
     success.classList.add('show');
     label.textContent='Sent ✓';
-    pushBubble('them',`Got your details — thanks ${data.name?data.name.split(' ')[0]:''}! While we get started on your demo, anything else you'd like us to know?`,true);
+    pushBubble('them',`Got your details, thanks ${data.name?data.name.split(' ')[0]:''}! We'll have your demo ready within 24 hours and email you when it's live so you can pick a time to view it.`,true);
   }catch(err){
     btn.disabled=false;label.textContent=original;
-    pushBubble('them',`Hmm — something went wrong sending that. Try again, or email us directly at contact@saturnresults.com.`,true);
+    pushBubble('them',`Hmm, something went wrong sending that. Try again, or email us directly at contact@saturnresults.com.`,true);
   }
 });
 
@@ -604,14 +601,19 @@ function pushBubble(who,text,withName=false){
 function escape(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'})[c])}
 
 const replies=[
-  {match:/(how long|time|fast|quick|when)/i,a:"Most demos are ready within 3–5 working days. We'll keep you posted at each milestone."},
-  {match:/(catch|free|cost.*demo|why free)/i,a:"No catch — we'd rather show than tell. The demo is yours to keep regardless of whether you decide to launch with us."},
-  {match:/(price|cost|pricing|how much|launch)/i,a:"Most full builds land between £1,500–£6,000 depending on scope. We'll quote precisely after seeing your demo."},
-  {match:/(example|portfolio|work|case|see)/i,a:"You can see our recent work on the homepage — Trinit.e, YK Wellness, Alderney Week, H Barbers and more."},
-  {match:/(seo|google|rank|search)/i,a:"Every site we ship is built on SEO foundations — Lighthouse-optimised, semantic markup, structured data. We can also run a full audit."},
-  {match:/(book|call|meet|chat|talk)/i,a:"Happy to jump on a call. Drop your email in the form on the left and we'll send a calendar link."},
-  {match:/(hi|hello|hey|yo)/i,a:"Hey ✦ great to meet you. What kind of business are you running?"},
-  {match:/(thank|thanks|cheers)/i,a:"Anytime — and welcome aboard 🪐"},
+  {match:/(how long|time|fast|quick|when.*demo|turnaround)/i,a:"Your free demo is ready in under 24 hours. As soon as it's live we'll email you and you can pick a time to view it together on a quick call."},
+  {match:/(catch|why free|why is it free)/i,a:"No catch. The studio is selective about who we offer free demos to since I'm building up the portfolio, so the slots go fast. Most clients fall in love with the site once they see it on the call."},
+  {match:/(price|pricing|cost|how much|fee|charge|expensive|cheap|budget)/i,a:"Every project is priced individually based on scope. The fairest way to share a number is on the call once we've shown you your demo. Fill the form on the left and we'll be in touch."},
+  {match:/(host|hosting|monthly|subscription|recurring|retainer|ongoing)/i,a:"Zero hosting costs. It's a one time fee, no monthly subscription, no surprise bills."},
+  {match:/(full build|launch|delivery|ready|live|finish)/i,a:"Most full builds are live in under a week. Larger or more complex projects take a little longer, we'll give you an honest timeline once we've seen the brief."},
+  {match:/(based|where|location|office|exeter|devon|uk)/i,a:"We're based at Venospace in Exeter. Happy to meet in person if you're local, or jump on a video call wherever you are."},
+  {match:/(industry|industries|business type|work with|kind of|niche)/i,a:"We work with all kinds of businesses, from local trades to wellness clinics, festivals and non profits. If you've got a business, we can build for it."},
+  {match:/(book|call|meet|chat|talk|next step|how does this work|process)/i,a:"Easy. Fill the form on the left, we'll build your free demo within 24 hours and email you. You then pick a time to view it together on a call."},
+  {match:/(example|portfolio|work|case|previous|other clients|see your)/i,a:"Have a look at our work on the homepage. Recent projects include Trinit.e Massage, YK Wellness, Alderney Week, Cycling Out Of Poverty and H Barbers."},
+  {match:/(seo|google|rank|search|traffic)/i,a:"Every site we ship is built on solid SEO foundations. Fast load times, semantic markup, clean structure. We can dive deeper on the call."},
+  {match:/(secure|safe|trust|legitimate|scam|real)/i,a:"Completely. We're a real Exeter based studio at Venospace, with live client sites you can visit on the homepage. Drop your details and we'll prove it."},
+  {match:/(hi|hello|hey|yo|hiya)/i,a:"Hey ✦ great to meet you. What kind of business are you running?"},
+  {match:/(thank|thanks|cheers|appreciate)/i,a:"Anytime, welcome aboard 🪐"},
 ];
 
 function botReply(msg){
@@ -619,7 +621,7 @@ function botReply(msg){
   setTimeout(()=>{
     typing.classList.remove('show');
     const hit=replies.find(r=>r.match.test(msg));
-    const ans=hit?hit.a:"Good question — let me flag this to the team. Drop your email in the form on the left and we'll get a tailored answer back within an hour.";
+    const ans=hit?hit.a:"Great question. Easiest way to get a proper answer is to fill the form on the left, we'll come back to you personally within the day.";
     pushBubble('them',ans,true);
   },900+Math.random()*700);
 }
@@ -641,85 +643,6 @@ document.querySelectorAll('.chip').forEach(c=>{
   });
 });
 
-/* ====== FOOTER INTERACTIVE BALLS (physics) ====== */
-(function(){
-  const c=document.getElementById('footer-canvas');
-  if(!c) return;
-  const ctx=c.getContext('2d');
-  let w,h,balls=[];
-  const mouse={x:-9999,y:-9999,active:false};
-
-  function resize(){
-    const r=c.getBoundingClientRect();
-    w=c.width=r.width*devicePixelRatio;
-    h=c.height=r.height*devicePixelRatio;
-    c.style.width=r.width+'px';c.style.height=r.height+'px';
-    ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
-    init();
-  }
-  function init(){
-    balls=[];
-    const W=w/devicePixelRatio,H=h/devicePixelRatio;
-    const count=Math.floor((W*H)/8000);
-    for(let i=0;i<count;i++){
-      balls.push({
-        x:Math.random()*W,y:Math.random()*H,
-        vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,
-        r:Math.random()*3+1.5,baseR:0,
-        hue:255+Math.random()*40,a:.4+Math.random()*.5,
-      });
-      balls[i].baseR=balls[i].r;
-    }
-  }
-  resize();window.addEventListener('resize',resize);
-
-  c.addEventListener('mousemove',e=>{
-    const r=c.getBoundingClientRect();
-    mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;mouse.active=true;
-  });
-  c.addEventListener('mouseleave',()=>{mouse.active=false;mouse.x=-9999;mouse.y=-9999});
-  window.addEventListener('mousemove',e=>{
-    const r=c.getBoundingClientRect();
-    if(e.clientY>=r.top-50 && e.clientY<=r.bottom+50){
-      mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;mouse.active=true;
-    }
-  });
-
-  function frame(){
-    const W=w/devicePixelRatio,H=h/devicePixelRatio;
-    ctx.clearRect(0,0,W,H);
-    for(let i=0;i<balls.length;i++){
-      for(let j=i+1;j<balls.length;j++){
-        const a=balls[i],b=balls[j];
-        const dx=a.x-b.x,dy=a.y-b.y;const d=Math.hypot(dx,dy);
-        if(d<120){
-          ctx.strokeStyle=`hsla(270,80%,75%,${(1-d/120)*.25})`;
-          ctx.lineWidth=.7;
-          ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
-        }
-      }
-    }
-    balls.forEach(b=>{
-      const dx=b.x-mouse.x,dy=b.y-mouse.y;const d=Math.hypot(dx,dy);
-      if(mouse.active && d<160){
-        const force=(160-d)/160;
-        b.vx+=(dx/d)*force*.6;b.vy+=(dy/d)*force*.6;
-        b.r=b.baseR+force*4;
-      }else{b.r+=(b.baseR-b.r)*.1}
-      b.vx*=.96;b.vy*=.96;b.x+=b.vx;b.y+=b.vy;
-      if(b.x<-10) b.x=W+10;if(b.x>W+10) b.x=-10;
-      if(b.y<-10) b.y=H+10;if(b.y>H+10) b.y=-10;
-      const grad=ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r*4);
-      grad.addColorStop(0,`hsla(${b.hue},80%,75%,${b.a})`);
-      grad.addColorStop(1,`hsla(${b.hue},80%,60%,0)`);
-      ctx.fillStyle=grad;
-      ctx.beginPath();ctx.arc(b.x,b.y,b.r*4,0,Math.PI*2);ctx.fill();
-      ctx.fillStyle=`hsla(${b.hue},90%,85%,${b.a+.2})`;
-      ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();
-    });
-    requestAnimationFrame(frame);
-  }frame();
-})();
 </script>
 </body>
 </html>

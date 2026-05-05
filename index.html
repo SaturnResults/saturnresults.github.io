@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Saturn Results — Digital Studio</title>
+<title>Saturn Results · Digital Studio</title>
 <meta name="description" content="Saturn Results is a digital studio crafting premium websites, brands, and growth systems for ambitious businesses." />
 <link rel="icon" href="SRWHITELOGO.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -105,16 +105,16 @@ nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
   padding:24px 48px;
-  transition:all .35s ease;
+  transition:transform .4s cubic-bezier(.7,0,.3,1),background .35s ease,border-color .35s ease;
+  transform:translateY(0);
 }
 nav.scrolled{
-  padding:14px 48px;
   background:rgba(8,7,13,.7);backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border);
 }
+nav.hidden{transform:translateY(-110%)}
 .nav-logo{display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:.05em}
-.nav-logo img{width:34px;height:34px;object-fit:contain;animation:logoSpin 20s linear infinite}
-@keyframes logoSpin{to{transform:rotate(360deg)}}
+.nav-logo img{width:34px;height:34px;object-fit:contain}
 .nav-links{display:flex;gap:36px;list-style:none;font-size:14px}
 .nav-links a{position:relative;padding:6px 0;color:var(--muted);transition:color .25s}
 .nav-links a:hover{color:var(--ink)}
@@ -170,10 +170,10 @@ nav.scrolled{
 }
 .stage-hint::before,.stage-hint::after{content:"";width:18px;height:1px;background:rgba(167,139,250,.4)}
 @media (max-width:900px){
-  .hero{padding:120px 22px 60px}
+  .hero{padding:120px 22px 60px;min-height:auto}
   .hero-inner{grid-template-columns:1fr;gap:30px;text-align:center}
   .hero-text{text-align:center}
-  .hero-stage{order:-1;max-width:380px}
+  .hero-stage{display:none}
 }
 .hero-badge{
   display:inline-flex;align-items:center;gap:10px;
@@ -249,16 +249,16 @@ section{padding:140px 48px;position:relative;z-index:5}
 /* ============ MARQUEE ============ */
 .marquee{
   border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  padding:30px 0;overflow:hidden;background:var(--bg-2);position:relative;z-index:5;
+  padding:16px 0;overflow:hidden;background:var(--bg-2);position:relative;z-index:5;
 }
-.marquee-track{display:flex;gap:80px;animation:marquee 30s linear infinite;white-space:nowrap;width:max-content}
+.marquee-track{display:flex;gap:48px;animation:marquee 30s linear infinite;white-space:nowrap;width:max-content}
 .marquee:hover .marquee-track{animation-play-state:paused}
 .marquee span{
-  font-family:'Instrument Serif',serif;font-size:42px;color:var(--muted);font-style:italic;
-  display:flex;align-items:center;gap:80px;transition:color .3s;
+  font-family:'Instrument Serif',serif;font-size:22px;color:var(--muted);font-style:italic;
+  display:flex;align-items:center;gap:48px;transition:color .3s;
 }
 .marquee span:hover{color:var(--purple-glow)}
-.marquee span::after{content:"✦";color:var(--purple);font-style:normal;font-size:24px}
+.marquee span::after{content:"✦";color:var(--purple);font-style:normal;font-size:14px}
 @keyframes marquee{to{transform:translateX(-50%)}}
 
 /* ============ WORK / PROJECTS ============ */
@@ -494,7 +494,7 @@ footer{
         <span class="word">demo site</span>
         <span class="word grad">for free.</span>
       </h1>
-      <p>No deposits. No obligations. See your business reimagined as a premium website before you commit a penny — that's the Saturn Results promise.</p>
+      <p>No deposits. No obligations. See your business reimagined as a premium website before you commit a penny. That's the Saturn Results promise.</p>
       <div class="hero-actions">
         <a class="btn btn-primary magnetic" href="contact.html">Claim Your Free Demo
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -530,19 +530,19 @@ footer{
 
     <article class="project reveal">
       <div class="project-visual">
-        <div class="project-num">— 01</div>
+        <div class="project-num">01</div>
         <div class="project-tag">Wellness</div>
         <img src="trinit-e.avif" alt="Trinit.e Massage website preview" loading="lazy"/>
       </div>
       <div class="project-content">
         <h3 class="project-title">Trinit.e Massage</h3>
-        <p class="project-desc">A serene digital home for a holistic massage practice — booking-ready, mobile-first, and built around calm typography and breathing-room layout.</p>
+        <p class="project-desc">A serene digital home for a holistic massage practice. Booking ready, mobile first and built around calm typography with generous breathing room.</p>
         <div class="project-meta">
           <div><span>Scope</span>Web · Brand</div>
           <div><span>Year</span>2025</div>
         </div>
         <div class="project-actions">
-          <a class="project-link" href="#">View Case
+          <a class="project-link" href="https://trinitemassage.co.uk/" target="_blank" rel="noopener">Visit Site
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
           </a>
         </div>
@@ -551,19 +551,19 @@ footer{
 
     <article class="project reveal">
       <div class="project-visual">
-        <div class="project-num">— 02</div>
+        <div class="project-num">02</div>
         <div class="project-tag">Events</div>
         <img src="alderney-week.avif" alt="Alderney Week festival site preview" loading="lazy"/>
       </div>
       <div class="project-content">
         <h3 class="project-title">Alderney Week</h3>
-        <p class="project-desc">A vibrant festival site for the Channel Islands' beloved annual celebration — schedules, ticketing, and an island-flavoured visual language.</p>
+        <p class="project-desc">A vibrant festival site for the Channel Islands' beloved annual celebration. Schedules, ticketing and an island flavoured visual language.</p>
         <div class="project-meta">
           <div><span>Scope</span>Full Site · CMS</div>
           <div><span>Year</span>2025</div>
         </div>
         <div class="project-actions">
-          <a class="project-link" href="#">View Case
+          <a class="project-link" href="https://www.alderneyweek.com/" target="_blank" rel="noopener">Visit Site
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
           </a>
         </div>
@@ -572,19 +572,19 @@ footer{
 
     <article class="project reveal">
       <div class="project-visual">
-        <div class="project-num">— 03</div>
+        <div class="project-num">03</div>
         <div class="project-tag">Wellness</div>
         <img src="yk-wellness.jpg" alt="YK Wellness clinic website preview" loading="lazy"/>
       </div>
       <div class="project-content">
         <h3 class="project-title">YK Wellness</h3>
-        <p class="project-desc">Premium clinic experience — multi-page service architecture, conversion-focused booking flow, and a serene, trust-building brand identity.</p>
+        <p class="project-desc">A premium clinic experience. Multi page service architecture, a conversion focused booking flow and a serene, trust building brand identity.</p>
         <div class="project-meta">
           <div><span>Scope</span>Brand · Web · SEO</div>
           <div><span>Year</span>2025</div>
         </div>
         <div class="project-actions">
-          <a class="project-link" href="#">View Case
+          <a class="project-link" href="https://srmarketing.live/index.html" target="_blank" rel="noopener">Visit Site
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
           </a>
         </div>
@@ -593,19 +593,19 @@ footer{
 
     <article class="project reveal">
       <div class="project-visual">
-        <div class="project-num">— 04</div>
-        <div class="project-tag">Non-Profit</div>
+        <div class="project-num">04</div>
+        <div class="project-tag">Non Profit</div>
         <img src="cycling-out-of-poverty.avif" alt="Cycling Out Of Poverty site preview" loading="lazy"/>
       </div>
       <div class="project-content">
         <h3 class="project-title">Cycling Out Of Poverty</h3>
-        <p class="project-desc">A cause-driven platform empowering African communities through bicycles. Built to inspire donations, share impact stories, and grow the movement.</p>
+        <p class="project-desc">A cause driven platform empowering African communities through bicycles. Built to inspire donations, share impact stories and grow the movement.</p>
         <div class="project-meta">
           <div><span>Scope</span>Web · Storytelling</div>
           <div><span>Year</span>2025</div>
         </div>
         <div class="project-actions">
-          <a class="project-link" href="#">View Case
+          <a class="project-link" href="https://fietsenuitdearmoede.framer.website/" target="_blank" rel="noopener">Visit Site
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
           </a>
         </div>
@@ -614,22 +614,19 @@ footer{
 
     <article class="project reveal">
       <div class="project-visual">
-        <div class="project-num">— 05</div>
+        <div class="project-num">05</div>
         <div class="project-tag">Hospitality</div>
         <img src="h-barbers.jpg" alt="H Barbers site preview" loading="lazy"/>
       </div>
       <div class="project-content">
         <h3 class="project-title">H Barbers</h3>
-        <p class="project-desc">A bold, modern site for a sharp local barbershop — slick booking, atmospheric photography, and a presence that matches the chair-side experience.</p>
+        <p class="project-desc">A bold, modern site for a sharp local barbershop. Slick booking, atmospheric photography and a presence that matches the chair side experience.</p>
         <div class="project-meta">
           <div><span>Scope</span>Web · Booking</div>
           <div><span>Year</span>2025</div>
         </div>
         <div class="project-actions">
-          <a class="project-link" href="http://marketingsr.online/" target="_blank" rel="noopener">Live Site
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-          </a>
-          <a class="project-link" href="https://saturnresults.github.io/RICHARD-DALE/" target="_blank" rel="noopener">Variant
+          <a class="project-link" href="http://marketingsr.online/" target="_blank" rel="noopener">Visit Site
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
           </a>
         </div>
@@ -650,13 +647,13 @@ footer{
       <div class="service-num">01</div>
       <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h18M3 12h18M3 17h12"/></svg></div>
       <h3>Web Design</h3>
-      <p>Bespoke layouts, type systems, and visual languages. Designed in-browser, refined to pixel.</p>
+      <p>Bespoke layouts, type systems and visual languages. Designed in browser, refined to pixel.</p>
     </div>
     <div class="service reveal">
       <div class="service-num">02</div>
       <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M16 18l6-6-6-6M8 6L2 12l6 6"/></svg></div>
       <h3>Development</h3>
-      <p>Hand-coded, lightning-fast sites. Lighthouse-optimised, accessible, and built to scale.</p>
+      <p>Hand coded, lightning fast sites. Lighthouse optimised, accessible and built to scale.</p>
     </div>
     <div class="service reveal">
       <div class="service-num">03</div>
@@ -668,7 +665,7 @@ footer{
       <div class="service-num">04</div>
       <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg></div>
       <h3>3D & Motion</h3>
-      <p>WebGL scenes, scroll-driven motion, and tactile micro-interactions that make sites feel alive.</p>
+      <p>WebGL scenes, scroll driven motion and tactile micro interactions that make sites feel alive.</p>
     </div>
     <div class="service reveal">
       <div class="service-num">05</div>
@@ -689,7 +686,7 @@ footer{
 <section id="cta">
   <div class="cta-inner reveal">
     <h2>Your free demo<br/><span class="grad">is waiting.</span></h2>
-    <p>Tell us about your business. We'll build a tailored demo site — yours to keep, no strings — and you decide if you want to take it further.</p>
+    <p>Tell us about your business. We'll build a tailored demo site, yours to keep with no strings attached, and you decide if you want to take it further.</p>
     <a class="btn btn-primary magnetic" href="contact.html">Start Your Free Demo
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
     </a>
@@ -702,7 +699,7 @@ footer{
   <div class="footer-content">
     <div class="footer-brand">
       <h3>Build something <em>orbital.</em></h3>
-      <p>A digital studio engineering premium websites, brands, and growth systems. Move your cursor — the stars listen.</p>
+      <p>A digital studio engineering premium websites, brands, and growth systems. Based at Venospace, Exeter.</p>
     </div>
     <div class="footer-col">
       <h4>Studio</h4>
@@ -783,13 +780,29 @@ document.querySelectorAll('.magnetic').forEach(el=>{
   el.addEventListener('mouseleave',()=>{el.style.transform=''});
 });
 
-/* ====== NAV scroll + scroll progress ====== */
+/* ====== NAV: hide on scroll down, reveal on scroll up ====== */
 const nav=document.getElementById('nav');
 const progress=document.getElementById('scrollProgress');
+let lastScrollY=window.scrollY;
+let scrollDelta=0;
 window.addEventListener('scroll',()=>{
-  nav.classList.toggle('scrolled',window.scrollY>40);
+  const y=window.scrollY;
+  const dy=y-lastScrollY;
+  scrollDelta=dy>0?Math.max(0,scrollDelta+dy):Math.min(0,scrollDelta+dy);
+
+  nav.classList.toggle('scrolled',y>40);
+
+  if(y<80){
+    nav.classList.remove('hidden');
+  }else if(dy>2 && y>120){
+    nav.classList.add('hidden');
+  }else if(dy<-4){
+    nav.classList.remove('hidden');
+  }
+
   const h=document.documentElement.scrollHeight-window.innerHeight;
-  progress.style.width=(window.scrollY/h*100)+'%';
+  progress.style.width=(y/h*100)+'%';
+  lastScrollY=y;
 });
 
 /* ====== Reveal ====== */
