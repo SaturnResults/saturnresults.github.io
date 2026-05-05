@@ -263,43 +263,72 @@ section{padding:140px 48px;position:relative;z-index:5}
 
 /* ============ WORK / PROJECTS ============ */
 #work{background:var(--bg)}
-.projects{max-width:1400px;margin:0 auto;display:grid;gap:32px}
+.projects{
+  max-width:1400px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(2,1fr);gap:32px;
+}
 .project{
   position:relative;border:1px solid var(--border);border-radius:24px;overflow:hidden;
   background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(139,92,246,.02));
-  transition:transform .6s cubic-bezier(.2,.8,.3,1),border-color .4s,box-shadow .4s;
-  display:grid;grid-template-columns:1.1fr 1fr;min-height:480px;
-  transform-style:preserve-3d;
+  transition:transform .5s cubic-bezier(.2,.8,.3,1),border-color .4s,box-shadow .4s;
+  display:flex;flex-direction:column;
 }
-.project:nth-child(even){grid-template-columns:1fr 1.1fr}
-.project:nth-child(even) .project-visual{order:2}
 .project::before{
   content:"";position:absolute;inset:-1px;border-radius:24px;
   background:linear-gradient(135deg,transparent 0%,rgba(139,92,246,.5) 50%,transparent 100%);
   opacity:0;transition:opacity .5s;z-index:-1;
 }
-.project:hover{border-color:rgba(139,92,246,.4);box-shadow:0 30px 80px rgba(139,92,246,.15)}
+.project:hover{transform:translateY(-6px);border-color:rgba(139,92,246,.4);box-shadow:0 30px 80px rgba(139,92,246,.18)}
 .project:hover::before{opacity:1}
-.project-content{padding:60px;display:flex;flex-direction:column;justify-content:space-between;position:relative;z-index:2}
-.project-num{font-family:'Instrument Serif',serif;font-size:14px;color:var(--purple);letter-spacing:.2em}
+
+.project-visual{
+  position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:var(--bg-2);
+}
+.project-visual img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform 1.2s cubic-bezier(.2,.8,.3,1),filter .5s;
+  filter:saturate(.95) brightness(.92);
+}
+.project:hover .project-visual img{transform:scale(1.07);filter:saturate(1.05) brightness(1)}
+.project-visual::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,transparent 40%,rgba(8,7,13,.85) 100%);
+  z-index:1;
+}
+.project-num{
+  position:absolute;top:18px;left:20px;z-index:2;
+  font-family:'Instrument Serif',serif;font-size:13px;color:var(--purple-glow);letter-spacing:.2em;
+  background:rgba(8,7,13,.6);backdrop-filter:blur(8px);
+  padding:6px 12px;border-radius:100px;border:1px solid rgba(167,139,250,.2);
+}
+.project-tag{
+  position:absolute;top:18px;right:20px;z-index:2;
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);
+  background:rgba(8,7,13,.6);backdrop-filter:blur(8px);
+  padding:6px 12px;border-radius:100px;border:1px solid var(--border);
+}
+
+.project-content{
+  padding:30px 32px 34px;display:flex;flex-direction:column;flex:1;gap:18px;
+}
 .project-title{
-  font-family:'Instrument Serif',serif;font-size:clamp(36px,4vw,56px);font-weight:400;
-  line-height:1;margin:18px 0;letter-spacing:-.02em;
+  font-family:'Instrument Serif',serif;font-size:clamp(28px,2.4vw,38px);font-weight:400;
+  line-height:1;letter-spacing:-.02em;margin:0;
   background:linear-gradient(135deg,#fff 0%,#fff 50%,var(--purple-glow) 100%);
   background-size:200% 100%;background-position:0% 0%;
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   transition:background-position .6s;
 }
 .project:hover .project-title{background-position:100% 0%}
-.project-tag{display:inline-block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
-.project-desc{color:var(--muted);font-size:15px;line-height:1.7;max-width:440px;margin-bottom:36px}
-.project-meta{display:flex;gap:30px;flex-wrap:wrap;margin-bottom:30px}
+.project-desc{color:var(--muted);font-size:14px;line-height:1.6;margin:0}
+.project-meta{display:flex;gap:22px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
 .project-meta div{font-size:12px}
-.project-meta span{display:block;color:var(--muted);text-transform:uppercase;letter-spacing:.15em;font-size:10px;margin-bottom:6px}
+.project-meta span{display:block;color:var(--muted);text-transform:uppercase;letter-spacing:.15em;font-size:9px;margin-bottom:4px}
+.project-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
 .project-link{
-  display:inline-flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;
-  align-self:flex-start;padding:14px 24px;border:1px solid var(--border);border-radius:100px;
-  transition:all .3s;position:relative;overflow:hidden;
+  display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  padding:12px 20px;border:1px solid var(--border);border-radius:100px;
+  transition:all .3s;position:relative;overflow:hidden;z-index:1;
 }
 .project-link::before{
   content:"";position:absolute;inset:0;background:var(--purple);
@@ -307,52 +336,12 @@ section{padding:140px 48px;position:relative;z-index:5}
 }
 .project-link:hover::before{transform:scaleX(1)}
 .project-link:hover{border-color:var(--purple)}
-.project-link svg{width:14px;height:14px;transition:transform .3s}
+.project-link svg{width:12px;height:12px;transition:transform .3s}
 .project-link:hover svg{transform:translate(2px,-2px)}
 
-.project-visual{position:relative;overflow:hidden;background:var(--bg-2)}
-.project-visual::before{
-  content:"";position:absolute;inset:0;
-  background:radial-gradient(circle at 50% 50%,rgba(139,92,246,.2),transparent 70%);
-  z-index:1;
-}
-.visual-art{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-family:'Instrument Serif',serif;color:rgba(255,255,255,.08);font-size:200px;
-  z-index:0;font-style:italic;user-select:none;
-  transition:transform .8s ease,color .5s;
-}
-.project:hover .visual-art{transform:scale(1.15) rotate(-5deg);color:rgba(167,139,250,.25)}
-.visual-orb{
-  position:absolute;border-radius:50%;
-  background:radial-gradient(circle at 30% 30%,var(--purple-glow),var(--purple-deep));
-  filter:blur(2px);box-shadow:0 0 80px var(--purple);
-  transition:transform .8s cubic-bezier(.2,.8,.3,1);
-  z-index:2;
-}
-.visual-orb.large{width:320px;height:320px;left:50%;top:50%;transform:translate(-50%,-50%)}
-.project:hover .visual-orb.large{transform:translate(-50%,-50%) scale(1.08)}
-.visual-ring{
-  position:absolute;border:1px solid rgba(139,92,246,.3);border-radius:50%;
-  width:480px;height:480px;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-20deg);
-  z-index:1;animation:ringSpin 30s linear infinite;
-}
-.visual-ring::after{
-  content:"";position:absolute;width:14px;height:14px;background:var(--purple-glow);border-radius:50%;
-  top:-7px;left:50%;transform:translateX(-50%);box-shadow:0 0 20px var(--purple-glow);
-}
-.visual-ring.r2{width:360px;height:360px;animation-duration:20s;animation-direction:reverse;border-color:rgba(167,139,250,.2)}
-@keyframes ringSpin{to{transform:translate(-50%,-50%) rotate(340deg)}}
-
 @media (max-width:900px){
-  .project,.project:nth-child(even){grid-template-columns:1fr;min-height:auto}
-  .project:nth-child(even) .project-visual{order:0}
-  .project-content{padding:36px 28px}
-  .project-visual{height:320px}
-  .visual-orb.large{width:200px;height:200px}
-  .visual-ring{width:300px;height:300px}
-  .visual-ring.r2{width:220px;height:220px}
-  .visual-art{font-size:120px}
+  .projects{grid-template-columns:1fr;gap:24px}
+  .project-content{padding:24px 24px 28px}
 }
 
 /* ============ SERVICES ============ */
@@ -539,143 +528,111 @@ footer{
 
   <div class="projects">
 
-    <article class="project tilt reveal">
+    <article class="project reveal">
+      <div class="project-visual">
+        <div class="project-num">— 01</div>
+        <div class="project-tag">Wellness</div>
+        <img src="trinit-e.avif" alt="Trinit.e Massage website preview" loading="lazy"/>
+      </div>
       <div class="project-content">
-        <div>
-          <div class="project-num">— 01</div>
-          <div class="project-tag">Wellness · Brand & Web</div>
-          <h3 class="project-title">Trinit.e Massage</h3>
-          <p class="project-desc">A serene digital home for a holistic massage practice — booking-ready, mobile-first, and built around calm typography and breathing-room layout.</p>
+        <h3 class="project-title">Trinit.e Massage</h3>
+        <p class="project-desc">A serene digital home for a holistic massage practice — booking-ready, mobile-first, and built around calm typography and breathing-room layout.</p>
+        <div class="project-meta">
+          <div><span>Scope</span>Web · Brand</div>
+          <div><span>Year</span>2025</div>
         </div>
-        <div>
-          <div class="project-meta">
-            <div><span>Industry</span>Wellness</div>
-            <div><span>Scope</span>Web Design · Build</div>
-            <div><span>Year</span>2025</div>
-          </div>
+        <div class="project-actions">
           <a class="project-link" href="#">View Case
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
           </a>
         </div>
       </div>
-      <div class="project-visual">
-        <div class="visual-ring"></div>
-        <div class="visual-ring r2"></div>
-        <div class="visual-orb large"></div>
-        <div class="visual-art">T</div>
-      </div>
     </article>
 
-    <article class="project tilt reveal">
+    <article class="project reveal">
+      <div class="project-visual">
+        <div class="project-num">— 02</div>
+        <div class="project-tag">Events</div>
+        <img src="alderney-week.avif" alt="Alderney Week festival site preview" loading="lazy"/>
+      </div>
       <div class="project-content">
-        <div>
-          <div class="project-num">— 02</div>
-          <div class="project-tag">Events · Tourism</div>
-          <h3 class="project-title">Alderney Week</h3>
-          <p class="project-desc">A vibrant festival site for the Channel Islands' beloved annual celebration — schedules, ticketing, and an island-flavoured visual language.</p>
+        <h3 class="project-title">Alderney Week</h3>
+        <p class="project-desc">A vibrant festival site for the Channel Islands' beloved annual celebration — schedules, ticketing, and an island-flavoured visual language.</p>
+        <div class="project-meta">
+          <div><span>Scope</span>Full Site · CMS</div>
+          <div><span>Year</span>2025</div>
         </div>
-        <div>
-          <div class="project-meta">
-            <div><span>Industry</span>Events</div>
-            <div><span>Scope</span>Full Site · CMS</div>
-            <div><span>Year</span>2025</div>
-          </div>
+        <div class="project-actions">
           <a class="project-link" href="#">View Case
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
           </a>
         </div>
       </div>
-      <div class="project-visual">
-        <div class="visual-ring"></div>
-        <div class="visual-ring r2"></div>
-        <div class="visual-orb large"></div>
-        <div class="visual-art">A</div>
-      </div>
     </article>
 
-    <article class="project tilt reveal">
+    <article class="project reveal">
+      <div class="project-visual">
+        <div class="project-num">— 03</div>
+        <div class="project-tag">Wellness</div>
+        <img src="yk-wellness.jpg" alt="YK Wellness clinic website preview" loading="lazy"/>
+      </div>
       <div class="project-content">
-        <div>
-          <div class="project-num">— 03</div>
-          <div class="project-tag">Wellness · Premium Web</div>
-          <h3 class="project-title">YK Wellness</h3>
-          <p class="project-desc">Premium clinic experience — multi-page service architecture, conversion-focused booking flow, and a serene, trust-building brand identity.</p>
+        <h3 class="project-title">YK Wellness</h3>
+        <p class="project-desc">Premium clinic experience — multi-page service architecture, conversion-focused booking flow, and a serene, trust-building brand identity.</p>
+        <div class="project-meta">
+          <div><span>Scope</span>Brand · Web · SEO</div>
+          <div><span>Year</span>2025</div>
         </div>
-        <div>
-          <div class="project-meta">
-            <div><span>Industry</span>Health & Wellness</div>
-            <div><span>Scope</span>Brand · Web · SEO</div>
-            <div><span>Year</span>2025</div>
-          </div>
+        <div class="project-actions">
           <a class="project-link" href="#">View Case
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
           </a>
         </div>
       </div>
-      <div class="project-visual">
-        <div class="visual-ring"></div>
-        <div class="visual-ring r2"></div>
-        <div class="visual-orb large"></div>
-        <div class="visual-art">YK</div>
-      </div>
     </article>
 
-    <article class="project tilt reveal">
+    <article class="project reveal">
+      <div class="project-visual">
+        <div class="project-num">— 04</div>
+        <div class="project-tag">Non-Profit</div>
+        <img src="cycling-out-of-poverty.avif" alt="Cycling Out Of Poverty site preview" loading="lazy"/>
+      </div>
       <div class="project-content">
-        <div>
-          <div class="project-num">— 04</div>
-          <div class="project-tag">Non-Profit · Storytelling</div>
-          <h3 class="project-title">Cycling Out Of Poverty</h3>
-          <p class="project-desc">A cause-driven platform empowering African communities through bicycles. Built to inspire donations, share impact stories, and grow the movement.</p>
+        <h3 class="project-title">Cycling Out Of Poverty</h3>
+        <p class="project-desc">A cause-driven platform empowering African communities through bicycles. Built to inspire donations, share impact stories, and grow the movement.</p>
+        <div class="project-meta">
+          <div><span>Scope</span>Web · Storytelling</div>
+          <div><span>Year</span>2025</div>
         </div>
-        <div>
-          <div class="project-meta">
-            <div><span>Industry</span>Non-Profit</div>
-            <div><span>Scope</span>Web · Storytelling</div>
-            <div><span>Year</span>2025</div>
-          </div>
+        <div class="project-actions">
           <a class="project-link" href="#">View Case
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
           </a>
         </div>
       </div>
-      <div class="project-visual">
-        <div class="visual-ring"></div>
-        <div class="visual-ring r2"></div>
-        <div class="visual-orb large"></div>
-        <div class="visual-art">C</div>
-      </div>
     </article>
 
-    <article class="project tilt reveal">
-      <div class="project-content">
-        <div>
-          <div class="project-num">— 05</div>
-          <div class="project-tag">Local · Hospitality</div>
-          <h3 class="project-title">H Barbers</h3>
-          <p class="project-desc">A bold, modern site for a sharp local barbershop — slick booking, atmospheric photography, and a presence that matches the chair-side experience.</p>
-        </div>
-        <div>
-          <div class="project-meta">
-            <div><span>Industry</span>Hospitality</div>
-            <div><span>Scope</span>Web · Booking</div>
-            <div><span>Live</span>marketingsr.online</div>
-          </div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <a class="project-link" href="http://marketingsr.online/" target="_blank" rel="noopener">Live Site
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-            </a>
-            <a class="project-link" href="https://saturnresults.github.io/RICHARD-DALE/" target="_blank" rel="noopener">Variant
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
+    <article class="project reveal">
       <div class="project-visual">
-        <div class="visual-ring"></div>
-        <div class="visual-ring r2"></div>
-        <div class="visual-orb large"></div>
-        <div class="visual-art">H</div>
+        <div class="project-num">— 05</div>
+        <div class="project-tag">Hospitality</div>
+        <img src="h-barbers.jpg" alt="H Barbers site preview" loading="lazy"/>
+      </div>
+      <div class="project-content">
+        <h3 class="project-title">H Barbers</h3>
+        <p class="project-desc">A bold, modern site for a sharp local barbershop — slick booking, atmospheric photography, and a presence that matches the chair-side experience.</p>
+        <div class="project-meta">
+          <div><span>Scope</span>Web · Booking</div>
+          <div><span>Year</span>2025</div>
+        </div>
+        <div class="project-actions">
+          <a class="project-link" href="http://marketingsr.online/" target="_blank" rel="noopener">Live Site
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </a>
+          <a class="project-link" href="https://saturnresults.github.io/RICHARD-DALE/" target="_blank" rel="noopener">Variant
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </a>
+        </div>
       </div>
     </article>
 

@@ -264,6 +264,45 @@ form{display:grid;gap:18px}
 }
 .trust .item{display:flex;align-items:center;gap:8px}
 .trust .item svg{width:14px;height:14px;color:var(--purple-glow)}
+
+/* ============ FOOTER (interactive particle field) ============ */
+footer{
+  position:relative;border-top:1px solid var(--border);
+  padding:80px 48px 40px;overflow:hidden;
+  background:linear-gradient(180deg,var(--bg) 0%,#120a1f 100%);
+  z-index:5;margin-top:80px;
+}
+#footer-canvas{
+  position:absolute;inset:0;width:100%;height:100%;z-index:0;cursor:none;
+}
+.footer-content{
+  position:relative;z-index:2;max-width:1400px;margin:0 auto;
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:50px;
+  margin-bottom:60px;pointer-events:none;
+}
+.footer-content > *{pointer-events:auto}
+.footer-brand h3{
+  font-family:'Instrument Serif',serif;font-size:48px;font-weight:400;line-height:1;margin-bottom:16px;letter-spacing:-.02em;
+}
+.footer-brand h3 em{font-style:italic;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.footer-brand p{color:var(--muted);font-size:14px;line-height:1.6;max-width:340px}
+.footer-col h4{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--purple);margin-bottom:20px}
+.footer-col a{display:block;font-size:14px;color:var(--muted);padding:6px 0;transition:color .25s,transform .25s}
+.footer-col a:hover{color:var(--ink);transform:translateX(4px)}
+.footer-bottom{
+  position:relative;z-index:2;max-width:1400px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;
+  padding-top:30px;border-top:1px solid var(--border);
+  font-size:12px;color:var(--muted);
+}
+.footer-bottom .copy{display:flex;align-items:center;gap:14px}
+.footer-bottom .copy img{width:28px;height:28px;object-fit:contain}
+@media (max-width:900px){
+  footer{padding:60px 22px 32px}
+  .footer-content{grid-template-columns:1fr 1fr;gap:36px}
+  .footer-brand{grid-column:1/-1}
+  .footer-brand h3{font-size:36px}
+}
 </style>
 </head>
 <body>
@@ -390,6 +429,43 @@ form{display:grid;gap:18px}
 
   </div>
 </main>
+
+<!-- FOOTER w/ interactive particles -->
+<footer>
+  <canvas id="footer-canvas"></canvas>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <h3>Build something <em>orbital.</em></h3>
+      <p>A digital studio engineering premium websites, brands, and growth systems. Move your cursor — the stars listen.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Studio</h4>
+      <a href="index.html#work">Work</a>
+      <a href="index.html#services">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Clients</h4>
+      <a href="index.html#work">Trinit.e</a>
+      <a href="index.html#work">Alderney Week</a>
+      <a href="index.html#work">YK Wellness</a>
+      <a href="http://marketingsr.online/" target="_blank" rel="noopener">H Barbers</a>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="mailto:contact@saturnresults.com">Email</a>
+      <a href="#">Instagram</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="copy">
+      <img src="SRWHITELOGO.png" alt=""/>
+      <span>© 2026 Saturn Results · Built with care</span>
+    </div>
+    <div>contact@saturnresults.com</div>
+  </div>
+</footer>
 
 <script>
 /* ========== Cursor ========== */
@@ -564,6 +640,86 @@ document.querySelectorAll('.chip').forEach(c=>{
     botReply(q);
   });
 });
+
+/* ====== FOOTER INTERACTIVE BALLS (physics) ====== */
+(function(){
+  const c=document.getElementById('footer-canvas');
+  if(!c) return;
+  const ctx=c.getContext('2d');
+  let w,h,balls=[];
+  const mouse={x:-9999,y:-9999,active:false};
+
+  function resize(){
+    const r=c.getBoundingClientRect();
+    w=c.width=r.width*devicePixelRatio;
+    h=c.height=r.height*devicePixelRatio;
+    c.style.width=r.width+'px';c.style.height=r.height+'px';
+    ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+    init();
+  }
+  function init(){
+    balls=[];
+    const W=w/devicePixelRatio,H=h/devicePixelRatio;
+    const count=Math.floor((W*H)/8000);
+    for(let i=0;i<count;i++){
+      balls.push({
+        x:Math.random()*W,y:Math.random()*H,
+        vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,
+        r:Math.random()*3+1.5,baseR:0,
+        hue:255+Math.random()*40,a:.4+Math.random()*.5,
+      });
+      balls[i].baseR=balls[i].r;
+    }
+  }
+  resize();window.addEventListener('resize',resize);
+
+  c.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect();
+    mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;mouse.active=true;
+  });
+  c.addEventListener('mouseleave',()=>{mouse.active=false;mouse.x=-9999;mouse.y=-9999});
+  window.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect();
+    if(e.clientY>=r.top-50 && e.clientY<=r.bottom+50){
+      mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;mouse.active=true;
+    }
+  });
+
+  function frame(){
+    const W=w/devicePixelRatio,H=h/devicePixelRatio;
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<balls.length;i++){
+      for(let j=i+1;j<balls.length;j++){
+        const a=balls[i],b=balls[j];
+        const dx=a.x-b.x,dy=a.y-b.y;const d=Math.hypot(dx,dy);
+        if(d<120){
+          ctx.strokeStyle=`hsla(270,80%,75%,${(1-d/120)*.25})`;
+          ctx.lineWidth=.7;
+          ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+        }
+      }
+    }
+    balls.forEach(b=>{
+      const dx=b.x-mouse.x,dy=b.y-mouse.y;const d=Math.hypot(dx,dy);
+      if(mouse.active && d<160){
+        const force=(160-d)/160;
+        b.vx+=(dx/d)*force*.6;b.vy+=(dy/d)*force*.6;
+        b.r=b.baseR+force*4;
+      }else{b.r+=(b.baseR-b.r)*.1}
+      b.vx*=.96;b.vy*=.96;b.x+=b.vx;b.y+=b.vy;
+      if(b.x<-10) b.x=W+10;if(b.x>W+10) b.x=-10;
+      if(b.y<-10) b.y=H+10;if(b.y>H+10) b.y=-10;
+      const grad=ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r*4);
+      grad.addColorStop(0,`hsla(${b.hue},80%,75%,${b.a})`);
+      grad.addColorStop(1,`hsla(${b.hue},80%,60%,0)`);
+      ctx.fillStyle=grad;
+      ctx.beginPath();ctx.arc(b.x,b.y,b.r*4,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle=`hsla(${b.hue},90%,85%,${b.a+.2})`;
+      ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();
+    });
+    requestAnimationFrame(frame);
+  }frame();
+})();
 </script>
 </body>
 </html>
