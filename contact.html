@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Free Demo · Saturn Results</title>
+<meta name="description" content="Claim your free demo site. Tell us about your business and chat with our team." />
+<link rel="icon" href="SRWHITELOGO.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08070d;
+  --bg-2:#0d0b14;
+  --ink:#ffffff;
+  --muted:#a8a4b8;
+  --muted-2:#7a7588;
+  --purple:#8b5cf6;
+  --purple-deep:#5b21b6;
+  --purple-glow:#a78bfa;
+  --border:rgba(255,255,255,.08);
+  --border-2:rgba(255,255,255,.14);
+  --grad:linear-gradient(135deg,#a78bfa 0%,#8b5cf6 50%,#5b21b6 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+::selection{background:var(--purple);color:#fff}
+
+/* ============ AMBIENT STARFIELD ============ */
+#stars-canvas{
+  position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:.4;
+}
+.bg-glow{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 80% 20%,rgba(139,92,246,.18),transparent 60%),
+    radial-gradient(ellipse 70% 60% at 10% 90%,rgba(91,33,182,.15),transparent 60%);
+}
+.noise{
+  position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ============ NAV ============ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:24px 48px;transition:all .35s ease;
+}
+nav.scrolled{
+  padding:14px 48px;background:rgba(8,7,13,.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);
+}
+.nav-logo{display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:.05em}
+.nav-logo img{width:32px;height:32px;object-fit:contain}
+.nav-back{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:10px 22px;border:1px solid var(--border);border-radius:100px;font-size:13px;
+  background:rgba(255,255,255,.02);transition:all .25s;color:var(--muted);
+}
+.nav-back:hover{color:var(--ink);border-color:var(--purple)}
+@media (max-width:768px){nav{padding:18px 22px}}
+
+/* ============ CURSOR ============ */
+.cursor{position:fixed;width:8px;height:8px;background:var(--purple);border-radius:50%;pointer-events:none;z-index:9000;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:transform .15s}
+.cursor-ring{position:fixed;width:40px;height:40px;border:1px solid var(--purple);border-radius:50%;pointer-events:none;z-index:8999;transform:translate(-50%,-50%);transition:transform .25s cubic-bezier(.2,.8,.3,1),width .25s,height .25s}
+.cursor.hover{transform:translate(-50%,-50%) scale(0)}
+.cursor-ring.hover{width:80px;height:80px;border-color:var(--purple-glow)}
+@media (max-width:768px){.cursor,.cursor-ring{display:none}}
+
+/* ============ LAYOUT ============ */
+.page{
+  position:relative;z-index:5;min-height:100vh;
+  padding:140px 48px 80px;
+  display:flex;align-items:center;justify-content:center;
+}
+.shell{
+  width:100%;max-width:1280px;
+  display:grid;grid-template-columns:1.1fr 1fr;gap:40px;
+}
+@media (max-width:1000px){
+  .page{padding:120px 22px 60px}
+  .shell{grid-template-columns:1fr;gap:24px}
+}
+
+/* ============ FORM PANEL ============ */
+.panel{
+  position:relative;border:1px solid var(--border);border-radius:28px;
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(139,92,246,.03));
+  backdrop-filter:blur(8px);
+  padding:56px 56px 48px;overflow:hidden;
+}
+.panel::before{
+  content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(167,139,250,.6),transparent);
+}
+@media (max-width:768px){.panel{padding:36px 28px}}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--purple-glow);margin-bottom:20px;
+}
+.eyebrow::before{content:"";width:24px;height:1px;background:var(--purple)}
+.eyebrow .dot{width:6px;height:6px;background:var(--purple);border-radius:50%;box-shadow:0 0 10px var(--purple)}
+
+h1.headline{
+  font-family:'Instrument Serif',serif;font-weight:400;
+  font-size:clamp(40px,5vw,64px);line-height:1;letter-spacing:-.02em;margin-bottom:20px;
+}
+h1.headline em{font-style:italic;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lede{color:var(--muted);font-size:16px;line-height:1.65;max-width:520px;margin-bottom:40px}
+
+/* form */
+form{display:grid;gap:18px}
+.row{display:grid;gap:18px;grid-template-columns:1fr 1fr}
+@media (max-width:600px){.row{grid-template-columns:1fr}}
+
+.field{position:relative}
+.field label{
+  position:absolute;top:18px;left:18px;font-size:13px;color:var(--muted-2);
+  pointer-events:none;transition:all .25s cubic-bezier(.2,.8,.3,1);letter-spacing:.02em;
+}
+.field input,.field select,.field textarea{
+  width:100%;background:rgba(255,255,255,.02);border:1px solid var(--border);
+  border-radius:14px;padding:24px 18px 10px;font-family:inherit;font-size:15px;color:var(--ink);
+  outline:none;transition:border-color .25s,background .25s;
+}
+.field textarea{resize:none;min-height:130px;padding-top:30px}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a78bfa' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center;cursor:pointer}
+.field input:focus,.field textarea:focus,.field select:focus{
+  border-color:var(--purple);background:rgba(139,92,246,.05);
+}
+.field input:focus + label,
+.field textarea:focus + label,
+.field select:focus + label,
+.field input:not(:placeholder-shown) + label,
+.field textarea:not(:placeholder-shown) + label,
+.field select.has-value + label{
+  top:8px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--purple-glow);
+}
+
+.submit{
+  margin-top:8px;
+  display:inline-flex;align-items:center;justify-content:center;gap:12px;
+  padding:18px 32px;border-radius:100px;border:none;
+  background:var(--ink);color:var(--bg);
+  font-family:inherit;font-size:14px;font-weight:500;letter-spacing:.04em;
+  cursor:pointer;position:relative;overflow:hidden;
+  transition:transform .3s cubic-bezier(.2,.8,.3,1),box-shadow .3s;
+}
+.submit::before{
+  content:"";position:absolute;inset:0;background:var(--grad);
+  transform:translateY(101%);transition:transform .4s cubic-bezier(.7,0,.3,1);z-index:0;
+}
+.submit:hover::before{transform:translateY(0)}
+.submit:hover{transform:translateY(-2px);color:var(--ink);box-shadow:0 16px 50px rgba(139,92,246,.4)}
+.submit > *{position:relative;z-index:1}
+.submit svg{width:16px;height:16px;transition:transform .3s}
+.submit:hover svg{transform:translateX(4px)}
+
+.fineprint{margin-top:16px;font-size:12px;color:var(--muted-2);line-height:1.6}
+.success{
+  display:none;padding:20px;border-radius:14px;
+  background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.3);
+  font-size:14px;color:var(--purple-glow);
+}
+.success.show{display:block}
+
+/* ============ CHAT PANEL ============ */
+.chat{
+  position:relative;border:1px solid var(--border);border-radius:28px;
+  background:linear-gradient(180deg,#0e0b18 0%,#0a0814 100%);
+  display:flex;flex-direction:column;overflow:hidden;
+  min-height:640px;max-height:780px;
+}
+.chat-head{
+  display:flex;align-items:center;gap:14px;padding:22px 24px;border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.015);
+}
+.avatar{
+  position:relative;width:44px;height:44px;border-radius:50%;
+  background:var(--grad);display:flex;align-items:center;justify-content:center;
+  font-family:'Instrument Serif',serif;font-size:20px;color:#fff;
+  box-shadow:0 0 30px rgba(139,92,246,.4);
+}
+.avatar::after{
+  content:"";position:absolute;bottom:0;right:0;width:12px;height:12px;
+  background:#10b981;border-radius:50%;border:2px solid #0e0b18;
+  animation:livepulse 1.6s ease-in-out infinite;
+}
+@keyframes livepulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.6)}50%{box-shadow:0 0 0 6px rgba(16,185,129,0)}}
+.chat-head .meta{flex:1}
+.chat-head .name{font-size:14px;font-weight:500}
+.chat-head .status{font-size:11px;color:var(--muted-2);letter-spacing:.05em;margin-top:2px}
+.chat-head .status .live{color:#10b981}
+
+.chat-body{
+  flex:1;padding:26px 24px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;
+  scroll-behavior:smooth;
+}
+.chat-body::-webkit-scrollbar{width:6px}
+.chat-body::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:6px}
+
+.bubble{
+  max-width:82%;padding:13px 16px;border-radius:18px;font-size:14px;line-height:1.55;
+  animation:bubbleIn .4s cubic-bezier(.2,.8,.3,1) backwards;
+}
+@keyframes bubbleIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.bubble.them{
+  align-self:flex-start;background:rgba(255,255,255,.04);border:1px solid var(--border);
+  border-bottom-left-radius:6px;color:var(--ink);
+}
+.bubble.me{
+  align-self:flex-end;background:var(--grad);color:#fff;
+  border-bottom-right-radius:6px;box-shadow:0 8px 30px rgba(139,92,246,.25);
+}
+.bubble.them small{display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:4px;opacity:.7}
+
+.typing{
+  display:none;align-self:flex-start;padding:14px 18px;background:rgba(255,255,255,.04);
+  border:1px solid var(--border);border-radius:18px;border-bottom-left-radius:6px;
+  gap:5px;align-items:center;
+}
+.typing.show{display:flex}
+.typing span{width:7px;height:7px;border-radius:50%;background:var(--purple-glow);opacity:.5;animation:typeBounce 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.15s}
+.typing span:nth-child(3){animation-delay:.3s}
+@keyframes typeBounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+
+.suggestions{
+  display:flex;gap:8px;flex-wrap:wrap;padding:0 24px 12px;
+}
+.chip{
+  font-size:12px;padding:8px 14px;border-radius:100px;border:1px solid var(--border);
+  background:rgba(255,255,255,.02);color:var(--muted);cursor:pointer;
+  transition:all .25s;
+}
+.chip:hover{border-color:var(--purple);background:rgba(139,92,246,.08);color:var(--ink)}
+
+.chat-input{
+  display:flex;gap:10px;padding:16px 18px;border-top:1px solid var(--border);
+  background:rgba(255,255,255,.015);
+}
+.chat-input input{
+  flex:1;background:rgba(255,255,255,.04);border:1px solid var(--border);
+  padding:14px 18px;border-radius:100px;color:var(--ink);font-family:inherit;font-size:14px;outline:none;
+  transition:border-color .25s,background .25s;
+}
+.chat-input input:focus{border-color:var(--purple);background:rgba(139,92,246,.06)}
+.chat-input button{
+  width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;
+  background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;
+  transition:transform .25s,box-shadow .25s;
+}
+.chat-input button:hover{transform:scale(1.05);box-shadow:0 8px 24px rgba(139,92,246,.4)}
+.chat-input button svg{width:16px;height:16px}
+
+/* trust strip */
+.trust{
+  margin-top:30px;display:flex;gap:30px;flex-wrap:wrap;align-items:center;
+  font-size:12px;color:var(--muted-2);
+}
+.trust .item{display:flex;align-items:center;gap:8px}
+.trust .item svg{width:14px;height:14px;color:var(--purple-glow)}
+</style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+<div class="bg-glow"></div>
+<div class="noise"></div>
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+<nav id="nav">
+  <a class="nav-logo" href="index.html">
+    <img src="SRWHITELOGO.png" alt="Saturn Results"/>
+    <span>Saturn Results</span>
+  </a>
+  <a class="nav-back" href="index.html">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Back to home
+  </a>
+</nav>
+
+<main class="page">
+  <div class="shell">
+
+    <!-- LEAD FORM -->
+    <section class="panel">
+      <div class="eyebrow"><span class="dot"></span> Free Demo · No Commitment</div>
+      <h1 class="headline">Tell us about your <em>business.</em></h1>
+      <p class="lede">Share a few details and we'll build a tailored preview of your future site — yours to keep, even if you don't move forward. We typically respond within one business day.</p>
+
+      <form id="leadForm" novalidate>
+        <div class="row">
+          <div class="field">
+            <input type="text" id="name" name="name" placeholder=" " required autocomplete="name"/>
+            <label for="name">Your name</label>
+          </div>
+          <div class="field">
+            <input type="text" id="company" name="company" placeholder=" " autocomplete="organization"/>
+            <label for="company">Business name</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <input type="email" id="email" name="email" placeholder=" " required autocomplete="email"/>
+            <label for="email">Email address</label>
+          </div>
+          <div class="field">
+            <input type="tel" id="phone" name="phone" placeholder=" " autocomplete="tel"/>
+            <label for="phone">Phone (optional)</label>
+          </div>
+        </div>
+        <div class="field">
+          <select id="industry" name="industry" required>
+            <option value="" disabled selected hidden></option>
+            <option>Wellness & Health</option>
+            <option>Hospitality & Food</option>
+            <option>Retail & E-commerce</option>
+            <option>Professional Services</option>
+            <option>Events & Tourism</option>
+            <option>Non-Profit</option>
+            <option>Other</option>
+          </select>
+          <label for="industry">Industry</label>
+        </div>
+        <div class="field">
+          <textarea id="brief" name="brief" placeholder=" " rows="4"></textarea>
+          <label for="brief">What does your business do? (optional)</label>
+        </div>
+        <button type="submit" class="submit">
+          <span>Request my free demo</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+        <div class="fineprint">By submitting, you agree to be contacted by Saturn Results regarding your demo. We never share your details.</div>
+        <div class="success" id="success">
+          ✦ Thank you — your request is in. We'll be in touch within 24 hours with your demo brief.
+        </div>
+      </form>
+
+      <div class="trust">
+        <div class="item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          No deposit required
+        </div>
+        <div class="item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Yours to keep
+        </div>
+        <div class="item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          24-hour response
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAT -->
+    <section class="chat">
+      <div class="chat-head">
+        <div class="avatar">S</div>
+        <div class="meta">
+          <div class="name">Saturn Studio</div>
+          <div class="status"><span class="live">●</span> Online — typically replies in minutes</div>
+        </div>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="bubble them">
+          <small>Saturn Studio</small>
+          Hey there ✦ Thanks for stopping by. Got a quick question about your demo? Ask away.
+        </div>
+        <div class="typing" id="typing"><span></span><span></span><span></span></div>
+      </div>
+      <div class="suggestions" id="suggestions">
+        <div class="chip" data-q="How long does the demo take?">How long does it take?</div>
+        <div class="chip" data-q="What's the catch with the free demo?">What's the catch?</div>
+        <div class="chip" data-q="What does it cost to launch?">Pricing?</div>
+        <div class="chip" data-q="Can I see examples?">See examples</div>
+      </div>
+      <form class="chat-input" id="chatInput">
+        <input type="text" id="chatField" placeholder="Type your message…" autocomplete="off"/>
+        <button type="submit" aria-label="Send">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </button>
+      </form>
+    </section>
+
+  </div>
+</main>
+
+<script>
+/* ========== Cursor ========== */
+const cursor=document.querySelector('.cursor');
+const ring=document.querySelector('.cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+function loop(){rx+=(mx-rx)*.15;ry+=(my-ry)*.15;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)}loop();
+document.querySelectorAll('a,button,input,select,textarea,.chip').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.classList.add('hover');ring.classList.add('hover')});
+  el.addEventListener('mouseleave',()=>{cursor.classList.remove('hover');ring.classList.remove('hover')});
+});
+
+/* ========== Nav scroll ========== */
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>20)});
+
+/* ========== Starfield ========== */
+(function(){
+  const c=document.getElementById('stars-canvas');
+  const ctx=c.getContext('2d');
+  let w,h,stars;
+  function resize(){w=c.width=innerWidth;h=c.height=innerHeight;
+    stars=Array.from({length:Math.floor((w*h)/9000)},()=>({
+      x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.2+.2,
+      a:Math.random()*.6+.2,tw:Math.random()*.02+.005,p:Math.random()*Math.PI*2
+    }));
+  }
+  resize();window.addEventListener('resize',resize);
+  function frame(){
+    ctx.clearRect(0,0,w,h);
+    stars.forEach(s=>{s.p+=s.tw;const a=s.a+Math.sin(s.p)*.3;
+      ctx.beginPath();ctx.fillStyle=`rgba(220,220,255,${a})`;ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill()});
+    requestAnimationFrame(frame);
+  }frame();
+})();
+
+/* ========== Select label trick ========== */
+document.querySelectorAll('select').forEach(s=>{
+  s.addEventListener('change',()=>s.classList.toggle('has-value',!!s.value));
+});
+
+/* ========== Form submit ========== */
+const form=document.getElementById('leadForm');
+const success=document.getElementById('success');
+/* ============================================================
+   GOOGLE SHEETS LEAD CAPTURE — SETUP IN 5 MINUTES
+   ============================================================
+   1) Create a sheet at https://sheets.new — name it "Saturn Results Leads"
+      Row 1 headers (exact): timestamp | name | company | email | phone | industry | brief
+
+   2) Extensions → Apps Script. Delete placeholder. Paste:
+
+      const SHEET_NAME = 'Sheet1';
+      function doPost(e) {
+        try {
+          const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+          const data = JSON.parse(e.postData.contents);
+          sheet.appendRow([
+            new Date(),
+            data.name || '',
+            data.company || '',
+            data.email || '',
+            data.phone || '',
+            data.industry || '',
+            data.brief || ''
+          ]);
+          return ContentService.createTextOutput(JSON.stringify({ok:true}))
+            .setMimeType(ContentService.MimeType.JSON);
+        } catch (err) {
+          return ContentService.createTextOutput(JSON.stringify({ok:false,error:err.toString()}))
+            .setMimeType(ContentService.MimeType.JSON);
+        }
+      }
+
+   3) Save (💾). Then: Deploy → New deployment → ⚙ Web app
+      • Execute as: Me
+      • Who has access: Anyone
+      • Click Deploy → Authorize → "Advanced → Go to project (unsafe) → Allow"
+
+   4) Copy the Web app URL. Paste it into SHEET_ENDPOINT below
+      (replace the whole string between the quotes).
+
+   5) Email alerts on new leads (optional):
+      In the sheet → Tools → Notification rules → Any changes → Email right away.
+
+   When you re-edit the Apps Script later, you MUST redeploy:
+   Deploy → Manage deployments → ✏ → Version: New version → Deploy
+   The URL stays the same.
+   ============================================================ */
+const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzKyCiomjxfu_fV7w5zqlIiIji6-kv3GBxB-XFcMXaFPWe-i4p9ShpTmMV053nwnJaH5g/exec';
+
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const data=Object.fromEntries(new FormData(form).entries());
+  if(!data.name||!data.email){return}
+  const btn=form.querySelector('button[type=submit]');
+  const label=btn.querySelector('span');
+  const original=label.textContent;
+  btn.disabled=true;label.textContent='Sending…';
+
+  try{
+    await fetch(SHEET_ENDPOINT,{
+      method:'POST',
+      mode:'no-cors', // Apps Script can't return CORS headers; we fire-and-forget
+      body:new URLSearchParams(data).toString(),
+      headers:{'Content-Type':'application/x-www-form-urlencoded'}
+    });
+    success.classList.add('show');
+    label.textContent='Sent ✓';
+    pushBubble('them',`Got your details — thanks ${data.name?data.name.split(' ')[0]:''}! While we get started on your demo, anything else you'd like us to know?`,true);
+  }catch(err){
+    btn.disabled=false;label.textContent=original;
+    pushBubble('them',`Hmm — something went wrong sending that. Try again, or email us directly at contact@saturnresults.com.`,true);
+  }
+});
+
+/* ========== Chat ========== */
+const body=document.getElementById('chatBody');
+const typing=document.getElementById('typing');
+const chatForm=document.getElementById('chatInput');
+const chatField=document.getElementById('chatField');
+
+function scrollDown(){body.scrollTop=body.scrollHeight}
+
+function pushBubble(who,text,withName=false){
+  const b=document.createElement('div');
+  b.className='bubble '+who;
+  if(who==='them' && withName){
+    b.innerHTML=`<small>Saturn Studio</small>${escape(text)}`;
+  }else{
+    b.textContent=text;
+  }
+  body.insertBefore(b,typing);
+  scrollDown();
+}
+function escape(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'})[c])}
+
+const replies=[
+  {match:/(how long|time|fast|quick|when)/i,a:"Most demos are ready within 3–5 working days. We'll keep you posted at each milestone."},
+  {match:/(catch|free|cost.*demo|why free)/i,a:"No catch — we'd rather show than tell. The demo is yours to keep regardless of whether you decide to launch with us."},
+  {match:/(price|cost|pricing|how much|launch)/i,a:"Most full builds land between £1,500–£6,000 depending on scope. We'll quote precisely after seeing your demo."},
+  {match:/(example|portfolio|work|case|see)/i,a:"You can see our recent work on the homepage — Trinit.e, YK Wellness, Alderney Week, H Barbers and more."},
+  {match:/(seo|google|rank|search)/i,a:"Every site we ship is built on SEO foundations — Lighthouse-optimised, semantic markup, structured data. We can also run a full audit."},
+  {match:/(book|call|meet|chat|talk)/i,a:"Happy to jump on a call. Drop your email in the form on the left and we'll send a calendar link."},
+  {match:/(hi|hello|hey|yo)/i,a:"Hey ✦ great to meet you. What kind of business are you running?"},
+  {match:/(thank|thanks|cheers)/i,a:"Anytime — and welcome aboard 🪐"},
+];
+
+function botReply(msg){
+  typing.classList.add('show');scrollDown();
+  setTimeout(()=>{
+    typing.classList.remove('show');
+    const hit=replies.find(r=>r.match.test(msg));
+    const ans=hit?hit.a:"Good question — let me flag this to the team. Drop your email in the form on the left and we'll get a tailored answer back within an hour.";
+    pushBubble('them',ans,true);
+  },900+Math.random()*700);
+}
+
+chatForm.addEventListener('submit',e=>{
+  e.preventDefault();
+  const v=chatField.value.trim();
+  if(!v) return;
+  pushBubble('me',v);
+  chatField.value='';
+  botReply(v);
+});
+
+document.querySelectorAll('.chip').forEach(c=>{
+  c.addEventListener('click',()=>{
+    const q=c.dataset.q;
+    pushBubble('me',q);
+    botReply(q);
+  });
+});
+</script>
+</body>
+</html>
