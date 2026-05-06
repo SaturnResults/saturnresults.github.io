@@ -340,6 +340,32 @@ form{display:grid;gap:18px}
   .team-socials svg{width:15px;height:15px}
 }
 
+/* ============ AUDIO STICKY BUTTON ============ */
+.audio-sticky{
+  position:fixed;right:24px;bottom:24px;z-index:90;
+  width:54px;height:54px;border-radius:50%;padding:0;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);background:rgba(8,7,13,.7);backdrop-filter:blur(16px);
+  cursor:pointer;
+  transform:translateY(120%) scale(.6);opacity:0;
+  transition:transform .5s cubic-bezier(.2,.8,.3,1),opacity .35s,border-color .25s,background .25s;
+}
+.audio-sticky.visible{opacity:1;transform:translateY(0) scale(1)}
+.audio-sticky:hover{border-color:var(--purple);background:rgba(139,92,246,.18)}
+.audio-sticky::before{
+  content:"";position:absolute;inset:-3px;border-radius:50%;
+  background:conic-gradient(from 0deg,transparent,var(--purple) 25%,transparent 50%);
+  opacity:0;animation:spin 3s linear infinite;z-index:-1;
+}
+.audio-sticky.playing::before{opacity:.5}
+@keyframes spin{to{transform:rotate(360deg)}}
+.audio-sticky .ico{width:18px;height:18px;color:var(--ink)}
+.audio-sticky.playing .ico{color:var(--purple-glow)}
+.audio-sticky .ico-pause{display:none}
+.audio-sticky.playing .ico-play{display:none}
+.audio-sticky.playing .ico-pause{display:inline-block}
+@media (max-width:768px){.audio-sticky{display:none!important}}
+
 /* ============ FOOTER (interactive particle field) ============ */
 footer{
   position:relative;border-top:1px solid var(--border);
@@ -384,6 +410,12 @@ footer{
 <div class="noise"></div>
 <div class="cursor"></div>
 <div class="cursor-ring"></div>
+
+<!-- Sticky audio toggle (desktop only) -->
+<button class="audio-sticky" id="audioSticky" type="button" aria-label="Toggle ambient soundtrack">
+  <svg class="ico ico-play" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l16 9-16 9V3z"/></svg>
+  <svg class="ico ico-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="3" width="5" height="18" rx="1"/><rect x="14" y="3" width="5" height="18" rx="1"/></svg>
+</button>
 
 <nav id="nav">
   <a class="nav-logo" href="index.html">
@@ -573,6 +605,173 @@ footer{
 </footer>
 
 <script>
+/* ====== AUDIO ENGINE (mirror of homepage) ====== */
+const SR_Audio=(function(){
+  let ctx=null,master=null,musicBus=null,sfxBus=null,reverb=null;
+  let voices=[];
+  let isPlaying=false,started=false;
+  let shimmerTimer=null,arpTimer=null,chordTimer=null;
+  let chordIdx=0;
+  const PROG=[
+    [65.41,130.81,196.00,233.08,311.13,392.00],
+    [51.91,103.83,164.81,207.65,311.13,415.30],
+    [43.65, 87.31,174.61,220.00,261.63,349.23],
+    [58.27,116.54,174.61,233.08,349.23,466.16],
+  ];
+  function ensure(){
+    if(ctx) return true;
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC) return false;
+    ctx=new AC();
+    master=ctx.createGain();master.gain.value=0;master.connect(ctx.destination);
+    musicBus=ctx.createGain();musicBus.gain.value=.6;musicBus.connect(master);
+    sfxBus=ctx.createGain();sfxBus.gain.value=.95;sfxBus.connect(master);
+    reverb=ctx.createConvolver();
+    const ir=ctx.createBuffer(2,ctx.sampleRate*4,ctx.sampleRate);
+    for(let c=0;c<2;c++){const d=ir.getChannelData(c);for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2.6)}
+    reverb.buffer=ir;
+    const wet=ctx.createGain();wet.gain.value=.55;
+    reverb.connect(wet);wet.connect(musicBus);
+    return true;
+  }
+  function makeVoice(freq,gainVal,attack=4,detune=0){
+    const o=ctx.createOscillator();o.type='sine';o.frequency.value=freq;o.detune.value=detune;
+    const g=ctx.createGain();g.gain.value=0;
+    const lfo=ctx.createOscillator();lfo.frequency.value=.06+Math.random()*.06;
+    const lfoG=ctx.createGain();lfoG.gain.value=gainVal*.35;
+    lfo.connect(lfoG);lfoG.connect(g.gain);
+    o.connect(g);g.connect(musicBus);g.connect(reverb);
+    o.start();lfo.start();
+    g.gain.linearRampToValueAtTime(gainVal,ctx.currentTime+attack);
+    return {osc:o,gain:g,target:gainVal};
+  }
+  function fadeVoice(v,target,time){const t=ctx.currentTime;v.gain.gain.cancelScheduledValues(t);v.gain.gain.linearRampToValueAtTime(target,t+time)}
+  function morphToChord(){
+    if(!isPlaying) return;
+    const chord=PROG[chordIdx%PROG.length];chordIdx++;
+    while(voices.length<chord.length) voices.push(makeVoice(chord[voices.length],.05,4));
+    voices.forEach((v,i)=>{
+      const f=chord[i%chord.length];
+      v.osc.frequency.cancelScheduledValues(ctx.currentTime);
+      v.osc.frequency.linearRampToValueAtTime(f,ctx.currentTime+5);
+      const targets=[.085,.06,.05,.04,.035,.03];
+      fadeVoice(v,targets[i]||.025,5);
+    });
+    chordTimer=setTimeout(morphToChord,16000);
+  }
+  function arpNote(){
+    if(!isPlaying) return;
+    const root=PROG[(chordIdx-1+PROG.length)%PROG.length][0];
+    const scale=[1,1.122,1.335,1.498,1.682];const oct=[2,4,4,8];
+    const f=root*scale[Math.floor(Math.random()*scale.length)]*oct[Math.floor(Math.random()*oct.length)];
+    const o=ctx.createOscillator();o.type='triangle';o.frequency.value=f;
+    const g=ctx.createGain();g.gain.value=0;
+    o.connect(g);g.connect(reverb);g.connect(musicBus);
+    const t=ctx.currentTime;
+    g.gain.linearRampToValueAtTime(.045,t+.4);g.gain.linearRampToValueAtTime(0,t+2.4);
+    o.start(t);o.stop(t+2.5);
+    arpTimer=setTimeout(arpNote,3500+Math.random()*5500);
+  }
+  function shimmer(){
+    if(!isPlaying) return;
+    const root=PROG[(chordIdx-1+PROG.length)%PROG.length][0];
+    const f=root*[8,10,12,16][Math.floor(Math.random()*4)];
+    const o=ctx.createOscillator();o.type='sine';o.frequency.value=f;
+    const g=ctx.createGain();g.gain.value=0;
+    o.connect(g);g.connect(reverb);g.connect(musicBus);
+    const t=ctx.currentTime;
+    g.gain.linearRampToValueAtTime(.025,t+.8);g.gain.linearRampToValueAtTime(0,t+3.5);
+    o.start(t);o.stop(t+3.6);
+    shimmerTimer=setTimeout(shimmer,5000+Math.random()*8000);
+  }
+  function startMusic(){
+    if(!ensure()) return;
+    if(ctx.state==='suspended') ctx.resume();
+    if(!started){
+      started=true;
+      const chord=PROG[0];const targets=[.085,.06,.05,.04,.035,.03];
+      chord.forEach((f,i)=>voices.push(makeVoice(f,targets[i]||.025,4)));
+      chordIdx=1;
+    }else{
+      const targets=[.085,.06,.05,.04,.035,.03];
+      voices.forEach((v,i)=>fadeVoice(v,targets[i]||.025,2));
+    }
+    master.gain.cancelScheduledValues(ctx.currentTime);
+    master.gain.linearRampToValueAtTime(.75,ctx.currentTime+2);
+    isPlaying=true;
+    if(!chordTimer) chordTimer=setTimeout(morphToChord,16000);
+    if(!arpTimer) arpTimer=setTimeout(arpNote,4000);
+    if(!shimmerTimer) shimmerTimer=setTimeout(shimmer,3000);
+    try{sessionStorage.setItem('saturn_music','on')}catch(_){}
+  }
+  function stopMusic(){
+    if(!ctx||!isPlaying) return;
+    isPlaying=false;
+    master.gain.cancelScheduledValues(ctx.currentTime);
+    master.gain.linearRampToValueAtTime(0,ctx.currentTime+1.2);
+    if(shimmerTimer){clearTimeout(shimmerTimer);shimmerTimer=null}
+    if(arpTimer){clearTimeout(arpTimer);arpTimer=null}
+    if(chordTimer){clearTimeout(chordTimer);chordTimer=null}
+    try{sessionStorage.setItem('saturn_music','off')}catch(_){}
+  }
+  function isOn(){return isPlaying}
+  function wasOn(){try{return sessionStorage.getItem('saturn_music')==='on'}catch(_){return false}}
+  function tone(freq,dur=.08,type='sine',vol=.22,detune=0){
+    if(!ctx||!isPlaying||ctx.state==='suspended') return;
+    const o=ctx.createOscillator();o.type=type;o.frequency.value=freq;o.detune.value=detune;
+    const g=ctx.createGain();g.gain.value=0;o.connect(g);g.connect(sfxBus);
+    const t=ctx.currentTime;
+    g.gain.linearRampToValueAtTime(vol,t+.005);g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    o.start(t);o.stop(t+dur+.02);
+  }
+  function click(){tone(880,.08,'sine',.32);tone(1320,.07,'triangle',.18,30)}
+  function hover(){tone(1480,.05,'sine',.12)}
+  function whoosh(intensity){
+    if(!ctx||!isPlaying||ctx.state==='suspended') return;
+    const dur=.22;
+    const buf=ctx.createBuffer(1,ctx.sampleRate*dur,ctx.sampleRate);
+    const d=buf.getChannelData(0);for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*(1-i/d.length);
+    const src=ctx.createBufferSource();src.buffer=buf;
+    const filt=ctx.createBiquadFilter();filt.type='bandpass';filt.frequency.value=1500+intensity*4000;filt.Q.value=6;
+    const g=ctx.createGain();g.gain.value=Math.min(.16,.04+intensity*.13);
+    src.connect(filt);filt.connect(g);g.connect(sfxBus);
+    const t=ctx.currentTime;g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    src.start();src.stop(t+dur+.02);
+  }
+  return {start:startMusic,stop:stopMusic,toggle:()=>{isPlaying?stopMusic():startMusic()},isOn,wasOn,click,hover,whoosh};
+})();
+
+/* ====== Wire sticky button + auto-resume ====== */
+(function(){
+  const stickyBtn=document.getElementById('audioSticky');
+  if(!stickyBtn) return;
+  stickyBtn.classList.add('visible'); // contact has no hero, show immediately
+  function syncUI(){stickyBtn.classList.toggle('playing',SR_Audio.isOn())}
+  stickyBtn.addEventListener('click',()=>{SR_Audio.toggle();syncUI()});
+  if(SR_Audio.wasOn() && !SR_Audio.isOn()){
+    stickyBtn.classList.add('playing');
+    const resumer=()=>{SR_Audio.start();syncUI();
+      window.removeEventListener('pointerdown',resumer);
+      window.removeEventListener('keydown',resumer);
+      window.removeEventListener('scroll',resumer);
+    };
+    window.addEventListener('pointerdown',resumer,{once:true});
+    window.addEventListener('keydown',resumer,{once:true});
+    window.addEventListener('scroll',resumer,{once:true,passive:true});
+  }
+  // SFX
+  document.querySelectorAll('a,button,input,select,textarea,.chip').forEach(el=>{
+    el.addEventListener('mouseenter',()=>SR_Audio.hover());
+    el.addEventListener('click',()=>SR_Audio.click());
+  });
+  let lastY=window.scrollY,whooshCool=0;
+  window.addEventListener('scroll',()=>{
+    const y=window.scrollY;const vel=Math.abs(y-lastY);lastY=y;
+    const now=performance.now();
+    if(vel>40 && now>whooshCool){SR_Audio.whoosh(Math.min(1,vel/120));whooshCool=now+300}
+  });
+})();
+
 /* ========== Cursor ========== */
 const cursor=document.querySelector('.cursor');
 const ring=document.querySelector('.cursor-ring');

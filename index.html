@@ -118,6 +118,7 @@ img{max-width:100%;display:block}
 .cursor.hover{transform:translate(-50%,-50%) scale(0)}
 .cursor-ring.hover{width:80px;height:80px;border-color:var(--purple-glow)}
 .cursor-ring.click{transform:translate(-50%,-50%) scale(.6)}
+body.iframe-active .cursor,body.iframe-active .cursor-ring{opacity:0;visibility:hidden;transition:opacity .2s}
 @media (max-width:768px){.cursor,.cursor-ring{display:none}}
 
 /* ============ NAV ============ */
@@ -520,12 +521,17 @@ footer::before{
   transition:all .3s cubic-bezier(.2,.8,.3,1);
 }
 .audio-btn:hover{border-color:var(--purple);background:rgba(139,92,246,.12);transform:translateY(-1px)}
+.audio-btn .ico{width:14px;height:14px;color:var(--purple-glow);transition:transform .25s}
+.audio-btn .ico-play{display:inline-block}
+.audio-btn .ico-pause{display:none}
+.audio-btn.playing .ico-play{display:none}
+.audio-btn.playing .ico-pause{display:inline-block}
 .audio-btn .wave{
-  display:inline-flex;align-items:center;gap:2px;width:18px;height:14px;
+  display:none;align-items:center;gap:2px;width:14px;height:12px;margin-left:2px;
 }
+.audio-btn.playing .wave{display:inline-flex}
 .audio-btn .wave i{
-  display:block;width:2px;background:var(--purple-glow);border-radius:1px;
-  height:30%;transition:height .25s;
+  display:block;width:2px;background:var(--purple-glow);border-radius:1px;height:30%;
 }
 .audio-btn.playing .wave i:nth-child(1){animation:wave 1s ease-in-out -.4s infinite}
 .audio-btn.playing .wave i:nth-child(2){animation:wave 1s ease-in-out -.2s infinite}
@@ -556,7 +562,8 @@ footer::before{
   opacity:0;animation:spin 3s linear infinite;z-index:-1;
 }
 .audio-sticky.playing::before{opacity:.5}
-.audio-sticky .wave{width:18px;height:14px}
+.audio-sticky .ico{width:18px;height:18px;color:var(--ink)}
+.audio-sticky.playing .ico{color:var(--purple-glow)}
 @media (max-width:768px){.audio-sticky{display:none!important}}
 </style>
 </head>
@@ -588,7 +595,8 @@ footer::before{
 
 <!-- Sticky audio toggle (desktop only, appears on scroll) -->
 <button class="audio-sticky" id="audioSticky" type="button" aria-label="Toggle ambient soundtrack">
-  <span class="wave"><i></i><i></i><i></i><i></i></span>
+  <svg class="ico ico-play" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l16 9-16 9V3z"/></svg>
+  <svg class="ico ico-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="3" width="5" height="18" rx="1"/><rect x="14" y="3" width="5" height="18" rx="1"/></svg>
 </button>
 
 <!-- Nav -->
@@ -608,8 +616,10 @@ footer::before{
 <!-- HERO -->
 <header class="hero">
   <button class="audio-btn audio-hero" id="audioHero" type="button" aria-label="Play ambient soundtrack">
-    <span class="wave"><i></i><i></i><i></i><i></i></span>
+    <svg class="ico ico-play" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l16 9-16 9V3z"/></svg>
+    <svg class="ico ico-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="3" width="5" height="18" rx="1"/><rect x="14" y="3" width="5" height="18" rx="1"/></svg>
     <span class="lbl">Play Sound</span>
+    <span class="wave"><i></i><i></i><i></i><i></i></span>
   </button>
   <div class="hero-grid"></div>
   <div class="hero-gradient"></div>
@@ -747,7 +757,7 @@ footer::before{
     <article class="project reveal" data-preview="http://marketingsr.online/">
       <div class="project-visual">
         <div class="project-num">05</div>
-        <div class="project-tag">Hospitality</div>
+        <div class="project-tag">Services</div>
         <img src="h-barbers.jpg" alt="H Barbers site preview" loading="lazy"/>
         <div class="preview-badge"><span class="live-dot"></span>Live preview</div>
       </div>
@@ -887,87 +897,135 @@ footer::before{
    ============================================================ */
 const SR_Audio=(function(){
   let ctx=null,master=null,musicBus=null,sfxBus=null,reverb=null;
-  let droneNodes=[];
+  let voices=[]; // active note voices for the chord progression
   let isPlaying=false,started=false;
-  let shimmerTimer=null;
+  let shimmerTimer=null,arpTimer=null,chordTimer=null;
+  let chordIdx=0;
+
+  // 4-chord cosmic progression (in Hz, root + key tones, low octave focused)
+  // Cmin9 → AbMaj7 → Fmin11 → Bb13
+  const PROG=[
+    [65.41,130.81,196.00,233.08,311.13,392.00], // Cmin9
+    [51.91,103.83,164.81,207.65,311.13,415.30], // AbMaj7
+    [43.65, 87.31,174.61,220.00,261.63,349.23], // Fmin
+    [58.27,116.54,174.61,233.08,349.23,466.16], // Bb13
+  ];
 
   function ensure(){
-    if(ctx) return;
+    if(ctx) return true;
     const AC=window.AudioContext||window.webkitAudioContext;
-    if(!AC) return;
+    if(!AC) return false;
     ctx=new AC();
     master=ctx.createGain();master.gain.value=0;master.connect(ctx.destination);
-    musicBus=ctx.createGain();musicBus.gain.value=.55;musicBus.connect(master);
-    sfxBus=ctx.createGain();sfxBus.gain.value=.45;sfxBus.connect(master);
+    musicBus=ctx.createGain();musicBus.gain.value=.6;musicBus.connect(master);
+    sfxBus=ctx.createGain();sfxBus.gain.value=.95;sfxBus.connect(master); // louder SFX
 
-    // simple algorithmic reverb (Schroeder-ish convolver impulse)
+    // algorithmic reverb (longer tail for cosmic feel)
     reverb=ctx.createConvolver();
-    const ir=ctx.createBuffer(2,ctx.sampleRate*3,ctx.sampleRate);
+    const ir=ctx.createBuffer(2,ctx.sampleRate*4,ctx.sampleRate);
     for(let c=0;c<2;c++){
       const d=ir.getChannelData(c);
-      for(let i=0;i<d.length;i++){
-        d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2.4);
-      }
+      for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2.6);
     }
     reverb.buffer=ir;
-    const wet=ctx.createGain();wet.gain.value=.45;
+    const wet=ctx.createGain();wet.gain.value=.55;
     reverb.connect(wet);wet.connect(musicBus);
-    // expose wet send
-    musicBus.wet=wet;
-    musicBus.reverb=reverb;
+    return true;
   }
 
-  function makeDrone(freq,gainVal,detune=0){
+  function makeVoice(freq,gainVal,attack=4,detune=0){
     const o=ctx.createOscillator();o.type='sine';o.frequency.value=freq;o.detune.value=detune;
     const g=ctx.createGain();g.gain.value=0;
-    // slow LFO modulating gain for breathing
-    const lfo=ctx.createOscillator();lfo.frequency.value=0.07+Math.random()*.05;
-    const lfoG=ctx.createGain();lfoG.gain.value=gainVal*.4;
+    const lfo=ctx.createOscillator();lfo.frequency.value=.06+Math.random()*.06;
+    const lfoG=ctx.createGain();lfoG.gain.value=gainVal*.35;
     lfo.connect(lfoG);lfoG.connect(g.gain);
-    o.connect(g);g.connect(musicBus);
-    g.connect(reverb);
+    o.connect(g);g.connect(musicBus);g.connect(reverb);
     o.start();lfo.start();
-    // fade in
-    g.gain.linearRampToValueAtTime(gainVal,ctx.currentTime+4);
-    return {osc:o,gain:g,lfo,lfoG};
+    g.gain.linearRampToValueAtTime(gainVal,ctx.currentTime+attack);
+    return {osc:o,gain:g,lfo,lfoG,target:gainVal};
   }
 
-  function shimmer(){
+  function fadeVoice(v,target,time){
+    const t=ctx.currentTime;
+    v.gain.gain.cancelScheduledValues(t);
+    v.gain.gain.linearRampToValueAtTime(target,t+time);
+  }
+
+  function morphToChord(){
     if(!isPlaying) return;
-    const notes=[523.25,659.25,783.99,987.77,1318.5];
-    const f=notes[Math.floor(Math.random()*notes.length)];
+    const chord=PROG[chordIdx%PROG.length];
+    chordIdx++;
+    // ensure we have enough voices
+    while(voices.length<chord.length){
+      voices.push(makeVoice(chord[voices.length],.05,4));
+    }
+    // smoothly morph each voice to new pitch + a small target gain
+    voices.forEach((v,i)=>{
+      const f=chord[i%chord.length];
+      v.osc.frequency.cancelScheduledValues(ctx.currentTime);
+      v.osc.frequency.linearRampToValueAtTime(f,ctx.currentTime+5);
+      const targets=[.085,.06,.05,.04,.035,.03];
+      const tg=targets[i]||.025;
+      fadeVoice(v,tg,5);
+    });
+    chordTimer=setTimeout(morphToChord,16000); // 16-second phrases
+  }
+
+  // gentle arpeggio melody, pentatonic
+  function arpNote(){
+    if(!isPlaying) return;
+    const root=PROG[(chordIdx-1+PROG.length)%PROG.length][0];
+    const scale=[1,1.122,1.335,1.498,1.682]; // pentatonic ratios
+    const oct=[2,4,4,8];
+    const f=root*scale[Math.floor(Math.random()*scale.length)]*oct[Math.floor(Math.random()*oct.length)];
     const o=ctx.createOscillator();o.type='triangle';o.frequency.value=f;
     const g=ctx.createGain();g.gain.value=0;
     o.connect(g);g.connect(reverb);g.connect(musicBus);
     const t=ctx.currentTime;
-    g.gain.linearRampToValueAtTime(.04,t+.6);
-    g.gain.linearRampToValueAtTime(0,t+3.2);
-    o.start(t);o.stop(t+3.4);
-    shimmerTimer=setTimeout(shimmer,4000+Math.random()*8000);
+    g.gain.linearRampToValueAtTime(.045,t+.4);
+    g.gain.linearRampToValueAtTime(0,t+2.4);
+    o.start(t);o.stop(t+2.5);
+    arpTimer=setTimeout(arpNote,3500+Math.random()*5500);
+  }
+
+  function shimmer(){
+    if(!isPlaying) return;
+    const root=PROG[(chordIdx-1+PROG.length)%PROG.length][0];
+    const f=root*[8,10,12,16][Math.floor(Math.random()*4)];
+    const o=ctx.createOscillator();o.type='sine';o.frequency.value=f;
+    const g=ctx.createGain();g.gain.value=0;
+    o.connect(g);g.connect(reverb);g.connect(musicBus);
+    const t=ctx.currentTime;
+    g.gain.linearRampToValueAtTime(.025,t+.8);
+    g.gain.linearRampToValueAtTime(0,t+3.5);
+    o.start(t);o.stop(t+3.6);
+    shimmerTimer=setTimeout(shimmer,5000+Math.random()*8000);
   }
 
   function startMusic(){
-    ensure();if(!ctx) return;
+    if(!ensure()) return;
     if(ctx.state==='suspended') ctx.resume();
-    if(started){
-      // already created drones, just unmute master
-      master.gain.cancelScheduledValues(ctx.currentTime);
-      master.gain.linearRampToValueAtTime(.7,ctx.currentTime+1.5);
-      isPlaying=true;
-      if(!shimmerTimer) shimmerTimer=setTimeout(shimmer,3000);
-      return;
+    if(!started){
+      started=true;
+      // build initial chord voices
+      const chord=PROG[0];
+      const targets=[.085,.06,.05,.04,.035,.03];
+      chord.forEach((f,i)=>voices.push(makeVoice(f,targets[i]||.025,4)));
+      chordIdx=1;
+    }else{
+      // re-fade voices in
+      voices.forEach((v,i)=>{
+        const targets=[.085,.06,.05,.04,.035,.03];
+        fadeVoice(v,targets[i]||.025,2);
+      });
     }
-    started=true;
-    // root chord drones (Cmin-ish cosmic pad)
-    droneNodes.push(makeDrone(65.41,.10,0));    // C2 sub
-    droneNodes.push(makeDrone(130.81,.07,-6));  // C3
-    droneNodes.push(makeDrone(196.00,.05,+4));  // G3
-    droneNodes.push(makeDrone(311.13,.04,-3));  // Eb4
-    droneNodes.push(makeDrone(392.00,.03,+5));  // G4
     master.gain.cancelScheduledValues(ctx.currentTime);
-    master.gain.linearRampToValueAtTime(.7,ctx.currentTime+2);
+    master.gain.linearRampToValueAtTime(.75,ctx.currentTime+2);
     isPlaying=true;
-    shimmerTimer=setTimeout(shimmer,3000);
+    if(!chordTimer) chordTimer=setTimeout(morphToChord,16000);
+    if(!arpTimer) arpTimer=setTimeout(arpNote,4000);
+    if(!shimmerTimer) shimmerTimer=setTimeout(shimmer,3000);
+    try{sessionStorage.setItem('saturn_music','on')}catch(_){}
   }
 
   function stopMusic(){
@@ -976,14 +1034,17 @@ const SR_Audio=(function(){
     master.gain.cancelScheduledValues(ctx.currentTime);
     master.gain.linearRampToValueAtTime(0,ctx.currentTime+1.2);
     if(shimmerTimer){clearTimeout(shimmerTimer);shimmerTimer=null;}
+    if(arpTimer){clearTimeout(arpTimer);arpTimer=null;}
+    if(chordTimer){clearTimeout(chordTimer);chordTimer=null;}
+    try{sessionStorage.setItem('saturn_music','off')}catch(_){}
   }
 
   function isOn(){return isPlaying}
+  function wasOn(){try{return sessionStorage.getItem('saturn_music')==='on'}catch(_){return false}}
 
-  // ---- SFX ----
-  function tone(freq,dur=.08,type='sine',vol=.18,detune=0){
-    if(!ctx||!isPlaying) return;
-    if(ctx.state==='suspended') return;
+  // ---- SFX (louder) ----
+  function tone(freq,dur=.08,type='sine',vol=.22,detune=0){
+    if(!ctx||!isPlaying||ctx.state==='suspended') return;
     const o=ctx.createOscillator();o.type=type;o.frequency.value=freq;o.detune.value=detune;
     const g=ctx.createGain();g.gain.value=0;
     o.connect(g);g.connect(sfxBus);
@@ -992,65 +1053,88 @@ const SR_Audio=(function(){
     g.gain.exponentialRampToValueAtTime(.0001,t+dur);
     o.start(t);o.stop(t+dur+.02);
   }
-  function click(){tone(880,.06,'sine',.12);tone(1320,.05,'sine',.06,30)}
-  function hover(){tone(1240,.04,'sine',.05)}
+  function click(){tone(880,.08,'sine',.32);tone(1320,.07,'triangle',.18,30)}
+  function hover(){tone(1480,.05,'sine',.12)}
   function whoosh(intensity){
-    if(!ctx||!isPlaying) return;
-    if(ctx.state==='suspended') return;
-    // filtered noise burst
-    const dur=.18;
+    if(!ctx||!isPlaying||ctx.state==='suspended') return;
+    const dur=.22;
     const buf=ctx.createBuffer(1,ctx.sampleRate*dur,ctx.sampleRate);
     const d=buf.getChannelData(0);
     for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*(1-i/d.length);
     const src=ctx.createBufferSource();src.buffer=buf;
     const filt=ctx.createBiquadFilter();filt.type='bandpass';
-    filt.frequency.value=1500+intensity*4000;filt.Q.value=8;
-    const g=ctx.createGain();g.gain.value=Math.min(.05,.01+intensity*.04);
+    filt.frequency.value=1500+intensity*4000;filt.Q.value=6;
+    const g=ctx.createGain();g.gain.value=Math.min(.16,.04+intensity*.13);
     src.connect(filt);filt.connect(g);g.connect(sfxBus);
     const t=ctx.currentTime;
     g.gain.exponentialRampToValueAtTime(.0001,t+dur);
     src.start();src.stop(t+dur+.02);
   }
 
-  return {start:startMusic,stop:stopMusic,toggle:()=>{isPlaying?stopMusic():startMusic()},isOn,click,hover,whoosh};
+  return {start:startMusic,stop:stopMusic,toggle:()=>{isPlaying?stopMusic():startMusic()},isOn,wasOn,click,hover,whoosh};
 })();
 
 /* ====== Wire audio buttons ====== */
 (function(){
   const heroBtn=document.getElementById('audioHero');
   const stickyBtn=document.getElementById('audioSticky');
-  const lbl=heroBtn.querySelector('.lbl');
+  const lbl=heroBtn?heroBtn.querySelector('.lbl'):null;
   function syncUI(){
     const on=SR_Audio.isOn();
-    heroBtn.classList.toggle('playing',on);
-    stickyBtn.classList.toggle('playing',on);
+    if(heroBtn) heroBtn.classList.toggle('playing',on);
+    if(stickyBtn) stickyBtn.classList.toggle('playing',on);
     if(lbl) lbl.textContent=on?'Pause Sound':'Play Sound';
   }
   function toggle(){SR_Audio.toggle();syncUI()}
-  heroBtn.addEventListener('click',toggle);
-  stickyBtn.addEventListener('click',toggle);
+  if(heroBtn) heroBtn.addEventListener('click',toggle);
+  if(stickyBtn) stickyBtn.addEventListener('click',toggle);
 
-  // sticky button visibility (after hero)
-  let stickyTicking=false;
-  window.addEventListener('scroll',()=>{
-    if(stickyTicking) return;stickyTicking=true;
-    requestAnimationFrame(()=>{
-      stickyBtn.classList.toggle('visible',window.scrollY>window.innerHeight*.6);
-      stickyTicking=false;
-    });
-  });
+  // Auto-resume music on cross-page nav: if sessionStorage says it was on,
+  // start it on the very next user gesture (browsers require user activation).
+  if(SR_Audio.wasOn() && !SR_Audio.isOn()){
+    if(stickyBtn) stickyBtn.classList.add('playing'); // visual hint
+    if(heroBtn){heroBtn.classList.add('playing');if(lbl) lbl.textContent='Resume Sound'}
+    const resumer=()=>{
+      SR_Audio.start();
+      syncUI();
+      window.removeEventListener('pointerdown',resumer);
+      window.removeEventListener('keydown',resumer);
+      window.removeEventListener('scroll',resumer);
+    };
+    window.addEventListener('pointerdown',resumer,{once:true});
+    window.addEventListener('keydown',resumer,{once:true});
+    window.addEventListener('scroll',resumer,{once:true,passive:true});
+  }
+
+  // sticky button visibility
+  if(stickyBtn){
+    const heroEl=document.querySelector('.hero');
+    if(heroEl){
+      let stickyTicking=false;
+      window.addEventListener('scroll',()=>{
+        if(stickyTicking) return;stickyTicking=true;
+        requestAnimationFrame(()=>{
+          stickyBtn.classList.toggle('visible',window.scrollY>window.innerHeight*.6);
+          stickyTicking=false;
+        });
+      });
+    }else{
+      // no hero on page (eg contact) - always visible
+      stickyBtn.classList.add('visible');
+    }
+  }
 
   // SFX wiring
-  document.querySelectorAll('a,button,.project,.service,.chip').forEach(el=>{
+  document.querySelectorAll('a,button,.project,.service,.chip,.team-socials a').forEach(el=>{
     el.addEventListener('mouseenter',()=>SR_Audio.hover());
     el.addEventListener('click',()=>SR_Audio.click());
   });
 
   // scroll whoosh, throttled by velocity
-  let lastY=window.scrollY,vel=0,whooshCool=0;
+  let lastY=window.scrollY,whooshCool=0;
   window.addEventListener('scroll',()=>{
     const y=window.scrollY;
-    vel=Math.abs(y-lastY);lastY=y;
+    const vel=Math.abs(y-lastY);lastY=y;
     const now=performance.now();
     if(vel>40 && now>whooshCool){
       SR_Audio.whoosh(Math.min(1,vel/120));
@@ -1195,11 +1279,13 @@ document.querySelectorAll('.service').forEach(el=>{
           iframe.addEventListener('load',()=>{requestAnimationFrame(()=>fitIframe(card))});
         }
         card.classList.add('preview-on');
+        document.body.classList.add('iframe-active');
       },400);
     });
     card.addEventListener('mouseleave',()=>{
       clearTimeout(timer);
       card.classList.remove('preview-on');
+      document.body.classList.remove('iframe-active');
     });
   });
 
