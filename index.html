@@ -523,7 +523,7 @@ footer::before{
     </div>
     <div class="hero-stage">
       <canvas id="bg-canvas"></canvas>
-      <div class="stage-hint">Drag · Scroll to zoom</div>
+      <div class="stage-hint">Drag to spin</div>
     </div>
   </div>
   <div class="scroll-hint">Scroll<div class="line"></div></div>
@@ -1014,7 +1014,7 @@ const canvas=document.getElementById('bg-canvas');
 const stage=canvas.parentElement;
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(45,1,.1,1000);
-camera.position.z=6;
+camera.position.z=6.6;
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
 renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
 function fitRenderer(){
@@ -1090,7 +1090,7 @@ moons.forEach(m=>planet.add(m.mesh));
 let isDragging=false,lastX=0,lastY=0;
 let velX=0,velY=0;
 let rotX=0,rotY=0;
-let zoom=6;
+let zoom=6.6;
 
 canvas.addEventListener('pointerdown',e=>{
   isDragging=true;canvas.setPointerCapture(e.pointerId);
@@ -1106,11 +1106,6 @@ canvas.addEventListener('pointermove',e=>{
 canvas.addEventListener('pointerup',e=>{isDragging=false;canvas.releasePointerCapture(e.pointerId)});
 canvas.addEventListener('pointercancel',()=>{isDragging=false});
 
-canvas.addEventListener('wheel',e=>{
-  e.preventDefault();
-  zoom+=e.deltaY*.005;
-  zoom=Math.max(3.5,Math.min(10,zoom));
-},{passive:false});
 
 window.addEventListener('resize',fitRenderer);
 window.addEventListener('load',()=>setTimeout(fitRenderer,50));
