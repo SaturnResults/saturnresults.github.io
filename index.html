@@ -309,11 +309,15 @@ section{padding:140px 48px;position:relative;z-index:5}
 .project-iframe{
   position:absolute;inset:0;width:1280px;height:800px;border:0;
   transform-origin:top left;pointer-events:none;
-  opacity:0;transition:opacity .5s ease;z-index:0;
-  background:var(--bg-2);
+  opacity:0;z-index:0;background:var(--bg-2);
+  transform:scale(var(--s,.4));
+  transition:opacity .5s ease,transform .9s cubic-bezier(.2,.8,.3,1);
 }
 @media (hover:hover){
-  .project.preview-on .project-iframe{opacity:1}
+  .project.preview-on .project-iframe{
+    opacity:1;pointer-events:auto;
+    transform:scale(calc(var(--s,.4) * 1.04));
+  }
   .project.preview-on .project-visual img{opacity:0}
 }
 .project-visual img{transition:transform 1.2s cubic-bezier(.2,.8,.3,1),filter .5s,opacity .4s ease}
@@ -530,7 +534,7 @@ footer::before{
 @keyframes wave{0%,100%{height:25%}50%{height:90%}}
 
 .audio-hero{
-  position:absolute;top:24px;right:24px;z-index:4;
+  position:absolute;top:96px;right:48px;z-index:4;
   opacity:0;animation:wordIn 1s ease 1s forwards;
 }
 @media (max-width:768px){.audio-hero{top:80px;right:16px}}
@@ -1167,12 +1171,8 @@ document.querySelectorAll('.service').forEach(el=>{
     const iframe=card.querySelector('.project-iframe');
     if(!visual||!iframe) return;
     const r=visual.getBoundingClientRect();
-    const sx=r.width/IFRAME_W;
-    const sy=r.height/IFRAME_H;
-    const s=Math.max(sx,sy);
-    iframe.style.transform=`scale(${s})`;
-    iframe.style.width=IFRAME_W+'px';
-    iframe.style.height=IFRAME_H+'px';
+    const s=Math.max(r.width/IFRAME_W,r.height/IFRAME_H);
+    card.style.setProperty('--s',s);
   }
 
   cards.forEach(card=>{
@@ -1188,13 +1188,10 @@ document.querySelectorAll('.service').forEach(el=>{
           iframe.src=url;
           iframe.loading='lazy';
           iframe.referrerPolicy='no-referrer';
-          iframe.setAttribute('scrolling','no');
           iframe.setAttribute('tabindex','-1');
-          iframe.setAttribute('aria-hidden','true');
           visual.appendChild(iframe);
           injected=true;
           fitIframe(card);
-          // some sites block X-Frame-Options; fade in only if it likely loaded
           iframe.addEventListener('load',()=>{requestAnimationFrame(()=>fitIframe(card))});
         }
         card.classList.add('preview-on');
