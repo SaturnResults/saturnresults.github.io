@@ -536,7 +536,7 @@ footer::before{
         <span class="word">demo site</span>
         <span class="word grad">for free.</span>
       </h1>
-      <p>No deposits. No obligations. See your business reimagined as a premium website before you commit a penny. That's the Saturn Results promise.</p>
+      <p>No deposits. No obligations. Zero monthly hosting costs. See your business reimagined as a premium website before you commit a penny. That's the Saturn Results promise.</p>
       <div class="hero-actions">
         <a class="btn btn-primary magnetic" href="contact.html">Claim Your Free Demo
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -940,13 +940,18 @@ document.querySelectorAll('.tilt').forEach(card=>{
   let w,h,balls=[];
   const mouse={x:-9999,y:-9999,active:false};
 
+  let lastW=0;
   function resize(){
     const r=c.getBoundingClientRect();
     w=c.width=r.width*devicePixelRatio;
     h=c.height=r.height*devicePixelRatio;
     c.style.width=r.width+'px';c.style.height=r.height+'px';
     ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
-    init();
+    // Only re-init balls if width changed (avoid mobile address-bar flicker)
+    if(Math.abs(r.width-lastW)>2){
+      lastW=r.width;
+      init();
+    }
   }
   function init(){
     balls=[];
@@ -964,7 +969,12 @@ document.querySelectorAll('.tilt').forEach(card=>{
       balls[i].baseR=balls[i].r;
     }
   }
-  resize();window.addEventListener('resize',resize);
+  resize();
+  let resizeTimer;
+  window.addEventListener('resize',()=>{
+    clearTimeout(resizeTimer);
+    resizeTimer=setTimeout(resize,150);
+  });
 
   c.addEventListener('mousemove',e=>{
     const r=c.getBoundingClientRect();
