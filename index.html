@@ -306,6 +306,30 @@ section{padding:140px 48px;position:relative;z-index:5}
 .project-visual{
   position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:var(--bg-2);
 }
+.project-iframe{
+  position:absolute;inset:0;width:1280px;height:800px;border:0;
+  transform-origin:top left;pointer-events:none;
+  opacity:0;transition:opacity .5s ease;z-index:0;
+  background:var(--bg-2);
+}
+@media (hover:hover){
+  .project.preview-on .project-iframe{opacity:1}
+  .project.preview-on .project-visual img{opacity:0}
+}
+.project-visual img{transition:transform 1.2s cubic-bezier(.2,.8,.3,1),filter .5s,opacity .4s ease}
+.preview-badge{
+  position:absolute;bottom:14px;right:14px;z-index:3;
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);
+  padding:6px 10px;border-radius:100px;
+  background:rgba(8,7,13,.65);backdrop-filter:blur(8px);border:1px solid rgba(167,139,250,.3);
+  opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s;
+}
+@media (hover:hover){
+  .project:hover .preview-badge{opacity:1;transform:translateY(0)}
+}
+.preview-badge .live-dot{width:5px;height:5px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981;animation:livepulse 1.6s ease-in-out infinite}
+@keyframes livepulse{0%,100%{box-shadow:0 0 8px #10b981}50%{box-shadow:0 0 16px #10b981}}
 .project-visual img{
   width:100%;height:100%;object-fit:cover;display:block;
   transition:transform 1.2s cubic-bezier(.2,.8,.3,1),filter .5s;
@@ -481,6 +505,55 @@ footer::before{
   background:var(--grad);box-shadow:0 0 12px var(--purple);
   transition:width .1s;
 }
+
+/* ============ AUDIO TOGGLE BUTTONS ============ */
+.audio-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:10px 18px;border:1px solid var(--border);border-radius:100px;
+  background:rgba(8,7,13,.6);backdrop-filter:blur(12px);
+  font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);
+  cursor:pointer;font-family:inherit;font-weight:500;
+  transition:all .3s cubic-bezier(.2,.8,.3,1);
+}
+.audio-btn:hover{border-color:var(--purple);background:rgba(139,92,246,.12);transform:translateY(-1px)}
+.audio-btn .wave{
+  display:inline-flex;align-items:center;gap:2px;width:18px;height:14px;
+}
+.audio-btn .wave i{
+  display:block;width:2px;background:var(--purple-glow);border-radius:1px;
+  height:30%;transition:height .25s;
+}
+.audio-btn.playing .wave i:nth-child(1){animation:wave 1s ease-in-out -.4s infinite}
+.audio-btn.playing .wave i:nth-child(2){animation:wave 1s ease-in-out -.2s infinite}
+.audio-btn.playing .wave i:nth-child(3){animation:wave 1s ease-in-out 0s infinite}
+.audio-btn.playing .wave i:nth-child(4){animation:wave 1s ease-in-out -.3s infinite}
+@keyframes wave{0%,100%{height:25%}50%{height:90%}}
+
+.audio-hero{
+  position:absolute;top:24px;right:24px;z-index:4;
+  opacity:0;animation:wordIn 1s ease 1s forwards;
+}
+@media (max-width:768px){.audio-hero{top:80px;right:16px}}
+
+.audio-sticky{
+  position:fixed;right:24px;bottom:24px;z-index:90;
+  width:54px;height:54px;border-radius:50%;padding:0;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);background:rgba(8,7,13,.7);backdrop-filter:blur(16px);
+  cursor:pointer;
+  transform:translateY(120%) scale(.6);opacity:0;
+  transition:transform .5s cubic-bezier(.2,.8,.3,1),opacity .35s,border-color .25s,background .25s;
+}
+.audio-sticky.visible{opacity:1;transform:translateY(0) scale(1)}
+.audio-sticky:hover{border-color:var(--purple);background:rgba(139,92,246,.18)}
+.audio-sticky::before{
+  content:"";position:absolute;inset:-3px;border-radius:50%;
+  background:conic-gradient(from 0deg,transparent,var(--purple) 25%,transparent 50%);
+  opacity:0;animation:spin 3s linear infinite;z-index:-1;
+}
+.audio-sticky.playing::before{opacity:.5}
+.audio-sticky .wave{width:18px;height:14px}
+@media (max-width:768px){.audio-sticky{display:none!important}}
 </style>
 </head>
 <body class="loading">
@@ -509,6 +582,11 @@ footer::before{
 <!-- Noise overlay -->
 <div class="noise"></div>
 
+<!-- Sticky audio toggle (desktop only, appears on scroll) -->
+<button class="audio-sticky" id="audioSticky" type="button" aria-label="Toggle ambient soundtrack">
+  <span class="wave"><i></i><i></i><i></i><i></i></span>
+</button>
+
 <!-- Nav -->
 <nav id="nav">
   <a class="nav-logo" href="#">
@@ -525,6 +603,10 @@ footer::before{
 
 <!-- HERO -->
 <header class="hero">
+  <button class="audio-btn audio-hero" id="audioHero" type="button" aria-label="Play ambient soundtrack">
+    <span class="wave"><i></i><i></i><i></i><i></i></span>
+    <span class="lbl">Play Sound</span>
+  </button>
   <div class="hero-grid"></div>
   <div class="hero-gradient"></div>
   <div class="hero-inner">
@@ -570,11 +652,12 @@ footer::before{
 
   <div class="projects">
 
-    <article class="project reveal">
+    <article class="project reveal" data-preview="https://trinitemassage.co.uk/">
       <div class="project-visual">
         <div class="project-num">01</div>
         <div class="project-tag">Wellness</div>
         <img src="trinit-e.avif" alt="Trinit.e Massage website preview" loading="lazy"/>
+        <div class="preview-badge"><span class="live-dot"></span>Live preview</div>
       </div>
       <div class="project-content">
         <h3 class="project-title">Trinit.e Massage</h3>
@@ -591,11 +674,12 @@ footer::before{
       </div>
     </article>
 
-    <article class="project reveal">
+    <article class="project reveal" data-preview="https://www.alderneyweek.com/">
       <div class="project-visual">
         <div class="project-num">02</div>
         <div class="project-tag">Events</div>
         <img src="alderney-week.avif" alt="Alderney Week festival site preview" loading="lazy"/>
+        <div class="preview-badge"><span class="live-dot"></span>Live preview</div>
       </div>
       <div class="project-content">
         <h3 class="project-title">Alderney Week</h3>
@@ -612,11 +696,12 @@ footer::before{
       </div>
     </article>
 
-    <article class="project reveal">
+    <article class="project reveal" data-preview="https://srmarketing.live/index.html">
       <div class="project-visual">
         <div class="project-num">03</div>
         <div class="project-tag">Wellness</div>
         <img src="yk-wellness.jpg" alt="YK Wellness clinic website preview" loading="lazy"/>
+        <div class="preview-badge"><span class="live-dot"></span>Live preview</div>
       </div>
       <div class="project-content">
         <h3 class="project-title">YK Wellness</h3>
@@ -633,11 +718,12 @@ footer::before{
       </div>
     </article>
 
-    <article class="project reveal">
+    <article class="project reveal" data-preview="https://fietsenuitdearmoede.framer.website/">
       <div class="project-visual">
         <div class="project-num">04</div>
         <div class="project-tag">Non Profit</div>
         <img src="cycling-out-of-poverty.avif" alt="Cycling Out Of Poverty site preview" loading="lazy"/>
+        <div class="preview-badge"><span class="live-dot"></span>Live preview</div>
       </div>
       <div class="project-content">
         <h3 class="project-title">Cycling Out Of Poverty</h3>
@@ -654,11 +740,12 @@ footer::before{
       </div>
     </article>
 
-    <article class="project reveal">
+    <article class="project reveal" data-preview="http://marketingsr.online/">
       <div class="project-visual">
         <div class="project-num">05</div>
         <div class="project-tag">Hospitality</div>
         <img src="h-barbers.jpg" alt="H Barbers site preview" loading="lazy"/>
+        <div class="preview-badge"><span class="live-dot"></span>Live preview</div>
       </div>
       <div class="project-content">
         <h3 class="project-title">H Barbers</h3>
@@ -791,6 +878,183 @@ footer::before{
 <!-- THREE.JS for hero background -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
+/* ============================================================
+   ====== AUDIO ENGINE: cosmic ambient + UI SFX (Web Audio) ===
+   ============================================================ */
+const SR_Audio=(function(){
+  let ctx=null,master=null,musicBus=null,sfxBus=null,reverb=null;
+  let droneNodes=[];
+  let isPlaying=false,started=false;
+  let shimmerTimer=null;
+
+  function ensure(){
+    if(ctx) return;
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC) return;
+    ctx=new AC();
+    master=ctx.createGain();master.gain.value=0;master.connect(ctx.destination);
+    musicBus=ctx.createGain();musicBus.gain.value=.55;musicBus.connect(master);
+    sfxBus=ctx.createGain();sfxBus.gain.value=.45;sfxBus.connect(master);
+
+    // simple algorithmic reverb (Schroeder-ish convolver impulse)
+    reverb=ctx.createConvolver();
+    const ir=ctx.createBuffer(2,ctx.sampleRate*3,ctx.sampleRate);
+    for(let c=0;c<2;c++){
+      const d=ir.getChannelData(c);
+      for(let i=0;i<d.length;i++){
+        d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2.4);
+      }
+    }
+    reverb.buffer=ir;
+    const wet=ctx.createGain();wet.gain.value=.45;
+    reverb.connect(wet);wet.connect(musicBus);
+    // expose wet send
+    musicBus.wet=wet;
+    musicBus.reverb=reverb;
+  }
+
+  function makeDrone(freq,gainVal,detune=0){
+    const o=ctx.createOscillator();o.type='sine';o.frequency.value=freq;o.detune.value=detune;
+    const g=ctx.createGain();g.gain.value=0;
+    // slow LFO modulating gain for breathing
+    const lfo=ctx.createOscillator();lfo.frequency.value=0.07+Math.random()*.05;
+    const lfoG=ctx.createGain();lfoG.gain.value=gainVal*.4;
+    lfo.connect(lfoG);lfoG.connect(g.gain);
+    o.connect(g);g.connect(musicBus);
+    g.connect(reverb);
+    o.start();lfo.start();
+    // fade in
+    g.gain.linearRampToValueAtTime(gainVal,ctx.currentTime+4);
+    return {osc:o,gain:g,lfo,lfoG};
+  }
+
+  function shimmer(){
+    if(!isPlaying) return;
+    const notes=[523.25,659.25,783.99,987.77,1318.5];
+    const f=notes[Math.floor(Math.random()*notes.length)];
+    const o=ctx.createOscillator();o.type='triangle';o.frequency.value=f;
+    const g=ctx.createGain();g.gain.value=0;
+    o.connect(g);g.connect(reverb);g.connect(musicBus);
+    const t=ctx.currentTime;
+    g.gain.linearRampToValueAtTime(.04,t+.6);
+    g.gain.linearRampToValueAtTime(0,t+3.2);
+    o.start(t);o.stop(t+3.4);
+    shimmerTimer=setTimeout(shimmer,4000+Math.random()*8000);
+  }
+
+  function startMusic(){
+    ensure();if(!ctx) return;
+    if(ctx.state==='suspended') ctx.resume();
+    if(started){
+      // already created drones, just unmute master
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.linearRampToValueAtTime(.7,ctx.currentTime+1.5);
+      isPlaying=true;
+      if(!shimmerTimer) shimmerTimer=setTimeout(shimmer,3000);
+      return;
+    }
+    started=true;
+    // root chord drones (Cmin-ish cosmic pad)
+    droneNodes.push(makeDrone(65.41,.10,0));    // C2 sub
+    droneNodes.push(makeDrone(130.81,.07,-6));  // C3
+    droneNodes.push(makeDrone(196.00,.05,+4));  // G3
+    droneNodes.push(makeDrone(311.13,.04,-3));  // Eb4
+    droneNodes.push(makeDrone(392.00,.03,+5));  // G4
+    master.gain.cancelScheduledValues(ctx.currentTime);
+    master.gain.linearRampToValueAtTime(.7,ctx.currentTime+2);
+    isPlaying=true;
+    shimmerTimer=setTimeout(shimmer,3000);
+  }
+
+  function stopMusic(){
+    if(!ctx||!isPlaying) return;
+    isPlaying=false;
+    master.gain.cancelScheduledValues(ctx.currentTime);
+    master.gain.linearRampToValueAtTime(0,ctx.currentTime+1.2);
+    if(shimmerTimer){clearTimeout(shimmerTimer);shimmerTimer=null;}
+  }
+
+  function isOn(){return isPlaying}
+
+  // ---- SFX ----
+  function tone(freq,dur=.08,type='sine',vol=.18,detune=0){
+    if(!ctx||!isPlaying) return;
+    if(ctx.state==='suspended') return;
+    const o=ctx.createOscillator();o.type=type;o.frequency.value=freq;o.detune.value=detune;
+    const g=ctx.createGain();g.gain.value=0;
+    o.connect(g);g.connect(sfxBus);
+    const t=ctx.currentTime;
+    g.gain.linearRampToValueAtTime(vol,t+.005);
+    g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    o.start(t);o.stop(t+dur+.02);
+  }
+  function click(){tone(880,.06,'sine',.12);tone(1320,.05,'sine',.06,30)}
+  function hover(){tone(1240,.04,'sine',.05)}
+  function whoosh(intensity){
+    if(!ctx||!isPlaying) return;
+    if(ctx.state==='suspended') return;
+    // filtered noise burst
+    const dur=.18;
+    const buf=ctx.createBuffer(1,ctx.sampleRate*dur,ctx.sampleRate);
+    const d=buf.getChannelData(0);
+    for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*(1-i/d.length);
+    const src=ctx.createBufferSource();src.buffer=buf;
+    const filt=ctx.createBiquadFilter();filt.type='bandpass';
+    filt.frequency.value=1500+intensity*4000;filt.Q.value=8;
+    const g=ctx.createGain();g.gain.value=Math.min(.05,.01+intensity*.04);
+    src.connect(filt);filt.connect(g);g.connect(sfxBus);
+    const t=ctx.currentTime;
+    g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    src.start();src.stop(t+dur+.02);
+  }
+
+  return {start:startMusic,stop:stopMusic,toggle:()=>{isPlaying?stopMusic():startMusic()},isOn,click,hover,whoosh};
+})();
+
+/* ====== Wire audio buttons ====== */
+(function(){
+  const heroBtn=document.getElementById('audioHero');
+  const stickyBtn=document.getElementById('audioSticky');
+  const lbl=heroBtn.querySelector('.lbl');
+  function syncUI(){
+    const on=SR_Audio.isOn();
+    heroBtn.classList.toggle('playing',on);
+    stickyBtn.classList.toggle('playing',on);
+    if(lbl) lbl.textContent=on?'Pause Sound':'Play Sound';
+  }
+  function toggle(){SR_Audio.toggle();syncUI()}
+  heroBtn.addEventListener('click',toggle);
+  stickyBtn.addEventListener('click',toggle);
+
+  // sticky button visibility (after hero)
+  let stickyTicking=false;
+  window.addEventListener('scroll',()=>{
+    if(stickyTicking) return;stickyTicking=true;
+    requestAnimationFrame(()=>{
+      stickyBtn.classList.toggle('visible',window.scrollY>window.innerHeight*.6);
+      stickyTicking=false;
+    });
+  });
+
+  // SFX wiring
+  document.querySelectorAll('a,button,.project,.service,.chip').forEach(el=>{
+    el.addEventListener('mouseenter',()=>SR_Audio.hover());
+    el.addEventListener('click',()=>SR_Audio.click());
+  });
+
+  // scroll whoosh, throttled by velocity
+  let lastY=window.scrollY,vel=0,whooshCool=0;
+  window.addEventListener('scroll',()=>{
+    const y=window.scrollY;
+    vel=Math.abs(y-lastY);lastY=y;
+    const now=performance.now();
+    if(vel>40 && now>whooshCool){
+      SR_Audio.whoosh(Math.min(1,vel/120));
+      whooshCool=now+300;
+    }
+  });
+})();
+
 /* ====== LOADER ====== */
 let percent=0;
 const pctEl=document.getElementById('loaderPercent');
@@ -891,6 +1155,63 @@ document.querySelectorAll('.service').forEach(el=>{
     el.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
   });
 });
+
+/* ====== PROJECT CARD: live iframe preview on hover (desktop only) ====== */
+(function(){
+  if(!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  const cards=document.querySelectorAll('.project[data-preview]');
+  const IFRAME_W=1280,IFRAME_H=800;
+
+  function fitIframe(card){
+    const visual=card.querySelector('.project-visual');
+    const iframe=card.querySelector('.project-iframe');
+    if(!visual||!iframe) return;
+    const r=visual.getBoundingClientRect();
+    const sx=r.width/IFRAME_W;
+    const sy=r.height/IFRAME_H;
+    const s=Math.max(sx,sy);
+    iframe.style.transform=`scale(${s})`;
+    iframe.style.width=IFRAME_W+'px';
+    iframe.style.height=IFRAME_H+'px';
+  }
+
+  cards.forEach(card=>{
+    let timer,injected=false;
+    const url=card.dataset.preview;
+    const visual=card.querySelector('.project-visual');
+
+    card.addEventListener('mouseenter',()=>{
+      timer=setTimeout(()=>{
+        if(!injected){
+          const iframe=document.createElement('iframe');
+          iframe.className='project-iframe';
+          iframe.src=url;
+          iframe.loading='lazy';
+          iframe.referrerPolicy='no-referrer';
+          iframe.setAttribute('scrolling','no');
+          iframe.setAttribute('tabindex','-1');
+          iframe.setAttribute('aria-hidden','true');
+          visual.appendChild(iframe);
+          injected=true;
+          fitIframe(card);
+          // some sites block X-Frame-Options; fade in only if it likely loaded
+          iframe.addEventListener('load',()=>{requestAnimationFrame(()=>fitIframe(card))});
+        }
+        card.classList.add('preview-on');
+      },400);
+    });
+    card.addEventListener('mouseleave',()=>{
+      clearTimeout(timer);
+      card.classList.remove('preview-on');
+    });
+  });
+
+  // refit on resize
+  let rT;window.addEventListener('resize',()=>{
+    clearTimeout(rT);
+    rT=setTimeout(()=>cards.forEach(fitIframe),120);
+  });
+})();
 
 /* ====== PROJECT CARD 3D TILT ====== */
 document.querySelectorAll('.tilt').forEach(card=>{
