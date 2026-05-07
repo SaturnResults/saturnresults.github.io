@@ -512,7 +512,11 @@ footer::before{
 }
 
 /* ============ HOMEPAGE CHAT SECTION ============ */
-#chat-section{background:var(--bg);position:relative;z-index:5}
+#chat-section{background:var(--bg);position:relative;z-index:5;padding-bottom:0}
+#chat-section + #cta{padding-top:80px}
+@media (max-width:768px){
+  #chat-section + #cta{padding-top:60px}
+}
 .chat-wrap{
   max-width:760px;margin:0 auto;
   border:1px solid var(--border);border-radius:28px;overflow:hidden;
