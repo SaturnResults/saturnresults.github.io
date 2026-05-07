@@ -518,7 +518,7 @@ footer::before{
   #chat-section + #cta{padding-top:60px}
 }
 .chat-wrap{
-  max-width:760px;margin:0 auto;
+  max-width:1080px;margin:0 auto;
   border:1px solid var(--border);border-radius:28px;overflow:hidden;
   background:linear-gradient(180deg,#0e0b18 0%,#0a0814 100%);
   display:flex;flex-direction:column;
@@ -526,7 +526,7 @@ footer::before{
 }
 .chat-wrap::before{
   content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:calc(100% - 60px);max-width:760px;height:1px;
+  width:calc(100% - 60px);max-width:1080px;height:1px;
   background:linear-gradient(90deg,transparent,rgba(167,139,250,.6),transparent);
 }
 .chat-head{
@@ -646,6 +646,63 @@ footer::before{
 }
 @media (max-width:768px){.audio-hero{display:none}}
 
+/* Sticky chat toggle (above the audio button) */
+.chat-sticky{
+  position:fixed;right:24px;bottom:88px;z-index:91;
+  width:54px;height:54px;border-radius:50%;padding:0;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);background:rgba(8,7,13,.7);backdrop-filter:blur(16px);
+  cursor:pointer;color:var(--ink);
+  transform:translateY(120%) scale(.6);opacity:0;
+  transition:transform .55s cubic-bezier(.2,.8,.3,1),opacity .35s,border-color .25s,background .25s;
+}
+.chat-sticky.visible{opacity:1;transform:translateY(0) scale(1)}
+.chat-sticky:hover{border-color:var(--purple);background:rgba(139,92,246,.18);color:var(--purple-glow)}
+.chat-sticky svg{width:22px;height:22px}
+.chat-sticky .badge{
+  position:absolute;top:-4px;right:-4px;width:16px;height:16px;border-radius:50%;
+  background:var(--purple);color:#fff;font-size:10px;font-weight:600;
+  display:none;align-items:center;justify-content:center;border:2px solid var(--bg);
+}
+.chat-sticky.has-msg .badge{display:flex;animation:badgePop .4s cubic-bezier(.2,.8,.3,1)}
+@keyframes badgePop{from{transform:scale(0)}to{transform:scale(1)}}
+@media (max-width:768px){.chat-sticky{bottom:24px;right:18px}}
+
+/* Floating chat popup */
+.chat-pop{
+  position:fixed;right:24px;bottom:158px;z-index:99;
+  width:min(420px,calc(100vw - 36px));
+  max-height:min(580px,calc(100vh - 200px));
+  border:1px solid var(--border);border-radius:24px;overflow:hidden;
+  background:linear-gradient(180deg,#0e0b18 0%,#0a0814 100%);
+  display:flex;flex-direction:column;
+  transform:translateY(20px) scale(.96);opacity:0;visibility:hidden;
+  transition:transform .35s cubic-bezier(.2,.8,.3,1),opacity .25s,visibility .35s;
+  box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px rgba(139,92,246,.1);
+}
+.chat-pop.open{transform:translateY(0) scale(1);opacity:1;visibility:visible}
+.chat-pop .chat-head{padding:16px 18px}
+.chat-pop .chat-avatar{width:38px;height:38px;font-size:17px}
+.chat-pop .chat-body{padding:18px;max-height:none;flex:1}
+.chat-pop .chat-suggestions{padding:0 18px 10px}
+.chat-pop .chat-form{padding:12px 14px}
+.chat-pop .chat-form input{padding:11px 16px;font-size:13px}
+.chat-pop .chat-form button{width:42px;height:42px}
+.chat-close{
+  margin-left:auto;background:none;border:0;color:var(--muted);cursor:pointer;
+  width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  transition:background .25s,color .25s;
+}
+.chat-close:hover{background:rgba(255,255,255,.06);color:var(--ink)}
+.chat-close svg{width:14px;height:14px}
+@media (max-width:768px){
+  .chat-pop{
+    right:12px;left:12px;width:auto;
+    bottom:90px;
+    max-height:min(70vh,calc(100vh - 130px));
+  }
+}
+
 .audio-sticky{
   position:fixed;right:24px;bottom:24px;z-index:90;
   width:54px;height:54px;border-radius:50%;padding:0;
@@ -693,6 +750,39 @@ footer::before{
 
 <!-- Noise overlay -->
 <div class="noise"></div>
+
+<!-- Sticky chat toggle (above audio button) -->
+<button class="chat-sticky" id="chatSticky" type="button" aria-label="Open chat">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <span class="badge">1</span>
+</button>
+
+<!-- Floating chat popup (synced with the in-page chat) -->
+<div class="chat-pop" id="chatPop" aria-hidden="true">
+  <div class="chat-head">
+    <div class="chat-avatar">S</div>
+    <div class="chat-meta">
+      <div class="name">Saturn Studio</div>
+      <div class="status"><span class="live">●</span> Online</div>
+    </div>
+    <button class="chat-close" id="chatClose" type="button" aria-label="Close chat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="chat-body" id="popChatBody"></div>
+  <div class="chat-suggestions" id="popChatChips">
+    <div class="chat-chip" data-q="What's the catch with the free demo?">What's the catch?</div>
+    <div class="chat-chip" data-q="Why is the demo really free?">Why is it really free?</div>
+    <div class="chat-chip" data-q="How can your sites cost so little?">How can it cost so little?</div>
+    <div class="chat-chip" data-q="What's the secret to a 24 hour demo?">24 hour demo… how?</div>
+  </div>
+  <form class="chat-form" id="popChatForm">
+    <input type="text" id="popChatField" placeholder="Type your question…" autocomplete="off"/>
+    <button type="submit" aria-label="Send">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+    </button>
+  </form>
+</div>
 
 <!-- Sticky audio toggle (desktop only, appears on scroll) -->
 <button class="audio-sticky" id="audioSticky" type="button" aria-label="Toggle ambient soundtrack">
@@ -767,31 +857,9 @@ footer::before{
 
   <div class="projects">
 
-    <article class="project reveal" data-preview="https://trinitemassage.co.uk/">
-      <div class="project-visual">
-        <div class="project-num">01</div>
-        <div class="project-tag">Wellness</div>
-        <img src="trinit-e.avif" alt="Trinit.e Massage website preview" loading="lazy"/>
-        <div class="preview-badge"><span class="live-dot"></span>Live preview</div>
-      </div>
-      <div class="project-content">
-        <h3 class="project-title">Trinit.e Massage</h3>
-        <p class="project-desc">A serene digital home for a holistic massage practice. Booking ready, mobile first and built around calm typography with generous breathing room.</p>
-        <div class="project-meta">
-          <div><span>Scope</span>Web · Brand</div>
-          <div><span>Year</span>2025</div>
-        </div>
-        <div class="project-actions">
-          <a class="project-link" href="https://trinitemassage.co.uk/" target="_blank" rel="noopener">Visit Site
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-          </a>
-        </div>
-      </div>
-    </article>
-
     <article class="project reveal" data-preview="https://www.alderneyweek.com/">
       <div class="project-visual">
-        <div class="project-num">02</div>
+        <div class="project-num">01</div>
         <div class="project-tag">Events</div>
         <img src="alderney-week.avif" alt="Alderney Week festival site preview" loading="lazy"/>
         <div class="preview-badge"><span class="live-dot"></span>Live preview</div>
@@ -811,9 +879,53 @@ footer::before{
       </div>
     </article>
 
-    <article class="project reveal" data-preview="https://srmarketing.live/index.html">
+    <article class="project reveal" data-preview="http://marketingsr.online/">
+      <div class="project-visual">
+        <div class="project-num">02</div>
+        <div class="project-tag">Services</div>
+        <img src="h-barbers.jpg" alt="H Barbers site preview" loading="lazy"/>
+        <div class="preview-badge"><span class="live-dot"></span>Live preview</div>
+      </div>
+      <div class="project-content">
+        <h3 class="project-title">H Barbers</h3>
+        <p class="project-desc">A bold, modern site for a sharp local barbershop. Slick booking, atmospheric photography and a presence that matches the chair side experience.</p>
+        <div class="project-meta">
+          <div><span>Scope</span>Web · Booking</div>
+          <div><span>Year</span>2025</div>
+        </div>
+        <div class="project-actions">
+          <a class="project-link" href="http://marketingsr.online/" target="_blank" rel="noopener">Visit Site
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project reveal" data-preview="https://saturnresults.co.uk/RICHARD-DALE/">
       <div class="project-visual">
         <div class="project-num">03</div>
+        <div class="project-tag">Hospitality</div>
+        <img src="richard-dale.jpg" alt="Richard Dale site preview" loading="lazy"/>
+        <div class="preview-badge"><span class="live-dot"></span>Live preview</div>
+      </div>
+      <div class="project-content">
+        <h3 class="project-title">Richard Dale</h3>
+        <p class="project-desc">A polished local presence built around clean typography and strong imagery. Designed to convert browsers into bookings and showcase the craft.</p>
+        <div class="project-meta">
+          <div><span>Scope</span>Web · Brand</div>
+          <div><span>Year</span>2025</div>
+        </div>
+        <div class="project-actions">
+          <a class="project-link" href="https://saturnresults.co.uk/RICHARD-DALE/" target="_blank" rel="noopener">Visit Site
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project reveal" data-preview="https://srmarketing.live/index.html">
+      <div class="project-visual">
+        <div class="project-num">04</div>
         <div class="project-tag">Wellness</div>
         <img src="yk-wellness.jpg" alt="YK Wellness clinic website preview" loading="lazy"/>
         <div class="preview-badge"><span class="live-dot"></span>Live preview</div>
@@ -833,9 +945,31 @@ footer::before{
       </div>
     </article>
 
+    <article class="project reveal" data-preview="https://trinitemassage.co.uk/">
+      <div class="project-visual">
+        <div class="project-num">05</div>
+        <div class="project-tag">Wellness</div>
+        <img src="trinit-e.avif" alt="Trinit.e Massage website preview" loading="lazy"/>
+        <div class="preview-badge"><span class="live-dot"></span>Live preview</div>
+      </div>
+      <div class="project-content">
+        <h3 class="project-title">Trinit.e Massage</h3>
+        <p class="project-desc">A serene digital home for a holistic massage practice. Booking ready, mobile first and built around calm typography with generous breathing room.</p>
+        <div class="project-meta">
+          <div><span>Scope</span>Web · Brand</div>
+          <div><span>Year</span>2025</div>
+        </div>
+        <div class="project-actions">
+          <a class="project-link" href="https://trinitemassage.co.uk/" target="_blank" rel="noopener">Visit Site
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
     <article class="project reveal" data-preview="https://fietsenuitdearmoede.framer.website/">
       <div class="project-visual">
-        <div class="project-num">04</div>
+        <div class="project-num">06</div>
         <div class="project-tag">Non Profit</div>
         <img src="cycling-out-of-poverty.avif" alt="Cycling Out Of Poverty site preview" loading="lazy"/>
         <div class="preview-badge"><span class="live-dot"></span>Live preview</div>
@@ -849,28 +983,6 @@ footer::before{
         </div>
         <div class="project-actions">
           <a class="project-link" href="https://fietsenuitdearmoede.framer.website/" target="_blank" rel="noopener">Visit Site
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article class="project reveal" data-preview="http://marketingsr.online/">
-      <div class="project-visual">
-        <div class="project-num">05</div>
-        <div class="project-tag">Services</div>
-        <img src="h-barbers.jpg" alt="H Barbers site preview" loading="lazy"/>
-        <div class="preview-badge"><span class="live-dot"></span>Live preview</div>
-      </div>
-      <div class="project-content">
-        <h3 class="project-title">H Barbers</h3>
-        <p class="project-desc">A bold, modern site for a sharp local barbershop. Slick booking, atmospheric photography and a presence that matches the chair side experience.</p>
-        <div class="project-meta">
-          <div><span>Scope</span>Web · Booking</div>
-          <div><span>Year</span>2025</div>
-        </div>
-        <div class="project-actions">
-          <a class="project-link" href="http://marketingsr.online/" target="_blank" rel="noopener">Visit Site
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
           </a>
         </div>
@@ -1360,23 +1472,65 @@ const io=new IntersectionObserver(entries=>{
 },{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-/* ====== HOMEPAGE CHAT WIDGET ====== */
+/* ====== HOMEPAGE CHAT — synced between in-page & popup ====== */
 (function(){
-  const body=document.getElementById('homeChatBody');
-  const typing=document.getElementById('homeChatTyping');
-  const form=document.getElementById('homeChatForm');
-  const field=document.getElementById('homeChatField');
-  if(!body||!form) return;
+  const inBody=document.getElementById('homeChatBody');
+  const inTyping=document.getElementById('homeChatTyping');
+  const inForm=document.getElementById('homeChatForm');
+  const inField=document.getElementById('homeChatField');
 
-  function scrollDown(){body.scrollTop=body.scrollHeight}
+  const popBody=document.getElementById('popChatBody');
+  const popForm=document.getElementById('popChatForm');
+  const popField=document.getElementById('popChatField');
+  const popChips=document.getElementById('popChatChips');
+
+  const popEl=document.getElementById('chatPop');
+  const popBtn=document.getElementById('chatSticky');
+  const popClose=document.getElementById('chatClose');
+
+  if(!inBody||!popBody) return;
+
+  // Shared message log (replayed into both views)
+  const messages=[
+    {who:'them',text:"Hey ✦ Curious about how we build a free site in under a day, why it costs almost nothing, or what the catch is? Pick any question below or fire your own.",withName:true}
+  ];
+
   function escape(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'})[c])}
-  function pushBubble(who,text,withName=false){
+
+  function makeBubble(m){
     const b=document.createElement('div');
-    b.className='chat-bubble '+who;
-    if(who==='them' && withName){b.innerHTML=`<small>Saturn Studio</small>${escape(text)}`}
-    else b.textContent=text;
-    body.insertBefore(b,typing);
-    scrollDown();
+    b.className='chat-bubble '+m.who;
+    if(m.who==='them' && m.withName){b.innerHTML=`<small>Saturn Studio</small>${escape(m.text)}`}
+    else b.textContent=m.text;
+    return b;
+  }
+
+  function renderInBody(){
+    while(inBody.firstChild) inBody.removeChild(inBody.firstChild);
+    messages.forEach(m=>inBody.appendChild(makeBubble(m)));
+    inBody.appendChild(inTyping);
+    inBody.scrollTop=inBody.scrollHeight;
+  }
+  function renderPopBody(){
+    while(popBody.firstChild) popBody.removeChild(popBody.firstChild);
+    messages.forEach(m=>popBody.appendChild(makeBubble(m)));
+    popBody.scrollTop=popBody.scrollHeight;
+  }
+  function renderAll(){renderInBody();renderPopBody()}
+
+  function pushMsg(who,text,withName=false){
+    messages.push({who,text,withName});
+    // append to both bodies (single-bubble append for animation)
+    const b1=makeBubble({who,text,withName});
+    inBody.insertBefore(b1,inTyping);
+    inBody.scrollTop=inBody.scrollHeight;
+    const b2=makeBubble({who,text,withName});
+    popBody.appendChild(b2);
+    popBody.scrollTop=popBody.scrollHeight;
+    // notify on closed popup
+    if(who==='them' && !popEl.classList.contains('open')){
+      popBtn.classList.add('has-msg');
+    }
   }
 
   const replies=[
@@ -1388,40 +1542,66 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     {match:/(based|where|location|office|exeter|devon|uk)/i,a:"We're based at Venospace in Exeter. Happy to meet in person if you're local, or jump on a video call wherever you are."},
     {match:/(industry|industries|business type|work with|kind of|niche|any business)/i,a:"We work with all kinds of businesses, from local trades to wellness clinics, festivals and non profits. If you've got a business, we can build for it."},
     {match:/(book|call|meet|chat|talk|next step|how does this work|process)/i,a:"Easy. Fill the form on the contact page, we'll build your free demo within 24 hours and email you. You then pick a time to view it together on a call."},
-    {match:/(example|portfolio|work|case|previous|other clients|see your)/i,a:"Scroll up — five live client sites are right there. Trinit.e Massage, YK Wellness, Alderney Week, Cycling Out Of Poverty and H Barbers. Hover any of them for a live preview."},
+    {match:/(example|portfolio|work|case|previous|other clients|see your)/i,a:"Scroll up — six live client sites are right there. Alderney Week, H Barbers, Richard Dale, YK Wellness, Trinit.e Massage and Cycling Out Of Poverty. Hover any of them for a live preview."},
     {match:/(seo|google|rank|search|traffic)/i,a:"Every site we ship is built on solid SEO foundations. Fast load times, semantic markup, clean structure, structured data. We can dive deeper on the call."},
-    {match:/(secure|safe|trust|legitimate|scam|real|legit)/i,a:"Completely. We're a real Exeter based studio at Venospace with five live client sites you can visit on this page. Drop your details and we'll prove it."},
+    {match:/(secure|safe|trust|legitimate|scam|real|legit)/i,a:"Completely. We're a real Exeter based studio at Venospace with six live client sites you can visit on this page. Drop your details and we'll prove it."},
     {match:/(hate|don'?t like|not happy|return|refund)/i,a:"Then you walk away with a free, polished demo site, yours to keep. No deposit, no obligation, nothing lost."},
     {match:/(hi|hello|hey|yo|hiya)/i,a:"Hey ✦ great to meet you. What kind of business are you running?"},
     {match:/(thank|thanks|cheers|appreciate)/i,a:"Anytime, welcome aboard 🪐"},
   ];
 
   function botReply(msg){
-    typing.classList.add('show');scrollDown();
+    inTyping.classList.add('show');inBody.scrollTop=inBody.scrollHeight;
     setTimeout(()=>{
-      typing.classList.remove('show');
+      inTyping.classList.remove('show');
       const hit=replies.find(r=>r.match.test(msg));
       const ans=hit?hit.a:"Great question. Easiest way to get a proper answer is to grab a free demo on the contact page, we'll come back to you personally within the day.";
-      pushBubble('them',ans,true);
+      pushMsg('them',ans,true);
     },900+Math.random()*700);
   }
 
-  form.addEventListener('submit',e=>{
+  function ask(text){
+    pushMsg('me',text);
+    botReply(text);
+  }
+
+  // Initial render
+  renderAll();
+
+  inForm.addEventListener('submit',e=>{
     e.preventDefault();
-    const v=field.value.trim();
+    const v=inField.value.trim();
     if(!v) return;
-    pushBubble('me',v);
-    field.value='';
-    botReply(v);
+    inField.value='';ask(v);
+  });
+  popForm.addEventListener('submit',e=>{
+    e.preventDefault();
+    const v=popField.value.trim();
+    if(!v) return;
+    popField.value='';ask(v);
   });
 
+  // Both chip groups call ask()
   document.querySelectorAll('.chat-chip').forEach(c=>{
-    c.addEventListener('click',()=>{
-      const q=c.dataset.q;
-      pushBubble('me',q);
-      botReply(q);
-    });
+    c.addEventListener('click',()=>ask(c.dataset.q));
   });
+
+  // Popup open/close
+  function openPop(){
+    popEl.classList.add('open');popEl.setAttribute('aria-hidden','false');
+    popBtn.classList.remove('has-msg');
+    setTimeout(()=>popField.focus(),200);
+  }
+  function closePop(){
+    popEl.classList.remove('open');popEl.setAttribute('aria-hidden','true');
+  }
+  popBtn.addEventListener('click',()=>{
+    popEl.classList.contains('open')?closePop():openPop();
+  });
+  popClose.addEventListener('click',closePop);
+
+  // Reveal sticky chat button after a moment
+  setTimeout(()=>popBtn.classList.add('visible'),1400);
 })();
 
 /* ====== Services: View all toggle (mobile) ====== */
