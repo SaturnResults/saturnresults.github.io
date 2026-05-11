@@ -511,6 +511,80 @@ footer::before{
   transition:width .1s;
 }
 
+/* ============ PRICING ============ */
+#pricing{background:var(--bg);position:relative;z-index:5}
+.pricing-grid{
+  max-width:1300px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  align-items:stretch;
+}
+.tier{
+  position:relative;display:flex;flex-direction:column;
+  border:1px solid var(--border);border-radius:24px;
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(139,92,246,.02));
+  padding:44px 36px 36px;
+  transition:transform .5s cubic-bezier(.2,.8,.3,1),border-color .4s,box-shadow .4s;
+}
+.tier:hover{transform:translateY(-6px);border-color:rgba(139,92,246,.35);box-shadow:0 30px 80px rgba(139,92,246,.15)}
+.tier.popular{
+  border-color:rgba(167,139,250,.5);
+  background:linear-gradient(180deg,rgba(139,92,246,.08),rgba(139,92,246,.02));
+  box-shadow:0 30px 80px rgba(139,92,246,.18);
+}
+.tier.popular::before{
+  content:"";position:absolute;inset:-1px;border-radius:24px;padding:1px;z-index:-1;
+  background:linear-gradient(135deg,rgba(167,139,250,.6),transparent 50%,rgba(91,33,182,.4));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+}
+.tier-badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  padding:6px 14px;border-radius:100px;font-size:10px;letter-spacing:.25em;text-transform:uppercase;
+  background:var(--grad);color:#fff;font-weight:600;box-shadow:0 8px 22px rgba(139,92,246,.4);
+}
+.tier-name{
+  font-family:'Instrument Serif',serif;font-weight:400;
+  font-size:30px;line-height:1;letter-spacing:-.02em;margin-bottom:8px;
+}
+.tier-tagline{font-size:13px;color:var(--muted);margin-bottom:28px;line-height:1.5;min-height:38px}
+.tier-price{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+.tier-price .currency{font-family:'Instrument Serif',serif;font-size:30px;color:var(--purple-glow)}
+.tier-price .amount{
+  font-family:'Instrument Serif',serif;font-size:72px;line-height:1;letter-spacing:-.03em;
+  background:linear-gradient(180deg,#fff 0%,#fff 50%,var(--purple-glow) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.tier-once{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:30px}
+.tier-divider{height:1px;background:var(--border);margin:0 0 26px}
+.tier-list{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:36px;flex:1}
+.tier-list li{display:flex;gap:12px;font-size:14px;line-height:1.5;color:var(--ink)}
+.tier-list li svg{width:16px;height:16px;color:var(--purple-glow);flex-shrink:0;margin-top:3px}
+.tier-list li.muted{color:var(--muted)}
+.tier-list li.muted svg{color:var(--muted);opacity:.4}
+.tier-cta{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:16px 24px;border-radius:100px;font-size:13px;letter-spacing:.06em;font-weight:500;
+  border:1px solid var(--border);background:transparent;color:var(--ink);
+  transition:all .3s cubic-bezier(.2,.8,.3,1);cursor:pointer;
+}
+.tier-cta:hover{border-color:var(--purple);background:rgba(139,92,246,.1);transform:translateY(-2px)}
+.tier.popular .tier-cta{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tier.popular .tier-cta:hover{background:var(--purple);color:#fff;border-color:var(--purple);box-shadow:0 12px 40px rgba(139,92,246,.4)}
+.tier-cta svg{width:14px;height:14px;transition:transform .3s}
+.tier-cta:hover svg{transform:translateX(3px)}
+
+.pricing-foot{
+  max-width:900px;margin:50px auto 0;text-align:center;
+  font-size:13px;color:var(--muted);line-height:1.7;
+}
+.pricing-foot strong{color:var(--purple-glow);font-weight:500}
+
+@media (max-width:1000px){
+  .pricing-grid{grid-template-columns:1fr;gap:20px;max-width:480px}
+  .tier{padding:36px 28px 28px}
+  .tier-price .amount{font-size:56px}
+}
+
 /* ============ HOMEPAGE CHAT SECTION ============ */
 #chat-section{background:var(--bg);position:relative;z-index:5;padding-bottom:0}
 #chat-section + #cta{padding-top:80px}
@@ -1052,6 +1126,90 @@ footer::before{
     <button class="btn btn-ghost magnetic" id="viewAllServices" type="button"><span class="lbl">View all services</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
     </button>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-head reveal" style="text-align:center">
+    <div class="section-eyebrow" style="justify-content:center">Pricing</div>
+    <h2 style="margin:14px auto 0">Three ways to <em style="font-style:italic;color:var(--purple-glow)">launch.</em></h2>
+    <p style="margin-left:auto;margin-right:auto">Honest one time pricing. No deposits, no monthly hosting fees, no surprise bills. Pick a tier, see your free demo first, then decide.</p>
+  </div>
+
+  <div class="pricing-grid">
+
+    <article class="tier reveal">
+      <div class="tier-name">Launch</div>
+      <div class="tier-tagline">A single, premium page that does one job brilliantly.</div>
+      <div class="tier-price"><span class="currency">£</span><span class="amount">1,500</span></div>
+      <div class="tier-once">One time fee · No hosting</div>
+      <div class="tier-divider"></div>
+      <ul class="tier-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>1 page custom landing site</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Bespoke design, no templates</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Mobile first responsive build</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Contact or booking form</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Domain & hosting setup</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Core SEO foundations</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>1 round of revisions</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>30 days post launch support</li>
+      </ul>
+      <a class="tier-cta magnetic" href="contact.html">Start with Launch
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </article>
+
+    <article class="tier popular reveal">
+      <div class="tier-badge">Most Popular</div>
+      <div class="tier-name">Studio</div>
+      <div class="tier-tagline">A full multi page site with brand polish, built to convert.</div>
+      <div class="tier-price"><span class="currency">£</span><span class="amount">2,000</span></div>
+      <div class="tier-once">One time fee · No hosting</div>
+      <div class="tier-divider"></div>
+      <ul class="tier-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Up to 5 page bespoke site</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Brand kit (colours, type, voice)</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Custom animations & micro interactions</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Booking, contact or lead capture</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Domain & hosting setup</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Advanced on page SEO</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Google Analytics & Search Console</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>2 rounds of revisions</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>60 days post launch support</li>
+      </ul>
+      <a class="tier-cta magnetic" href="contact.html">Go with Studio
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </article>
+
+    <article class="tier reveal">
+      <div class="tier-name">Orbit</div>
+      <div class="tier-tagline">Everything in Studio, plus AI, automation and the works.</div>
+      <div class="tier-price"><span class="currency">£</span><span class="amount">3,000</span></div>
+      <div class="tier-once">One time fee · No hosting</div>
+      <div class="tier-divider"></div>
+      <ul class="tier-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Unlimited pages, fully bespoke</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Full brand identity package</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>AI chatbot trained on your business</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Social media setup & templates</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>WebGL, 3D & advanced motion</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Payments, bookings & integrations</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Full SEO audit & strategy</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Priority response, direct line</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Unlimited revisions</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>90 days post launch support</li>
+      </ul>
+      <a class="tier-cta magnetic" href="contact.html">Enter Orbit
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </article>
+
+  </div>
+
+  <div class="pricing-foot reveal">
+    Every plan starts with a <strong>free demo site</strong> built within 24 hours. You only pay once you're certain. <strong>Zero monthly hosting fees</strong>, ever.
   </div>
 </section>
 
