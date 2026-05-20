@@ -104,13 +104,44 @@ nav.scrolled{background:rgba(8,7,13,.75);backdrop-filter:blur(20px);border-botto
 .kv .row a{color:var(--purple-glow)}
 .kv .row a:hover{text-decoration:underline}
 
-.deliverables{display:flex;flex-direction:column;gap:12px}
-.deliv{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1px solid var(--border);border-radius:14px;transition:all .25s}
+.deliverables,.list{display:flex;flex-direction:column;gap:10px}
+.deliv,.row-item{display:flex;align-items:center;gap:14px;padding:14px 18px;border:1px solid var(--border);border-radius:14px;transition:all .25s}
 .deliv:hover{border-color:var(--purple);background:rgba(139,92,246,.06);transform:translateX(3px)}
 .deliv svg{width:18px;height:18px;color:var(--purple-glow);flex-shrink:0}
-.deliv .d-name{font-size:14px;font-weight:500}
-.deliv .d-meta{font-size:12px;color:var(--muted);margin-top:2px}
+.deliv .d-name,.row-item .d-name{font-size:14px;font-weight:500}
+.deliv .d-meta,.row-item .d-meta{font-size:12px;color:var(--muted);margin-top:2px}
 .deliv .arrow{margin-left:auto;color:var(--muted)}
+
+/* check/cross status icons */
+.row-item .pill-ico{
+  width:26px;height:26px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.04);border:1px solid var(--border);
+}
+.row-item .pill-ico svg{width:14px;height:14px}
+.row-item.done .pill-ico{background:rgba(16,185,129,.18);border-color:rgba(16,185,129,.5);color:#10b981}
+.row-item.active .pill-ico{background:rgba(139,92,246,.18);border-color:rgba(167,139,250,.55);color:var(--purple-glow)}
+.row-item.warn .pill-ico{background:rgba(245,158,11,.18);border-color:rgba(245,158,11,.5);color:#fbbf24}
+.row-item .tag{margin-left:auto;font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:5px 10px;border-radius:100px;background:rgba(255,255,255,.04);color:var(--muted)}
+.row-item.done .tag{background:rgba(16,185,129,.14);color:#10b981}
+.row-item.active .tag{background:rgba(139,92,246,.14);color:var(--purple-glow)}
+.row-item.warn .tag{background:rgba(245,158,11,.14);color:#fbbf24}
+.row-item a.open{margin-left:8px;font-size:12px;color:var(--purple-glow)}
+
+/* payments */
+.pay-row{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1px solid var(--border);border-radius:14px}
+.pay-row .pay-name{font-size:14px;font-weight:500}
+.pay-row .pay-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.pay-row .pay-amount{margin-left:auto;font-family:'Instrument Serif',serif;font-size:22px;letter-spacing:-.01em}
+.pay-row.paid{background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.25)}
+.pay-row.due{background:rgba(245,158,11,.06);border-color:rgba(245,158,11,.3)}
+.pay-row.sent{background:rgba(139,92,246,.06);border-color:rgba(167,139,250,.3)}
+.pay-row .tag{font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:5px 10px;border-radius:100px;margin-left:12px}
+.pay-row.paid .tag{background:rgba(16,185,129,.18);color:#10b981}
+.pay-row.due .tag{background:rgba(245,158,11,.18);color:#fbbf24}
+.pay-row.sent .tag{background:rgba(139,92,246,.18);color:var(--purple-glow)}
+.pay-foot{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-top:18px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+.pay-foot strong{color:var(--ink);font-family:'Instrument Serif',serif;font-size:24px;letter-spacing:-.01em;font-weight:400}
 
 /* gallery + upload */
 .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:22px}
@@ -202,6 +233,31 @@ nav.scrolled{background:rgba(8,7,13,.75);backdrop-filter:blur(20px);border-botto
         <h2>Deliverables</h2>
         <div class="sub">Everything we've shipped for you.</div>
         <div class="deliverables" id="deliverables"></div>
+      </div>
+
+      <div class="card" id="asksCard" style="display:none">
+        <h2>We need from you</h2>
+        <div class="sub">Action items on your side. Pop anything we're waiting on into the upload box below.</div>
+        <div class="list" id="asksList"></div>
+      </div>
+
+      <div class="card" id="weOweCard" style="display:none">
+        <h2>What you need from us</h2>
+        <div class="sub">What the studio is working on for you next.</div>
+        <div class="list" id="weOweList"></div>
+      </div>
+
+      <div class="card full" id="paymentsCard" style="display:none">
+        <h2>Payments</h2>
+        <div class="sub">Invoices, deposits and balances. Click an invoice to view it.</div>
+        <div class="list" id="paymentsList"></div>
+        <div class="pay-foot" id="payFoot"></div>
+      </div>
+
+      <div class="card full" id="contractsCard" style="display:none">
+        <h2>Contracts</h2>
+        <div class="sub">Agreements and service docs. Signed copies stay here for your records.</div>
+        <div class="list" id="contractsList"></div>
       </div>
 
       <div class="card full">
@@ -308,12 +364,49 @@ const CLIENTS = {
     steps:[ ["Discovery & brief",1,"Done"], ["Design",1,"Done"], ["Build",1,"Done"], ["Launch",1,"Live"], ["Ongoing support",2,"Active"] ],
     deliverables:[ {n:"Live website",m:"View site",href:"https://saturnresults.co.uk/RICHARD-DALE/"}, {n:"Brand assets",m:"Delivered"} ]
   },
-  "YKWELLNESS-2025": {
+  "YKWELLNESS-2026": {
     name:"YK Wellness",
-    tagline:"Premium clinic site — live.",
-    details:{ "Plan":"Orbit", "Scope":"Brand · Web · SEO", "Live site":{href:"https://srmarketing.live/index.html",text:"srmarketing.live"}, "Started":"2025" },
-    steps:[ ["Discovery & brief",1,"Done"], ["Design",1,"Done"], ["Build",1,"Done"], ["Launch",1,"Live"], ["SEO & support",2,"Active"] ],
-    deliverables:[ {n:"Live website",m:"srmarketing.live",href:"https://srmarketing.live/index.html"}, {n:"Brand identity",m:"Delivered"}, {n:"SEO setup",m:"Delivered"} ]
+    tagline:"Premium clinic site — live and growing.",
+    details:{
+      "Plan":"Orbit",
+      "Scope":"Brand · Web · SEO",
+      "Live site":{href:"https://srmarketing.live/index.html",text:"srmarketing.live"},
+      "Started":"2025",
+      "Account manager":"Harry Bingham"
+    },
+    steps:[
+      ["Discovery & brief",1,"Done"],
+      ["Design",1,"Done"],
+      ["Build",1,"Done"],
+      ["Launch",1,"Live"],
+      ["SEO & ongoing support",2,"Active"]
+    ],
+    deliverables:[
+      {n:"Live website",m:"srmarketing.live",href:"https://srmarketing.live/index.html"},
+      {n:"Brand identity package",m:"Delivered"},
+      {n:"On-page SEO setup",m:"Delivered"},
+      {n:"Google Analytics & Search Console",m:"Delivered"}
+    ],
+    asks:[
+      {item:"Updated team photos",status:"pending",due:"This week"},
+      {item:"New treatment menu (PDF or doc)",status:"pending",due:"Anytime"},
+      {item:"Confirm new Instagram handle for footer link",status:"pending"},
+      {item:"Branding questionnaire",status:"done"}
+    ],
+    weOwe:[
+      {item:"Add new 'Pricing' page",status:"active",due:"This week"},
+      {item:"Quarterly SEO report",status:"active",due:"End of month"},
+      {item:"Set up automated booking confirmation email",status:"pending"}
+    ],
+    payments:[
+      {label:"Deposit — Studio plan",amount:"£850",status:"paid",date:"Paid 14 Jan 2026"},
+      {label:"Final balance — Studio plan",amount:"£850",status:"paid",date:"Paid 28 Jan 2026"},
+      {label:"SEO retainer — Q2",amount:"£300",status:"due",date:"Due 1 Jun 2026",href:"mailto:contact@saturnresults.com?subject=YK%20Wellness%20Q2%20invoice"}
+    ],
+    contracts:[
+      {name:"Studio plan service agreement",status:"signed",date:"Signed 14 Jan 2026",href:"mailto:contact@saturnresults.com?subject=Copy%20of%20YK%20service%20agreement"},
+      {name:"SEO retainer addendum",status:"sent",date:"Sent 5 May 2026 — awaiting signature",href:"mailto:contact@saturnresults.com?subject=Sign%20SEO%20retainer"}
+    ]
   },
   "TRINITE-2025": {
     name:"Trinit.e Massage",
@@ -377,9 +470,83 @@ function render(client){
       </${tag}>`);
   });
 
+  // asks / weOwe lists
+  renderRowList('#asksCard','#asksList',client.asks,(it)=>({
+    cls: it.status==='done'?'done':(it.status==='warn'?'warn':'active'),
+    ico: it.status==='done'
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>',
+    tag: it.status==='done'?'Received':(it.due||'Pending')
+  }));
+  renderRowList('#weOweCard','#weOweList',client.weOwe,(it)=>({
+    cls: it.status==='delivered'?'done':(it.status==='active'?'active':'warn'),
+    ico: it.status==='delivered'
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>',
+    tag: it.status==='delivered'?'Delivered':(it.status==='active'?'In progress':'Queued') + (it.due?` · ${it.due}`:'')
+  }));
+
+  // payments
+  const pCard=$('#paymentsCard'),pList=$('#paymentsList'),pFoot=$('#payFoot');
+  if(client.payments && client.payments.length){
+    pCard.style.display='';pList.innerHTML='';
+    let paid=0,due=0;
+    client.payments.forEach(p=>{
+      const num=Number(String(p.amount).replace(/[^\d.]/g,''))||0;
+      if(p.status==='paid') paid+=num; else if(p.status==='due') due+=num;
+      pList.insertAdjacentHTML('beforeend',
+        `<div class="pay-row ${p.status}">
+          <div>
+            <div class="pay-name">${p.label}</div>
+            <div class="pay-sub">${p.date||''}</div>
+          </div>
+          <div class="pay-amount">${p.amount}</div>
+          <div class="tag">${p.status==='paid'?'Paid':p.status==='due'?'Due':'Sent'}</div>
+          ${p.href?`<a class="open" href="${p.href}" target="_blank" rel="noopener">View</a>`:''}
+        </div>`);
+    });
+    pFoot.innerHTML = `<div>Paid to date</div><strong>£${paid.toLocaleString()}</strong>` +
+      (due ? `<div style="margin-left:auto">Outstanding</div><strong style="color:#fbbf24">£${due.toLocaleString()}</strong>` : '');
+  } else { pCard.style.display='none' }
+
+  // contracts
+  const cCard=$('#contractsCard'),cList=$('#contractsList');
+  if(client.contracts && client.contracts.length){
+    cCard.style.display='';cList.innerHTML='';
+    client.contracts.forEach(c=>{
+      const cls=c.status==='signed'?'done':(c.status==='sent'?'active':'warn');
+      const tag=c.status==='signed'?'Signed':c.status==='sent'?'Awaiting signature':'Pending';
+      const ico=c.status==='signed'
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>';
+      cList.insertAdjacentHTML('beforeend',
+        `<div class="row-item ${cls}">
+          <div class="pill-ico">${ico}</div>
+          <div><div class="d-name">${c.name}</div><div class="d-meta">${c.date||''}</div></div>
+          <div class="tag">${tag}</div>
+          ${c.href?`<a class="open" href="${c.href}" target="_blank" rel="noopener">Open</a>`:''}
+        </div>`);
+    });
+  } else { cCard.style.display='none' }
+
   renderGallery(client.name);
   loginView.style.display='none';
   dashView.classList.add('show');
+}
+
+function renderRowList(cardSel,listSel,items,mapper){
+  const card=$(cardSel),list=$(listSel);
+  if(!items||!items.length){card.style.display='none';return}
+  card.style.display='';list.innerHTML='';
+  items.forEach(it=>{
+    const m=mapper(it);
+    list.insertAdjacentHTML('beforeend',
+      `<div class="row-item ${m.cls}">
+        <div class="pill-ico">${m.ico}</div>
+        <div><div class="d-name">${it.item}</div></div>
+        <div class="tag">${m.tag}</div>
+      </div>`);
+  });
 }
 
 /* ---- session ---- */
