@@ -654,12 +654,24 @@ function adminReset(){
 }
 
 /* ---- session ---- */
+function nkey(s){return String(s||'').trim().toUpperCase().replace(/[\s_]+/g,'-').replace(/[^A-Z0-9-]/g,'')}
+function findClient(raw){
+  const k=nkey(raw);
+  if(CLIENTS[k]) return [k,CLIENTS[k]];
+  // loose fallback — ignore dashes entirely
+  const stripped=k.replace(/-/g,'');
+  for(const key of Object.keys(CLIENTS)){
+    if(key.replace(/-/g,'')===stripped) return [key,CLIENTS[key]];
+  }
+  return [null,null];
+}
+
 function login(code){
-  const key=code.trim().toUpperCase();
-  if(key===ADMIN_CODE){ openAdmin(); return true; }
-  const client=CLIENTS[key];
+  const key=nkey(code);
+  if(key===ADMIN_CODE || key.replace(/-/g,'')===ADMIN_CODE.replace(/-/g,'')){ openAdmin(); return true; }
+  const [hitKey,client]=findClient(code);
   if(!client){ $('#loginErr').classList.add('show'); return false; }
-  try{ sessionStorage.setItem('sr_portal',key); }catch(_){}
+  try{ sessionStorage.setItem('sr_portal',hitKey); }catch(_){}
   render(client);
   return true;
 }
@@ -686,12 +698,7 @@ $('#adminReset').addEventListener('click',adminReset);
   const urlKey = (new URLSearchParams(location.search).get('key'))
               || (location.hash.match(/key=([^&]+)/)||[])[1];
   if(urlKey){
-    const k=decodeURIComponent(urlKey).toUpperCase();
-    if(k===ADMIN_CODE){ openAdmin(); return; }
-    if(CLIENTS[k]){
-      try{sessionStorage.setItem('sr_portal',k)}catch(_){}
-      render(CLIENTS[k]); return;
-    }
+    if(login(decodeURIComponent(urlKey))) return;
   }
   // 2) Resume previous session
   let saved=null; try{saved=sessionStorage.getItem('sr_portal')}catch(_){}
