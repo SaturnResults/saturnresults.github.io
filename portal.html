@@ -680,8 +680,20 @@ $('#adminPreview').addEventListener('click',adminPreview);
 $('#adminCopy').addEventListener('click',adminCopy);
 $('#adminReset').addEventListener('click',adminReset);
 
-// auto-resume session
+// auto-resume session (and accept ?key= or #key= one-tap login link)
 (function(){
+  // 1) URL key takes priority (works with ?key=… and #key=… )
+  const urlKey = (new URLSearchParams(location.search).get('key'))
+              || (location.hash.match(/key=([^&]+)/)||[])[1];
+  if(urlKey){
+    const k=decodeURIComponent(urlKey).toUpperCase();
+    if(k===ADMIN_CODE){ openAdmin(); return; }
+    if(CLIENTS[k]){
+      try{sessionStorage.setItem('sr_portal',k)}catch(_){}
+      render(CLIENTS[k]); return;
+    }
+  }
+  // 2) Resume previous session
   let saved=null; try{saved=sessionStorage.getItem('sr_portal')}catch(_){}
   if(saved==='__ADMIN__'){ openAdmin(); return; }
   if(saved && CLIENTS[saved]) render(CLIENTS[saved]);
