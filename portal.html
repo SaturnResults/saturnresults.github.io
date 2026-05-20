@@ -127,6 +127,9 @@ nav.scrolled{background:rgba(8,7,13,.75);backdrop-filter:blur(20px);border-botto
 .row-item.active .tag{background:rgba(139,92,246,.14);color:var(--purple-glow)}
 .row-item.warn .tag{background:rgba(245,158,11,.14);color:#fbbf24}
 .row-item a.open{margin-left:8px;font-size:12px;color:var(--purple-glow)}
+.ask-bullets{margin:10px 0 2px;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.ask-bullets li{font-size:13px;color:var(--muted);line-height:1.5}
+.ask-bullets li::marker{color:var(--purple-glow)}
 
 /* payments */
 .pay-row{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1px solid var(--border);border-radius:14px}
@@ -136,10 +139,12 @@ nav.scrolled{background:rgba(8,7,13,.75);backdrop-filter:blur(20px);border-botto
 .pay-row.paid{background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.25)}
 .pay-row.due{background:rgba(245,158,11,.06);border-color:rgba(245,158,11,.3)}
 .pay-row.sent{background:rgba(139,92,246,.06);border-color:rgba(167,139,250,.3)}
+.pay-row.pending{background:rgba(255,255,255,.02);border-color:var(--border)}
 .pay-row .tag{font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:5px 10px;border-radius:100px;margin-left:12px}
 .pay-row.paid .tag{background:rgba(16,185,129,.18);color:#10b981}
 .pay-row.due .tag{background:rgba(245,158,11,.18);color:#fbbf24}
 .pay-row.sent .tag{background:rgba(139,92,246,.18);color:var(--purple-glow)}
+.pay-row.pending .tag{background:rgba(255,255,255,.06);color:var(--muted)}
 .pay-foot{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-top:18px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
 .pay-foot strong{color:var(--ink);font-family:'Instrument Serif',serif;font-size:24px;letter-spacing:-.01em;font-weight:400}
 
@@ -200,6 +205,33 @@ nav.scrolled{background:rgba(8,7,13,.75);backdrop-filter:blur(20px);border-botto
         <div class="err" id="loginErr">That code didn't match. Check it and try again, or contact us.</div>
       </form>
       <div class="hint">Lost your code? Email <a href="mailto:contact@saturnresults.com" style="color:var(--purple-glow)">contact@saturnresults.com</a> and we'll resend it.</div>
+    </div>
+  </section>
+
+  <!-- ADMIN -->
+  <section class="dash" id="adminView" style="display:none">
+    <div class="dash-head">
+      <div>
+        <div class="eyebrow">Admin · Studio Only</div>
+        <h1>Edit client <em id="adminWhich">portals</em></h1>
+      </div>
+      <button class="logout" id="adminLogout" type="button">Exit admin</button>
+    </div>
+    <div class="card full" style="margin-bottom:20px">
+      <h2>Select client</h2>
+      <div class="sub">Pick a client to load their current data into the editor.</div>
+      <div id="adminPicker" style="display:flex;gap:10px;flex-wrap:wrap"></div>
+    </div>
+    <div class="card full">
+      <h2>Edit data <span id="adminCodeShow" style="font-size:13px;color:var(--muted-2);margin-left:8px"></span></h2>
+      <div class="sub">Change anything below, click <strong>Preview</strong> to see it, then <strong>Copy as JS</strong> and paste it into <code style="color:var(--purple-glow)">portal.html</code> at the matching client key. Commit to GitHub to make it live for everyone.</div>
+      <textarea id="adminEditor" style="width:100%;min-height:420px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:14px;padding:18px;color:var(--ink);font-family:ui-monospace,SF Mono,Menlo,monospace;font-size:13px;outline:none;resize:vertical;line-height:1.55" spellcheck="false"></textarea>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+        <button class="btn" id="adminPreview" type="button" style="width:auto;padding:14px 22px">Preview as client</button>
+        <button class="btn ghost" id="adminCopy" type="button" style="width:auto;padding:14px 22px">Copy as JS</button>
+        <button class="btn ghost" id="adminReset" type="button" style="width:auto;padding:14px 22px">Reset to saved</button>
+      </div>
+      <div id="adminMsg" style="margin-top:14px;font-size:13px;color:var(--purple-glow);min-height:18px"></div>
     </div>
   </section>
 
@@ -284,7 +316,7 @@ nav.scrolled{background:rgba(8,7,13,.75);backdrop-filter:blur(20px);border-botto
           </div>
           <div class="contact-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13 1 .37 1.96.72 2.88a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.11-.45c.92.35 1.88.59 2.88.72A2 2 0 0 1 21 16.92z"/></svg>
-            <div><div class="l">Phone</div><a class="v" href="tel:+447000000000">Ask us on the call</a></div>
+            <div><div class="l">Phone</div><a class="v" href="tel:+447397149933">07397 149 933</a></div>
           </div>
           <div class="contact-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -366,46 +398,51 @@ const CLIENTS = {
   },
   "YKWELLNESS-2026": {
     name:"YK Wellness",
-    tagline:"Premium clinic site — live and growing.",
+    tagline:"Site is essentially done — final sign-off coming up.",
     details:{
-      "Plan":"Orbit",
-      "Scope":"Brand · Web · SEO",
+      "Plan":"Studio",
+      "Scope":"Web · SEO · Google Ads",
       "Live site":{href:"https://srmarketing.live/index.html",text:"srmarketing.live"},
-      "Started":"2025",
+      "Started":"April 2026",
       "Account manager":"Harry Bingham"
     },
     steps:[
       ["Discovery & brief",1,"Done"],
       ["Design",1,"Done"],
       ["Build",1,"Done"],
-      ["Launch",1,"Live"],
-      ["SEO & ongoing support",2,"Active"]
+      ["Google Ads (paused)",1,"Ran earlier"],
+      ["Final sign-off",2,"In progress"]
     ],
     deliverables:[
       {n:"Live website",m:"srmarketing.live",href:"https://srmarketing.live/index.html"},
-      {n:"Brand identity package",m:"Delivered"},
       {n:"On-page SEO setup",m:"Delivered"},
+      {n:"Google Ads campaign",m:"Ran earlier — currently paused"},
       {n:"Google Analytics & Search Console",m:"Delivered"}
     ],
     asks:[
-      {item:"Updated team photos",status:"pending",due:"This week"},
-      {item:"New treatment menu (PDF or doc)",status:"pending",due:"Anytime"},
-      {item:"Confirm new Instagram handle for footer link",status:"pending"},
-      {item:"Branding questionnaire",status:"done"}
+      {item:"Photos for the site",status:"done"},
+      {item:"Confirm you're happy with the site (final sign-off)",status:"pending",due:"This week"},
+      {item:"Answer 9 quick questions for the site copy & FAQ",status:"pending",due:"This week",bullets:[
+        "What are the 5 most common questions clients ask before booking? (e.g. 'Is it painful?', 'What do I wear?')",
+        "Do you offer couples massage?",
+        "Do clients have a choice of male or female therapist?",
+        "What's the cancellation / rescheduling policy?",
+        "Do you take walk-ins or is it appointment-only?",
+        "Do you offer gift vouchers? Where do you buy them?",
+        "Is there parking at Westway Sports Centre?",
+        "Are there any conditions you can't treat (e.g. pregnancy, recent surgery)?",
+        "What's your most popular treatment and why do clients keep coming back for it?"
+      ]}
     ],
     weOwe:[
-      {item:"Add new 'Pricing' page",status:"active",due:"This week"},
-      {item:"Quarterly SEO report",status:"active",due:"End of month"},
-      {item:"Set up automated booking confirmation email",status:"pending"}
+      {item:"Monthly SEO report",status:"active",due:"End of month"}
     ],
     payments:[
-      {label:"Deposit — Studio plan",amount:"£850",status:"paid",date:"Paid 14 Jan 2026"},
-      {label:"Final balance — Studio plan",amount:"£850",status:"paid",date:"Paid 28 Jan 2026"},
-      {label:"SEO retainer — Q2",amount:"£300",status:"due",date:"Due 1 Jun 2026",href:"mailto:contact@saturnresults.com?subject=YK%20Wellness%20Q2%20invoice"}
+      {label:"Invoice #1 — first half",amount:"£475",status:"paid",date:"Paid April 2026"},
+      {label:"Invoice #2 — final balance",amount:"£475",status:"pending",date:"To be sent on sign-off"}
     ],
     contracts:[
-      {name:"Studio plan service agreement",status:"signed",date:"Signed 14 Jan 2026",href:"mailto:contact@saturnresults.com?subject=Copy%20of%20YK%20service%20agreement"},
-      {name:"SEO retainer addendum",status:"sent",date:"Sent 5 May 2026 — awaiting signature",href:"mailto:contact@saturnresults.com?subject=Sign%20SEO%20retainer"}
+      {name:"Studio plan service agreement",status:"signed",date:"Signed April 2026",href:"mailto:contact@saturnresults.com?subject=Copy%20of%20YK%20service%20agreement"}
     ]
   },
   "TRINITE-2025": {
@@ -501,7 +538,7 @@ function render(client){
             <div class="pay-sub">${p.date||''}</div>
           </div>
           <div class="pay-amount">${p.amount}</div>
-          <div class="tag">${p.status==='paid'?'Paid':p.status==='due'?'Due':'Sent'}</div>
+          <div class="tag">${p.status==='paid'?'Paid':p.status==='due'?'Due':p.status==='pending'?'Not yet sent':'Sent'}</div>
           ${p.href?`<a class="open" href="${p.href}" target="_blank" rel="noopener">View</a>`:''}
         </div>`);
     });
@@ -540,18 +577,86 @@ function renderRowList(cardSel,listSel,items,mapper){
   card.style.display='';list.innerHTML='';
   items.forEach(it=>{
     const m=mapper(it);
+    const bullets=it.bullets&&it.bullets.length
+      ? `<ul class="ask-bullets">${it.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>`
+      : '';
     list.insertAdjacentHTML('beforeend',
       `<div class="row-item ${m.cls}">
         <div class="pill-ico">${m.ico}</div>
-        <div><div class="d-name">${it.item}</div></div>
+        <div style="flex:1"><div class="d-name">${it.item}</div>${bullets}</div>
         <div class="tag">${m.tag}</div>
       </div>`);
   });
 }
 
+/* ---- admin mode ---- */
+const ADMIN_CODE='SR-ADMIN-9933';
+
+function openAdmin(){
+  try{ sessionStorage.setItem('sr_portal','__ADMIN__'); }catch(_){}
+  loginView.style.display='none';
+  dashView.classList.remove('show');
+  $('#adminView').style.display='block';
+  // build picker
+  const pick=$('#adminPicker');pick.innerHTML='';
+  Object.keys(CLIENTS).forEach(k=>{
+    pick.insertAdjacentHTML('beforeend',
+      `<button class="btn ghost adminPick" data-k="${k}" type="button" style="width:auto;padding:10px 16px;font-size:12px;letter-spacing:.1em">${k}<br><span style="opacity:.6;font-weight:400;letter-spacing:0">${CLIENTS[k].name}</span></button>`);
+  });
+  pick.querySelectorAll('.adminPick').forEach(b=>{
+    b.addEventListener('click',()=>loadIntoEditor(b.dataset.k));
+  });
+  // load first client by default
+  const first=Object.keys(CLIENTS)[0];
+  loadIntoEditor(first);
+}
+
+function loadIntoEditor(key){
+  $('#adminWhich').textContent=CLIENTS[key].name;
+  $('#adminCodeShow').textContent='Code: '+key;
+  $('#adminEditor').value=JSON.stringify(CLIENTS[key],null,2);
+  $('#adminEditor').dataset.k=key;
+  $('#adminMsg').textContent='';
+}
+
+function adminPreview(){
+  const k=$('#adminEditor').dataset.k;
+  try{
+    const parsed=JSON.parse($('#adminEditor').value);
+    CLIENTS[k]=parsed;
+    $('#adminView').style.display='none';
+    render(parsed);
+    $('#adminMsg').textContent='';
+  }catch(e){
+    $('#adminMsg').textContent='⚠ Invalid JSON: '+e.message;
+    $('#adminMsg').style.color='#fca5a5';
+  }
+}
+
+function adminCopy(){
+  const k=$('#adminEditor').dataset.k;
+  try{
+    const parsed=JSON.parse($('#adminEditor').value);
+    const snippet=`  "${k}": ${JSON.stringify(parsed,null,2).split('\n').join('\n  ')},\n`;
+    navigator.clipboard.writeText(snippet).then(()=>{
+      $('#adminMsg').style.color='var(--purple-glow)';
+      $('#adminMsg').textContent='✓ Copied. Paste over the matching block in portal.html in the CLIENTS object, then commit & push.';
+    });
+  }catch(e){
+    $('#adminMsg').textContent='⚠ Invalid JSON: '+e.message;
+    $('#adminMsg').style.color='#fca5a5';
+  }
+}
+
+function adminReset(){
+  const k=$('#adminEditor').dataset.k;
+  loadIntoEditor(k); // re-loads from in-memory CLIENTS (last preview applied)
+}
+
 /* ---- session ---- */
 function login(code){
   const key=code.trim().toUpperCase();
+  if(key===ADMIN_CODE){ openAdmin(); return true; }
   const client=CLIENTS[key];
   if(!client){ $('#loginErr').classList.add('show'); return false; }
   try{ sessionStorage.setItem('sr_portal',key); }catch(_){}
@@ -567,9 +672,18 @@ $('#logoutBtn').addEventListener('click',()=>{
   try{ sessionStorage.removeItem('sr_portal'); }catch(_){}
   location.reload();
 });
+$('#adminLogout').addEventListener('click',()=>{
+  try{ sessionStorage.removeItem('sr_portal'); }catch(_){}
+  location.reload();
+});
+$('#adminPreview').addEventListener('click',adminPreview);
+$('#adminCopy').addEventListener('click',adminCopy);
+$('#adminReset').addEventListener('click',adminReset);
+
 // auto-resume session
 (function(){
   let saved=null; try{saved=sessionStorage.getItem('sr_portal')}catch(_){}
+  if(saved==='__ADMIN__'){ openAdmin(); return; }
   if(saved && CLIENTS[saved]) render(CLIENTS[saved]);
 })();
 
