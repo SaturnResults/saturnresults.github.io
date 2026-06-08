@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>YK Wellness — Saturn Results</title>
+<link rel="icon" href="favicon.png" type="image/png" sizes="256x256">
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: auto; }
+a { color: inherit; text-decoration: none; }
+
+body {
+  background: #ffffff;
+  color: #000000;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─────────────────────────────────────────
+   NAV
+───────────────────────────────────────── */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 80px;
+  border-bottom: 1px solid #000;
+}
+.nav-logo {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.nav-back {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #888;
+  transition: color 0.1s;
+}
+.nav-back:hover { color: #000; }
+
+/* ─────────────────────────────────────────
+   HERO
+───────────────────────────────────────── */
+.hero {
+  padding: 120px 80px 100px;
+  border-bottom: 1px solid #000;
+}
+.hero-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 80px;
+}
+.hero-meta-left {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #888;
+  font-weight: 400;
+}
+.hero-meta-right {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #888;
+  font-weight: 400;
+}
+.hero h1 {
+  font-size: clamp(64px, 9vw, 140px);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  color: #000;
+  margin-bottom: 60px;
+  max-width: 1100px;
+}
+.hero-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: end;
+}
+.hero-deck {
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1.55;
+  color: #000;
+  max-width: 520px;
+}
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.tag {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #888;
+  font-weight: 400;
+  padding: 0 20px;
+  border-right: 1px solid #ccc;
+}
+.tag:last-child { border-right: none; padding-right: 0; }
+.tag:first-child { padding-left: 0; }
+
+/* ─────────────────────────────────────────
+   STAT BAND
+───────────────────────────────────────── */
+.stat-band {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid #000;
+}
+.stat-item {
+  padding: 60px 80px;
+  border-right: 1px solid #000;
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-size: clamp(52px, 6vw, 88px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+}
+.stat-label {
+  font-size: 13px;
+  font-weight: 300;
+  color: #000;
+  line-height: 1.6;
+  max-width: 240px;
+  margin-bottom: 12px;
+}
+.stat-source {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #888;
+}
+
+/* ─────────────────────────────────────────
+   SECTION SHARED
+───────────────────────────────────────── */
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #888;
+  font-weight: 400;
+  margin-bottom: 48px;
+  display: block;
+}
+
+/* ─────────────────────────────────────────
+   PROBLEM
+───────────────────────────────────────── */
+.problem {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  border-bottom: 1px solid #000;
+}
+.problem-label-col {
+  padding: 100px 80px 100px 80px;
+  border-right: 1px solid #000;
+}
+.problem-content {
+  padding: 100px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.problem-text h2 {
+  font-size: clamp(28px, 3.5vw, 46px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+}
+.problem-text p {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: #000;
+  margin-bottom: 20px;
+}
+.problem-text p:last-child { margin-bottom: 0; }
+.problem-pullquote {
+  border-top: 1px solid #000;
+  padding-top: 40px;
+}
+.pq-num {
+  font-size: clamp(72px, 9vw, 120px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+.pq-text {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: #000;
+  margin-bottom: 20px;
+}
+.pq-source {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #888;
+}
+
+/* ─────────────────────────────────────────
+   BEFORE / AFTER
+───────────────────────────────────────── */
+.compare {
+  border-bottom: 1px solid #000;
+}
+.compare-head {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  border-bottom: 1px solid #000;
+}
+.compare-head-label {
+  padding: 60px 80px;
+  border-right: 1px solid #000;
+}
+.compare-head-text {
+  padding: 60px 80px;
+}
+.compare-head-text h2 {
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  margin-bottom: 16px;
+}
+.compare-head-text p {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: #555;
+}
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.compare-card { overflow: hidden; }
+.compare-card + .compare-card { border-left: 1px solid #000; }
+.compare-header {
+  padding: 18px 32px;
+  border-bottom: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.compare-header h3 {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: #888;
+}
+.badge {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding: 3px 10px;
+  border: 1px solid #000;
+}
+.badge-before { color: #888; border-color: #ccc; }
+.badge-after { color: #fff; background: #000; }
+.compare-preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+.compare-preview iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 1280px; height: 800px;
+  border: 0;
+  transform-origin: top left;
+  pointer-events: none;
+}
+.compare-preview.old-preview iframe { filter: grayscale(1) brightness(0.9); }
+.compare-caption {
+  padding: 24px 32px;
+  border-top: 1px solid #000;
+}
+.compare-caption strong {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  display: block;
+  margin-bottom: 6px;
+}
+.compare-caption span {
+  font-size: 13px;
+  font-weight: 300;
+  color: #555;
+  line-height: 1.55;
+}
+
+/* ─────────────────────────────────────────
+   WHAT WE BUILT
+───────────────────────────────────────── */
+.built {
+  border-bottom: 1px solid #000;
+}
+.built-head {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  border-bottom: 1px solid #000;
+}
+.built-head-label {
+  padding: 60px 80px;
+  border-right: 1px solid #000;
+}
+.built-head-text {
+  padding: 60px 80px;
+}
+.built-head-text h2 {
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+}
+.built-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.built-card {
+  padding: 52px 48px;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+.built-card:nth-child(3n) { border-right: none; }
+.built-card:nth-child(4),
+.built-card:nth-child(5),
+.built-card:nth-child(6) { border-bottom: none; }
+.built-num {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: #888;
+  font-weight: 400;
+  margin-bottom: 32px;
+}
+.built-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.built-card p {
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: #555;
+}
+
+/* ─────────────────────────────────────────
+   RESULT
+───────────────────────────────────────── */
+.result {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  border-bottom: 1px solid #000;
+}
+.result-label-col {
+  padding: 100px 80px 100px 80px;
+  border-right: 1px solid #000;
+}
+.result-content {
+  padding: 100px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.result-text h2 {
+  font-size: clamp(28px, 3.5vw, 46px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+}
+.result-text p {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: #000;
+  margin-bottom: 20px;
+}
+.result-text p:last-child { margin-bottom: 0; }
+.result-metrics { border: 1px solid #000; }
+.result-metric {
+  padding: 20px 28px;
+  border-bottom: 1px solid #000;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.result-metric:last-child { border-bottom: none; }
+.rm-label {
+  font-size: 12px;
+  font-weight: 400;
+  color: #888;
+  letter-spacing: 0.04em;
+}
+.rm-value {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* ─────────────────────────────────────────
+   CTA
+───────────────────────────────────────── */
+.cta-section {
+  padding: 160px 80px;
+  border-bottom: 1px solid #000;
+}
+.cta-inner {
+  max-width: 900px;
+}
+.cta-kicker {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #888;
+  display: block;
+  margin-bottom: 48px;
+}
+.cta-section h2 {
+  font-size: clamp(52px, 8vw, 120px);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  margin-bottom: 60px;
+}
+.cta-section p {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #555;
+  max-width: 480px;
+  margin-bottom: 52px;
+}
+.cta-btn {
+  display: inline-block;
+  padding: 16px 44px;
+  border: 1px solid #000;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #000;
+  background: transparent;
+  transition: background 0.1s, color 0.1s;
+  cursor: pointer;
+}
+.cta-btn:hover { background: #000; color: #fff; }
+.cta-note {
+  display: block;
+  margin-top: 24px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #aaa;
+}
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+footer {
+  padding: 24px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #000;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #888;
+}
+footer a { transition: color 0.1s; }
+footer a:hover { color: #000; }
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media(max-width: 1100px) {
+  .problem, .result { grid-template-columns: 1fr; }
+  .problem-label-col, .result-label-col { border-right: none; border-bottom: 1px solid #000; padding: 48px 40px 32px; }
+  .problem-content, .result-content { grid-template-columns: 1fr; gap: 60px; padding: 60px 40px; }
+  .compare-head, .built-head { grid-template-columns: 1fr; }
+  .compare-head-label, .built-head-label { border-right: none; border-bottom: 1px solid #000; padding: 40px 40px 28px; }
+  .compare-head-text, .built-head-text { padding: 40px; }
+  .built-grid { grid-template-columns: 1fr; }
+  .built-card { border-right: none; }
+  .built-card:nth-child(4),
+  .built-card:nth-child(5) { border-bottom: 1px solid #000; }
+  .built-card:last-child { border-bottom: none; }
+}
+@media(max-width: 800px) {
+  nav, .hero, .stat-band, .cta-section, footer { padding-left: 28px; padding-right: 28px; }
+  .hero { padding-top: 80px; padding-bottom: 72px; }
+  .hero h1 { margin-bottom: 40px; }
+  .hero-body { grid-template-columns: 1fr; gap: 40px; }
+  .hero-tags { justify-content: flex-start; }
+  .stat-band { grid-template-columns: 1fr; }
+  .stat-item { border-right: none; border-bottom: 1px solid #000; }
+  .stat-item:last-child { border-bottom: none; }
+  .stat-item { padding: 48px 28px; }
+  .compare-grid { grid-template-columns: 1fr; }
+  .compare-card + .compare-card { border-left: none; border-top: 1px solid #000; }
+  .cta-section { padding-top: 100px; padding-bottom: 100px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Saturn Results</a>
+  <a href="index.html" class="nav-back">← Back</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-meta">
+    <span class="hero-meta-left">Case Study No. 001</span>
+    <span class="hero-meta-right">Wellness · London · 2025</span>
+  </div>
+  <h1>London's Best<br/>Wellness Website.</h1>
+  <div class="hero-body">
+    <p class="hero-deck">YK Wellness came to us on a slow WordPress site losing more than half its visitors before they ever reached the booking page. We rebuilt everything from scratch.</p>
+    <div class="hero-tags">
+      <span class="tag">Web Design</span>
+      <span class="tag">Development</span>
+      <span class="tag">Animation</span>
+      <span class="tag">Mobile First</span>
+      <span class="tag">London</span>
+    </div>
+  </div>
+</section>
+
+<!-- STAT BAND -->
+<div class="stat-band">
+  <div class="stat-item">
+    <div class="stat-num">53%</div>
+    <p class="stat-label">of potential clients leave before booking if a site takes more than 3 seconds to load.</p>
+    <div class="stat-source">Google Research</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">Under 1s</div>
+    <p class="stat-label">load time on the new site. Zero templates. Zero plugins. Zero compromise.</p>
+    <div class="stat-source">Saturn Results Build</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">#1</div>
+    <p class="stat-label">best wellness website in London. Not a claim. A fact we can demonstrate.</p>
+    <div class="stat-source">Saturn Results Research, 2025</div>
+  </div>
+</div>
+
+<!-- THE PROBLEM -->
+<section class="problem">
+  <div class="problem-label-col">
+    <span class="section-label">The Problem</span>
+  </div>
+  <div class="problem-content">
+    <div class="problem-text">
+      <h2>A beautiful practice. An invisible online presence.</h2>
+      <p>YK Wellness offers exceptional care. But their WordPress site was slow, hard to navigate on mobile, and visually generic. For every 100 people who found them online, more than half left before seeing a single treatment.</p>
+      <p>Speed is not a technical detail. It is a direct line to revenue. A site that loads in under a second converts at a fundamentally different rate to one that takes four.</p>
+    </div>
+    <div class="problem-pullquote">
+      <div class="pq-num">53%</div>
+      <p class="pq-text">of potential clients leave a website that takes more than 3 seconds to load and do not return. For a wellness practice in London, that is hundreds of missed bookings every year.</p>
+      <div class="pq-source">Google Research · Mobile Speed Study</div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="compare">
+  <div class="compare-head">
+    <div class="compare-head-label">
+      <span class="section-label">The Work</span>
+    </div>
+    <div class="compare-head-text">
+      <h2>Before and After.</h2>
+      <p>The same practice. A completely different first impression.</p>
+    </div>
+  </div>
+  <div class="compare-grid">
+    <div class="compare-card">
+      <div class="compare-header">
+        <h3>Old Site — WordPress · Slow · Generic</h3>
+        <span class="badge badge-before">Before</span>
+      </div>
+      <div class="compare-preview old-preview">
+        <iframe src="https://ykwellness.co.uk/" loading="lazy" onload="scaleFrame(this)" title="YK Wellness old site"></iframe>
+      </div>
+      <div class="compare-caption">
+        <strong>Slow WordPress template</strong>
+        <span>Heavy plugins, generic layout, poor mobile experience. No sense of the quality inside.</span>
+      </div>
+    </div>
+    <div class="compare-card">
+      <div class="compare-header">
+        <h3>New Site — Custom Built · Fast · Animated</h3>
+        <span class="badge badge-after">After</span>
+      </div>
+      <div class="compare-preview">
+        <iframe src="https://srmarketing.live/" loading="lazy" onload="scaleFrame(this)" title="YK Wellness new site"></iframe>
+      </div>
+      <div class="compare-caption">
+        <strong>Custom built from scratch</strong>
+        <span>Instant load, smooth animations, clear booking flow. The site earns trust before a word is read.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE BUILT -->
+<section class="built">
+  <div class="built-head">
+    <div class="built-head-label">
+      <span class="section-label">The Detail</span>
+    </div>
+    <div class="built-head-text">
+      <h2>What We Built.</h2>
+    </div>
+  </div>
+  <div class="built-grid">
+    <div class="built-card">
+      <div class="built-num">01</div>
+      <h3>Sub-second load time</h3>
+      <p>No WordPress. No plugins. Pure hand-coded HTML, CSS and JavaScript that loads faster than any template can match.</p>
+    </div>
+    <div class="built-card">
+      <div class="built-num">02</div>
+      <h3>Considered animation</h3>
+      <p>Every transition is intentional. The site moves in a way that reflects the calm, premium experience the practice delivers in person.</p>
+    </div>
+    <div class="built-card">
+      <div class="built-num">03</div>
+      <h3>Mobile first</h3>
+      <p>Over 70% of visitors arrive on a phone. Every element was designed for mobile first, then scaled up. Nothing breaks. Nothing squishes.</p>
+    </div>
+    <div class="built-card">
+      <div class="built-num">04</div>
+      <h3>Built to convert</h3>
+      <p>Prominent booking buttons, a treatment recommender, transparent pricing. Every page moves the visitor closer to a confirmed appointment.</p>
+    </div>
+    <div class="built-card">
+      <div class="built-num">05</div>
+      <h3>Social proof, done properly</h3>
+      <p>Five-star Google reviews, professional accreditations, named client testimonials. The trust signals are impossible to miss.</p>
+    </div>
+    <div class="built-card">
+      <div class="built-num">06</div>
+      <h3>A brand, not a template</h3>
+      <p>Typography, colour and imagery chosen to reflect YK Wellness specifically. Visitors feel the quality of the practice before reading a word.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESULT -->
+<section class="result">
+  <div class="result-label-col">
+    <span class="section-label">The Outcome</span>
+  </div>
+  <div class="result-content">
+    <div class="result-text">
+      <h2>More visitors. More bookings.</h2>
+      <p>A faster site does not just feel better. It directly increases the number of people who stay, explore and book. For a London wellness practice with a full treatment menu, every percentage point of conversion matters.</p>
+      <p>The new site gives YK Wellness a digital presence that matches the standard of care they deliver.</p>
+    </div>
+    <div class="result-metrics">
+      <div class="result-metric">
+        <span class="rm-label">Page load time</span>
+        <span class="rm-value">Under 1s</span>
+      </div>
+      <div class="result-metric">
+        <span class="rm-label">Built with</span>
+        <span class="rm-value">Zero templates</span>
+      </div>
+      <div class="result-metric">
+        <span class="rm-label">Mobile experience</span>
+        <span class="rm-value">First class</span>
+      </div>
+      <div class="result-metric">
+        <span class="rm-label">Booking flow</span>
+        <span class="rm-value">Three clicks</span>
+      </div>
+      <div class="result-metric">
+        <span class="rm-label">Market position</span>
+        <span class="rm-value">Best in London</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <span class="cta-kicker">Work with Saturn Results</span>
+    <h2>Your practice<br/>deserves this.</h2>
+    <p>We build a free demo for your practice first. No deposit. No obligation. If you love it, we talk. If not, you keep it.</p>
+    <a href="contact.html" class="cta-btn">Get your free demo</a>
+    <span class="cta-note">Free demo · No deposit · No obligation · Delivered in days</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Saturn Results</span>
+  <a href="index.html">saturnresults.co.uk</a>
+</footer>
+
+<script>
+function scaleFrame(iframe) {
+  const c = iframe.closest('.compare-preview');
+  const s = Math.max(c.clientWidth / 1280, c.clientHeight / 800);
+  iframe.style.transform = `scale(${s})`;
+}
+window.addEventListener('resize', () => {
+  document.querySelectorAll('.compare-preview iframe').forEach(scaleFrame);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>YK Wellness Case Study · Saturn Results</title>
+<meta name="description" content="How Saturn Results built the best wellness website in London, turning a slow WordPress site into a fast, beautiful, booking-ready experience."/>
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="favicon.png" type="image/png" sizes="256x256">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff;
+  --bg-soft:#fafafa;
+  --bg-purple:#f5f3ff;
+  --ink:#0a0a0a;
+  --muted:#6b7280;
+  --muted-light:#9ca3af;
+  --purple:#8b5cf6;
+  --purple-deep:#6d28d9;
+  --purple-light:#ede9fe;
+  --border:#e5e7eb;
+  --border-purple:#ddd6fe;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+::selection{background:var(--purple-light);color:var(--purple-deep)}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 56px;
+  background:rgba(255,255,255,0.85);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;letter-spacing:.02em;color:var(--ink)}
+.nav-logo img{width:28px;height:28px;object-fit:contain}
+.nav-back{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 20px;border:1px solid var(--border);border-radius:100px;
+  font-size:12px;font-weight:500;color:var(--muted);
+  transition:all .2s ease;letter-spacing:.02em;
+}
+.nav-back:hover{border-color:var(--purple);color:var(--purple)}
+.nav-back svg{width:13px;height:13px;transition:transform .2s}
+.nav-back:hover svg{transform:translateX(-2px)}
+@media(max-width:768px){nav{padding:16px 24px}}
+
+/* HERO */
+.hero{
+  padding:160px 56px 100px;
+  border-bottom:1px solid var(--border);
+  position:relative;
+  overflow:hidden;
+}
+.hero-accent{
+  position:absolute;top:0;right:0;
+  width:600px;height:600px;
+  background:radial-gradient(circle at top right,rgba(139,92,246,.07) 0%,transparent 65%);
+  pointer-events:none;
+}
+.hero-inner{
+  max-width:1100px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:64px;
+  align-items:center;
+}
+.hero-text{}
+.hero-image{
+  position:relative;
+  border-radius:20px;
+  overflow:visible;
+  aspect-ratio:4/5;
+}
+.hero-image-wrap{
+  position:relative;
+  width:100%;height:100%;
+  border-radius:20px;
+  overflow:hidden;
+  border:1px solid var(--border);
+}
+.hero-image-wrap img{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+}
+.hero-image-wrap::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.45) 100%);
+  pointer-events:none;
+}
+/* FROSTED STAT CARDS — on image */
+.stat-cards{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:20px 20px 20px 20px;
+  pointer-events:none;
+  z-index:2;
+}
+.stat-card{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding:18px 22px;
+  border-radius:16px;
+  background:rgba(255,255,255,.13);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.28);
+  box-shadow:0 4px 32px rgba(0,0,0,.15);
+}
+.stat-card:nth-child(1){
+  align-self:flex-start;
+  width:55%;
+}
+.stat-card:nth-child(2){
+  align-self:flex-end;
+  width:60%;
+}
+.sc-num{
+  font-family:'Instrument Serif',serif;
+  font-size:36px;
+  font-weight:400;
+  color:#fff;
+  line-height:1;
+  letter-spacing:-.02em;
+}
+.sc-label{
+  font-size:12px;
+  color:rgba(255,255,255,.9);
+  line-height:1.5;
+  font-weight:400;
+}
+.sc-source{
+  font-size:9px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.45);
+  margin-top:2px;
+}
+/* 3× CARD — left column, below tags */
+.stat-card-left{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding:18px 22px;
+  border-radius:16px;
+  background:var(--bg-purple);
+  border:1px solid var(--border-purple);
+  margin-top:24px;
+  width:fit-content;
+  min-width:220px;
+}
+.stat-card-left .sc-num{
+  font-family:'Instrument Serif',serif;
+  font-size:36px;
+  font-weight:400;
+  color:var(--purple-deep);
+  line-height:1;
+  letter-spacing:-.02em;
+}
+.stat-card-left .sc-label{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.5;
+  max-width:200px;
+}
+.stat-card-left .sc-source{
+  font-size:9px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--muted-light);
+  margin-top:2px;
+}
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;gap:40px}
+  .hero-image{aspect-ratio:16/9;max-height:320px}
+}
+@media(max-width:768px){.hero{padding:120px 24px 72px}}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--purple);margin-bottom:32px;
+}
+.eyebrow-line{width:32px;height:1px;background:var(--purple);opacity:.5}
+.hero h1{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(48px,7vw,96px);
+  line-height:.95;
+  letter-spacing:-.03em;
+  color:var(--ink);
+  margin-bottom:28px;
+  font-weight:400;
+}
+.hero h1 em{
+  font-style:italic;
+  background:linear-gradient(135deg,var(--purple) 0%,var(--purple-deep) 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  padding-right:.05em;display:inline-block;
+}
+.hero-sub{
+  font-size:clamp(16px,1.4vw,19px);
+  color:var(--muted);
+  max-width:560px;
+  line-height:1.7;
+  margin-bottom:48px;
+}
+.hero-tags{display:flex;gap:8px;flex-wrap:wrap}
+.tag{
+  padding:6px 16px;border-radius:100px;
+  font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  border:1px solid var(--border);color:var(--muted);
+  background:var(--bg-soft);
+}
+@media(max-width:768px){.hero{padding:120px 24px 72px}}
+
+/* STAT BAND */
+.stat-band{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-bottom:1px solid var(--border);
+}
+.stat-item{
+  padding:48px 56px;
+  border-right:1px solid var(--border);
+  position:relative;
+}
+.stat-item:last-child{border-right:none}
+.stat-num{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(40px,5vw,64px);
+  font-weight:400;
+  line-height:1;
+  color:var(--ink);
+  margin-bottom:10px;
+  letter-spacing:-.02em;
+}
+.stat-num span{color:var(--purple)}
+.stat-label{font-size:13px;color:var(--muted);line-height:1.5;max-width:200px}
+.stat-source{
+  margin-top:8px;font-size:10px;color:var(--muted-light);
+  letter-spacing:.05em;text-transform:uppercase;
+}
+@media(max-width:768px){
+  .stat-band{grid-template-columns:1fr}
+  .stat-item{padding:36px 24px;border-right:none;border-bottom:1px solid var(--border)}
+  .stat-item:last-child{border-bottom:none}
+}
+
+/* THE PROBLEM */
+.problem{
+  padding:120px 56px;
+  border-bottom:1px solid var(--border);
+  background:var(--bg-soft);
+}
+.problem-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.problem-text .eyebrow{margin-bottom:24px}
+.problem-text h2{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(36px,4vw,54px);
+  line-height:1.05;
+  letter-spacing:-.02em;
+  font-weight:400;
+  margin-bottom:24px;
+}
+.problem-text p{font-size:16px;color:var(--muted);line-height:1.75;margin-bottom:16px}
+.problem-text p:last-child{margin-bottom:0}
+.problem-callout{
+  background:var(--purple-light);
+  border:1px solid var(--border-purple);
+  border-radius:16px;
+  padding:36px;
+}
+.problem-callout .big{
+  font-family:'Instrument Serif',serif;
+  font-size:48px;
+  font-weight:400;
+  color:var(--purple-deep);
+  line-height:1;
+  margin-bottom:12px;
+}
+.problem-callout p{font-size:14px;color:var(--purple-deep);line-height:1.6;opacity:.8}
+.problem-callout .source{margin-top:16px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);opacity:.6}
+@media(max-width:900px){
+  .problem{padding:80px 24px}
+  .problem-inner{grid-template-columns:1fr;gap:48px}
+}
+
+/* BEFORE / AFTER */
+.compare{padding:120px 56px;border-bottom:1px solid var(--border)}
+.compare-inner{max-width:1300px;margin:0 auto}
+.section-head{margin-bottom:64px}
+.section-head .eyebrow{margin-bottom:20px}
+.section-head h2{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(36px,4vw,56px);
+  letter-spacing:-.02em;font-weight:400;
+  line-height:1.05;
+}
+.section-head p{margin-top:16px;color:var(--muted);max-width:520px;font-size:16px;line-height:1.7}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.compare-card{border:1px solid var(--border);border-radius:20px;overflow:hidden;background:var(--bg-soft)}
+.compare-card.after{border-color:var(--border-purple)}
+.compare-header{
+  padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  background:var(--bg);
+}
+.compare-dots{display:flex;gap:5px}
+.compare-dots span{width:9px;height:9px;border-radius:50%}
+.compare-dots span:nth-child(1){background:#ff5f57}
+.compare-dots span:nth-child(2){background:#febc2e}
+.compare-dots span:nth-child(3){background:#28c840}
+.compare-meta{display:flex;align-items:center;gap:10px}
+.compare-meta h3{font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--ink)}
+.compare-meta p{font-size:11px;color:var(--muted)}
+.badge{
+  padding:3px 10px;border-radius:100px;
+  font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+}
+.badge-before{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+.badge-after{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}
+.compare-preview{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#f3f4f6}
+.compare-preview iframe{position:absolute;top:0;left:0;width:1280px;height:800px;border:0;transform-origin:top left;pointer-events:none}
+.compare-preview.old-preview iframe{filter:grayscale(.25) brightness(.95)}
+.compare-caption{padding:18px 20px;border-top:1px solid var(--border);background:var(--bg)}
+.compare-caption strong{font-size:13px;font-weight:600;color:var(--ink)}
+.compare-caption span{display:block;font-size:12px;color:var(--muted);line-height:1.5;margin-top:4px}
+@media(max-width:900px){
+  .compare{padding:80px 24px}
+  .compare-grid{grid-template-columns:1fr}
+}
+
+/* WHAT WE BUILT */
+.built{
+  padding:120px 56px;
+  background:var(--bg-soft);
+  border-bottom:1px solid var(--border);
+}
+.built-inner{max-width:1100px;margin:0 auto}
+.built-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:20px;overflow:hidden}
+.built-card{
+  padding:40px 36px;
+  background:var(--bg);
+  transition:background .2s;
+}
+.built-card:hover{background:var(--bg-purple)}
+.built-icon{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--purple-light);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;margin-bottom:20px;
+}
+.built-card h3{font-size:15px;font-weight:600;margin-bottom:10px;color:var(--ink)}
+.built-card p{font-size:13px;color:var(--muted);line-height:1.7}
+@media(max-width:900px){
+  .built{padding:80px 24px}
+  .built-grid{grid-template-columns:1fr}
+}
+
+/* RESULT */
+.result{
+  padding:120px 56px;
+  border-bottom:1px solid var(--border);
+}
+.result-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.result-text .eyebrow{margin-bottom:24px}
+.result-text h2{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(36px,4vw,54px);
+  line-height:1.05;letter-spacing:-.02em;font-weight:400;
+  margin-bottom:24px;
+}
+.result-text p{font-size:16px;color:var(--muted);line-height:1.75;margin-bottom:16px}
+.result-metrics{display:flex;flex-direction:column;gap:1px;border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.result-metric{
+  padding:28px 32px;background:var(--bg);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background .2s;
+}
+.result-metric:last-child{border-bottom:none}
+.result-metric:hover{background:var(--bg-purple)}
+.rm-label{font-size:13px;color:var(--muted)}
+.rm-value{font-family:'Instrument Serif',serif;font-size:28px;font-weight:400;color:var(--purple-deep)}
+@media(max-width:900px){
+  .result{padding:80px 24px}
+  .result-inner{grid-template-columns:1fr;gap:48px}
+}
+
+/* CTA */
+.cta-section{
+  padding:120px 56px;
+  background:var(--bg-soft);
+  border-top:1px solid var(--border);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.cta-glow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:600px;height:400px;
+  background:radial-gradient(ellipse,rgba(139,92,246,.06) 0%,transparent 65%);
+  pointer-events:none;
+}
+.cta-section .eyebrow{color:var(--purple);margin-bottom:28px;justify-content:center}
+.cta-section .eyebrow-line{background:var(--purple)}
+.cta-section h2{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(36px,5vw,68px);
+  font-weight:400;line-height:1;letter-spacing:-.03em;
+  color:var(--ink);margin-bottom:20px;
+  position:relative;z-index:2;
+}
+.cta-section h2 em{
+  font-style:italic;
+  background:linear-gradient(135deg,var(--purple),var(--purple-deep));
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  padding-right:.05em;display:inline-block;
+}
+.cta-section p{
+  font-size:clamp(15px,1.2vw,17px);
+  color:var(--muted);
+  max-width:440px;margin:0 auto 40px;
+  line-height:1.7;position:relative;z-index:2;
+}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:16px 36px;border-radius:100px;
+  font-size:14px;font-weight:600;letter-spacing:.02em;
+  background:var(--ink);color:#fff;
+  transition:all .3s cubic-bezier(.2,.8,.3,1);
+  position:relative;z-index:2;
+}
+.cta-btn:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(139,92,246,.25);background:var(--purple-deep)}
+.cta-btn svg{width:16px;height:16px;transition:transform .25s}
+.cta-btn:hover svg{transform:translateX(3px)}
+.cta-note{
+  margin-top:80px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted-light);position:relative;z-index:2;
+}
+@media(max-width:768px){.cta-section{padding:80px 24px}}
+
+/* FOOTER */
+footer{
+  padding:28px 56px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:12px;color:var(--muted);
+}
+@media(max-width:768px){footer{padding:24px;flex-direction:column;gap:8px;text-align:center}}
+
+/* REVEAL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .75s cubic-bezier(.2,.8,.3,1),transform .75s cubic-bezier(.2,.8,.3,1)}
+.reveal.visible{opacity:1;transform:none}
+.reveal-d1{transition-delay:.08s}
+.reveal-d2{transition-delay:.16s}
+.reveal-d3{transition-delay:.24s}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="SRWHITELOGO.png" alt="Saturn Results" style="filter:invert(1)"/>
+    Saturn Results
+  </a>
+  <a href="index.html" class="nav-back">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+    Back
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-accent"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="eyebrow reveal"><span class="eyebrow-line"></span> Case Study · Wellness</div>
+      <h1 class="reveal reveal-d1">London's <em>best</em><br/>wellness website</h1>
+      <p class="hero-sub reveal reveal-d2">YK Wellness came to us on a slow WordPress site losing over half its visitors before they ever reached the booking page. We rebuilt everything from scratch.</p>
+      <div class="hero-tags reveal reveal-d3">
+        <span class="tag">Web Design</span>
+        <span class="tag">Development</span>
+        <span class="tag">Animation</span>
+        <span class="tag">Mobile First</span>
+        <span class="tag">London</span>
+      </div>
+    </div>
+    <div class="hero-image reveal reveal-d2">
+      <div class="hero-image-wrap">
+        <img src="LONDON FUTURE.jpg" alt="YK Wellness"/>
+      </div>
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="sc-num">53%</div>
+          <div class="sc-label">of mobile users abandon a site if it takes more than 3 seconds to load</div>
+          <div class="sc-source">Source: Google Research</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-num">#1</div>
+          <div class="sc-label">best wellness website in London based on our own research across the market</div>
+          <div class="sc-source">Saturn Results, May 2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- THE PROBLEM -->
+<section class="problem">
+  <div class="problem-inner">
+    <div class="problem-text reveal">
+      <div class="eyebrow"><span class="eyebrow-line"></span> The Problem</div>
+      <h2>A beautiful practice. An invisible online presence.</h2>
+      <p>YK Wellness offers exceptional care. But their WordPress site was slow, hard to navigate on mobile, and visually generic. For every 100 people who found them online, more than half left before seeing a single treatment.</p>
+      <p>Speed is not a technical detail. It is a direct line to revenue. A site that loads in under a second converts at a fundamentally different rate to one that takes four.</p>
+    </div>
+    <div class="problem-callout reveal reveal-d1">
+      <div class="big">53%</div>
+      <p>of potential clients leave a website that takes more than 3 seconds to load and do not return. For a wellness practice in London, that is hundreds of missed bookings every year.</p>
+      <div class="source">Google Research · Mobile Speed Study</div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="compare">
+  <div class="compare-inner">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="eyebrow-line"></span> The Work</div>
+      <h2>Before and after</h2>
+      <p>The same practice. A completely different first impression.</p>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-card reveal reveal-d1">
+        <div class="compare-header">
+          <div class="compare-dots"><span></span><span></span><span></span></div>
+          <div class="compare-meta">
+            <div>
+              <h3>Old Site</h3>
+              <p>WordPress · Slow · Generic</p>
+            </div>
+          </div>
+          <span class="badge badge-before">Before</span>
+        </div>
+        <div class="compare-preview old-preview">
+          <iframe src="https://ykwellness.co.uk/" loading="lazy" onload="scaleFrame(this)" title="YK Wellness old site"></iframe>
+        </div>
+        <div class="compare-caption">
+          <strong>Slow WordPress template</strong>
+          <span>Heavy plugins, generic layout, poor mobile experience. No sense of the quality inside.</span>
+        </div>
+      </div>
+      <div class="compare-card after reveal reveal-d2">
+        <div class="compare-header">
+          <div class="compare-dots"><span></span><span></span><span></span></div>
+          <div class="compare-meta">
+            <div>
+              <h3>New Site</h3>
+              <p>Custom built · Fast · Animated</p>
+            </div>
+          </div>
+          <span class="badge badge-after">After</span>
+        </div>
+        <div class="compare-preview">
+          <iframe src="https://srmarketing.live/" loading="lazy" onload="scaleFrame(this)" title="YK Wellness new site"></iframe>
+        </div>
+        <div class="compare-caption">
+          <strong>Custom built from scratch</strong>
+          <span>Instant load, smooth animations, clear booking flow. The site earns trust before a word is read.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE BUILT -->
+<section class="built">
+  <div class="built-inner">
+    <div class="section-head reveal" style="margin-bottom:48px">
+      <div class="eyebrow"><span class="eyebrow-line"></span> The Detail</div>
+      <h2>What we built</h2>
+    </div>
+    <div class="built-grid">
+      <div class="built-card reveal">
+        <div class="built-icon">⚡</div>
+        <h3>Sub-second load time</h3>
+        <p>No WordPress. No plugins. Pure hand-coded HTML, CSS and JavaScript that loads faster than any template can match.</p>
+      </div>
+      <div class="built-card reveal reveal-d1">
+        <div class="built-icon">✦</div>
+        <h3>Considered animation</h3>
+        <p>Every transition is intentional. The site moves in a way that reflects the calm, premium experience the practice delivers in person.</p>
+      </div>
+      <div class="built-card reveal reveal-d2">
+        <div class="built-icon">📱</div>
+        <h3>Mobile first</h3>
+        <p>Over 70% of visitors arrive on a phone. Every element was designed for mobile first, then scaled up. Nothing breaks. Nothing squishes.</p>
+      </div>
+      <div class="built-card reveal">
+        <div class="built-icon">📅</div>
+        <h3>Built to convert</h3>
+        <p>Prominent booking buttons, a treatment recommender, transparent pricing. Every page moves the visitor closer to a confirmed appointment.</p>
+      </div>
+      <div class="built-card reveal reveal-d1">
+        <div class="built-icon">⭐</div>
+        <h3>Social proof, done properly</h3>
+        <p>Five star Google reviews, professional accreditations, named client testimonials. The trust signals are impossible to miss.</p>
+      </div>
+      <div class="built-card reveal reveal-d2">
+        <div class="built-icon">🎨</div>
+        <h3>A brand, not a template</h3>
+        <p>The typography, colour and imagery were chosen to reflect YK Wellness specifically. Visitors feel the quality of the practice before reading a word.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULT -->
+<section class="result">
+  <div class="result-inner">
+    <div class="result-text reveal">
+      <div class="eyebrow"><span class="eyebrow-line"></span> The Outcome</div>
+      <h2>More visitors. More bookings.</h2>
+      <p>A faster site does not just feel better. It directly increases the number of people who stay, explore and book. For a London wellness practice with a full treatment menu, every percentage point of conversion matters.</p>
+      <p>The new site gives YK Wellness a digital presence that matches the standard of care they deliver.</p>
+    </div>
+    <div class="result-metrics reveal reveal-d1">
+      <div class="result-metric">
+        <span class="rm-label">Page load time</span>
+        <span class="rm-value">Under 1s</span>
+      </div>
+      <div class="result-metric">
+        <span class="rm-label">Built with</span>
+        <span class="rm-value">Zero templates</span>
+      </div>
+      <div class="result-metric">
+        <span class="rm-label">Mobile experience</span>
+        <span class="rm-value">First class</span>
+      </div>
+      <div class="result-metric">
+        <span class="rm-label">Booking flow</span>
+        <span class="rm-value">Three clicks</span>
+      </div>
+      <div class="result-metric">
+        <span class="rm-label">Market position</span>
+        <span class="rm-value">Best in London</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="eyebrow reveal"><span class="eyebrow-line"></span> Work with us<span class="eyebrow-line"></span></div>
+  <h2 class="reveal reveal-d1">Your practice<br/>deserves <em>this.</em></h2>
+  <p class="reveal reveal-d2">We build a free demo for your practice first. No deposit. No obligation. If you love it, we talk. If not, you keep it.</p>
+  <a href="contact.html" class="cta-btn reveal reveal-d3">
+    Get your free demo
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+  </a>
+  <p class="cta-note reveal">Free demo · No deposit · No obligation · Delivered in days</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Saturn Results</span>
+  <a href="index.html" style="color:var(--purple);font-weight:500">saturnresults.co.uk</a>
+</footer>
+
+<script>
+function scaleFrame(iframe){
+  const c=iframe.closest('.compare-preview');
+  const s=Math.max(c.clientWidth/1280,c.clientHeight/800);
+  iframe.style.transform=`scale(${s})`;
+  iframe.style.transformOrigin='top left';
+}
+window.addEventListener('resize',()=>{
+  document.querySelectorAll('.compare-preview iframe').forEach(scaleFrame);
+});
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
