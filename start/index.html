@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Welcome · Saturn Results</title>
+<meta name="description" content="Your starting point with Saturn Results. Everything you need to know as we begin working together." />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#08070d">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="256x256">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08070d;
+  --bg-2:#0d0b14;
+  --ink:#ffffff;
+  --muted:#a8a4b8;
+  --purple:#8b5cf6;
+  --purple-deep:#5b21b6;
+  --purple-glow:#a78bfa;
+  --border:rgba(255,255,255,.08);
+  --grad:linear-gradient(135deg,#a78bfa 0%,#8b5cf6 50%,#5b21b6 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',-apple-system,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+::selection{background:var(--purple);color:#fff}
+
+/* starfield */
+.stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background:
+   radial-gradient(1px 1px at 20% 30%,#fff,transparent),
+   radial-gradient(1px 1px at 60% 70%,#fff,transparent),
+   radial-gradient(1px 1px at 80% 20%,#cbbdf5,transparent),
+   radial-gradient(1px 1px at 35% 80%,#fff,transparent),
+   radial-gradient(1px 1px at 90% 60%,#fff,transparent),
+   radial-gradient(1px 1px at 10% 60%,#cbbdf5,transparent);
+  background-repeat:repeat;background-size:600px 600px;}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;transition:background .35s,border-color .35s;}
+nav.scrolled{background:rgba(8,7,13,.7);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:.05em}
+.nav-logo img{width:34px;height:34px;object-fit:contain}
+.nav-cta{padding:10px 22px;border:1px solid var(--border);border-radius:100px;font-size:13px;background:rgba(139,92,246,.08);transition:all .25s}
+.nav-cta:hover{background:var(--purple);border-color:var(--purple)}
+@media (max-width:768px){nav{padding:18px 22px}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border-radius:100px;font-size:14px;font-weight:500;letter-spacing:.02em;transition:all .3s cubic-bezier(.2,.8,.3,1);cursor:pointer;border:1px solid transparent}
+.btn-primary{background:var(--ink);color:var(--bg)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 50px rgba(139,92,246,.5)}
+.btn-ghost{border-color:var(--border);color:var(--ink);background:transparent}
+.btn-ghost:hover{border-color:var(--purple);transform:translateY(-3px);box-shadow:0 16px 50px rgba(139,92,246,.3)}
+.btn svg{width:16px;height:16px;transition:transform .3s}
+.btn:hover svg{transform:translateX(4px)}
+
+/* hero */
+.hero{position:relative;min-height:90vh;padding:160px 48px 80px;overflow:hidden;display:flex;align-items:center;z-index:5}
+.hero-gradient{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,rgba(139,92,246,.18) 0%,transparent 55%);z-index:1;pointer-events:none}
+.hero-inner{position:relative;z-index:3;width:100%;max-width:980px;margin:0 auto;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:10px;padding:8px 18px;border:1px solid var(--border);border-radius:100px;background:rgba(255,255,255,.03);font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:32px}
+.hero-badge .dot{width:6px;height:6px;background:var(--purple);border-radius:50%;box-shadow:0 0 12px var(--purple);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 12px var(--purple)}50%{box-shadow:0 0 24px var(--purple-glow)}}
+.hero h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(44px,6.5vw,92px);line-height:1;letter-spacing:-.02em;margin-bottom:26px}
+.hero h1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-style:italic}
+.hero p{font-size:clamp(16px,1.2vw,19px);color:var(--muted);max-width:620px;margin:0 auto 40px;line-height:1.6}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+
+/* sections */
+section{padding:120px 48px;position:relative;z-index:5}
+@media (max-width:768px){section{padding:80px 22px}.hero{padding:130px 22px 60px}}
+.section-head{max-width:1100px;margin:0 auto 70px;text-align:center}
+.section-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--purple);margin-bottom:20px;justify-content:center}
+.section-eyebrow::before{content:"";width:30px;height:1px;background:var(--purple)}
+.section-head h2{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(38px,6vw,76px);line-height:1;letter-spacing:-.02em;margin:0 auto}
+.section-head h2 em{font-style:italic;color:var(--purple-glow)}
+.section-head p{margin:22px auto 0;color:var(--muted);max-width:620px;font-size:17px;line-height:1.6}
+
+/* services grid */
+#services{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.services-grid{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border)}
+.service{background:var(--bg-2);padding:44px 36px;transition:background .4s}
+.service:hover{background:var(--bg)}
+.service h3{font-family:'Instrument Serif',serif;font-weight:400;font-size:28px;margin-bottom:14px;line-height:1.1}
+.service p{color:var(--muted);font-size:14px;line-height:1.7}
+.service-num{font-family:'Instrument Serif',serif;color:var(--purple);font-size:14px;margin-bottom:24px;letter-spacing:.2em}
+
+/* pricing tiers */
+.pricing-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:24px;align-items:stretch}
+.tier{position:relative;display:flex;flex-direction:column;border:1px solid var(--border);border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(139,92,246,.02));padding:44px 36px 36px;transition:transform .5s cubic-bezier(.2,.8,.3,1),border-color .4s,box-shadow .4s}
+.tier:hover{transform:translateY(-6px);border-color:rgba(139,92,246,.35);box-shadow:0 30px 80px rgba(139,92,246,.15)}
+.tier.popular{border-color:rgba(167,139,250,.5);background:linear-gradient(180deg,rgba(139,92,246,.08),rgba(139,92,246,.02));box-shadow:0 30px 80px rgba(139,92,246,.18)}
+.tier-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);padding:6px 14px;border-radius:100px;font-size:10px;letter-spacing:.25em;text-transform:uppercase;background:var(--grad);color:#fff;font-weight:600;box-shadow:0 8px 22px rgba(139,92,246,.4)}
+.tier-name{font-family:'Instrument Serif',serif;font-weight:400;font-size:30px;line-height:1;letter-spacing:-.02em;margin-bottom:8px}
+.tier-tagline{font-size:13px;color:var(--muted);margin-bottom:26px;line-height:1.5;min-height:38px}
+.tier-price{display:flex;align-items:baseline;gap:8px;margin-bottom:4px}
+.tier-price .currency{font-family:'Instrument Serif',serif;font-size:28px;color:var(--purple-glow)}
+.tier-price .amount{font-family:'Instrument Serif',serif;font-size:66px;line-height:1.05;background:linear-gradient(180deg,#fff 0%,#fff 50%,var(--purple-glow) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.tier-price .was{font-size:18px;color:var(--muted);text-decoration:line-through;opacity:.7}
+.tier-once{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:28px}
+.tier-divider{height:1px;background:var(--border);margin:0 0 24px}
+.tier-list{list-style:none;display:flex;flex-direction:column;gap:13px;margin-bottom:34px;flex:1}
+.tier-list li{display:flex;gap:12px;font-size:14px;line-height:1.5;color:var(--ink)}
+.tier-list li svg{width:16px;height:16px;color:var(--purple-glow);flex-shrink:0;margin-top:3px}
+.tier-cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 24px;border-radius:100px;font-size:13px;letter-spacing:.06em;font-weight:500;border:1px solid var(--border);background:transparent;color:var(--ink);transition:all .3s cubic-bezier(.2,.8,.3,1);cursor:pointer}
+.tier-cta:hover{border-color:var(--purple);background:rgba(139,92,246,.1);transform:translateY(-2px)}
+.tier.popular .tier-cta{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tier.popular .tier-cta:hover{background:var(--purple);color:#fff;border-color:var(--purple);box-shadow:0 12px 40px rgba(139,92,246,.4)}
+.tier-cta svg{width:14px;height:14px;transition:transform .3s}
+.tier-cta:hover svg{transform:translateX(3px)}
+.pricing-foot{max-width:820px;margin:46px auto 0;text-align:center;font-size:13px;color:var(--muted);line-height:1.7}
+.pricing-foot strong{color:var(--purple-glow);font-weight:500}
+@media (max-width:860px){.pricing-grid{grid-template-columns:1fr;max-width:460px}.tier-price .amount{font-size:54px}}
+
+/* marketing band */
+.mkt{max-width:900px;margin:34px auto 0;border:1px solid var(--border);border-radius:24px;background:linear-gradient(180deg,rgba(139,92,246,.06),rgba(139,92,246,.01));padding:40px 36px;text-align:center}
+.mkt h3{font-family:'Instrument Serif',serif;font-weight:400;font-size:32px;margin-bottom:10px}
+.mkt .from{font-family:'Instrument Serif',serif;font-size:46px;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.mkt p{color:var(--muted);font-size:15px;max-width:620px;margin:12px auto 0;line-height:1.6}
+.mkt .chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+.mkt .chip{font-size:12px;padding:9px 16px;border-radius:100px;border:1px solid var(--border);background:rgba(255,255,255,.02);color:var(--muted)}
+
+/* steps */
+.steps{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px}
+.step{border:1px solid var(--border);border-radius:20px;padding:32px 26px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(139,92,246,.02))}
+.step .n{font-family:'Instrument Serif',serif;font-size:38px;color:var(--purple-glow);line-height:1;margin-bottom:16px}
+.step h4{font-size:16px;margin-bottom:8px}
+.step p{color:var(--muted);font-size:13px;line-height:1.6}
+
+/* usp */
+.usp-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+.usp{border:1px solid var(--border);border-radius:20px;padding:30px 28px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(139,92,246,.02))}
+.usp h4{font-family:'Instrument Serif',serif;font-weight:400;font-size:22px;margin-bottom:10px;color:var(--purple-glow)}
+.usp p{color:var(--muted);font-size:14px;line-height:1.6}
+
+/* faq */
+.faq{max-width:820px;margin:0 auto}
+.faq details{border:1px solid var(--border);border-radius:16px;padding:6px 22px;margin-bottom:14px;background:rgba(255,255,255,.015)}
+.faq summary{cursor:pointer;list-style:none;padding:18px 0;font-size:16px;font-weight:500;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--purple-glow);font-size:22px;transition:transform .25s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq p{color:var(--muted);font-size:14px;line-height:1.7;padding:0 0 20px}
+
+/* cta */
+#cta{text-align:center;background:radial-gradient(ellipse at 50% 50%,rgba(139,92,246,.15),transparent 60%)}
+.cta-inner{max-width:820px;margin:0 auto}
+.cta-inner h2{font-family:'Instrument Serif',serif;font-size:clamp(44px,8vw,96px);line-height:1;font-weight:400;margin-bottom:26px;letter-spacing:-.02em}
+.cta-inner h2 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-style:italic}
+.cta-inner p{color:var(--muted);font-size:18px;margin-bottom:40px;max-width:540px;margin-left:auto;margin-right:auto;line-height:1.6}
+
+/* footer */
+footer{position:relative;padding:90px 48px 40px;background:linear-gradient(180deg,transparent 0%,#120a1f 100%);z-index:6}
+.footer-content{max-width:1300px;margin:0 auto 50px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:50px}
+.footer-brand h3{font-family:'Instrument Serif',serif;font-size:42px;font-weight:400;line-height:1;margin-bottom:16px;letter-spacing:-.02em}
+.footer-brand h3 em{font-style:italic;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.footer-brand p{color:var(--muted);font-size:14px;line-height:1.6;max-width:340px}
+.footer-col h4{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--purple);margin-bottom:20px}
+.footer-col a{display:block;font-size:14px;color:var(--muted);padding:6px 0;transition:color .25s}
+.footer-col a:hover{color:var(--ink)}
+.footer-bottom{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;padding-top:30px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
+.footer-bottom .copy{display:flex;align-items:center;gap:14px}
+.footer-bottom .copy img{width:28px;height:28px;object-fit:contain}
+@media (max-width:900px){.footer-content{grid-template-columns:1fr 1fr;gap:36px}.footer-brand{grid-column:1/-1}}
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<!-- Nav -->
+<nav id="nav">
+  <a class="nav-logo" href="/">
+    <img src="/SRWHITELOGO.png" alt="Saturn Results"/>
+    <span>Saturn Results</span>
+  </a>
+  <a class="nav-cta" href="mailto:contact@saturnresults.com">Message Us →</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-gradient"></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span> Welcome to Saturn Results</div>
+    <h1>Welcome<br/><span class="grad">aboard.</span></h1>
+    <p>You've taken the first step, and we're glad to have you. This page is your starting point: everything you need to know as we begin working together to grow your business online.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#next">What Happens Next
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="#onboard">What We'll Need</a>
+    </div>
+  </div>
+</header>
+
+<!-- WHAT WE DO -->
+<section id="services">
+  <div class="section-head">
+    <div class="section-eyebrow">What We'll Handle</div>
+    <h2>Everything we'll be doing <em>for you.</em></h2>
+    <p>From your website to every marketing channel, here's what we look after on your behalf once we're working together.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service"><div class="service-num">01</div><h3>Websites</h3><p>One page sites, full multi page sites, online stores and landing pages. Built bespoke for any niche, mobile first, and live in a week.</p></div>
+    <div class="service"><div class="service-num">02</div><h3>Meta &amp; Google Ads</h3><p>Targeted Facebook, Instagram and Google campaigns that put your business in front of ready to buy customers.</p></div>
+    <div class="service"><div class="service-num">03</div><h3>SEO</h3><p>Get found on Google for the searches that matter, with on page optimisation and a strategy built around your goals.</p></div>
+    <div class="service"><div class="service-num">04</div><h3>Email Marketing</h3><p>Turn visitors into repeat customers with email flows and campaigns that keep your brand front of mind.</p></div>
+    <div class="service"><div class="service-num">05</div><h3>Social Media</h3><p>Full social media management so your channels stay active, on brand and working for you.</p></div>
+    <div class="service"><div class="service-num">06</div><h3>Content &amp; Strategy</h3><p>Content strategy and creation that gives you something to say and the plan to say it consistently.</p></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-head">
+    <div class="section-eyebrow">Your Plan</div>
+    <h2>The offer you're <em>starting with.</em></h2>
+    <p>A quick recap of what we agreed, all in one place. Your website is discounted because we handle your marketing, so we only do well when your site brings in sales.</p>
+  </div>
+
+  <div class="pricing-grid">
+    <article class="tier">
+      <div class="tier-name">One-Page Website</div>
+      <div class="tier-tagline">A single, premium page that does one job brilliantly.</div>
+      <div class="tier-price"><span class="currency">£</span><span class="amount">200</span><span class="was">£450</span></div>
+      <div class="tier-once">One time · when you market with us</div>
+      <div class="tier-divider"></div>
+      <ul class="tier-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Bespoke single-page design, no templates</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Mobile first, fast and responsive</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Contact or booking form</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Core SEO foundations</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Live within one week</li>
+      </ul>
+      <a class="tier-cta" href="mailto:contact@saturnresults.com">Any Questions?
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </article>
+
+    <article class="tier popular">
+      <div class="tier-badge">Best Value</div>
+      <div class="tier-name">Full Website</div>
+      <div class="tier-tagline">A full multi page site (5+ pages) built to convert.</div>
+      <div class="tier-price"><span class="currency">£</span><span class="amount">550</span><span class="was">£950</span></div>
+      <div class="tier-once">One time · when you market with us</div>
+      <div class="tier-divider"></div>
+      <ul class="tier-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>5+ page bespoke website</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Brand polish, colours and type</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Booking, contact or lead capture</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>On page SEO and analytics setup</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Live within one week</li>
+      </ul>
+      <a class="tier-cta" href="mailto:contact@saturnresults.com">Any Questions?
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </article>
+  </div>
+
+  <div class="mkt">
+    <h3>Monthly Marketing</h3>
+    <div class="from">from £200<span style="font-size:18px;color:var(--muted);-webkit-text-fill-color:var(--muted)"> /mo</span></div>
+    <p>Scalable to suit your business, from £200 up to £1,000 per month depending on how much we run. Start small, then scale as the results come in.</p>
+    <div class="chips">
+      <span class="chip">Meta Ads</span><span class="chip">Google Ads</span><span class="chip">SEO</span><span class="chip">Email</span><span class="chip">Social Media</span><span class="chip">Content</span>
+    </div>
+  </div>
+
+  <div class="pricing-foot">
+    Standard website pricing is <strong>£450</strong> (one page) and <strong>£950</strong> (full site). The discounted rates apply when Saturn handles your marketing. Every build is delivered in <strong>one week</strong>, with <strong>no monthly hosting fees</strong>.
+  </div>
+</section>
+
+<!-- WHY SATURN -->
+<section>
+  <div class="section-head">
+    <div class="section-eyebrow">Why Saturn</div>
+    <h2>Built to win <em>with you.</em></h2>
+  </div>
+  <div class="usp-grid">
+    <div class="usp"><h4>A website for next to nothing</h4><p>Because we make our money on the marketing, your website comes at a price most agencies would never offer.</p></div>
+    <div class="usp"><h4>Live in one week</h4><p>No months of waiting. We onboard you, build the site, and have you live within seven days.</p></div>
+    <div class="usp"><h4>Everything under one roof</h4><p>Website plus every major marketing channel, from one team that knows your business.</p></div>
+    <div class="usp"><h4>We win when you win</h4><p>The website and the marketing work together, so our interests are aligned with yours from day one.</p></div>
+  </div>
+</section>
+
+<!-- WHAT HAPPENS NEXT -->
+<section id="next" style="background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="section-head">
+    <div class="section-eyebrow">What Happens Next</div>
+    <h2>From today to live in <em>one week.</em></h2>
+    <p>Here's exactly how the next few days look now that we're working together.</p>
+  </div>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><h4>Welcome chat</h4><p>A quick call to understand your business, your customers and what you want to achieve.</p></div>
+    <div class="step"><div class="n">2</div><h4>You send your bits</h4><p>You pass us your branding, products and details using the checklist below. That's all we need.</p></div>
+    <div class="step"><div class="n">3</div><h4>We build</h4><p>Your bespoke website is designed and live within one week, with revisions until you're happy.</p></div>
+    <div class="step"><div class="n">4</div><h4>We grow</h4><p>We set up and run your marketing, then report on results and scale as you grow.</p></div>
+  </div>
+</section>
+
+<!-- WHAT WE'LL NEED -->
+<section id="onboard">
+  <div class="section-head">
+    <div class="section-eyebrow">What We'll Need</div>
+    <h2>A few things to <em>get started.</em></h2>
+    <p>Send these over whenever you're ready. Don't have something? No problem, we can help create it.</p>
+  </div>
+  <div class="usp-grid">
+    <div class="usp"><h4>Your brand</h4><p>Logo, any brand colours, and a few words on the feel you're after. We can create these if you don't have them.</p></div>
+    <div class="usp"><h4>Your offering</h4><p>The products or services you sell, with pricing, and anything that makes you different.</p></div>
+    <div class="usp"><h4>Photos &amp; content</h4><p>Any images, photography or existing copy you'd like used. We can source or write more if needed.</p></div>
+    <div class="usp"><h4>Your goals</h4><p>What success looks like for you: more sales, more enquiries, or growing your brand.</p></div>
+    <div class="usp"><h4>Access</h4><p>Your domain, plus any existing website or social accounts, so we can get everything connected.</p></div>
+    <div class="usp"><h4>A point of contact</h4><p>The best person and way to reach you, so we can keep things moving quickly.</p></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="section-head">
+    <div class="section-eyebrow">Questions</div>
+    <h2>Good to <em>know.</em></h2>
+  </div>
+  <div class="faq">
+    <details><summary>Why is the website so cheap?</summary><p>Because we make our money on the marketing. The discounted website is how we earn the marketing relationship, and it keeps our interests aligned with yours. If you only want the website, it is charged at our standard rate (£450 for one page, £950 for a full site).</p></details>
+    <details><summary>How long until my site is live?</summary><p>One week from onboarding. We move fast so you start seeing results sooner.</p></details>
+    <details><summary>What does the monthly marketing include?</summary><p>It is built around your goals and can cover Meta and Google ads, SEO, email, social media and content. We start with a package that fits your budget, from £200 per month, and scale up as the results come in.</p></details>
+    <details><summary>Do I own my website?</summary><p>Yes. The website is yours, with no monthly hosting fees from us.</p></details>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-inner">
+    <h2>Glad to have you <span class="grad">aboard.</span></h2>
+    <p>That's everything for now. Any questions as we get going, we're only a message away, and we'll be in touch shortly to begin.</p>
+    <a class="btn btn-primary" href="mailto:contact@saturnresults.com">Message Us
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+    <p style="margin-top:26px;font-size:14px">Call <a href="tel:+447397149933" style="color:var(--purple-glow)">07397 149933</a> &nbsp;·&nbsp; <a href="mailto:contact@saturnresults.com" style="color:var(--purple-glow)">contact@saturnresults.com</a></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <h3>Build something <em>orbital.</em></h3>
+      <p>A digital studio engineering premium websites, brands, and growth systems. Based at Venospace, Exeter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Studio</h4>
+      <a href="/">Home</a>
+      <a href="/#work">Work</a>
+      <a href="/contact/">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="mailto:contact@saturnresults.com">Email</a>
+      <a href="tel:+447397149933">07397 149933</a>
+      <a href="/portal/">Client Portal</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="copy">
+      <img src="/SRWHITELOGO.png" alt=""/>
+      <span>© 2026 Saturn Results · Built with care</span>
+    </div>
+    <div>contact@saturnresults.com</div>
+  </div>
+</footer>
+
+<script>
+// nav background on scroll
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>40)},{passive:true});
+</script>
+</body>
+</html>
