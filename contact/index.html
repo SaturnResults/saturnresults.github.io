@@ -859,8 +859,7 @@ const success=document.getElementById('success');
    Deploy → Manage deployments → ✏ → Version: New version → Deploy
    The URL stays the same.
    ============================================================ */
-const SHEET_ENDPOINT  = 'https://script.google.com/macros/s/AKfycbzKyCiomjxfu_fV7w5zqlIiIji6-kv3GBxB-XFcMXaFPWe-i4p9ShpTmMV053nwnJaH5g/exec';
-const WEB3FORMS_KEY   = 'ac6bd08f-23c7-4311-abe6-b49c47fe5f20'; // emails contact@saturnresults.com
+const WEB3FORMS_KEY = 'ac6bd08f-23c7-4311-abe6-b49c47fe5f20';
 
 form.addEventListener('submit',async e=>{
   e.preventDefault();
@@ -871,28 +870,16 @@ form.addEventListener('submit',async e=>{
   const original=label.textContent;
   btn.disabled=true;label.textContent='Sending…';
 
-  // Build Web3Forms payload (adds access key, subject, from name)
-  const w3=new FormData();
-  w3.append('access_key',WEB3FORMS_KEY);
-  w3.append('subject',`New free demo request — ${data.name||'Unknown'}`);
-  w3.append('from_name','Saturn Results · saturnresults.co.uk');
-  Object.entries(data).forEach(([k,v])=>w3.append(k,v));
-
-  const sheetPost = fetch(SHEET_ENDPOINT,{
-    method:'POST',mode:'no-cors',
-    body:new URLSearchParams(data).toString(),
-    headers:{'Content-Type':'application/x-www-form-urlencoded'}
-  }).catch(()=>{});
-
-  const emailPost = fetch('https://api.web3forms.com/submit',{
-    method:'POST',
-    body:w3
-  }).then(r=>r.ok?r.json():null).catch(()=>null);
+  const payload=new FormData();
+  payload.append('access_key',WEB3FORMS_KEY);
+  payload.append('subject',`New free demo request — ${data.name||'Unknown'}`);
+  payload.append('from_name','Saturn Results · saturnresults.co.uk');
+  Object.entries(data).forEach(([k,v])=>payload.append(k,v));
 
   try{
-    // Wait for the email send (Web3Forms returns proper CORS) — if it works, we know mail went out
-    const r=await emailPost;
-    await sheetPost; // sheet is fire-and-forget; ignore failures
+    const res=await fetch('https://api.web3forms.com/submit',{method:'POST',body:payload});
+    const json=await res.json().catch(()=>({success:false}));
+    if(!json.success) throw new Error(json.message||'Submission failed');
     success.classList.add('show');
     label.textContent='Sent ✓';
     pushBubble('them',`Got your details, thanks ${data.name?data.name.split(' ')[0]:''}! We'll have your demo ready within 24 hours and email you when it's live so you can pick a time to view it.`,true);
