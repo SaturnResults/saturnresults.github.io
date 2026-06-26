@@ -44,6 +44,11 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',-apple-system,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;touch-action:pan-y}
 body.loading{overflow:hidden;height:100vh}
+@media (max-width:768px){
+  /* Belt-and-braces: never let the body lose vertical scroll on mobile */
+  html,body{overflow-x:hidden;overflow-y:auto !important;-webkit-overflow-scrolling:touch;touch-action:pan-y !important;height:auto !important}
+  body.loading{overflow:hidden !important}
+}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 ::selection{background:var(--purple);color:#fff}
@@ -1628,13 +1633,19 @@ const pctTimer=setInterval(()=>{
   if(percent>=100){percent=100;clearInterval(pctTimer)}
   pctEl.textContent=String(Math.floor(percent)).padStart(2,'0')+'%';
 },80);
-window.addEventListener('load',()=>{
-  setTimeout(()=>{
-    pctEl.textContent='100%';
-    document.getElementById('loader').classList.add('hidden');
-    document.body.classList.remove('loading');
-  },2300);
-});
+let dismissed=false;
+function dismissLoader(){
+  if(dismissed) return; dismissed=true;
+  clearInterval(pctTimer);
+  if(pctEl) pctEl.textContent='100%';
+  const el=document.getElementById('loader');
+  if(el) el.classList.add('hidden');
+  document.body.classList.remove('loading');
+}
+// Primary: dismiss after window load + brief beat
+window.addEventListener('load',()=>setTimeout(dismissLoader,1400));
+// Safety net: never let the loader trap scroll for more than 3.5s
+setTimeout(dismissLoader,3500);
 
 /* ====== CUSTOM CURSOR ====== */
 const cursor=document.querySelector('.cursor');
