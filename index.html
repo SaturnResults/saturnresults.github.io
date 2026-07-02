@@ -58,75 +58,47 @@ img{max-width:100%;display:block}
   position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:.5;
 }
 
-/* ============ LOADING SCREEN (warp-speed cinematic) ============ */
+/* ============ LOADING SCREEN (calm cosmic drift) ============ */
 #loader{
-  position:fixed;inset:0;background:#000;z-index:9999;
+  position:fixed;inset:0;background:var(--bg);z-index:9999;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  transition:opacity .7s cubic-bezier(.7,0,.3,1),visibility .7s;
+  transition:opacity .6s ease,visibility .6s;
   overflow:hidden;
 }
 #loader.hidden{opacity:0;visibility:hidden}
-#loader.hidden .loader-flash{opacity:1;transition:opacity .25s ease-out}
-#warp-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
-.loader-flash{
-  position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,#fff 0%,rgba(167,139,250,.6) 30%,transparent 65%);
-  opacity:0;pointer-events:none;z-index:2;
-}
+#warp-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.55}
 .loader-center{
-  position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;gap:24px;
-  transform:scale(1);transition:transform .6s cubic-bezier(.5,0,.75,0),opacity .5s ease;
+  position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;gap:22px;
+  transition:opacity .5s ease,transform .5s ease;
 }
-#loader.hidden .loader-center{transform:scale(3.2);opacity:0}
+#loader.hidden .loader-center{transform:translateY(-6px);opacity:0}
 .loader-logo{
-  width:78px;height:78px;position:relative;
-  animation:logoPulse 1.4s cubic-bezier(.5,0,.5,1) infinite;
+  width:64px;height:64px;position:relative;
 }
 .loader-logo img{
   width:100%;height:100%;object-fit:contain;
-  filter:drop-shadow(0 0 24px rgba(167,139,250,.9)) drop-shadow(0 0 48px rgba(139,92,246,.5));
-}
-.loader-logo::before,.loader-logo::after{
-  content:"";position:absolute;inset:-14px;border-radius:50%;
-  border:1px solid transparent;pointer-events:none;
+  filter:drop-shadow(0 0 14px rgba(167,139,250,.55));
 }
 .loader-logo::before{
-  border-top-color:var(--purple-glow);
-  border-right-color:transparent;
-  animation:spin .9s linear infinite;
-}
-.loader-logo::after{
-  inset:-26px;
-  border-bottom-color:var(--purple);
-  border-left-color:transparent;
-  animation:spin 1.6s linear infinite reverse;
+  content:"";position:absolute;inset:-12px;border-radius:50%;
+  border:1px solid transparent;border-top-color:var(--purple-glow);
+  animation:spin 1.5s linear infinite;pointer-events:none;
 }
 .loader-word{
-  font-family:'Instrument Serif',serif;font-style:italic;font-size:22px;
-  color:#fff;letter-spacing:.02em;
-  text-shadow:0 0 20px rgba(167,139,250,.5);
-  opacity:0;animation:loaderFade .6s ease .2s forwards;
+  font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;
+  color:var(--muted);letter-spacing:.02em;
 }
-.loader-word .g{
-  background:linear-gradient(135deg,#a78bfa,#8b5cf6,#5b21b6);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-}
+.loader-word .g{color:var(--purple-glow)}
 .loader-bar{
-  width:200px;height:2px;background:rgba(255,255,255,.08);position:relative;overflow:hidden;border-radius:2px;
-  opacity:0;animation:loaderFade .5s ease .3s forwards;
+  width:180px;height:1px;background:rgba(255,255,255,.08);position:relative;overflow:hidden;
 }
 .loader-bar::after{
   content:"";position:absolute;inset:0;width:0;
-  background:linear-gradient(90deg,var(--purple-glow),#fff,var(--purple-glow));
-  box-shadow:0 0 12px var(--purple-glow);
-  animation:fill 1.6s cubic-bezier(.4,0,.2,1) forwards;
+  background:linear-gradient(90deg,transparent,var(--purple-glow),transparent);
+  animation:fill 1.4s cubic-bezier(.4,0,.2,1) forwards;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes fill{to{width:100%}}
-@keyframes loaderFade{to{opacity:1}}
-@keyframes logoPulse{
-  0%,100%{transform:scale(1);filter:brightness(1)}
-  50%{transform:scale(1.06);filter:brightness(1.25)}
-}
 
 /* ============ CUSTOM CURSOR ============ */
 .cursor{
@@ -831,7 +803,6 @@ footer::before{
 <!-- Loading screen -->
 <div id="loader">
   <canvas id="warp-canvas"></canvas>
-  <div class="loader-flash"></div>
   <div class="loader-center">
     <div class="loader-logo"><img src="SRWHITELOGO.png" alt="SR"/></div>
     <div class="loader-word">Enterin<span class="g">g</span> the studio</div>
@@ -1668,16 +1639,16 @@ const SR_Audio=(function(){
   });
 })();
 
-/* ====== LOADER — warp-speed cinematic ====== */
+/* ====== LOADER — calm cosmic drift ====== */
 (function(){
   const canvas=document.getElementById('warp-canvas');
   if(!canvas){return}
   const ctx=canvas.getContext('2d');
-  let w,h,cx,cy,stars,running=true,speed=1;
+  let w,h,cx,cy,stars,running=true;
   function resize(){
     w=canvas.width=innerWidth;h=canvas.height=innerHeight;
     cx=w/2;cy=h/2;
-    const n=Math.min(320,Math.floor((w*h)/6000));
+    const n=Math.min(160,Math.floor((w*h)/10000)); // fewer stars, less busy
     stars=Array.from({length:n},()=>({
       x:(Math.random()-.5)*w,
       y:(Math.random()-.5)*h,
@@ -1689,13 +1660,12 @@ const SR_Audio=(function(){
   addEventListener('resize',resize);
   function frame(){
     if(!running) return;
-    // subtle trail effect
-    ctx.fillStyle='rgba(0,0,0,.35)';
+    ctx.fillStyle='rgba(8,7,13,.55)'; // gentler trails, matches bg
     ctx.fillRect(0,0,w,h);
     for(let i=0;i<stars.length;i++){
       const s=stars[i];
       s.pz=s.z;
-      s.z-=speed*8;
+      s.z-=1.8; // constant, slow speed — no ramp
       if(s.z<1){
         s.x=(Math.random()-.5)*w;
         s.y=(Math.random()-.5)*h;
@@ -1706,23 +1676,13 @@ const SR_Audio=(function(){
       const px=s.x*pk+cx, py=s.y*pk+cy;
       if(x<0||x>w||y<0||y>h) continue;
       const bright=Math.min(1,(w-s.z)/w);
-      const hue=260+bright*40;
-      ctx.strokeStyle=`hsla(${hue},100%,${70+bright*20}%,${.4+bright*.6})`;
-      ctx.lineWidth=Math.max(.6,bright*2.2);
+      ctx.strokeStyle=`hsla(268,60%,${70+bright*15}%,${.15+bright*.35})`;
+      ctx.lineWidth=Math.max(.5,bright*1.1);
       ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(x,y);ctx.stroke();
     }
     requestAnimationFrame(frame);
   }
   frame();
-  // ramp speed up for warp effect
-  const rampStart=performance.now();
-  function ramp(){
-    if(!running) return;
-    const t=(performance.now()-rampStart)/1200;
-    speed=1+Math.min(6,t*t*7);
-    requestAnimationFrame(ramp);
-  }
-  ramp();
   window._warpStop=()=>{running=false};
 })();
 
