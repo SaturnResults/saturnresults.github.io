@@ -58,56 +58,75 @@ img{max-width:100%;display:block}
   position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:.5;
 }
 
-/* ============ LOADING SCREEN ============ */
+/* ============ LOADING SCREEN (warp-speed cinematic) ============ */
 #loader{
-  position:fixed;inset:0;background:var(--bg);z-index:9999;
+  position:fixed;inset:0;background:#000;z-index:9999;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  transition:opacity .9s cubic-bezier(.7,0,.3,1),visibility .9s;
+  transition:opacity .7s cubic-bezier(.7,0,.3,1),visibility .7s;
+  overflow:hidden;
 }
 #loader.hidden{opacity:0;visibility:hidden}
-#loader.hidden .loader-curtain{transform:translateY(-100%)}
-.loader-curtain{
-  position:absolute;inset:0;background:linear-gradient(180deg,var(--bg) 0%,#1a0d2e 100%);
-  z-index:-1;transition:transform 1s cubic-bezier(.85,0,.15,1);
+#loader.hidden .loader-flash{opacity:1;transition:opacity .25s ease-out}
+#warp-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.loader-flash{
+  position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,#fff 0%,rgba(167,139,250,.6) 30%,transparent 65%);
+  opacity:0;pointer-events:none;z-index:2;
 }
-.loader-ring{
-  width:140px;height:140px;position:relative;margin-bottom:30px;
+.loader-center{
+  position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;gap:24px;
+  transform:scale(1);transition:transform .6s cubic-bezier(.5,0,.75,0),opacity .5s ease;
 }
-.loader-ring::before,.loader-ring::after{
-  content:"";position:absolute;inset:0;border-radius:50%;
-  border:1px solid transparent;
-}
-.loader-ring::before{
-  border-top-color:var(--purple);
-  border-right-color:var(--purple-glow);
-  animation:spin 1.4s linear infinite;
-}
-.loader-ring::after{
-  inset:18px;
-  border-bottom-color:var(--purple-glow);
-  border-left-color:var(--purple);
-  animation:spin 2s linear infinite reverse;
-}
+#loader.hidden .loader-center{transform:scale(3.2);opacity:0}
 .loader-logo{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  width:78px;height:78px;position:relative;
+  animation:logoPulse 1.4s cubic-bezier(.5,0,.5,1) infinite;
 }
-.loader-logo img{width:60px;height:60px;object-fit:contain;filter:drop-shadow(0 0 20px var(--purple))}
-.loader-text{
-  font-family:'Instrument Serif',serif;font-size:14px;letter-spacing:.4em;
-  color:var(--muted);text-transform:uppercase;
+.loader-logo img{
+  width:100%;height:100%;object-fit:contain;
+  filter:drop-shadow(0 0 24px rgba(167,139,250,.9)) drop-shadow(0 0 48px rgba(139,92,246,.5));
 }
-.loader-percent{
-  margin-top:14px;font-size:12px;letter-spacing:.3em;color:var(--purple-glow);font-variant-numeric:tabular-nums;
+.loader-logo::before,.loader-logo::after{
+  content:"";position:absolute;inset:-14px;border-radius:50%;
+  border:1px solid transparent;pointer-events:none;
+}
+.loader-logo::before{
+  border-top-color:var(--purple-glow);
+  border-right-color:transparent;
+  animation:spin .9s linear infinite;
+}
+.loader-logo::after{
+  inset:-26px;
+  border-bottom-color:var(--purple);
+  border-left-color:transparent;
+  animation:spin 1.6s linear infinite reverse;
+}
+.loader-word{
+  font-family:'Instrument Serif',serif;font-style:italic;font-size:22px;
+  color:#fff;letter-spacing:.02em;
+  text-shadow:0 0 20px rgba(167,139,250,.5);
+  opacity:0;animation:loaderFade .6s ease .2s forwards;
+}
+.loader-word .g{
+  background:linear-gradient(135deg,#a78bfa,#8b5cf6,#5b21b6);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
 .loader-bar{
-  margin-top:24px;width:240px;height:1px;background:rgba(255,255,255,.08);position:relative;overflow:hidden;
+  width:200px;height:2px;background:rgba(255,255,255,.08);position:relative;overflow:hidden;border-radius:2px;
+  opacity:0;animation:loaderFade .5s ease .3s forwards;
 }
 .loader-bar::after{
-  content:"";position:absolute;inset:0;width:0;background:var(--grad);
-  animation:fill 2.2s cubic-bezier(.7,0,.3,1) forwards;
+  content:"";position:absolute;inset:0;width:0;
+  background:linear-gradient(90deg,var(--purple-glow),#fff,var(--purple-glow));
+  box-shadow:0 0 12px var(--purple-glow);
+  animation:fill 1.6s cubic-bezier(.4,0,.2,1) forwards;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes fill{to{width:100%}}
+@keyframes loaderFade{to{opacity:1}}
+@keyframes logoPulse{
+  0%,100%{transform:scale(1);filter:brightness(1)}
+  50%{transform:scale(1.06);filter:brightness(1.25)}
+}
 
 /* ============ CUSTOM CURSOR ============ */
 .cursor{
@@ -345,6 +364,8 @@ section{padding:140px 48px;position:relative;z-index:5}
   transition:transform 1.2s cubic-bezier(.2,.8,.3,1),filter .5s;
   filter:saturate(.95) brightness(.92);
 }
+.project.contain-fit .project-visual img{object-fit:contain;background:var(--bg-2);filter:none}
+.project.contain-fit:hover .project-visual img{filter:brightness(1.05)}
 .project:hover .project-visual img{transform:scale(1.07);filter:saturate(1.05) brightness(1)}
 .project-visual::after{
   content:"";position:absolute;inset:0;pointer-events:none;
@@ -809,13 +830,13 @@ footer::before{
 
 <!-- Loading screen -->
 <div id="loader">
-  <div class="loader-curtain"></div>
-  <div class="loader-ring">
+  <canvas id="warp-canvas"></canvas>
+  <div class="loader-flash"></div>
+  <div class="loader-center">
     <div class="loader-logo"><img src="SRWHITELOGO.png" alt="SR"/></div>
+    <div class="loader-word">Enterin<span class="g">g</span> the studio</div>
+    <div class="loader-bar"></div>
   </div>
-  <div class="loader-text">Saturn Results</div>
-  <div class="loader-percent" id="loaderPercent">00%</div>
-  <div class="loader-bar"></div>
 </div>
 
 <!-- Custom cursor -->
@@ -960,7 +981,7 @@ footer::before{
       </div>
     </article>
 
-    <article class="project reveal" data-preview="https://saturnresults.co.uk/raglouk-demo/">
+    <article class="project reveal contain-fit" data-preview="https://saturnresults.co.uk/raglouk-demo/">
       <div class="project-visual">
         <div class="project-num">02</div>
         <div class="project-tag">Apparel</div>
@@ -982,11 +1003,11 @@ footer::before{
       </div>
     </article>
 
-    <article class="project reveal" data-preview="https://www.alderneyweek.com/">
+    <article class="project reveal contain-fit" data-preview="https://www.alderneyweek.com/">
       <div class="project-visual">
         <div class="project-num">03</div>
         <div class="project-tag">Events</div>
-        <img src="alderney-week.avif" alt="Alderney Week festival site preview" loading="lazy"/>
+        <img src="alderney-week.png" alt="Alderney Week festival site preview" loading="lazy"/>
         <div class="preview-badge"><span class="live-dot"></span>Live preview</div>
       </div>
       <div class="project-content">
@@ -1647,27 +1668,80 @@ const SR_Audio=(function(){
   });
 })();
 
-/* ====== LOADER ====== */
-let percent=0;
-const pctEl=document.getElementById('loaderPercent');
-const pctTimer=setInterval(()=>{
-  percent+=Math.random()*8;
-  if(percent>=100){percent=100;clearInterval(pctTimer)}
-  pctEl.textContent=String(Math.floor(percent)).padStart(2,'0')+'%';
-},80);
+/* ====== LOADER — warp-speed cinematic ====== */
+(function(){
+  const canvas=document.getElementById('warp-canvas');
+  if(!canvas){return}
+  const ctx=canvas.getContext('2d');
+  let w,h,cx,cy,stars,running=true,speed=1;
+  function resize(){
+    w=canvas.width=innerWidth;h=canvas.height=innerHeight;
+    cx=w/2;cy=h/2;
+    const n=Math.min(320,Math.floor((w*h)/6000));
+    stars=Array.from({length:n},()=>({
+      x:(Math.random()-.5)*w,
+      y:(Math.random()-.5)*h,
+      z:Math.random()*w,
+      pz:0
+    }));
+  }
+  resize();
+  addEventListener('resize',resize);
+  function frame(){
+    if(!running) return;
+    // subtle trail effect
+    ctx.fillStyle='rgba(0,0,0,.35)';
+    ctx.fillRect(0,0,w,h);
+    for(let i=0;i<stars.length;i++){
+      const s=stars[i];
+      s.pz=s.z;
+      s.z-=speed*8;
+      if(s.z<1){
+        s.x=(Math.random()-.5)*w;
+        s.y=(Math.random()-.5)*h;
+        s.z=w;s.pz=s.z;continue;
+      }
+      const k=128/s.z, pk=128/s.pz;
+      const x=s.x*k+cx, y=s.y*k+cy;
+      const px=s.x*pk+cx, py=s.y*pk+cy;
+      if(x<0||x>w||y<0||y>h) continue;
+      const bright=Math.min(1,(w-s.z)/w);
+      const hue=260+bright*40;
+      ctx.strokeStyle=`hsla(${hue},100%,${70+bright*20}%,${.4+bright*.6})`;
+      ctx.lineWidth=Math.max(.6,bright*2.2);
+      ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(x,y);ctx.stroke();
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+  // ramp speed up for warp effect
+  const rampStart=performance.now();
+  function ramp(){
+    if(!running) return;
+    const t=(performance.now()-rampStart)/1200;
+    speed=1+Math.min(6,t*t*7);
+    requestAnimationFrame(ramp);
+  }
+  ramp();
+  window._warpStop=()=>{running=false};
+})();
+
 let dismissed=false;
 function dismissLoader(){
   if(dismissed) return; dismissed=true;
-  clearInterval(pctTimer);
-  if(pctEl) pctEl.textContent='100%';
   const el=document.getElementById('loader');
   if(el) el.classList.add('hidden');
   document.body.classList.remove('loading');
+  setTimeout(()=>{ if(window._warpStop) window._warpStop() },900);
 }
-// Primary: dismiss after window load + brief beat
-window.addEventListener('load',()=>setTimeout(dismissLoader,1400));
-// Safety net: never let the loader trap scroll for more than 3.5s
-setTimeout(dismissLoader,3500);
+// Fast, cinematic: dismiss ~1.5s after DOM ready — no waiting on full page load
+if(document.readyState==='complete'||document.readyState==='interactive'){
+  setTimeout(dismissLoader,1500);
+}else{
+  document.addEventListener('DOMContentLoaded',()=>setTimeout(dismissLoader,1500));
+}
+// Safety net
+setTimeout(dismissLoader,3000);
 
 /* ====== CUSTOM CURSOR ====== */
 const cursor=document.querySelector('.cursor');
