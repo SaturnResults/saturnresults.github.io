@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saturn Voyages — Find a trip that fits your budget</title>
+<meta name="description" content="Tell us your budget and how far you'll go — we'll suggest destinations, hotels and excursions that fit.">
+<link rel="icon" href="../favicon.png">
+<style>
+  :root{
+    --bg:#faf7f1;            /* page plane */
+    --surface:#fdfbf7;       /* card surface */
+    --ink:#1c1a17;
+    --ink-2:#57534b;
+    --ink-3:#8a857b;
+    --line:#e7e2d7;
+    --brand:#0f4c5c;         /* deep teal */
+    --brand-ink:#0b3a46;
+    --accent:#e36414;        /* sunset orange */
+    --accent-soft:#fbe8da;
+    --seg-flights:#2a78d6;   /* validated categorical slot 1 */
+    --seg-hotel:#1baf7a;     /* slot 2 */
+    --seg-exc:#eda100;       /* slot 3 */
+    --track:#eee9dd;
+    --radius:16px;
+    --shadow:0 1px 2px rgba(28,26,23,.06),0 8px 24px rgba(28,26,23,.07);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:40;
+    background:rgba(250,247,241,.88);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;color:var(--brand-ink);text-decoration:none;letter-spacing:-.01em}
+  .logo .globe{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--brand);color:#fff;font-size:1.05rem}
+  .nav a.cta{background:var(--brand);color:#fff;text-decoration:none;padding:9px 18px;border-radius:999px;font-weight:600;font-size:.92rem}
+  .nav a.cta:hover{background:var(--brand-ink)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:56px 0 28px;text-align:center}
+  .hero .eyebrow{display:inline-block;background:var(--accent-soft);color:#9a4207;font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:18px}
+  .hero h1{font-size:clamp(2rem,5vw,3.3rem);line-height:1.12;letter-spacing:-.02em;font-weight:800;max-width:760px;margin:0 auto}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero p{color:var(--ink-2);max-width:560px;margin:16px auto 0;font-size:1.06rem}
+
+  /* ---------- planner ---------- */
+  .planner{
+    background:var(--surface);border:1px solid var(--line);border-radius:20px;
+    box-shadow:var(--shadow);padding:26px;margin:34px auto 10px;max-width:960px;
+  }
+  .planner-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .field label{display:block;font-size:.8rem;font-weight:700;color:var(--ink-2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px}
+  .field select,.field input[type=number]{
+    width:100%;height:46px;padding:0 12px;border:1px solid var(--line);border-radius:10px;
+    background:#fff;font:inherit;color:var(--ink);
+  }
+  .field select:focus,.field input:focus{outline:2px solid var(--brand);outline-offset:1px;border-color:var(--brand)}
+  .money{position:relative}
+  .money span{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ink-3);font-weight:600}
+  .money input{padding-left:26px !important}
+  .radius-row{grid-column:1/-1;display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-top:4px}
+  .radius-row label{font-size:.8rem;font-weight:700;color:var(--ink-2);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+  input[type=range]{flex:1;min-width:200px;accent-color:var(--brand);height:32px}
+  .radius-out{font-weight:700;color:var(--brand-ink);min-width:220px;font-variant-numeric:tabular-nums}
+  .radius-out small{display:block;font-weight:500;color:var(--ink-3)}
+  .planner .go{
+    grid-column:1/-1;margin-top:4px;height:52px;border:0;border-radius:12px;cursor:pointer;
+    background:var(--accent);color:#fff;font:inherit;font-weight:800;font-size:1.05rem;letter-spacing:.01em;
+  }
+  .planner .go:hover{filter:brightness(1.06)}
+
+  /* ---------- results ---------- */
+  #results{scroll-margin-top:76px}
+  .results-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:44px 0 6px}
+  .results-head h2{font-size:1.5rem;letter-spacing:-.01em}
+  .results-head .sub{color:var(--ink-2);font-size:.95rem}
+  .sort{display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--ink-2)}
+  .sort select{height:38px;border:1px solid var(--line);border-radius:9px;background:#fff;font:inherit;padding:0 8px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:22px;margin:18px 0 60px}
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;
+  }
+  .card-top{height:118px;position:relative;display:flex;align-items:flex-end;padding:14px 18px;color:#fff}
+  .card-top .emoji{position:absolute;top:12px;right:16px;font-size:2rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,.25))}
+  .card-top h3{font-size:1.35rem;font-weight:800;letter-spacing:-.01em;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+  .card-top .country{font-size:.85rem;opacity:.92;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+  .badge{
+    position:absolute;top:12px;left:16px;background:rgba(0,0,0,.38);backdrop-filter:blur(4px);
+    color:#fff;font-size:.75rem;font-weight:600;padding:4px 10px;border-radius:999px;
+  }
+  .card-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:14px;flex:1}
+  .tagline{color:var(--ink-2);font-size:.92rem}
+
+  .block h4{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);margin-bottom:6px}
+  .hotel{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  .hotel .name{font-weight:700}
+  .stars{color:var(--accent);font-size:.85rem;letter-spacing:.05em}
+  .hotel .price{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .hotel .price small,.exc li small{font-weight:500;color:var(--ink-3)}
+  .exc{list-style:none}
+  .exc li{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-top:1px dashed var(--line);font-size:.93rem}
+  .exc li:first-child{border-top:0}
+  .exc li small{white-space:nowrap}
+  .exc .p{font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+  /* budget bar (stacked meter + text legend) */
+  .budget{margin-top:auto;padding-top:8px}
+  .budget .totals{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+  .budget .total{font-size:1.25rem;font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+  .budget .left{font-size:.85rem;color:var(--ink-2)}
+  .bar{display:flex;height:10px;border-radius:6px;background:var(--track);overflow:hidden}
+  .bar i{display:block;height:100%}
+  .bar i + i{border-left:2px solid var(--surface)}   /* 2px surface gap between segments */
+  .bar .f{background:var(--seg-flights)} .bar .h{background:var(--seg-hotel)} .bar .e{background:var(--seg-exc)}
+  .legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:8px;font-size:.8rem;color:var(--ink-2)}
+  .legend b{color:var(--ink);font-variant-numeric:tabular-nums;font-weight:700}
+  .legend .sw{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;vertical-align:0}
+
+  .card .book{
+    margin-top:14px;display:block;text-align:center;text-decoration:none;
+    background:var(--brand);color:#fff;font-weight:700;padding:11px;border-radius:10px;font-size:.95rem;
+  }
+  .card .book:hover{background:var(--brand-ink)}
+
+  /* empty / over-budget states */
+  .empty{
+    grid-column:1/-1;text-align:center;background:var(--surface);border:1px dashed var(--line);
+    border-radius:var(--radius);padding:54px 24px;color:var(--ink-2);
+  }
+  .empty .big{font-size:2.4rem;margin-bottom:10px}
+  .empty h3{color:var(--ink);margin-bottom:6px}
+  .stretch-note{grid-column:1/-1;font-size:.9rem;color:var(--ink-3);margin:-6px 0 2px}
+
+  /* ---------- how it works / footer ---------- */
+  .how{border-top:1px solid var(--line);background:var(--surface);padding:52px 0}
+  .how h2{text-align:center;font-size:1.6rem;letter-spacing:-.01em;margin-bottom:30px}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .step{text-align:center;padding:0 8px}
+  .step .n{width:44px;height:44px;border-radius:50%;background:var(--accent-soft);color:#9a4207;font-weight:800;display:grid;place-items:center;margin:0 auto 12px;font-size:1.1rem}
+  .step h3{font-size:1.05rem;margin-bottom:6px}
+  .step p{color:var(--ink-2);font-size:.93rem}
+  footer{padding:34px 0 44px;text-align:center;color:var(--ink-3);font-size:.85rem}
+  footer a{color:var(--brand);text-decoration:none;font-weight:600}
+  footer .note{max-width:640px;margin:8px auto 0}
+
+  @media(max-width:860px){
+    .planner-grid{grid-template-columns:repeat(2,1fr)}
+    .steps{grid-template-columns:1fr}
+    .hero{padding-top:40px}
+  }
+  @media(max-width:480px){
+    .planner-grid{grid-template-columns:1fr}
+    .planner{padding:20px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#"><span class="globe">✈</span> Saturn&nbsp;Voyages</a>
+    <a class="cta" href="#planner">Plan my trip</a>
+  </div>
+</header>
+
+<section class="hero wrap">
+  <span class="eyebrow">Budget-first travel planning</span>
+  <h1>Tell us your <em>budget</em> and how far you'll roam.<br>We'll do the rest.</h1>
+  <p>Pick a starting point, a spending limit and a travel radius — we'll suggest destinations, hand-picked hotels and excursions that genuinely fit your wallet.</p>
+</section>
+
+<section class="wrap" id="planner">
+  <form class="planner" id="plannerForm" novalidate>
+    <div class="planner-grid">
+      <div class="field">
+        <label for="origin">Departing from</label>
+        <select id="origin"></select>
+      </div>
+      <div class="field">
+        <label for="travellers">Travellers</label>
+        <select id="travellers">
+          <option value="1">1 person</option>
+          <option value="2" selected>2 people</option>
+          <option value="3">3 people</option>
+          <option value="4">4 people</option>
+          <option value="5">5 people</option>
+          <option value="6">6 people</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="nights">Nights</label>
+        <select id="nights">
+          <option value="2">2 nights</option>
+          <option value="3">3 nights</option>
+          <option value="4">4 nights</option>
+          <option value="5" selected>5 nights</option>
+          <option value="7">7 nights</option>
+          <option value="10">10 nights</option>
+          <option value="14">14 nights</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="budget">Total budget</label>
+        <div class="money"><span>£</span><input type="number" id="budget" min="100" step="50" value="1500" inputmode="numeric"></div>
+      </div>
+
+      <div class="radius-row">
+        <label for="radius">Travel radius</label>
+        <input type="range" id="radius" min="150" max="17000" step="50" value="2500"
+               aria-describedby="radiusOut">
+        <output class="radius-out" id="radiusOut" for="radius"></output>
+      </div>
+
+      <button class="go" type="submit">Show me where I can go →</button>
+    </div>
+  </form>
+</section>
+
+<section class="wrap" id="results" hidden>
+  <div class="results-head">
+    <div>
+      <h2>Trips that fit</h2>
+      <p class="sub" id="resultsSub"></p>
+    </div>
+    <div class="sort">
+      <label for="sort">Sort by</label>
+      <select id="sort">
+        <option value="match">Best match</option>
+        <option value="cheap">Lowest total</option>
+        <option value="lux">Most luxurious</option>
+        <option value="near">Closest first</option>
+      </select>
+    </div>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section class="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Set your limits</h3><p>Your budget covers everything we suggest — return travel, hotel and activities. No surprises at checkout.</p></div>
+      <div class="step"><div class="n">2</div><h3>We match within your radius</h3><p>We measure real distances from your departure point and only show places inside your circle.</p></div>
+      <div class="step"><div class="n">3</div><h3>Book with a human</h3><p>Like a trip? Send it to our travel team and we'll confirm live prices and handle every booking.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Saturn Voyages</strong> · hello@saturnvoyages.example · Built by <a href="https://saturnresults.co.uk">Saturn Results</a></p>
+    <p class="note">Demonstration site. Hotel, excursion and travel prices are illustrative estimates for planning, not live quotes — our team confirms exact prices before any booking.</p>
+  </div>
+</footer>
+
+<script>
+/* ================= data ================= */
+const ORIGINS = [
+  {name:"London (UK)",        lat:51.47, lon:-0.45},
+  {name:"Manchester (UK)",    lat:53.36, lon:-2.27},
+  {name:"Birmingham (UK)",    lat:52.45, lon:-1.73},
+  {name:"Edinburgh (UK)",     lat:55.95, lon:-3.36},
+  {name:"Bristol (UK)",       lat:51.38, lon:-2.72},
+  {name:"Guernsey (CI)",      lat:49.43, lon:-2.60},
+  {name:"Jersey (CI)",        lat:49.21, lon:-2.19},
+  {name:"Alderney (CI)",      lat:49.71, lon:-2.21},
+  {name:"Dublin (IE)",        lat:53.42, lon:-6.27},
+  {name:"Paris (FR)",         lat:49.01, lon: 2.55},
+  {name:"Amsterdam (NL)",     lat:52.31, lon: 4.76},
+  {name:"New York (US)",      lat:40.64, lon:-73.78},
+];
+
+/* h = hotels {n,stars,pn per-room per-night} · x = excursions {n,pp per-person, d duration} */
+const DESTS = [
+ {city:"Cornwall", country:"United Kingdom", lat:50.26, lon:-5.05, emoji:"🌊", g:["#0f4c5c","#3aa7a3"],
+  tag:"Surf beaches, coastal paths and proper pasties on England's wild south-west tip.",
+  h:[{n:"The Headland Escape",s:5,pn:210},{n:"Harbourside Inn",s:4,pn:120},{n:"St Ives Guesthouse",s:3,pn:78}],
+  x:[{n:"St Michael's Mount tour",pp:28,d:"half day"},{n:"Beginner surf lesson",pp:45,d:"2 hrs"},{n:"Eden Project entry",pp:38,d:"full day"}]},
+ {city:"Lake District", country:"United Kingdom", lat:54.46, lon:-3.09, emoji:"⛰️", g:["#2d6a4f","#74c69d"],
+  tag:"England's fell-and-lake country — hikes, steamers and cosy pubs.",
+  h:[{n:"Windermere Manor",s:5,pn:195},{n:"Keswick Lodge",s:4,pn:110},{n:"Ambleside B&B",s:3,pn:72}],
+  x:[{n:"Lake Windermere cruise",pp:22,d:"2 hrs"},{n:"Guided fell walk",pp:35,d:"full day"},{n:"Beatrix Potter trail",pp:16,d:"half day"}]},
+ {city:"Edinburgh", country:"Scotland", lat:55.95, lon:-3.19, emoji:"🏰", g:["#3d405b","#81b29a"],
+  tag:"Castle-topped capital of festivals, closes and whisky bars.",
+  h:[{n:"Royal Mile Grand",s:5,pn:230},{n:"New Town Townhouse",s:4,pn:135},{n:"Old Town Hostel Deluxe",s:3,pn:80}],
+  x:[{n:"Edinburgh Castle entry",pp:22,d:"half day"},{n:"Whisky tasting tour",pp:40,d:"3 hrs"},{n:"Arthur's Seat sunrise hike",pp:18,d:"3 hrs"}]},
+ {city:"Dublin", country:"Ireland", lat:53.35, lon:-6.26, emoji:"🍀", g:["#1b4332","#52b788"],
+  tag:"Georgian squares, live folk sessions and the home of the black stuff.",
+  h:[{n:"The Liffey Grand",s:5,pn:220},{n:"Temple Bar Hotel",s:4,pn:140},{n:"Portobello Rooms",s:3,pn:85}],
+  x:[{n:"Guinness Storehouse",pp:26,d:"half day"},{n:"Cliffs of Moher day trip",pp:65,d:"full day"},{n:"Literary pub crawl",pp:20,d:"evening"}]},
+ {city:"Paris", country:"France", lat:48.86, lon:2.35, emoji:"🗼", g:["#5f0f40","#c86b85"],
+  tag:"Museums, boulangeries and golden-hour walks along the Seine.",
+  h:[{n:"Le Marais Palace",s:5,pn:280},{n:"Hôtel Saint-Germain",s:4,pn:165},{n:"Montmartre Petit",s:3,pn:98}],
+  x:[{n:"Louvre skip-the-line",pp:35,d:"half day"},{n:"Seine dinner cruise",pp:75,d:"evening"},{n:"Versailles day trip",pp:60,d:"full day"}]},
+ {city:"Amsterdam", country:"Netherlands", lat:52.37, lon:4.90, emoji:"🚲", g:["#124559","#598392"],
+  tag:"Canal rings, world-class art and cycling everywhere.",
+  h:[{n:"Canal House Nine",s:5,pn:265},{n:"Jordaan Boutique",s:4,pn:155},{n:"De Pijp Studios",s:3,pn:95}],
+  x:[{n:"Canal cruise",pp:22,d:"90 min"},{n:"Van Gogh Museum",pp:24,d:"half day"},{n:"Zaanse Schans windmills",pp:45,d:"half day"}]},
+ {city:"Barcelona", country:"Spain", lat:41.39, lon:2.17, emoji:"🏖️", g:["#bc4b51","#f4a259"],
+  tag:"Gaudí, tapas crawls and city beaches in the Catalan capital.",
+  h:[{n:"Passeig de Gràcia Suites",s:5,pn:240},{n:"Gothic Quarter Hotel",s:4,pn:145},{n:"Barceloneta Rooms",s:3,pn:88}],
+  x:[{n:"Sagrada Família entry",pp:33,d:"half day"},{n:"Tapas & wine walk",pp:55,d:"evening"},{n:"Montserrat day trip",pp:52,d:"full day"}]},
+ {city:"Lisbon", country:"Portugal", lat:38.72, lon:-9.14, emoji:"🚋", g:["#e07a5f","#f2cc8f"],
+  tag:"Tiled hills, custard tarts and Atlantic sunsets from miradouros.",
+  h:[{n:"Alfama Palácio",s:5,pn:215},{n:"Chiado Boutique",s:4,pn:130},{n:"Bairro Alto Guest",s:3,pn:78}],
+  x:[{n:"Tram 28 & old town tour",pp:25,d:"half day"},{n:"Sintra palaces day trip",pp:58,d:"full day"},{n:"Fado night with dinner",pp:48,d:"evening"}]},
+ {city:"Porto", country:"Portugal", lat:41.15, lon:-8.61, emoji:"🍷", g:["#6d3a2d","#c97b63"],
+  tag:"Port cellars, azulejo churches and the Douro on your doorstep.",
+  h:[{n:"Ribeira River House",s:5,pn:190},{n:"Bolhão Central",s:4,pn:115},{n:"Cedofeita Rooms",s:3,pn:68}],
+  x:[{n:"Port cellar tasting",pp:30,d:"2 hrs"},{n:"Douro Valley cruise",pp:70,d:"full day"},{n:"Francesinha food tour",pp:42,d:"evening"}]},
+ {city:"Rome", country:"Italy", lat:41.90, lon:12.50, emoji:"🏛️", g:["#7f5539","#ddb892"],
+  tag:"The eternal city — ruins, trattorie and gelato on every corner.",
+  h:[{n:"Palazzo Navona",s:5,pn:260},{n:"Trastevere Charm",s:4,pn:150},{n:"Monti Guesthouse",s:3,pn:92}],
+  x:[{n:"Colosseum & Forum",pp:40,d:"half day"},{n:"Vatican Museums",pp:38,d:"half day"},{n:"Pasta masterclass",pp:55,d:"3 hrs"}]},
+ {city:"Nice", country:"France", lat:43.70, lon:7.27, emoji:"☀️", g:["#0077b6","#90e0ef"],
+  tag:"Riviera promenades, pebble beaches and day trips to Monaco.",
+  h:[{n:"Promenade Bleue",s:5,pn:250},{n:"Vieux Nice Hôtel",s:4,pn:150},{n:"Gare Sud Rooms",s:3,pn:90}],
+  x:[{n:"Monaco & Èze day trip",pp:55,d:"full day"},{n:"Old town food tour",pp:48,d:"3 hrs"},{n:"Coastal e-bike ride",pp:38,d:"half day"}]},
+ {city:"Prague", country:"Czechia", lat:50.08, lon:14.44, emoji:"🌉", g:["#3c1642","#8c5383"],
+  tag:"Fairy-tale bridges, castle views and Europe's best beer prices.",
+  h:[{n:"Old Town Astronomical",s:5,pn:175},{n:"Malá Strana House",s:4,pn:105},{n:"Žižkov Rooms",s:3,pn:62}],
+  x:[{n:"Castle & Charles Bridge tour",pp:24,d:"half day"},{n:"Beer spa experience",pp:60,d:"2 hrs"},{n:"River dinner cruise",pp:45,d:"evening"}]},
+ {city:"Vienna", country:"Austria", lat:48.21, lon:16.37, emoji:"🎻", g:["#582f0e","#a68a64"],
+  tag:"Imperial palaces, coffee houses and concerts every night.",
+  h:[{n:"Ringstrasse Imperial",s:5,pn:235},{n:"Naschmarkt Boutique",s:4,pn:135},{n:"Leopoldstadt Stay",s:3,pn:82}],
+  x:[{n:"Schönbrunn Palace",pp:29,d:"half day"},{n:"Classical concert evening",pp:49,d:"evening"},{n:"Café culture walk",pp:32,d:"3 hrs"}]},
+ {city:"Budapest", country:"Hungary", lat:47.50, lon:19.04, emoji:"♨️", g:["#264653","#2a9d8f"],
+  tag:"Thermal baths, ruin bars and a parliament that glows at night.",
+  h:[{n:"Danube Panorama",s:5,pn:165},{n:"Jewish Quarter Hotel",s:4,pn:98},{n:"Buda Hills Guest",s:3,pn:58}],
+  x:[{n:"Széchenyi Baths entry",pp:28,d:"half day"},{n:"Danube night cruise",pp:35,d:"evening"},{n:"Ruin bar crawl",pp:25,d:"evening"}]},
+ {city:"Copenhagen", country:"Denmark", lat:55.68, lon:12.57, emoji:"🧜", g:["#1d3557","#457b9d"],
+  tag:"Harbour swims, new-Nordic food and hygge by design.",
+  h:[{n:"Nyhavn Waterfront",s:5,pn:285},{n:"Vesterbro Design Hotel",s:4,pn:170},{n:"Nørrebro Rooms",s:3,pn:105}],
+  x:[{n:"Canal boat tour",pp:18,d:"90 min"},{n:"Tivoli Gardens entry",pp:22,d:"evening"},{n:"Nordic food walk",pp:65,d:"3 hrs"}]},
+ {city:"Reykjavik", country:"Iceland", lat:64.13, lon:-21.90, emoji:"🌋", g:["#22333b","#5e8b7e"],
+  tag:"Geysers, glaciers and — with luck — the northern lights.",
+  h:[{n:"Harbour Aurora Hotel",s:5,pn:290},{n:"Laugavegur Central",s:4,pn:180},{n:"Hallgrímur Guesthouse",s:3,pn:115}],
+  x:[{n:"Golden Circle tour",pp:75,d:"full day"},{n:"Blue Lagoon entry",pp:70,d:"half day"},{n:"Northern lights hunt",pp:60,d:"evening"}]},
+ {city:"Dubrovnik", country:"Croatia", lat:42.65, lon:18.09, emoji:"🛡️", g:["#9d0208","#e85d04"],
+  tag:"Marble streets and city walls above the glittering Adriatic.",
+  h:[{n:"Stradun Heritage",s:5,pn:225},{n:"Old Port Boutique",s:4,pn:135},{n:"Lapad Bay Rooms",s:3,pn:82}],
+  x:[{n:"City walls walk",pp:35,d:"2 hrs"},{n:"Elaphiti islands sail",pp:60,d:"full day"},{n:"Game of Thrones tour",pp:40,d:"3 hrs"}]},
+ {city:"Athens", country:"Greece", lat:37.98, lon:23.73, emoji:"🏺", g:["#003049","#669bbc"],
+  tag:"The Acropolis, buzzing plateias and souvlaki done right.",
+  h:[{n:"Acropolis View Suites",s:5,pn:195},{n:"Plaka Boutique",s:4,pn:115},{n:"Koukaki Rooms",s:3,pn:68}],
+  x:[{n:"Acropolis & museum",pp:38,d:"half day"},{n:"Cape Sounion sunset",pp:48,d:"half day"},{n:"Greek food walk",pp:45,d:"3 hrs"}]},
+ {city:"Santorini", country:"Greece", lat:36.39, lon:25.46, emoji:"🌅", g:["#1a237e","#42a5f5"],
+  tag:"White-and-blue cliff villages above a volcanic caldera.",
+  h:[{n:"Caldera Cave Suites",s:5,pn:320},{n:"Oia Sunset Hotel",s:4,pn:190},{n:"Fira Family Rooms",s:3,pn:105}],
+  x:[{n:"Caldera catamaran cruise",pp:95,d:"half day"},{n:"Wine & sunset tour",pp:65,d:"evening"},{n:"Akrotiri ruins",pp:25,d:"half day"}]},
+ {city:"Málaga", country:"Spain", lat:36.72, lon:-4.42, emoji:"🍊", g:["#e76f51","#f4a261"],
+  tag:"Costa del Sol sunshine with a proper old town and art scene.",
+  h:[{n:"Muelle Uno Marina",s:5,pn:185},{n:"Soho Arts Hotel",s:4,pn:110},{n:"Centro Histórico Rooms",s:3,pn:65}],
+  x:[{n:"Caminito del Rey",pp:45,d:"full day"},{n:"Picasso Museum & tapas",pp:38,d:"half day"},{n:"Catamaran sunset sail",pp:35,d:"2 hrs"}]},
+ {city:"Palma, Mallorca", country:"Spain", lat:39.57, lon:2.65, emoji:"⛵", g:["#006d77","#83c5be"],
+  tag:"Cathedral views, hidden coves and mountain villages by e-bike.",
+  h:[{n:"Paseo Marítimo Grand",s:5,pn:210},{n:"Old Town Palma House",s:4,pn:125},{n:"Santa Catalina Rooms",s:3,pn:75}],
+  x:[{n:"Serra de Tramuntana drive",pp:55,d:"full day"},{n:"Hidden coves boat trip",pp:48,d:"half day"},{n:"Palma tapas tour",pp:40,d:"evening"}]},
+ {city:"Valletta, Malta", country:"Malta", lat:35.90, lon:14.51, emoji:"🏝️", g:["#936639","#d4a373"],
+  tag:"Honey-stone streets, harbour forts and year-round swimming.",
+  h:[{n:"Grand Harbour Palazzo",s:5,pn:200},{n:"Merchant Street Suites",s:4,pn:120},{n:"Sliema Seafront Rooms",s:3,pn:70}],
+  x:[{n:"Blue Grotto & Mdina",pp:45,d:"full day"},{n:"Comino lagoon cruise",pp:38,d:"full day"},{n:"Valletta history walk",pp:22,d:"3 hrs"}]},
+ {city:"Tenerife", country:"Canary Islands", lat:28.29, lon:-16.63, emoji:"🌴", g:["#283618","#606c38"],
+  tag:"Winter sun, volcano hikes and whale-watching off the coast.",
+  h:[{n:"Costa Adeje Palace",s:5,pn:195},{n:"Puerto Colón Resort",s:4,pn:115},{n:"La Laguna Guesthouse",s:3,pn:65}],
+  x:[{n:"Mount Teide cable car",pp:42,d:"half day"},{n:"Whale & dolphin cruise",pp:40,d:"3 hrs"},{n:"Masca gorge hike",pp:48,d:"full day"}]},
+ {city:"Marrakech", country:"Morocco", lat:31.63, lon:-8.02, emoji:"🕌", g:["#9c2706","#e07a3f"],
+  tag:"Souks, riads and mint tea on rooftops at the edge of the Atlas.",
+  h:[{n:"Riad El Jardin",s:5,pn:160},{n:"Medina Courtyard House",s:4,pn:95},{n:"Gueliz City Rooms",s:3,pn:55}],
+  x:[{n:"Atlas Mountains day trip",pp:50,d:"full day"},{n:"Souk & tannery tour",pp:28,d:"half day"},{n:"Desert dinner under stars",pp:70,d:"evening"}]},
+ {city:"Istanbul", country:"Türkiye", lat:41.01, lon:28.98, emoji:"🕌", g:["#1e2749","#30638e"],
+  tag:"Two continents, grand bazaars and Bosphorus ferries at dusk.",
+  h:[{n:"Bosphorus Palace View",s:5,pn:180},{n:"Sultanahmet Boutique",s:4,pn:105},{n:"Galata Rooms",s:3,pn:60}],
+  x:[{n:"Hagia Sophia & Blue Mosque",pp:35,d:"half day"},{n:"Bosphorus sunset cruise",pp:30,d:"2 hrs"},{n:"Grand Bazaar food walk",pp:45,d:"3 hrs"}]},
+ {city:"New York", country:"United States", lat:40.71, lon:-74.01, emoji:"🗽", g:["#212529","#495057"],
+  tag:"Skyline views, Broadway nights and bagels worth the queue.",
+  h:[{n:"Midtown Skyline Hotel",s:5,pn:340},{n:"SoHo Loft Hotel",s:4,pn:220},{n:"Brooklyn Bridge Rooms",s:3,pn:140}],
+  x:[{n:"Top of the Rock",pp:38,d:"2 hrs"},{n:"Broadway show ticket",pp:95,d:"evening"},{n:"Statue of Liberty ferry",pp:28,d:"half day"}]},
+ {city:"Dubai", country:"UAE", lat:25.20, lon:55.27, emoji:"🏙️", g:["#7b2cbf","#c77dff"],
+  tag:"Desert dunes by day, record-breaking skyline by night.",
+  h:[{n:"Marina Sky Resort",s:5,pn:260},{n:"Downtown Fountain View",s:4,pn:160},{n:"Deira City Hotel",s:3,pn:85}],
+  x:[{n:"Desert safari & BBQ",pp:65,d:"evening"},{n:"Burj Khalifa At the Top",pp:45,d:"2 hrs"},{n:"Old Dubai & souk tour",pp:35,d:"half day"}]},
+ {city:"Cancún", country:"Mexico", lat:21.16, lon:-86.85, emoji:"🐠", g:["#00afb9","#0081a7"],
+  tag:"Caribbean sand, cenote swims and Mayan ruins nearby.",
+  h:[{n:"Playa Turquesa Resort",s:5,pn:230},{n:"Zona Hotelera Suites",s:4,pn:140},{n:"Centro Cancún Rooms",s:3,pn:80}],
+  x:[{n:"Chichén Itzá day trip",pp:75,d:"full day"},{n:"Cenote snorkel combo",pp:55,d:"half day"},{n:"Isla Mujeres catamaran",pp:65,d:"full day"}]},
+ {city:"Bangkok", country:"Thailand", lat:13.76, lon:100.50, emoji:"🛺", g:["#ff6d00","#ffab40"],
+  tag:"Golden temples, floating markets and the best street food on earth.",
+  h:[{n:"Chao Phraya Riverside",s:5,pn:150},{n:"Sukhumvit Boutique",s:4,pn:85},{n:"Old City Hostel Suites",s:3,pn:45}],
+  x:[{n:"Grand Palace & Wat Pho",pp:30,d:"half day"},{n:"Floating market tour",pp:40,d:"half day"},{n:"Street food night tour",pp:35,d:"evening"}]},
+ {city:"Bali", country:"Indonesia", lat:-8.41, lon:115.19, emoji:"🌺", g:["#087e8b","#3c6e71"],
+  tag:"Rice terraces, temple sunrises and surf at golden beaches.",
+  h:[{n:"Ubud Jungle Villas",s:5,pn:170},{n:"Canggu Beach Resort",s:4,pn:95},{n:"Seminyak Garden Stay",s:3,pn:50}],
+  x:[{n:"Mount Batur sunrise trek",pp:45,d:"half day"},{n:"Ubud temples & terraces",pp:38,d:"full day"},{n:"Beginner surf lesson",pp:30,d:"2 hrs"}]},
+ {city:"Tokyo", country:"Japan", lat:35.68, lon:139.69, emoji:"🗾", g:["#d90429","#ef233c"],
+  tag:"Neon crossings, quiet shrines and ramen at 2am.",
+  h:[{n:"Shinjuku Sky Hotel",s:5,pn:250},{n:"Asakusa Ryokan Modern",s:4,pn:150},{n:"Shibuya Pod Deluxe",s:3,pn:85}],
+  x:[{n:"Tsukiji food tour",pp:60,d:"3 hrs"},{n:"Mt Fuji day trip",pp:90,d:"full day"},{n:"teamLab Planets entry",pp:25,d:"2 hrs"}]},
+ {city:"Cape Town", country:"South Africa", lat:-33.92, lon:18.42, emoji:"🐧", g:["#14213d","#fca311"],
+  tag:"Table Mountain, winelands and penguins on the beach.",
+  h:[{n:"V&A Waterfront Grand",s:5,pn:210},{n:"Camps Bay Retreat",s:4,pn:130},{n:"City Bowl Backpackers+",s:3,pn:60}],
+  x:[{n:"Table Mountain cableway",pp:25,d:"half day"},{n:"Cape Peninsula tour",pp:60,d:"full day"},{n:"Stellenbosch wine day",pp:55,d:"full day"}]},
+];
+
+/* ================= helpers ================= */
+const R = 6371;
+const gbp = new Intl.NumberFormat("en-GB",{style:"currency",currency:"GBP",maximumFractionDigits:0});
+function dist(a,b){
+  const t=Math.PI/180;
+  const dLat=(b.lat-a.lat)*t, dLon=(b.lon-a.lon)*t;
+  const h=Math.sin(dLat/2)**2 + Math.cos(a.lat*t)*Math.cos(b.lat*t)*Math.sin(dLon/2)**2;
+  return 2*R*Math.asin(Math.sqrt(h));
+}
+/* estimated return transport per person, by distance */
+function transportPP(km){
+  if(km < 120)  return 20;                                   // local / ferry hop
+  if(km < 450)  return Math.round(35 + km*0.09);             // train / short hop
+  const shortHaul = Math.min(km,1500)*0.062;
+  const longHaul  = Math.max(0,km-1500)*0.041;
+  return Math.round(48 + shortHaul + longHaul);              // return flights
+}
+function transportLabel(km){ return km<120 ? "Ferry / local travel" : km<450 ? "Train or short flight" : "Return flights"; }
+function rooms(travellers){ return Math.ceil(travellers/2); }
+function stars(n){ return "★".repeat(n)+"☆".repeat(5-n); }
+
+/* Build the best affordable package for one destination. Returns null if even
+   the cheapest hotel + transport busts the budget. */
+function buildPackage(dest, origin, budget, travellers, nights){
+  const km = Math.round(dist(origin,dest));
+  const flights = transportPP(km)*travellers;
+  const nRooms = rooms(travellers);
+  if(flights > budget) return null;
+
+  // most luxurious hotel that still leaves ~10% of budget breathing room for activities
+  const byPrice=[...dest.h].sort((a,b)=>b.pn-a.pn);
+  let hotel=null;
+  for(const h of byPrice){
+    const cost=h.pn*nights*nRooms;
+    if(flights+cost <= budget*0.9){ hotel=h; break; }
+  }
+  if(!hotel){ // fall back: cheapest that fits at all
+    const cheapest=byPrice[byPrice.length-1];
+    if(flights + cheapest.pn*nights*nRooms <= budget) hotel=cheapest;
+    else return null;
+  }
+  const hotelCost=hotel.pn*nights*nRooms;
+
+  // add excursions (cheapest first so more experiences fit) while budget allows
+  let remaining=budget-flights-hotelCost;
+  const excs=[];
+  for(const x of [...dest.x].sort((a,b)=>a.pp-b.pp)){
+    const c=x.pp*travellers;
+    if(c<=remaining){ excs.push({...x,cost:c}); remaining-=c; }
+  }
+  const excCost=excs.reduce((s,e)=>s+e.cost,0);
+  const total=flights+hotelCost+excCost;
+  const used=total/budget;
+  // match score: reward budget well spent, hotel quality and a fuller itinerary
+  const score = (1-Math.abs(0.88-used))*100 + hotel.s*6 + excs.length*4;
+  return {dest,km,flights,hotel,hotelCost,excs,excCost,total,leftover:budget-total,score};
+}
+
+/* ================= UI ================= */
+const $=id=>document.getElementById(id);
+const originSel=$("origin");
+ORIGINS.forEach((o,i)=>originSel.add(new Option(o.name,i)));
+
+const radius=$("radius"), radiusOut=$("radiusOut");
+function fmtRadius(){
+  const km=+radius.value;
+  if(km>=17000){ radiusOut.innerHTML="Anywhere on Earth <small>no distance limit</small>"; return; }
+  const mi=Math.round(km*0.621);
+  const hrs=(km/800).toFixed(km<800?1:0);
+  radiusOut.innerHTML=`Up to ${km.toLocaleString()} km (${mi.toLocaleString()} mi) <small>≈ ${hrs} hr${hrs==="1"?"":"s"} flying</small>`;
+}
+radius.addEventListener("input",()=>{fmtRadius(); if(lastQuery) run();});
+fmtRadius();
+
+let lastQuery=null;
+$("plannerForm").addEventListener("submit",e=>{e.preventDefault(); run(true);});
+$("sort").addEventListener("change",()=>{ if(lastQuery) render(lastQuery); });
+["origin","travellers","nights","budget"].forEach(id=>$(id).addEventListener("change",()=>{ if(lastQuery) run(); }));
+
+function run(scroll){
+  const budget=Math.max(100,+$("budget").value||0);
+  $("budget").value=budget;
+  lastQuery={
+    origin:ORIGINS[+originSel.value],
+    budget,
+    travellers:+$("travellers").value,
+    nights:+$("nights").value,
+    radius:+radius.value,
+  };
+  render(lastQuery);
+  if(scroll) $("results").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function render(q){
+  const inRadius=DESTS.filter(d=>dist(q.origin,d)<=q.radius && dist(q.origin,d)>60);
+  const pkgs=inRadius.map(d=>buildPackage(d,q.origin,q.budget,q.travellers,q.nights)).filter(Boolean);
+
+  const mode=$("sort").value;
+  pkgs.sort((a,b)=> mode==="cheap" ? a.total-b.total
+            : mode==="lux"   ? (b.hotel.s-a.hotel.s)||(b.hotelCost-a.hotelCost)
+            : mode==="near"  ? a.km-b.km
+            : b.score-a.score);
+
+  $("results").hidden=false;
+  $("resultsSub").textContent=
+    `${q.travellers} traveller${q.travellers>1?"s":""} · ${q.nights} nights · ${gbp.format(q.budget)} total · from ${q.origin.name}`;
+
+  const grid=$("grid");
+  grid.innerHTML="";
+
+  if(pkgs.length===0){
+    const nearMisses=inRadius.length;
+    grid.innerHTML=`<div class="empty">
+      <div class="big">🧭</div>
+      <h3>No trips fit that budget yet</h3>
+      <p>${nearMisses
+          ? `${nearMisses} destination${nearMisses>1?"s are":" is"} inside your radius, but ${q.nights} nights for ${q.travellers} would go over ${gbp.format(q.budget)}.`
+          : "Nothing in our collection sits inside that radius."}
+         <br>Try widening the radius, trimming a night or two, or nudging the budget up.</p>
+    </div>`;
+    return;
+  }
+
+  const top=pkgs.slice(0,9);
+  grid.insertAdjacentHTML("beforeend",
+    `<p class="stretch-note">Showing ${top.length} of ${pkgs.length} matching trip${pkgs.length>1?"s":""}. Every package below — travel, hotel and excursions — fits inside your ${gbp.format(q.budget)} budget.</p>`);
+
+  for(const p of top){
+    const d=p.dest;
+    const fPct=(p.flights/q.budget*100), hPct=(p.hotelCost/q.budget*100), ePct=(p.excCost/q.budget*100);
+    const excHTML = p.excs.length
+      ? p.excs.map(x=>`<li><span>${x.n} <small>· ${x.d}</small></span><span class="p">${gbp.format(x.cost)}</span></li>`).join("")
+      : `<li><span style="color:var(--ink-3)">Budget covers travel & hotel — excursions bookable on arrival</span></li>`;
+    grid.insertAdjacentHTML("beforeend",`
+    <article class="card">
+      <div class="card-top" style="background:linear-gradient(135deg,${d.g[0]},${d.g[1]})">
+        <span class="badge">${p.km.toLocaleString()} km away</span>
+        <span class="emoji">${d.emoji}</span>
+        <div><h3>${d.city}</h3><div class="country">${d.country}</div></div>
+      </div>
+      <div class="card-body">
+        <p class="tagline">${d.tag}</p>
+        <div class="block">
+          <h4>Stay · ${q.nights} nights</h4>
+          <div class="hotel">
+            <span><span class="name">${p.hotel.n}</span><br><span class="stars" aria-label="${p.hotel.s} star hotel">${stars(p.hotel.s)}</span></span>
+            <span class="price">${gbp.format(p.hotelCost)}<br><small>${gbp.format(p.hotel.pn)}/night · ${rooms(q.travellers)} room${rooms(q.travellers)>1?"s":""}</small></span>
+          </div>
+        </div>
+        <div class="block">
+          <h4>Excursions included</h4>
+          <ul class="exc">${excHTML}</ul>
+        </div>
+        <div class="budget">
+          <div class="totals">
+            <span class="total">${gbp.format(p.total)}</span>
+            <span class="left">${gbp.format(p.leftover)} spending money left</span>
+          </div>
+          <div class="bar" role="img" aria-label="Budget breakdown: travel ${gbp.format(p.flights)}, hotel ${gbp.format(p.hotelCost)}, excursions ${gbp.format(p.excCost)}, ${gbp.format(p.leftover)} unspent">
+            <i class="f" style="width:${fPct}%"></i><i class="h" style="width:${hPct}%"></i><i class="e" style="width:${ePct}%"></i>
+          </div>
+          <div class="legend">
+            <span><span class="sw" style="background:var(--seg-flights)"></span>${transportLabel(p.km)} <b>${gbp.format(p.flights)}</b></span>
+            <span><span class="sw" style="background:var(--seg-hotel)"></span>Hotel <b>${gbp.format(p.hotelCost)}</b></span>
+            <span><span class="sw" style="background:var(--seg-exc)"></span>Excursions <b>${gbp.format(p.excCost)}</b></span>
+          </div>
+        </div>
+        <a class="book" href="mailto:hello@saturnvoyages.example?subject=${encodeURIComponent("Trip enquiry: "+d.city+" ("+q.nights+" nights, "+gbp.format(p.total)+")")}">Enquire about this trip</a>
+      </div>
+    </article>`);
+  }
+}
+</script>
+</body>
+</html>
