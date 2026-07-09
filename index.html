@@ -106,11 +106,7 @@ img{max-width:100%;display:block}
   pointer-events:none;z-index:9000;transform:translate(-50%,-50%);
   transition:transform .15s ease,opacity .2s;mix-blend-mode:difference;
 }
-.cursor-ring{
-  position:fixed;width:40px;height:40px;border:1px solid var(--purple);border-radius:50%;
-  pointer-events:none;z-index:8999;transform:translate(-50%,-50%);
-  transition:transform .25s cubic-bezier(.2,.8,.3,1),width .25s,height .25s,opacity .2s,border-color .25s;
-}
+.cursor-ring{display:none}
 .cursor.hover{transform:translate(-50%,-50%) scale(0)}
 .cursor-ring.hover{width:80px;height:80px;border-color:var(--purple-glow)}
 .cursor-ring.click{transform:translate(-50%,-50%) scale(.6)}
