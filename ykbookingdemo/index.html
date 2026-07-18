@@ -1,0 +1,621 @@
+<title>YK Wellness — Booking</title>
+<style>
+  /* ============ YK Wellness design system (from srmarketing.live) ============ */
+  :root{
+    --ivory:#fdf8f3; --white:#ffffff; --sand:#e8ddd0; --stone:#c9b89a;
+    --bronze:#c49a6c; --bronze-dark:#8a5f3c; --bronze-lt:#f5ede6;
+    --charcoal:#1a0d05; --mid:#5c4030; --light:#9a7860; --accent:#b5825a;
+    --ok:#4a7c59; --ok-lt:#e9f2ec; --warn:#a8552f; --warn-lt:#f8e9e2;
+    --font-serif:'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    --font-sans:'DM Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+    --radius-sm:6px; --radius-md:14px; --radius-lg:28px;
+    --shadow-sm:0 2px 12px rgba(26,13,5,.06);
+    --shadow-md:0 8px 32px rgba(26,13,5,.10);
+    --transition:all .25s cubic-bezier(.4,0,.2,1);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:16px}
+  body{font-family:var(--font-sans);background:var(--ivory);color:var(--charcoal);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+  h1,h2,h3,h4{font-family:var(--font-serif);font-weight:500;line-height:1.2;letter-spacing:-.01em;text-wrap:balance}
+  button{font-family:inherit;cursor:pointer}
+  button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--bronze-dark);outline-offset:2px}
+  input{font-family:inherit}
+  .eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+
+  /* ============ Shell ============ */
+  .topbar{background:var(--charcoal);color:var(--ivory);position:sticky;top:0;z-index:50}
+  .topbar-in{max-width:1160px;margin:0 auto;padding:.7rem 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .wordmark{font-family:var(--font-serif);font-size:1.3rem;letter-spacing:.04em}
+  .wordmark b{font-weight:600;color:var(--stone)}
+  .viewswitch{display:flex;background:rgba(255,255,255,.08);border-radius:100px;padding:3px}
+  .viewswitch button{border:0;background:transparent;color:rgba(255,255,255,.65);font-size:.8rem;font-weight:600;letter-spacing:.03em;padding:.42rem 1.1rem;border-radius:100px;transition:var(--transition)}
+  .viewswitch button.on{background:var(--bronze);color:#fff}
+  .page{max-width:1160px;margin:0 auto;padding:2rem 1.25rem 5rem}
+
+  /* ============ Customer booking ============ */
+  .book-head{text-align:center;margin:1.2rem 0 2rem}
+  .book-head h1{font-size:clamp(2rem,5vw,3rem)}
+  .book-head p{color:var(--mid);margin-top:.4rem;font-size:.98rem}
+  .steps{display:flex;justify-content:center;gap:.4rem;margin:1.4rem 0 2rem;flex-wrap:wrap}
+  .step-chip{display:flex;align-items:center;gap:.45rem;font-size:.78rem;font-weight:600;color:var(--light);padding:.35rem .9rem;border-radius:100px;background:transparent;border:1px solid transparent}
+  .step-chip .n{width:1.35rem;height:1.35rem;border-radius:50%;background:var(--sand);color:var(--mid);display:grid;place-items:center;font-size:.72rem}
+  .step-chip.cur{background:var(--white);border-color:var(--sand);color:var(--charcoal);box-shadow:var(--shadow-sm)}
+  .step-chip.cur .n{background:var(--bronze);color:#fff}
+  .step-chip.done .n{background:var(--bronze-lt);color:var(--bronze-dark)}
+  .panel{max-width:820px;margin:0 auto}
+  .svc-group{margin-bottom:2rem}
+  .svc-group h3{font-size:1.5rem;margin-bottom:.9rem;display:flex;align-items:baseline;gap:.6rem}
+  .svc-group h3 small{font-family:var(--font-sans);font-size:.75rem;color:var(--light);font-weight:500;letter-spacing:.05em}
+  .svc-list{display:grid;gap:.6rem}
+  .svc{display:flex;justify-content:space-between;align-items:center;gap:1rem;background:var(--white);border:1px solid var(--sand);border-radius:var(--radius-md);padding:1rem 1.25rem;text-align:left;transition:var(--transition);width:100%}
+  .svc:hover{border-color:var(--bronze);box-shadow:var(--shadow-sm);transform:translateY(-1px)}
+  .svc .nm{font-weight:600;font-size:.95rem}
+  .svc .meta{color:var(--light);font-size:.8rem;margin-top:.15rem}
+  .svc .pr{font-family:var(--font-serif);font-size:1.25rem;color:var(--bronze-dark);white-space:nowrap}
+  .ppl{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.8rem}
+  .person{background:var(--white);border:1px solid var(--sand);border-radius:var(--radius-md);padding:1.3rem 1rem;text-align:center;transition:var(--transition)}
+  .person:hover{border-color:var(--bronze);box-shadow:var(--shadow-sm);transform:translateY(-1px)}
+  .person .av{width:56px;height:56px;border-radius:50%;margin:0 auto .6rem;display:grid;place-items:center;font-family:var(--font-serif);font-size:1.35rem;color:#fff;background:var(--bronze)}
+  .person.any .av{background:var(--charcoal);font-size:1.1rem}
+  .person .nm{font-weight:600;font-size:.95rem}
+  .person .role{color:var(--light);font-size:.78rem;margin-top:.1rem}
+  .person .stars{color:var(--bronze);font-size:.78rem;margin-top:.3rem;letter-spacing:.1em}
+  .person .stars span{color:var(--mid);letter-spacing:0;margin-left:.3rem}
+  .daystrip{display:flex;gap:.5rem;overflow-x:auto;padding:.2rem .2rem .8rem;scrollbar-width:thin}
+  .day{min-width:70px;background:var(--white);border:1px solid var(--sand);border-radius:var(--radius-md);padding:.6rem .4rem;text-align:center;transition:var(--transition);flex-shrink:0}
+  .day .dow{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--light);font-weight:600}
+  .day .dn{font-family:var(--font-serif);font-size:1.35rem;margin:.1rem 0}
+  .day .mo{font-size:.68rem;color:var(--light)}
+  .day.sel{background:var(--charcoal);border-color:var(--charcoal)}
+  .day.sel .dow,.day.sel .mo{color:var(--stone)}
+  .day.sel .dn{color:#fff}
+  .day:disabled{opacity:.35;cursor:default}
+  .slotgrp{margin-top:1.2rem}
+  .slotgrp h4{font-family:var(--font-sans);font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem}
+  .slots{display:flex;flex-wrap:wrap;gap:.5rem}
+  .slot{background:var(--white);border:1px solid var(--sand);border-radius:100px;padding:.5rem 1.1rem;font-size:.85rem;font-weight:500;transition:var(--transition)}
+  .slot:hover{border-color:var(--bronze);color:var(--bronze-dark)}
+  .slot.sel{background:var(--bronze);border-color:var(--bronze);color:#fff}
+  .noslots{background:var(--bronze-lt);border-radius:var(--radius-md);padding:1.2rem;color:var(--mid);font-size:.9rem;text-align:center}
+  .sumcard{background:var(--white);border:1px solid var(--sand);border-radius:var(--radius-md);padding:1.2rem 1.4rem;margin-bottom:1.4rem;display:flex;flex-wrap:wrap;gap:1.5rem}
+  .sumcard div .k{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--light);font-weight:600}
+  .sumcard div .v{font-weight:600;font-size:.92rem;margin-top:.1rem}
+  .form{display:grid;gap:.9rem;grid-template-columns:1fr 1fr}
+  .form .full{grid-column:1/-1}
+  .field label{display:block;font-size:.75rem;font-weight:600;letter-spacing:.05em;color:var(--mid);margin-bottom:.3rem}
+  .field input{width:100%;border:1px solid var(--sand);border-radius:var(--radius-sm);padding:.7rem .9rem;font-size:.92rem;background:var(--white);color:var(--charcoal)}
+  .field input:focus{border-color:var(--bronze)}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.88rem;font-weight:600;letter-spacing:.04em;padding:.8rem 2rem;border-radius:100px;border:2px solid transparent;transition:var(--transition)}
+  .btn-primary{background:var(--bronze);color:#fff;border-color:var(--bronze)}
+  .btn-primary:hover{background:var(--bronze-dark);border-color:var(--bronze-dark);transform:translateY(-1px);box-shadow:0 6px 20px rgba(138,95,60,.3)}
+  .btn-ghost{background:transparent;color:var(--mid);border-color:var(--sand)}
+  .btn-ghost:hover{border-color:var(--charcoal);color:var(--charcoal)}
+  .navrow{display:flex;justify-content:space-between;margin-top:1.8rem;gap:1rem}
+  .confirm{text-align:center;padding:2.5rem 1rem}
+  .confirm .tick{width:64px;height:64px;border-radius:50%;background:var(--ok-lt);color:var(--ok);display:grid;place-items:center;font-size:1.8rem;margin:0 auto 1.2rem}
+  .confirm h2{font-size:2.2rem}
+  .confirm .ref{font-size:.8rem;letter-spacing:.14em;color:var(--light);text-transform:uppercase;margin-top:.5rem}
+  .confirm .ref b{color:var(--bronze-dark)}
+  .confirm .sumcard{max-width:520px;margin:1.6rem auto;text-align:left}
+  .hint{font-size:.8rem;color:var(--light);text-align:center;margin-top:1rem}
+
+  /* ============ Admin ============ */
+  .adm-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:1rem;margin-bottom:1.4rem}
+  .adm-head h1{font-size:2rem}
+  .adm-head p{color:var(--light);font-size:.85rem}
+  .statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin-bottom:1.6rem}
+  .stat{background:var(--white);border:1px solid var(--sand);border-radius:var(--radius-md);padding:1rem 1.2rem}
+  .stat .k{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--light);font-weight:600}
+  .stat .v{font-family:var(--font-serif);font-size:1.9rem;color:var(--charcoal);font-variant-numeric:tabular-nums}
+  .stat .s{font-size:.72rem;color:var(--light)}
+  .adm-tabs{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+  .adm-tabs button{border:1px solid var(--sand);background:var(--white);border-radius:100px;padding:.45rem 1.1rem;font-size:.8rem;font-weight:600;color:var(--mid);transition:var(--transition)}
+  .adm-tabs button.on{background:var(--charcoal);border-color:var(--charcoal);color:var(--ivory)}
+  .datebar{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
+  .datebar button{border:1px solid var(--sand);background:var(--white);border-radius:100px;width:2.1rem;height:2.1rem;font-size:.9rem;color:var(--mid)}
+  .datebar .lbl{font-family:var(--font-serif);font-size:1.25rem}
+  .datebar .today-btn{width:auto;padding:0 .9rem;font-size:.75rem;font-weight:600;height:2.1rem}
+  .calwrap{overflow-x:auto;background:var(--white);border:1px solid var(--sand);border-radius:var(--radius-md);box-shadow:var(--shadow-sm)}
+  .cal{display:grid;min-width:860px;grid-template-columns:56px repeat(5,1fr)}
+  .cal .headcell{padding:.7rem .5rem;border-bottom:1px solid var(--sand);text-align:center;position:sticky;top:0;background:var(--white)}
+  .cal .headcell .nm{font-weight:600;font-size:.85rem}
+  .cal .headcell .rl{font-size:.68rem;color:var(--light)}
+  .cal .headcell .off{display:inline-block;font-size:.62rem;font-weight:600;letter-spacing:.06em;color:var(--warn);background:var(--warn-lt);border-radius:100px;padding:.1rem .5rem;margin-top:.2rem}
+  .coltrack{position:relative;border-left:1px solid #f1e8dc}
+  .timecol{position:relative}
+  .hourline{position:absolute;left:0;right:0;border-top:1px solid #f1e8dc}
+  .hourlab{position:absolute;right:8px;transform:translateY(-55%);font-size:.66rem;color:var(--light);font-variant-numeric:tabular-nums}
+  .offshade{position:absolute;left:0;right:0;background:repeating-linear-gradient(-45deg,#faf4ec,#faf4ec 6px,#f3eadf 6px,#f3eadf 8px)}
+  .bk{position:absolute;left:4px;right:4px;border-radius:8px;padding:.3rem .5rem;font-size:.68rem;line-height:1.25;overflow:hidden;border:0;text-align:left;transition:var(--transition)}
+  .bk:hover{filter:brightness(.97);box-shadow:var(--shadow-sm)}
+  .bk .c{font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bk .s{opacity:.75;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bk.massage{background:var(--bronze-lt);color:var(--bronze-dark);border-left:3px solid var(--bronze)}
+  .bk.osteo{background:#ece9f2;color:#4a3d6b;border-left:3px solid #7a6aa0}
+  .tblwrap{overflow-x:auto;background:var(--white);border:1px solid var(--sand);border-radius:var(--radius-md);box-shadow:var(--shadow-sm)}
+  table{border-collapse:collapse;width:100%;min-width:760px;font-size:.85rem}
+  th{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--light);text-align:left;padding:.8rem 1rem;border-bottom:1px solid var(--sand);font-weight:600}
+  td{padding:.7rem 1rem;border-bottom:1px solid #f5efe6;vertical-align:middle;font-variant-numeric:tabular-nums}
+  tr:last-child td{border-bottom:0}
+  .pill{display:inline-block;font-size:.68rem;font-weight:600;border-radius:100px;padding:.15rem .6rem;letter-spacing:.03em}
+  .pill.ok{background:var(--ok-lt);color:var(--ok)}
+  .pill.cx{background:var(--warn-lt);color:var(--warn)}
+  .mini{border:1px solid var(--sand);background:var(--white);border-radius:100px;padding:.3rem .8rem;font-size:.72rem;font-weight:600;color:var(--warn);transition:var(--transition)}
+  .mini:hover{border-color:var(--warn);background:var(--warn-lt)}
+  .mini[disabled]{opacity:.4;cursor:default}
+  .rota-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.9rem}
+  .rota-card{background:var(--white);border:1px solid var(--sand);border-radius:var(--radius-md);padding:1.1rem 1.2rem}
+  .rota-card .top{display:flex;align-items:center;gap:.7rem;margin-bottom:.7rem}
+  .rota-card .av{width:40px;height:40px;border-radius:50%;background:var(--bronze);color:#fff;display:grid;place-items:center;font-family:var(--font-serif);font-size:1.05rem}
+  .rota-card .nm{font-weight:600;font-size:.95rem}
+  .rota-card .rl{font-size:.72rem;color:var(--light)}
+  .rota-line{display:flex;justify-content:space-between;font-size:.78rem;padding:.22rem 0;color:var(--mid)}
+  .rota-line b{font-variant-numeric:tabular-nums;font-weight:500;color:var(--charcoal)}
+  .rota-line.offday b{color:var(--light);font-style:italic}
+  .dayoff-btn{margin-top:.8rem;width:100%;border-radius:100px;border:1px solid var(--sand);background:var(--ivory);padding:.5rem;font-size:.75rem;font-weight:600;color:var(--mid);transition:var(--transition)}
+  .dayoff-btn.off{background:var(--warn-lt);border-color:var(--warn);color:var(--warn)}
+  .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--charcoal);color:var(--ivory);border-radius:100px;padding:.7rem 1.5rem;font-size:.85rem;opacity:0;pointer-events:none;transition:all .3s ease;z-index:100;box-shadow:var(--shadow-md)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .adm-note{font-size:.78rem;color:var(--light);margin-top:1rem;max-width:640px}
+  @media (max-width:640px){.form{grid-template-columns:1fr}.steps{gap:.2rem}.step-chip{padding:.3rem .6rem}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="wordmark">YK <b>WELLNESS</b></div>
+    <div class="viewswitch" role="tablist">
+      <button id="tab-client" class="on" onclick="setView('client')">Book online</button>
+      <button id="tab-admin" onclick="setView('admin')">Admin</button>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <!-- ================= CUSTOMER ================= -->
+  <div id="view-client">
+    <div class="book-head">
+      <div class="eyebrow">Westway Sports &amp; Fitness Centre · London W10</div>
+      <h1>Book your treatment</h1>
+      <p>Mon–Fri 8:00am–8:00pm · Sat–Sun 9:00am–6:00pm</p>
+    </div>
+    <div class="steps" id="stepbar"></div>
+    <div class="panel" id="flow"></div>
+  </div>
+
+  <!-- ================= ADMIN ================= -->
+  <div id="view-admin" hidden>
+    <div class="adm-head">
+      <div>
+        <div class="eyebrow">Management</div>
+        <h1>Front desk</h1>
+        <p>Every online booking lands here the moment it's made.</p>
+      </div>
+    </div>
+    <div class="statrow" id="statrow"></div>
+    <div class="adm-tabs">
+      <button id="atab-cal" class="on" onclick="setAdminTab('cal')">Day calendar</button>
+      <button id="atab-list" onclick="setAdminTab('list')">Bookings</button>
+      <button id="atab-rota" onclick="setAdminTab('rota')">Team &amp; rotas</button>
+    </div>
+    <div id="adm-cal">
+      <div class="datebar">
+        <button onclick="admShift(-1)" aria-label="Previous day">‹</button>
+        <span class="lbl" id="adm-date-lbl"></span>
+        <button onclick="admShift(1)" aria-label="Next day">›</button>
+        <button class="today-btn" onclick="admToday()">Today</button>
+      </div>
+      <div class="calwrap"><div class="cal" id="calgrid"></div></div>
+      <p class="adm-note">Each column is one therapist. Hatched areas are outside their rota, so those times never appear on the booking site. Bookings made in the client view appear here instantly — try it.</p>
+    </div>
+    <div id="adm-list" hidden>
+      <div class="tblwrap"><table>
+        <thead><tr><th>Ref</th><th>Client</th><th>Contact</th><th>Treatment</th><th>Therapist</th><th>When</th><th>Price</th><th>Status</th><th></th></tr></thead>
+        <tbody id="bktbody"></tbody>
+      </table></div>
+      <p class="adm-note">In the full build, each row would also trigger a confirmation email/SMS to the client and the therapist, a 24-hour reminder, and a contact record in your CRM.</p>
+    </div>
+    <div id="adm-rota" hidden>
+      <div class="rota-grid" id="rotagrid"></div>
+      <p class="adm-note">Marking someone off for today removes their open slots from the booking site immediately (existing bookings stay and would be flagged for rebooking). In the full build, rotas and holidays are editable here.</p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= Data — from YK Wellness on Fresha ================= */
+const STAFF = [
+  {id:'paula',    name:'Paula',    role:'Osteopath',                    rating:'5.0', cat:'osteo',
+   rota:{1:[9,17],2:[9,17],3:[9,17],4:[9,17],5:[9,17]}},
+  {id:'alfie',    name:'Alfie',    role:'Osteopath',                    rating:'4.9', cat:'osteo',
+   rota:{2:[12,20],4:[12,20],6:[9,15],0:[10,16]}},
+  {id:'giuseppe', name:'Giuseppe', role:'Sports & Massage Therapist',   rating:'5.0', cat:'massage',
+   rota:{1:[8,14],2:[8,14],3:[8,14],4:[8,14],5:[8,14],6:[9,18]}},
+  {id:'joe',      name:'Joe',      role:'Massage Therapist',            rating:'5.0', cat:'massage',
+   rota:{1:[14,20],2:[14,20],3:[14,20],4:[14,20],5:[14,20],0:[9,18]}},
+  {id:'yury',     name:'Yury',     role:'Advanced & Clinical Massage',  rating:'5.0', cat:'massage',
+   rota:{2:[10,19],3:[10,19],4:[10,19],5:[10,19],6:[10,16]}},
+];
+const OPEN = {1:[8,20],2:[8,20],3:[8,20],4:[8,20],5:[8,20],6:[9,18],0:[9,18]};
+
+const SERVICES = [
+  {id:'dt60',  grp:'Massage',    name:'Deep Tissue Massage',        dur:60,  price:75,  staff:['giuseppe','joe','yury']},
+  {id:'dt90',  grp:'Massage',    name:'Deep Tissue Massage',        dur:90,  price:105, staff:['giuseppe','joe','yury']},
+  {id:'dt120', grp:'Massage',    name:'Deep Tissue Massage',        dur:120, price:140, staff:['giuseppe','joe','yury']},
+  {id:'sp60',  grp:'Massage',    name:'Sports Massage',             dur:60,  price:75,  staff:['giuseppe','joe']},
+  {id:'sw60',  grp:'Massage',    name:'Swedish Massage',            dur:60,  price:75,  staff:['giuseppe','joe','yury']},
+  {id:'cbd60', grp:'Massage',    name:'CBD Massage',                dur:60,  price:75,  staff:['joe','yury']},
+  {id:'mld60', grp:'Massage',    name:'Manual Lymphatic Drainage',  dur:60,  price:75,  staff:['giuseppe','yury']},
+  {id:'yu30',  grp:'Massage',    name:'Massage with Yury',          dur:30,  price:53,  staff:['yury']},
+  {id:'yu60',  grp:'Massage',    name:'Massage with Yury',          dur:60,  price:75,  staff:['yury']},
+  {id:'yu90',  grp:'Massage',    name:'Massage with Yury',          dur:90,  price:105, staff:['yury']},
+  {id:'yu120', grp:'Massage',    name:'Massage with Yury',          dur:120, price:140, staff:['yury']},
+  {id:'os-in', grp:'Osteopathy', name:'Initial Assessment',         dur:60,  price:100, staff:['paula','alfie']},
+  {id:'os-30', grp:'Osteopathy', name:'Follow-up',                  dur:30,  price:60,  staff:['paula','alfie']},
+  {id:'os-45', grp:'Osteopathy', name:'Follow-up',                  dur:45,  price:75,  staff:['paula','alfie']},
+  {id:'os-60', grp:'Osteopathy', name:'Follow-up',                  dur:60,  price:90,  staff:['paula','alfie']},
+];
+const staffById = id => STAFF.find(s=>s.id===id);
+const svcById   = id => SERVICES.find(s=>s.id===id);
+
+/* ================= State & persistence ================= */
+const LS_BK='ykw_bookings_v2', LS_OFF='ykw_dayoff_v2';
+let bookings = [], dayOff = {};
+function save(){ try{localStorage.setItem(LS_BK,JSON.stringify(bookings));localStorage.setItem(LS_OFF,JSON.stringify(dayOff));}catch(e){} }
+function load(){
+  try{
+    bookings = JSON.parse(localStorage.getItem(LS_BK)||'null')||[];
+    dayOff   = JSON.parse(localStorage.getItem(LS_OFF)||'null')||{};
+  }catch(e){ bookings=[]; dayOff={}; }
+  if(!bookings.length) seed();
+}
+function dkey(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function today(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
+function addDays(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
+
+/* Seed demo bookings over today + next 3 days so the diary looks real */
+function seed(){
+  const names=[['Sophie Turner','07700 900123'],['Marcus Bell','07700 900456'],['Priya Shah','07700 900789'],
+    ['Daniel Okoye','07700 900321'],['Hannah Lewis','07700 900654'],['Tom Whitfield','07700 900987'],
+    ['Elena Petrova','07700 900147'],['James Doyle','07700 900258'],['Aisha Rahman','07700 900369'],
+    ['Rob Carter','07700 900741'],['Lucy Nguyen','07700 900852'],['Sam Barker','07700 900963']];
+  const plan=[ /* dayOffset, staff, svc, startMin(min from 00:00) */
+    [0,'paula','os-in',9*60],[0,'paula','os-45',11*60],[0,'paula','os-30',14*60+30],
+    [0,'giuseppe','sp60',9*60],[0,'giuseppe','dt60',11*60+30],
+    [0,'joe','dt90',14*60],[0,'joe','sw60',17*60],
+    [0,'yury','yu60',10*60+30],[0,'yury','yu90',15*60],
+    [1,'giuseppe','dt60',9*60+30],[1,'joe','cbd60',15*60],[1,'yury','yu120',11*60],
+    [2,'paula','os-60',10*60],[2,'joe','dt60',16*60],[3,'yury','yu60',12*60],[3,'giuseppe','mld60',10*60]
+  ];
+  let i=0;
+  plan.forEach(([off,st,sv,min])=>{
+    const staff=staffById(st), d=addDays(today(),off), dow=d.getDay();
+    const rota=staff.rota[dow]; const svc=svcById(sv);
+    if(!rota) return;
+    if(min<rota[0]*60||min+svc.dur>rota[1]*60) return;
+    const [nm,ph]=names[i%names.length]; i++;
+    bookings.push({ref:'YK-'+String(1000+bookings.length),date:dkey(d),start:min,staffId:st,svcId:sv,
+      client:nm,phone:ph,email:nm.toLowerCase().replace(/[^a-z]+/g,'.')+'@example.com',
+      status:'confirmed',created:Date.now()-Math.floor(Math.random()*86400000),online:Math.random()>0.35});
+  });
+  save();
+}
+
+/* ================= Availability engine ================= */
+function slotsFor(dateObj, svc, staffIds){
+  const dow=dateObj.getDay(), open=OPEN[dow], dk=dkey(dateObj);
+  if(!open) return [];
+  const now=new Date(), isToday=dk===dkey(today());
+  const out=[];
+  for(let m=open[0]*60;m+svc.dur<=open[1]*60;m+=30){
+    if(isToday && m<=now.getHours()*60+now.getMinutes()) continue;
+    const free=staffIds.filter(id=>{
+      const st=staffById(id), rota=st.rota[dow];
+      if(!rota) return false;
+      if((dayOff[dk]||[]).includes(id)) return false;
+      if(m<rota[0]*60||m+svc.dur>rota[1]*60) return false;
+      return !bookings.some(b=>b.date===dk&&b.staffId===id&&b.status==='confirmed'&&
+        m<b.start+svcById(b.svcId).dur && b.start<m+svc.dur);
+    });
+    if(free.length) out.push({min:m,free});
+  }
+  return out;
+}
+function fmtMin(m){
+  let h=Math.floor(m/60), mm=m%60, ap=h>=12?'pm':'am'; let h12=h%12||12;
+  return h12+':' + String(mm).padStart(2,'0') + ap;
+}
+function fmtDate(d){ return d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'}); }
+
+/* ================= Customer flow ================= */
+let sel={step:1,svc:null,staffChoice:null,date:null,slot:null,assigned:null};
+const STEPS=['Treatment','Therapist','Date & time','Your details'];
+
+function renderSteps(){
+  const bar=document.getElementById('stepbar');
+  if(sel.step>4){ bar.innerHTML=''; return; }
+  bar.innerHTML=STEPS.map((s,i)=>{
+    const n=i+1, cls=n===sel.step?'cur':(n<sel.step?'done':'');
+    return `<div class="step-chip ${cls}"><span class="n">${n<sel.step?'✓':n}</span>${s}</div>`;
+  }).join('');
+}
+
+function renderFlow(){
+  renderSteps();
+  const el=document.getElementById('flow');
+  if(sel.step===1){
+    const grps=[...new Set(SERVICES.map(s=>s.grp))];
+    el.innerHTML=grps.map(g=>`
+      <div class="svc-group">
+        <h3>${g} <small>${g==='Osteopathy'?'with Paula & Alfie':'· 5.0 ★ from 600+ reviews'}</small></h3>
+        <div class="svc-list">
+          ${SERVICES.filter(s=>s.grp===g).map(s=>`
+            <button class="svc" onclick="pickSvc('${s.id}')">
+              <span><span class="nm">${s.name}</span><span class="meta"> — ${s.dur} min</span></span>
+              <span class="pr">£${s.price}</span>
+            </button>`).join('')}
+        </div>
+      </div>`).join('');
+  }
+  else if(sel.step===2){
+    const svc=svcById(sel.svc);
+    const elig=svc.staff.map(staffById);
+    el.innerHTML=`
+      <div class="svc-group"><h3>Who would you like to see?</h3></div>
+      <div class="ppl">
+        ${elig.length>1?`<button class="person any" onclick="pickStaff('any')">
+          <div class="av">✳</div><div class="nm">Any available</div>
+          <div class="role">First free professional</div><div class="stars">Fastest availability</div>
+        </button>`:''}
+        ${elig.map(p=>`<button class="person" onclick="pickStaff('${p.id}')">
+          <div class="av">${p.name[0]}</div><div class="nm">${p.name}</div>
+          <div class="role">${p.role}</div><div class="stars">★★★★★<span>${p.rating}</span></div>
+        </button>`).join('')}
+      </div>
+      <div class="navrow"><button class="btn btn-ghost" onclick="back(1)">‹ Back</button><span></span></div>`;
+  }
+  else if(sel.step===3){
+    const svc=svcById(sel.svc);
+    const ids=sel.staffChoice==='any'?svc.staff:[sel.staffChoice];
+    if(!sel.date) sel.date=dkey(today());
+    let daysHtml='';
+    for(let i=0;i<14;i++){
+      const d=addDays(today(),i), dk=dkey(d);
+      const has=slotsFor(d,svc,ids).length>0;
+      daysHtml+=`<button class="day ${dk===sel.date?'sel':''}" ${has?'':'disabled'} onclick="pickDate('${dk}')">
+        <div class="dow">${d.toLocaleDateString('en-GB',{weekday:'short'})}</div>
+        <div class="dn">${d.getDate()}</div>
+        <div class="mo">${d.toLocaleDateString('en-GB',{month:'short'})}</div></button>`;
+    }
+    const dObj=new Date(sel.date+'T00:00:00');
+    const slots=slotsFor(dObj,svc,ids);
+    const grp={Morning:[],Afternoon:[],Evening:[]};
+    slots.forEach(s=>{ (s.min<12*60?grp.Morning:s.min<17*60?grp.Afternoon:grp.Evening).push(s); });
+    const slotHtml=slots.length?Object.entries(grp).filter(([,v])=>v.length).map(([k,v])=>`
+      <div class="slotgrp"><h4>${k}</h4><div class="slots">
+        ${v.map(s=>`<button class="slot ${sel.slot===s.min?'sel':''}" onclick="pickSlot(${s.min})">${fmtMin(s.min)}</button>`).join('')}
+      </div></div>`).join('')
+      :`<div class="noslots">No availability this day — try another date.</div>`;
+    const who=sel.staffChoice==='any'?'Any available professional':staffById(sel.staffChoice).name;
+    el.innerHTML=`
+      <div class="svc-group"><h3>Pick a time</h3>
+      <p style="color:var(--light);font-size:.85rem;margin-top:.2rem">${svc.name} · ${svc.dur} min · ${who}</p></div>
+      <div class="daystrip">${daysHtml}</div>
+      ${slotHtml}
+      <div class="navrow">
+        <button class="btn btn-ghost" onclick="back(2)">‹ Back</button>
+        <button class="btn btn-primary" ${sel.slot==null?'style="opacity:.4;pointer-events:none"':''} onclick="toDetails()">Continue ›</button>
+      </div>`;
+  }
+  else if(sel.step===4){
+    const svc=svcById(sel.svc), d=new Date(sel.date+'T00:00:00');
+    const who=staffById(sel.assigned);
+    el.innerHTML=`
+      <div class="sumcard">
+        <div><div class="k">Treatment</div><div class="v">${svc.name} · ${svc.dur} min</div></div>
+        <div><div class="k">Therapist</div><div class="v">${who.name}</div></div>
+        <div><div class="k">When</div><div class="v">${fmtDate(d)}, ${fmtMin(sel.slot)}</div></div>
+        <div><div class="k">Price</div><div class="v">£${svc.price} — pay at the clinic</div></div>
+      </div>
+      <form class="form" onsubmit="confirmBooking(event)">
+        <div class="field"><label for="f-name">Full name *</label><input id="f-name" required autocomplete="name" placeholder="Jane Smith"></div>
+        <div class="field"><label for="f-phone">Mobile *</label><input id="f-phone" required autocomplete="tel" placeholder="07700 900000"></div>
+        <div class="field full"><label for="f-email">Email</label><input id="f-email" type="email" autocomplete="email" placeholder="jane@email.com"></div>
+        <div class="field full"><label for="f-notes">Anything your therapist should know?</label><input id="f-notes" placeholder="Optional"></div>
+        <div class="full navrow">
+          <button type="button" class="btn btn-ghost" onclick="back(3)">‹ Back</button>
+          <button type="submit" class="btn btn-primary">Confirm booking</button>
+        </div>
+      </form>
+      <p class="hint">No payment is taken online in this demo — you'd pay at the clinic (or by card terminal on the day).</p>`;
+  }
+  else if(sel.step===5){
+    const b=sel.lastBooking, svc=svcById(b.svcId), who=staffById(b.staffId), d=new Date(b.date+'T00:00:00');
+    el.innerHTML=`
+      <div class="confirm">
+        <div class="tick">✓</div>
+        <h2>You're booked in, ${b.client.split(' ')[0]}</h2>
+        <div class="ref">Booking reference <b>${b.ref}</b></div>
+        <div class="sumcard">
+          <div><div class="k">Treatment</div><div class="v">${svc.name} · ${svc.dur} min</div></div>
+          <div><div class="k">Therapist</div><div class="v">${who.name}</div></div>
+          <div><div class="k">When</div><div class="v">${fmtDate(d)}, ${fmtMin(b.start)}</div></div>
+          <div><div class="k">Where</div><div class="v">Westway Sports &amp; Fitness Centre, 1 Crowthorne Rd, W10 6RP</div></div>
+        </div>
+        <p style="color:var(--light);font-size:.85rem;max-width:460px;margin:0 auto 1.5rem">A confirmation and a 24-hour reminder would be sent to you and to ${who.name} by email/SMS. Now open the <b>Admin</b> tab to see your booking on the clinic side.</p>
+        <button class="btn btn-primary" onclick="resetFlow()">Book another treatment</button>
+      </div>`;
+  }
+}
+function pickSvc(id){ sel.svc=id; sel.staffChoice=null; sel.slot=null; sel.step=2; renderFlow(); window.scrollTo({top:0}); }
+function pickStaff(id){ sel.staffChoice=id; sel.slot=null; sel.date=null; sel.step=3; renderFlow(); window.scrollTo({top:0}); }
+function pickDate(dk){ sel.date=dk; sel.slot=null; renderFlow(); }
+function pickSlot(m){ sel.slot=m; renderFlow(); }
+function back(n){ sel.step=n; if(n<3)sel.slot=null; renderFlow(); }
+function toDetails(){
+  const svc=svcById(sel.svc);
+  const ids=sel.staffChoice==='any'?svc.staff:[sel.staffChoice];
+  const slot=slotsFor(new Date(sel.date+'T00:00:00'),svc,ids).find(s=>s.min===sel.slot);
+  if(!slot){ toast('That time was just taken — pick another.'); sel.slot=null; renderFlow(); return; }
+  // "Any": assign the free therapist with the lightest day
+  sel.assigned = sel.staffChoice==='any'
+    ? slot.free.sort((a,b)=>dayCount(a)-dayCount(b))[0]
+    : sel.staffChoice;
+  sel.step=4; renderFlow(); window.scrollTo({top:0});
+  function dayCount(id){ return bookings.filter(b=>b.date===sel.date&&b.staffId===id&&b.status==='confirmed').length; }
+}
+function confirmBooking(e){
+  e.preventDefault();
+  const b={ref:'YK-'+String(1000+bookings.length),date:sel.date,start:sel.slot,staffId:sel.assigned,svcId:sel.svc,
+    client:document.getElementById('f-name').value.trim(),
+    phone:document.getElementById('f-phone').value.trim(),
+    email:document.getElementById('f-email').value.trim(),
+    notes:document.getElementById('f-notes').value.trim(),
+    status:'confirmed',created:Date.now(),online:true};
+  bookings.push(b); save();
+  sel.lastBooking=b; sel.step=5; renderFlow(); window.scrollTo({top:0});
+}
+function resetFlow(){ sel={step:1,svc:null,staffChoice:null,date:null,slot:null,assigned:null}; renderFlow(); window.scrollTo({top:0}); }
+
+/* ================= Admin ================= */
+let admDate=today(), admTab='cal';
+function setAdminTab(t){
+  admTab=t;
+  ['cal','list','rota'].forEach(x=>{
+    document.getElementById('adm-'+x).hidden=x!==t;
+    document.getElementById('atab-'+x).classList.toggle('on',x===t);
+  });
+  renderAdmin();
+}
+function admShift(n){ admDate=addDays(admDate,n); renderAdmin(); }
+function admToday(){ admDate=today(); renderAdmin(); }
+
+function renderAdmin(){
+  renderStats();
+  if(admTab==='cal') renderCal();
+  if(admTab==='list') renderList();
+  if(admTab==='rota') renderRota();
+}
+function renderStats(){
+  const dk=dkey(today());
+  const todays=bookings.filter(b=>b.date===dk&&b.status==='confirmed');
+  const online=todays.filter(b=>b.online).length;
+  // week (Mon–Sun) revenue
+  const monday=addDays(today(),-((today().getDay()+6)%7));
+  const week=bookings.filter(b=>b.status==='confirmed'&&b.date>=dkey(monday)&&b.date<=dkey(addDays(monday,6)));
+  const rev=week.reduce((a,b)=>a+svcById(b.svcId).price,0);
+  // utilisation today
+  const dow=today().getDay();
+  let rotaMin=0; STAFF.forEach(s=>{ const r=s.rota[dow]; if(r&&!(dayOff[dk]||[]).includes(s.id)) rotaMin+=(r[1]-r[0])*60; });
+  const bookedMin=todays.reduce((a,b)=>a+svcById(b.svcId).dur,0);
+  const upcoming=bookings.filter(b=>b.status==='confirmed'&&b.date>=dk).length;
+  document.getElementById('statrow').innerHTML=`
+    <div class="stat"><div class="k">Today</div><div class="v">${todays.length}</div><div class="s">${online} booked online</div></div>
+    <div class="stat"><div class="k">This week's value</div><div class="v">£${rev.toLocaleString()}</div><div class="s">${week.length} appointments</div></div>
+    <div class="stat"><div class="k">Utilisation today</div><div class="v">${rotaMin?Math.round(bookedMin/rotaMin*100):0}%</div><div class="s">of rota hours booked</div></div>
+    <div class="stat"><div class="k">Upcoming</div><div class="v">${upcoming}</div><div class="s">confirmed bookings</div></div>`;
+}
+function renderCal(){
+  const dk=dkey(admDate), dow=admDate.getDay(), open=OPEN[dow];
+  document.getElementById('adm-date-lbl').textContent=fmtDate(admDate);
+  const grid=document.getElementById('calgrid');
+  if(!open){ grid.innerHTML='<div style="grid-column:1/-1;padding:2rem;text-align:center;color:var(--light)">Closed</div>'; return; }
+  const [o,c]=open, pxh=52, H=(c-o)*pxh;
+  let html=`<div class="headcell"></div>`+STAFF.map(s=>{
+    const off=(dayOff[dk]||[]).includes(s.id), r=s.rota[dow];
+    return `<div class="headcell"><div class="nm">${s.name}</div><div class="rl">${s.role}</div>
+      ${off?'<span class="off">OFF TODAY</span>':(!r?'<span class="off" style="color:var(--light);background:var(--sand)">NOT ROTA’D</span>':'')}</div>`;
+  }).join('');
+  // time column
+  let tcol=`<div class="timecol" style="height:${H}px">`;
+  for(let h=o;h<=c;h++) tcol+=`<div class="hourlab" style="top:${(h-o)*pxh}px">${h}:00</div>`;
+  tcol+='</div>';
+  html+=tcol;
+  STAFF.forEach(s=>{
+    const r=s.rota[dow], off=(dayOff[dk]||[]).includes(s.id);
+    let col=`<div class="coltrack" style="height:${H}px">`;
+    for(let h=o;h<=c;h++) col+=`<div class="hourline" style="top:${(h-o)*pxh}px"></div>`;
+    if(!r||off){ col+=`<div class="offshade" style="top:0;height:${H}px"></div>`; }
+    else{
+      if(r[0]>o) col+=`<div class="offshade" style="top:0;height:${(r[0]-o)*pxh}px"></div>`;
+      if(r[1]<c) col+=`<div class="offshade" style="top:${(r[1]-o)*pxh}px;height:${(c-r[1])*pxh}px"></div>`;
+    }
+    bookings.filter(b=>b.date===dk&&b.staffId===s.id&&b.status==='confirmed').forEach(b=>{
+      const svc=svcById(b.svcId);
+      const top=(b.start-o*60)/60*pxh, h2=svc.dur/60*pxh;
+      col+=`<button class="bk ${staffById(b.staffId).cat==='osteo'?'osteo':'massage'}" style="top:${top}px;height:${h2-2}px"
+        title="${b.client} — ${svc.name} ${svc.dur}min · ${fmtMin(b.start)} · ${b.ref}" onclick="askCancel('${b.ref}')">
+        <span class="c">${fmtMin(b.start)} ${b.client}</span><span class="s">${svc.name} · ${svc.dur}min</span></button>`;
+    });
+    col+='</div>';
+    html+=col;
+  });
+  grid.innerHTML=html;
+}
+function renderList(){
+  const rows=[...bookings].sort((a,b)=>a.date===b.date?a.start-b.start:(a.date<b.date?-1:1));
+  document.getElementById('bktbody').innerHTML=rows.map(b=>{
+    const svc=svcById(b.svcId), st=staffById(b.staffId), d=new Date(b.date+'T00:00:00');
+    return `<tr>
+      <td>${b.ref}</td><td><b>${b.client}</b>${b.online?' <span class="pill ok" title="Booked via the website">online</span>':''}</td>
+      <td>${b.phone}${b.email?'<br><span style="color:var(--light);font-size:.75rem">'+b.email+'</span>':''}</td>
+      <td>${svc.name} · ${svc.dur}min</td><td>${st.name}</td>
+      <td>${d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})} ${fmtMin(b.start)}</td>
+      <td>£${svc.price}</td>
+      <td><span class="pill ${b.status==='confirmed'?'ok':'cx'}">${b.status}</span></td>
+      <td>${b.status==='confirmed'?`<button class="mini" onclick="askCancel('${b.ref}')">Cancel</button>`:''}</td>
+    </tr>`;
+  }).join('');
+}
+const DOWS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+function renderRota(){
+  const dk=dkey(today());
+  document.getElementById('rotagrid').innerHTML=STAFF.map(s=>{
+    const off=(dayOff[dk]||[]).includes(s.id);
+    const lines=[1,2,3,4,5,6,0].map(d=>{
+      const r=s.rota[d];
+      return `<div class="rota-line ${r?'':'offday'}"><span>${DOWS[d]}</span><b>${r?`${r[0]}:00 – ${r[1]}:00`:'Not working'}</b></div>`;
+    }).join('');
+    return `<div class="rota-card">
+      <div class="top"><div class="av">${s.name[0]}</div><div><div class="nm">${s.name}</div><div class="rl">${s.role} · ★ ${s.rating}</div></div></div>
+      ${lines}
+      <button class="dayoff-btn ${off?'off':''}" onclick="toggleOff('${s.id}')">${off?'Marked off today — tap to restore':'Mark off for today'}</button>
+    </div>`;
+  }).join('');
+}
+function toggleOff(id){
+  const dk=dkey(today());
+  dayOff[dk]=dayOff[dk]||[];
+  const i=dayOff[dk].indexOf(id);
+  if(i>=0){ dayOff[dk].splice(i,1); toast(staffById(id).name+' is back on today'); }
+  else{ dayOff[dk].push(id); toast(staffById(id).name+' marked off — their slots are now hidden from clients'); }
+  save(); renderAdmin();
+}
+function askCancel(ref){
+  const b=bookings.find(x=>x.ref===ref);
+  if(!b||b.status!=='confirmed') return;
+  if(confirm(`Cancel ${b.ref} — ${b.client}, ${svcById(b.svcId).name} on ${new Date(b.date+'T00:00:00').toLocaleDateString('en-GB')} at ${fmtMin(b.start)}?\n\nThe slot reopens on the booking site immediately.`)){
+    b.status='cancelled'; save(); renderAdmin(); toast('Booking cancelled — slot released');
+  }
+}
+
+/* ================= Shell ================= */
+function setView(v){
+  document.getElementById('view-client').hidden=v!=='client';
+  document.getElementById('view-admin').hidden=v!=='admin';
+  document.getElementById('tab-client').classList.toggle('on',v==='client');
+  document.getElementById('tab-admin').classList.toggle('on',v==='admin');
+  if(v==='admin') renderAdmin(); else renderFlow();
+  window.scrollTo({top:0});
+}
+let toastTimer;
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+load(); renderFlow();
+</script>
