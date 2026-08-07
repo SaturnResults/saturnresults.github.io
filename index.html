@@ -6,6 +6,23 @@
 <title>Saturn Results · Digital Studio</title>
 <meta name="description" content="Saturn Results is a digital studio crafting premium websites, brands and growth systems for ambitious businesses. Free demo, no deposit." />
 <meta name="theme-color" content="#08070d">
+<script>
+/* Bulletproof loader dismiss — runs before ANY other script.
+   Guarantees mobile can always scroll even if main script errors, network stalls,
+   or the tab is opened from a link that lands here in a suspended state. */
+(function(){
+  function kill(){
+    if(document.body) document.body.classList.remove('loading');
+    var l=document.getElementById('loader');
+    if(l){l.classList.add('hidden');setTimeout(function(){if(l&&l.parentNode)l.style.display='none'},700)}
+  }
+  var start=function(){setTimeout(kill,2500)};
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start);
+  else start();
+  window.addEventListener('load',function(){setTimeout(kill,600)});
+  window.addEventListener('pageshow',function(e){if(e.persisted) kill(); else setTimeout(kill,1500)});
+})();
+</script>
 <link rel="icon" href="favicon.png" type="image/png" sizes="256x256">
 <link rel="apple-touch-icon" href="favicon.png">
 
@@ -45,9 +62,8 @@
 html,body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',-apple-system,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;touch-action:pan-y}
 body.loading{overflow:hidden;height:100vh}
 @media (max-width:768px){
-  /* Belt-and-braces: never let the body lose vertical scroll on mobile */
-  html,body{overflow-x:hidden;overflow-y:auto !important;-webkit-overflow-scrolling:touch;touch-action:pan-y !important;height:auto !important}
-  body.loading{overflow:hidden !important}
+  /* Belt-and-braces: mobile must NEVER lose scroll — even while loader is up */
+  html,body,body.loading{overflow-x:hidden !important;overflow-y:auto !important;-webkit-overflow-scrolling:touch;touch-action:pan-y !important;height:auto !important;position:static !important}
 }
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
