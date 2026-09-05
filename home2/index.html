@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Saturn Results · UK Marketing Agency</title>
+<meta name="description" content="Saturn Results is a strategic marketing agency helping UK businesses grow with strategy, professional web design, SEO, social and AI."/>
+<meta name="theme-color" content="#08070d">
+<meta name="robots" content="noindex"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="256x256">
+<link rel="apple-touch-icon" href="/favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<script>
+(function(){function kill(){document.body&&document.body.classList.remove('loading');var l=document.getElementById('loader');if(l){l.classList.add('hidden');setTimeout(function(){l.style.display='none'},600)}}var s=function(){setTimeout(kill,1400)};document.readyState==='loading'?document.addEventListener('DOMContentLoaded',s):s();window.addEventListener('load',function(){setTimeout(kill,400)});setTimeout(kill,2500);})();
+</script>
+
+<style>
+:root{
+  --bg:#08070d;
+  --bg-2:#0d0b16;
+  --bg-3:#141020;
+  --ink:#f5f3ff;
+  --muted:#a8a4b8;
+  --muted-2:#7a7588;
+  --line:rgba(255,255,255,.07);
+  --line-2:rgba(255,255,255,.12);
+  --purple:#8b5cf6;
+  --purple-2:#a78bfa;
+  --purple-3:#5b21b6;
+  --sans:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;
+  --serif:'Instrument Serif',Georgia,serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;touch-action:pan-y;font-feature-settings:"ss01","ss02";
+}
+@media (max-width:768px){html,body{overflow-y:auto!important;height:auto!important;position:static!important}}
+body.loading{overflow:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+::selection{background:var(--purple);color:#fff}
+
+/* ---------- LOADER ---------- */
+#loader{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .55s ease,visibility .55s}
+#loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.loader-mark{display:flex;flex-direction:column;align-items:center;gap:18px}
+.loader-mark img{width:48px;height:48px;object-fit:contain;opacity:.9}
+.loader-mark .bar{width:120px;height:1px;background:var(--line);overflow:hidden;position:relative}
+.loader-mark .bar::after{content:"";position:absolute;inset:0;width:0;background:linear-gradient(90deg,transparent,var(--purple-2),transparent);animation:barFill 1.2s ease-out forwards}
+@keyframes barFill{to{width:100%}}
+
+/* ---------- SUBTLE STARFIELD ---------- */
+#stars{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.35}
+
+/* ---------- LAYOUT ---------- */
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px;position:relative}
+@media (max-width:720px){.wrap{padding:0 22px}}
+
+section{position:relative;z-index:5;padding:140px 0}
+@media (max-width:720px){section{padding:96px 0}}
+
+/* ---------- NAV ---------- */
+nav.top{position:fixed;top:0;left:0;right:0;z-index:80;transition:background .3s,border-color .3s}
+nav.top.scrolled{background:rgba(8,7,13,.7);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+nav.top .inner{display:flex;align-items:center;justify-content:space-between;padding:20px 32px}
+@media (max-width:720px){nav.top .inner{padding:16px 22px}}
+.brand{display:flex;align-items:center;gap:11px;font-weight:500;letter-spacing:-.01em}
+.brand img{width:26px;height:26px;object-fit:contain}
+.brand span{font-size:15px}
+.links{display:flex;align-items:center;gap:32px}
+.links a{color:var(--muted);font-size:14px;transition:color .2s}
+.links a:hover{color:var(--ink)}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:100px;background:var(--ink);color:var(--bg);font-size:13px;font-weight:500;transition:transform .25s,box-shadow .25s}
+.cta-btn:hover{transform:translateY(-1px);box-shadow:0 12px 30px rgba(139,92,246,.25)}
+@media (max-width:900px){.links a:not(.cta-btn){display:none}}
+
+/* ---------- CHIP ---------- */
+.chip{display:inline-flex;align-items:center;gap:9px;padding:6px 14px 6px 12px;border:1px solid var(--line);border-radius:100px;font-size:12px;color:var(--muted);background:rgba(255,255,255,.02);letter-spacing:.01em;font-weight:500}
+.chip__dot{width:6px;height:6px;background:var(--purple-2);border-radius:50%;box-shadow:0 0 8px var(--purple-2)}
+
+/* ---------- TWO-LINE HEADING PATTERN ---------- */
+h1,h2,h3{font-family:var(--sans);letter-spacing:-.03em;font-weight:500;line-height:1}
+.h-two{display:flex;flex-direction:column;gap:.05em;letter-spacing:-.035em}
+.h-two .a{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--ink);line-height:.95;letter-spacing:-.025em}
+.h-two .b{font-weight:500;color:var(--muted);line-height:.95;letter-spacing:-.03em}
+.h-two.big .a,.h-two.big .b{font-size:clamp(44px,6vw,84px)}
+.h-two.mid .a,.h-two.mid .b{font-size:clamp(36px,4.6vw,64px)}
+
+/* Section head layout */
+.section-head{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:end;margin-bottom:64px}
+@media (max-width:900px){.section-head{grid-template-columns:1fr;gap:22px;margin-bottom:44px}}
+.section-head .lede{color:var(--muted);font-size:16px;line-height:1.6;max-width:440px}
+.section-head .chip{margin-bottom:24px}
+
+/* ---------- HERO ---------- */
+.hero{padding:130px 0 90px;position:relative;min-height:calc(100vh - 60px);display:flex;align-items:center}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;width:100%}
+@media (max-width:960px){.hero{min-height:auto;padding:130px 0 60px}.hero .wrap{grid-template-columns:1fr;gap:40px}}
+.hero .text{max-width:640px}
+.hero .chip{margin-bottom:32px;animation:fade .6s ease .1s backwards}
+.hero h1{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(42px,5.2vw,74px);line-height:1.02;letter-spacing:-.02em;margin-bottom:0;color:var(--ink)}
+.hero h1 .accent{background:linear-gradient(135deg,var(--purple-2),var(--purple));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line span{display:inline-block;opacity:0;transform:translateY(50%);animation:riseIn .9s cubic-bezier(.2,.8,.3,1) forwards}
+.hero h1 .line:nth-child(1) span{animation-delay:.15s}
+.hero h1 .line:nth-child(2) span{animation-delay:.28s}
+.hero h1 .line:nth-child(3) span{animation-delay:.41s}
+@keyframes riseIn{to{opacity:1;transform:translateY(0)}}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.hero .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:40px;opacity:0;animation:fade .8s ease .7s forwards}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 24px;border-radius:100px;font-size:14px;font-weight:500;letter-spacing:-.005em;transition:transform .25s cubic-bezier(.2,.8,.3,1),box-shadow .25s,border-color .25s,background .25s;border:1px solid transparent}
+.btn.primary{background:var(--ink);color:var(--bg)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(167,139,250,.35)}
+.btn.ghost{border-color:var(--line-2);color:var(--ink);background:transparent}
+.btn.ghost:hover{border-color:var(--purple-2);background:rgba(139,92,246,.06);transform:translateY(-2px)}
+.btn svg{width:14px;height:14px;transition:transform .25s}
+.btn:hover svg{transform:translateX(3px)}
+
+/* Hero moon stage */
+.moon-stage{position:relative;aspect-ratio:1/1;width:100%;max-width:560px;justify-self:end;opacity:0;animation:fade 1.2s ease .3s forwards}
+@media (max-width:960px){.moon-stage{display:none}}
+#moon-canvas{width:100%;height:100%;cursor:grab;position:relative;z-index:2}
+#moon-canvas:active{cursor:grabbing}
+.moon-glow{position:absolute;inset:-20%;background:radial-gradient(circle at 60% 45%,rgba(139,92,246,.22),transparent 55%);pointer-events:none;z-index:1}
+
+.hero-meta{display:flex;gap:32px;margin-top:56px;flex-wrap:wrap;opacity:0;animation:fade .8s ease .9s forwards}
+.hero-meta div{font-size:13px;color:var(--muted)}
+.hero-meta div strong{display:block;font-family:var(--serif);font-style:italic;color:var(--ink);font-size:22px;font-weight:400;margin-bottom:4px}
+@media (max-width:960px){.hero-meta{margin-top:32px}}
+
+/* ---------- MARQUEE ---------- */
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0;overflow:hidden;background:var(--bg);position:relative;z-index:5}
+.marquee-track{display:flex;gap:56px;animation:marquee 32s linear infinite;white-space:nowrap;width:max-content}
+.marquee span{font-family:var(--serif);font-style:italic;font-size:24px;color:var(--muted);display:flex;align-items:center;gap:56px}
+.marquee span::after{content:"·";color:var(--purple-2);font-style:normal;font-size:16px;transform:translateY(-2px)}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ---------- WORK ---------- */
+.projects{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:900px){.projects{grid-template-columns:1fr;gap:16px}}
+.card{position:relative;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--bg-2);transition:transform .5s cubic-bezier(.2,.8,.3,1),border-color .35s}
+.card:hover{transform:translateY(-4px);border-color:var(--line-2)}
+.card .media{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--bg-3)}
+.card .media img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.8,.3,1);filter:saturate(.9) brightness(.94)}
+.card.contain .media img{object-fit:contain;background:var(--bg-2)}
+.card:hover .media img{transform:scale(1.04);filter:saturate(1) brightness(1)}
+.card .media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(8,7,13,.6) 100%);pointer-events:none}
+.card .num{position:absolute;top:16px;left:18px;font-family:var(--serif);font-style:italic;font-size:14px;color:var(--purple-2);z-index:2}
+.card .tag{position:absolute;top:16px;right:18px;font-size:11px;color:var(--muted);letter-spacing:.02em;background:rgba(8,7,13,.7);backdrop-filter:blur(6px);padding:5px 11px;border-radius:100px;border:1px solid var(--line);z-index:2}
+.card .body{padding:26px 26px 24px;display:flex;flex-direction:column;gap:14px}
+.card .body h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:28px;letter-spacing:-.02em;line-height:1.05;color:var(--ink)}
+.card .body p{color:var(--muted);font-size:14px;line-height:1.55}
+.card .body .foot{display:flex;justify-content:space-between;align-items:center;padding-top:6px;margin-top:6px;border-top:1px solid var(--line)}
+.card .body .meta{display:flex;gap:20px;font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em}
+.card .visit{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink);letter-spacing:-.005em}
+.card .visit svg{width:12px;height:12px;transition:transform .25s}
+.card:hover .visit svg{transform:translate(2px,-2px)}
+
+/* Live iframe preview on hover (desktop only) */
+.iframe{position:absolute;inset:0;width:1280px;height:800px;border:0;transform-origin:top left;pointer-events:none;opacity:0;transition:opacity .5s ease,transform .8s cubic-bezier(.2,.8,.3,1);background:var(--bg-3);z-index:1}
+@media (hover:hover){.card.live-on .iframe{opacity:1;pointer-events:auto;transform:scale(calc(var(--s,.4) * 1.02))}.card.live-on .media img{opacity:0}}
+
+/* ---------- CAPABILITIES (deck stack) ---------- */
+.decks{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:820px){.decks{grid-template-columns:1fr}}
+.deck{border:1px solid var(--line);border-radius:20px;padding:36px 32px;background:var(--bg-2);transition:transform .4s cubic-bezier(.2,.8,.3,1),border-color .3s;position:relative;overflow:hidden}
+.deck:hover{transform:translateY(-3px);border-color:var(--line-2)}
+.deck::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple-2),transparent);opacity:0;transition:opacity .3s}
+.deck:hover::before{opacity:1}
+.deck .n{font-family:var(--serif);font-style:italic;color:var(--purple-2);font-size:13px;letter-spacing:.02em;margin-bottom:22px}
+.deck h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:30px;letter-spacing:-.02em;line-height:1.05;color:var(--ink);margin-bottom:12px}
+.deck p{color:var(--muted);font-size:14px;line-height:1.6}
+
+/* ---------- PRICING ---------- */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+@media (max-width:1000px){.tiers{grid-template-columns:1fr;max-width:460px;margin:0 auto}}
+.tier{position:relative;border:1px solid var(--line);border-radius:22px;background:var(--bg-2);padding:36px 32px;display:flex;flex-direction:column;transition:transform .4s,border-color .3s}
+.tier:hover{transform:translateY(-4px);border-color:var(--line-2)}
+.tier.pop{background:linear-gradient(180deg,rgba(139,92,246,.08),rgba(139,92,246,.02));border-color:rgba(167,139,250,.35)}
+.tier .badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.15em;text-transform:uppercase;padding:5px 12px;border-radius:100px;background:linear-gradient(135deg,var(--purple-2),var(--purple));color:#fff;font-weight:600;box-shadow:0 6px 18px rgba(139,92,246,.4)}
+.tier .name{font-family:var(--serif);font-style:italic;font-weight:400;font-size:26px;color:var(--ink);margin-bottom:6px}
+.tier .tag{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:22px;min-height:38px}
+.tier .price{display:flex;align-items:baseline;gap:4px;margin-bottom:4px}
+.tier .price .c{font-family:var(--serif);font-style:italic;font-size:26px;color:var(--purple-2)}
+.tier .price .amt{font-family:var(--serif);font-style:italic;font-size:62px;line-height:1;color:var(--ink);letter-spacing:-.02em;padding-right:.08em}
+.tier .price-note{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted-2);margin-bottom:22px}
+.tier .divider{height:1px;background:var(--line);margin:0 0 22px}
+.tier ul{list-style:none;flex:1;display:flex;flex-direction:column;gap:11px;margin-bottom:26px}
+.tier li{display:flex;gap:10px;font-size:13.5px;line-height:1.5;color:var(--ink)}
+.tier li svg{width:14px;height:14px;color:var(--purple-2);flex-shrink:0;margin-top:4px}
+.tier .cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;border-radius:100px;border:1px solid var(--line-2);font-size:13px;font-weight:500;color:var(--ink);background:transparent;transition:all .3s;text-align:center}
+.tier .cta:hover{background:rgba(139,92,246,.1);border-color:var(--purple-2)}
+.tier.pop .cta{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tier.pop .cta:hover{background:var(--purple);color:#fff;border-color:var(--purple);box-shadow:0 12px 30px rgba(139,92,246,.35)}
+.tier .cta svg{width:12px;height:12px;transition:transform .25s}
+.tier .cta:hover svg{transform:translateX(2px)}
+.pricing-foot{max-width:800px;margin:44px auto 0;text-align:center;font-size:13px;color:var(--muted);line-height:1.7}
+.pricing-foot strong{color:var(--purple-2);font-weight:500}
+
+/* ---------- CHAT ---------- */
+.chat-wrap{max-width:920px;margin:0 auto;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:var(--bg-2);display:flex;flex-direction:column;min-height:500px}
+.chat-head{display:flex;align-items:center;gap:14px;padding:20px 24px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.015)}
+.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--purple-2),var(--purple-3));display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:16px;color:#fff;position:relative;flex-shrink:0}
+.avatar::after{content:"";position:absolute;bottom:0;right:0;width:10px;height:10px;background:#10b981;border-radius:50%;border:2px solid var(--bg-2);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.6)}50%{box-shadow:0 0 0 5px rgba(16,185,129,0)}}
+.chat-meta .name{font-size:14px;font-weight:500}
+.chat-meta .status{font-size:11px;color:var(--muted-2);margin-top:2px}
+.chat-meta .status .live{color:#10b981}
+.chat-body{flex:1;padding:24px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;max-height:360px;scroll-behavior:smooth}
+.chat-body::-webkit-scrollbar{width:5px}
+.chat-body::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:5px}
+.bubble{max-width:82%;padding:12px 16px;border-radius:16px;font-size:14px;line-height:1.55;animation:bubIn .35s cubic-bezier(.2,.8,.3,1)}
+@keyframes bubIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.bubble.them{align-self:flex-start;background:rgba(255,255,255,.04);border:1px solid var(--line);border-bottom-left-radius:5px}
+.bubble.me{align-self:flex-end;background:linear-gradient(135deg,var(--purple-2),var(--purple));color:#fff;border-bottom-right-radius:5px}
+.bubble.them small{display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--purple-2);margin-bottom:4px;opacity:.7}
+.typing{display:none;align-self:flex-start;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:16px;border-bottom-left-radius:5px;gap:5px}
+.typing.show{display:flex}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--purple-2);opacity:.5;animation:typB 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.15s}
+.typing span:nth-child(3){animation-delay:.3s}
+@keyframes typB{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-4px);opacity:1}}
+.chips{display:flex;gap:8px;flex-wrap:wrap;padding:0 22px 12px}
+.q-chip{font-size:12px;padding:8px 13px;border-radius:100px;border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--muted);cursor:pointer;transition:all .25s}
+.q-chip:hover{border-color:var(--purple-2);background:rgba(139,92,246,.08);color:var(--ink)}
+.chat-form{display:flex;gap:10px;padding:14px 18px;border-top:1px solid var(--line);background:rgba(255,255,255,.015)}
+.chat-form input{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--line);padding:12px 16px;border-radius:100px;color:var(--ink);font-family:inherit;font-size:14px;outline:none;transition:border-color .2s,background .2s}
+.chat-form input:focus{border-color:var(--purple-2);background:rgba(139,92,246,.05)}
+.chat-form button{width:42px;height:42px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--purple-2),var(--purple));color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.chat-form button:hover{transform:scale(1.05);box-shadow:0 6px 18px rgba(139,92,246,.35)}
+.chat-form svg{width:15px;height:15px}
+
+/* ---------- CTA ---------- */
+.cta-band{text-align:center;padding:120px 0 130px;background:radial-gradient(ellipse at 50% 50%,rgba(139,92,246,.12),transparent 60%)}
+.cta-band h2{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(46px,7vw,96px);line-height:1;letter-spacing:-.02em;margin-bottom:24px;color:var(--ink)}
+.cta-band h2 .accent{background:linear-gradient(135deg,var(--purple-2),var(--purple));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.cta-band p{color:var(--muted);font-size:17px;line-height:1.6;max-width:520px;margin:0 auto 40px}
+
+/* ---------- FOOTER ---------- */
+footer{border-top:1px solid var(--line);padding:70px 0 40px;position:relative;z-index:5}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:52px}
+@media (max-width:820px){.foot-grid{grid-template-columns:1fr 1fr;gap:32px}.foot-grid > :first-child{grid-column:1/-1}}
+.foot-brand h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:36px;line-height:1.05;letter-spacing:-.02em;margin-bottom:14px;color:var(--ink)}
+.foot-brand h3 .accent{background:linear-gradient(135deg,var(--purple-2),var(--purple));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.foot-brand p{color:var(--muted);font-size:14px;line-height:1.6;max-width:340px}
+.foot-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--purple-2);margin-bottom:16px;font-weight:500}
+.foot-col a{display:block;font-size:14px;color:var(--muted);padding:5px 0;transition:color .2s}
+.foot-col a:hover{color:var(--ink)}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;padding-top:26px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.foot-bottom .copy{display:flex;align-items:center;gap:12px}
+.foot-bottom .copy img{width:24px;height:24px}
+
+/* ---------- REVEAL ANIMATIONS ---------- */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.8,.3,1),transform .8s cubic-bezier(.2,.8,.3,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body class="loading">
+
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-mark">
+    <img src="/SRWHITELOGO.png" alt="Saturn Results"/>
+    <div class="bar"></div>
+  </div>
+</div>
+
+<canvas id="stars"></canvas>
+
+<!-- NAV -->
+<nav class="top" id="topNav">
+  <div class="inner">
+    <a class="brand" href="/">
+      <img src="/SRWHITELOGO.png" alt="Saturn Results"/>
+      <span>Saturn Results</span>
+    </a>
+    <div class="links">
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#chat">Ask</a>
+      <a href="/contact/" class="cta-btn">Book a Call
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="text">
+      <div class="chip"><span class="chip__dot"></span> Now Onboarding · Q3</div>
+      <h1>
+        <span class="line"><span>We help UK businesses</span></span>
+        <span class="line"><span><span class="accent">grow</span> with strategy,</span></span>
+        <span class="line"><span>web, SEO, social and AI.</span></span>
+      </h1>
+      <div class="actions">
+        <a class="btn primary" href="/contact/">Book a Call
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a class="btn ghost" href="#work">View Work</a>
+      </div>
+      <div class="hero-meta">
+        <div><strong>11</strong>brands shipped</div>
+        <div><strong>7 days</strong>average build</div>
+        <div><strong>Exeter</strong>Venospace HQ</div>
+      </div>
+    </div>
+    <div class="moon-stage">
+      <div class="moon-glow"></div>
+      <canvas id="moon-canvas"></canvas>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Strategy</span><span>Web Design</span><span>SEO</span><span>Social</span><span>AI</span><span>Brand</span>
+    <span>Strategy</span><span>Web Design</span><span>SEO</span><span>Social</span><span>AI</span><span>Brand</span>
+  </div>
+</div>
+
+<!-- WORK -->
+<section id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="chip"><span class="chip__dot"></span> Selected Work</div>
+        <h2 class="h-two big">
+          <span class="a">Eleven brands.</span>
+          <span class="b">One agency.</span>
+        </h2>
+      </div>
+      <p class="lede">Every site we build is engineered for performance, designed for clarity and tuned to convert. Hover any card for a live preview.</p>
+    </div>
+
+    <div class="projects">
+      <!-- 01 YK Wellness -->
+      <article class="card reveal" data-preview="https://srmarketing.live/index.html">
+        <div class="media">
+          <span class="num">— 01</span><span class="tag">Wellness</span>
+          <img src="/yk-wellness.jpg" alt="YK Wellness site preview" loading="lazy"/>
+        </div>
+        <div class="body">
+          <h3>YK Wellness</h3>
+          <p>A premium clinic experience. Multi page service architecture, a conversion focused booking flow and a serene, trust building brand identity.</p>
+          <div class="foot">
+            <div class="meta"><span>Brand · Web · SEO</span></div>
+            <a class="visit" href="https://srmarketing.live/index.html" target="_blank" rel="noopener">Visit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+      <!-- 02 Raglo UK -->
+      <article class="card reveal contain" data-preview="https://saturnresults.co.uk/raglouk-demo/">
+        <div class="media">
+          <span class="num">— 02</span><span class="tag">Apparel</span>
+          <img src="/raglo-uk.png" alt="Raglo UK site preview" loading="lazy"/>
+        </div>
+        <div class="body">
+          <h3>Raglo UK</h3>
+          <p>A confident, modern brand presence built for an ambitious UK label. Editorial product layouts and a buying experience that feels effortless.</p>
+          <div class="foot">
+            <div class="meta"><span>Web · Brand</span></div>
+            <a class="visit" href="https://saturnresults.co.uk/raglouk-demo/" target="_blank" rel="noopener">Visit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+      <!-- 03 Tony Kosoko -->
+      <article class="card reveal contain" data-preview="https://tonykosokophysiotherapy.com/">
+        <div class="media">
+          <span class="num">— 03</span><span class="tag">Healthcare</span>
+          <img src="/tony-kosoko.png" alt="Tony Kosoko Physio site preview" loading="lazy"/>
+        </div>
+        <div class="body">
+          <h3>Tony Kosoko Physio</h3>
+          <p>A calm, trusted digital home for a specialist physiotherapy practice. Clear services and a booking flow built to convert enquiries into appointments.</p>
+          <div class="foot">
+            <div class="meta"><span>Web · Brand</span></div>
+            <a class="visit" href="https://tonykosokophysiotherapy.com/" target="_blank" rel="noopener">Visit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+      <!-- 04 Alderney Week -->
+      <article class="card reveal" data-preview="https://www.alderneyweek.com/">
+        <div class="media">
+          <span class="num">— 04</span><span class="tag">Events</span>
+          <img src="/alderney-week.avif" alt="Alderney Week site preview" loading="lazy"/>
+        </div>
+        <div class="body">
+          <h3>Alderney Week</h3>
+          <p>A vibrant festival site for the Channel Islands' beloved annual celebration. Schedules, ticketing and an island flavoured visual language.</p>
+          <div class="foot">
+            <div class="meta"><span>Full Site · CMS</span></div>
+            <a class="visit" href="https://www.alderneyweek.com/" target="_blank" rel="noopener">Visit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+      <!-- 05 Utopia -->
+      <article class="card reveal" data-preview="https://saturnresults.co.uk/utopia-worldwide/">
+        <div class="media">
+          <span class="num">— 05</span><span class="tag">Lifestyle</span>
+          <img src="/utopia-worldwide.png" alt="Utopia Worldwide site preview" loading="lazy"/>
+        </div>
+        <div class="body">
+          <h3>Utopia Worldwide</h3>
+          <p>A bold, future facing brand site for a worldwide lifestyle label. Editorial typography, immersive imagery and a story driven flow.</p>
+          <div class="foot">
+            <div class="meta"><span>Web · Brand</span></div>
+            <a class="visit" href="https://saturnresults.co.uk/utopia-worldwide/" target="_blank" rel="noopener">Visit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+      <!-- 06 Longis Bay -->
+      <article class="card reveal" data-preview="https://longisbay.com/">
+        <div class="media">
+          <span class="num">— 06</span><span class="tag">Garden</span>
+          <img src="/longis-bay.avif" alt="Longis Bay site preview" loading="lazy"/>
+        </div>
+        <div class="body">
+          <h3>Longis Bay</h3>
+          <p>A grounded, beautifully shot site for a garden business. Plant catalogue, services and enquiries packaged in a calm, nature led layout.</p>
+          <div class="foot">
+            <div class="meta"><span>Web · Brand</span></div>
+            <a class="visit" href="https://longisbay.com/" target="_blank" rel="noopener">Visit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+      <!-- 07 Coasters -->
+      <article class="card reveal" data-preview="https://srdemo.site/">
+        <div class="media">
+          <span class="num">— 07</span><span class="tag">Cafe</span>
+          <img src="/srdemo.jpg" alt="Coasters Cafe site preview" loading="lazy"/>
+        </div>
+        <div class="body">
+          <h3>Coasters Cafe</h3>
+          <p>A warm, appetising site for a local cafe. Menu, opening hours and atmosphere wrapped in a layout that pulls people through the door.</p>
+          <div class="foot">
+            <div class="meta"><span>Web · Brand</span></div>
+            <a class="visit" href="https://srdemo.site/" target="_blank" rel="noopener">Visit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+      <!-- 08 H Barbers -->
+      <article class="card reveal" data-preview="https://saturnresults.co.uk/H-BARBERS/">
+        <div class="media">
+          <span class="num">— 08</span><span class="tag">Services</span>
+          <img src="/h-barbers.jpg" alt="H Barbers site preview" loading="lazy"/>
+        </div>
+        <div class="body">
+          <h3>H Barbers</h3>
+          <p>A bold, modern site for a sharp local barbershop. Slick booking, atmospheric photography and a presence that matches the chair side experience.</p>
+          <div class="foot">
+            <div class="meta"><span>Web · Booking</span></div>
+            <a class="visit" href="https://saturnresults.co.uk/H-BARBERS/" target="_blank" rel="noopener">Visit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+      <!-- 09 Richard Dale -->
+      <article class="card reveal" data-preview="https://saturnresults.co.uk/RICHARD-DALE/">
+        <div class="media">
+          <span class="num">— 09</span><span class="tag">Hospitality</span>
+          <img src="/richard-dale.jpg" alt="Richard Dale site preview" loading="lazy"/>
+        </div>
+        <div class="body">
+          <h3>Richard Dale</h3>
+          <p>A polished local presence built around clean typography and strong imagery. Designed to convert browsers into bookings and showcase the craft.</p>
+          <div class="foot">
+            <div class="meta"><span>Web · Brand</span></div>
+            <a class="visit" href="https://saturnresults.co.uk/RICHARD-DALE/" target="_blank" rel="noopener">Visit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+      <!-- 10 Trinit.e -->
+      <article class="card reveal" data-preview="https://trinitemassage.co.uk/">
+        <div class="media">
+          <span class="num">— 10</span><span class="tag">Wellness</span>
+          <img src="/trinit-e.avif" alt="Trinit.e Massage site preview" loading="lazy"/>
+        </div>
+        <div class="body">
+          <h3>Trinit.e Massage</h3>
+          <p>A serene digital home for a holistic massage practice. Booking ready, mobile first and built around calm typography with generous breathing room.</p>
+          <div class="foot">
+            <div class="meta"><span>Web · Brand</span></div>
+            <a class="visit" href="https://trinitemassage.co.uk/" target="_blank" rel="noopener">Visit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+      <!-- 11 Cycling Out Of Poverty -->
+      <article class="card reveal" data-preview="https://fietsenuitdearmoede.framer.website/">
+        <div class="media">
+          <span class="num">— 11</span><span class="tag">Non Profit</span>
+          <img src="/cycling-out-of-poverty.avif" alt="Cycling Out Of Poverty site preview" loading="lazy"/>
+        </div>
+        <div class="body">
+          <h3>Cycling Out Of Poverty</h3>
+          <p>A cause driven platform empowering African communities through bicycles. Built to inspire donations, share impact stories and grow the movement.</p>
+          <div class="foot">
+            <div class="meta"><span>Web · Storytelling</span></div>
+            <a class="visit" href="https://fietsenuitdearmoede.framer.website/" target="_blank" rel="noopener">Visit
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="chip"><span class="chip__dot"></span> Capabilities</div>
+        <h2 class="h-two big">
+          <span class="a">What we do.</span>
+          <span class="b">Everything, in one place.</span>
+        </h2>
+      </div>
+      <p class="lede">Strategy first, then the systems that carry it. Eight disciplines, one senior led team, one point of contact.</p>
+    </div>
+
+    <div class="decks">
+      <div class="deck reveal">
+        <div class="n">— 01</div>
+        <h3>Web Design</h3>
+        <p>Bespoke layouts, type systems and visual languages. Designed in browser, refined to pixel.</p>
+      </div>
+      <div class="deck reveal">
+        <div class="n">— 02</div>
+        <h3>Development</h3>
+        <p>Hand coded, lightning fast sites. Lighthouse optimised, accessible and built to scale.</p>
+      </div>
+      <div class="deck reveal">
+        <div class="n">— 03</div>
+        <h3>Brand Identity</h3>
+        <p>Logo systems, palettes, type, voice. Cohesive identities that travel across every touchpoint.</p>
+      </div>
+      <div class="deck reveal">
+        <div class="n">— 04</div>
+        <h3>3D &amp; Motion</h3>
+        <p>WebGL scenes, scroll driven motion and tactile micro interactions that make sites feel alive.</p>
+      </div>
+      <div class="deck reveal">
+        <div class="n">— 05</div>
+        <h3>Growth &amp; SEO</h3>
+        <p>Technical SEO, content systems and analytics. Ship a site that ranks, converts and compounds.</p>
+      </div>
+      <div class="deck reveal">
+        <div class="n">— 06</div>
+        <h3>Strategy</h3>
+        <p>Positioning, messaging and roadmaps. We start with the why before pushing pixels.</p>
+      </div>
+      <div class="deck reveal">
+        <div class="n">— 07</div>
+        <h3>AI Chatbots</h3>
+        <p>Smart, on brand assistants that capture leads, answer questions and qualify prospects around the clock.</p>
+      </div>
+      <div class="deck reveal">
+        <div class="n">— 08</div>
+        <h3>Social Media</h3>
+        <p>Content, scheduling and growth. Feeds that look like the brand and bring qualified eyes back to the site.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="chip"><span class="chip__dot"></span> Pricing</div>
+        <h2 class="h-two big">
+          <span class="a">Three ways</span>
+          <span class="b">to launch.</span>
+        </h2>
+      </div>
+      <p class="lede">Honest one time pricing for a bespoke build. Pick a tier, book a call, and we'll take it from there.</p>
+    </div>
+
+    <div class="tiers">
+      <article class="tier reveal">
+        <div class="name">Launch</div>
+        <div class="tag">A single, premium page that does one job brilliantly.</div>
+        <div class="price"><span class="c">£</span><span class="amt">1,497</span></div>
+        <div class="price-note">One time build fee</div>
+        <div class="divider"></div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Up to 5 page bespoke site</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Bespoke design, no templates</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Mobile first responsive build</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Contact or booking form</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Domain &amp; hosting setup</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Core SEO foundations</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Unlimited revisions</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>30 days post launch support</li>
+        </ul>
+        <a class="cta" href="/contact/">Start with Launch
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </article>
+
+      <article class="tier pop reveal">
+        <div class="badge">Most Popular</div>
+        <div class="name">Studio</div>
+        <div class="tag">A full multi page site with brand polish, built to convert.</div>
+        <div class="price"><span class="c">£</span><span class="amt">1,997</span></div>
+        <div class="price-note">One time build fee</div>
+        <div class="divider"></div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Up to 10 page bespoke site</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Brand kit (colours, type, voice)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Custom animations &amp; micro interactions</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Booking, contact or lead capture</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Domain &amp; hosting setup</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Advanced on page SEO</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Google Analytics &amp; Search Console</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Unlimited revisions</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>60 days post launch support</li>
+        </ul>
+        <a class="cta" href="/contact/">Go with Studio
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </article>
+
+      <article class="tier reveal">
+        <div class="name">Orbit</div>
+        <div class="tag">Everything in Studio, plus AI, automation and the works.</div>
+        <div class="price"><span class="c">£</span><span class="amt">2,997</span></div>
+        <div class="price-note">One time build fee</div>
+        <div class="divider"></div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Up to 30 page bespoke site</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Full brand identity package</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>AI chatbot trained on your business</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Social media setup &amp; templates</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>WebGL, 3D &amp; advanced motion</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Payments, bookings &amp; integrations</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Full SEO audit &amp; strategy</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Priority response, direct line</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>Unlimited revisions</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l5 5L20 7"/></svg>90 days post launch support</li>
+        </ul>
+        <a class="cta" href="/contact/">Enter Orbit
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </article>
+    </div>
+    <div class="pricing-foot reveal">
+      Every project starts with a <strong>free strategy call</strong>. Most builds are <strong>live within a week</strong>. Transparent pricing, senior led, no surprises.
+    </div>
+  </div>
+</section>
+
+<!-- CHAT -->
+<section id="chat" style="padding-bottom:60px">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="chip"><span class="chip__dot"></span> Ask Anything</div>
+        <h2 class="h-two big">
+          <span class="a">Got a question?</span>
+          <span class="b">Ask Saturn.</span>
+        </h2>
+      </div>
+      <p class="lede">Real answers, no sales pitch. Try one of the questions below or write your own.</p>
+    </div>
+
+    <div class="chat-wrap reveal">
+      <div class="chat-head">
+        <div class="avatar">S</div>
+        <div class="chat-meta">
+          <div class="name">Saturn Studio</div>
+          <div class="status"><span class="live">●</span> Online · typically replies in seconds</div>
+        </div>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="bubble them"><small>Saturn Studio</small>Hey ✦ Ask us anything. What we do, how we price it, how fast we move, or how we help brands like yours grow.</div>
+        <div class="typing" id="typing"><span></span><span></span><span></span></div>
+      </div>
+      <div class="chips" id="chatChips">
+        <div class="q-chip" data-q="How much does it cost?">How much does it cost?</div>
+        <div class="q-chip" data-q="What services do you offer?">What do you do?</div>
+        <div class="q-chip" data-q="How fast can you build?">How fast is it?</div>
+        <div class="q-chip" data-q="Can I see examples?">See your work</div>
+      </div>
+      <form class="chat-form" id="chatForm">
+        <input type="text" id="chatField" placeholder="Type your question…" autocomplete="off"/>
+        <button type="submit" aria-label="Send">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="wrap">
+    <h2>Ready to <span class="accent">grow?</span></h2>
+    <p>Tell us about your business and where you want to go. We'll come back within 24 hours to schedule a call.</p>
+    <a class="btn primary" href="/contact/">Book a Call
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <h3>Build something <span class="accent">orbital.</span></h3>
+        <p>A UK marketing agency helping ambitious businesses grow with strategy, web, SEO, social and AI. Based at Venospace, Exeter.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Agency</h4>
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#pricing">Pricing</a>
+        <a href="/contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>Clients</h4>
+        <a href="#work">YK Wellness</a>
+        <a href="#work">Raglo UK</a>
+        <a href="#work">Tony Kosoko</a>
+        <a href="#work">Alderney Week</a>
+      </div>
+      <div class="foot-col">
+        <h4>Connect</h4>
+        <a href="mailto:contact@saturnresults.com">Email</a>
+        <a href="/portal/">Client Portal</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="copy">
+        <img src="/SRWHITELOGO.png" alt=""/>
+        <span>© 2026 Saturn Results · Built with care</span>
+      </div>
+      <div>contact@saturnresults.com</div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ---------- STARFIELD (subtle, viewport only) ---------- */
+(function(){
+  const c=document.getElementById('stars');
+  if(!c) return;
+  const ctx=c.getContext('2d');
+  let w,h,stars;
+  function resize(){
+    w=c.width=innerWidth;h=c.height=innerHeight;
+    const n=Math.min(120,Math.floor(w*h/16000));
+    stars=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1+.2,a:Math.random()*.5+.2,t:Math.random()*.02+.005,p:Math.random()*6.28}));
+  }
+  resize();addEventListener('resize',resize);
+  let on=true;document.addEventListener('visibilitychange',()=>{on=!document.hidden;if(on) loop()});
+  function loop(){
+    if(!on) return;
+    ctx.clearRect(0,0,w,h);
+    stars.forEach(s=>{s.p+=s.t;ctx.beginPath();ctx.fillStyle=`rgba(220,220,255,${s.a+Math.sin(s.p)*.25})`;ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill()});
+    requestAnimationFrame(loop);
+  }loop();
+})();
+
+/* ---------- NAV scroll ---------- */
+window.addEventListener('scroll',()=>{
+  document.getElementById('topNav').classList.toggle('scrolled',scrollY>30);
+});
+
+/* ---------- REVEAL ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---------- IFRAME PREVIEW ON HOVER ---------- */
+(function(){
+  if(!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  const cards=document.querySelectorAll('.card[data-preview]');
+  let active=null, killT=null;
+  function kill(){if(!active) return;const f=active.querySelector('.iframe');if(f) f.remove();active=null}
+  function fit(card){
+    const m=card.querySelector('.media');
+    const r=m.getBoundingClientRect();
+    const s=Math.max(r.width/1280,r.height/800);
+    card.style.setProperty('--s',s);
+  }
+  cards.forEach(card=>{
+    let t;
+    card.addEventListener('mouseenter',()=>{
+      clearTimeout(killT);
+      t=setTimeout(()=>{
+        if(active && active!==card) kill();
+        if(!card.querySelector('.iframe')){
+          const f=document.createElement('iframe');
+          f.className='iframe';
+          f.src=card.dataset.preview;
+          f.loading='lazy';
+          f.referrerPolicy='no-referrer';
+          card.querySelector('.media').appendChild(f);
+          fit(card);
+          f.addEventListener('load',()=>requestAnimationFrame(()=>fit(card)));
+        }
+        active=card;
+        card.classList.add('live-on');
+      },500);
+    });
+    card.addEventListener('mouseleave',()=>{
+      clearTimeout(t);
+      card.classList.remove('live-on');
+      killT=setTimeout(kill,3500);
+    });
+  });
+  let rT;window.addEventListener('resize',()=>{clearTimeout(rT);rT=setTimeout(()=>cards.forEach(fit),120)});
+})();
+
+/* ---------- CHAT ---------- */
+(function(){
+  const body=document.getElementById('chatBody');
+  const typing=document.getElementById('typing');
+  const form=document.getElementById('chatForm');
+  const field=document.getElementById('chatField');
+  const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'})[c]);
+  function push(who,text,withName=false){
+    const b=document.createElement('div');
+    b.className='bubble '+who;
+    if(who==='them'&&withName) b.innerHTML=`<small>Saturn Studio</small>${esc(text)}`;
+    else b.textContent=text;
+    body.insertBefore(b,typing);
+    body.scrollTop=body.scrollHeight;
+  }
+  const replies=[
+    {m:/(what.*(do|service|offer)|service|capabilit|help with|specialis|specializ)/i,a:"We're a UK marketing agency. Strategy, professional web design, SEO, social and AI, all under one roof. Book a call and we'll walk you through what a joined up plan looks like for your business."},
+    {m:/(how long|time|fast|quick|turnaround|when.*live|how quick|how soon)/i,a:"Most websites are live within a week. Ongoing work runs on a rolling monthly engagement so you see results month on month. We'll give you an honest timeline once we've heard the brief."},
+    {m:/(price|pricing|cost|how much|fee|charge|expensive|cheap|budget|package|invest)/i,a:"Website builds start at £1,497 and are fully bespoke. Ongoing marketing engagements are quoted per scope. Book a call and we'll walk you through what makes sense for where you're at."},
+    {m:/(retainer|ongoing|monthly|subscription|contract|recurring)/i,a:"Ongoing marketing (SEO, social, AI, content) runs on a rolling monthly engagement. Websites are a one time build fee. No lock in, no surprises."},
+    {m:/(build|launch|delivery|ready|live|finish|website|site)/i,a:"Every website is hand built for the brand. Custom design, fast performance, senior led. Most launch within a week."},
+    {m:/(based|where|location|office|exeter|devon|uk|london|remote)/i,a:"We're based at Venospace in Exeter and work with brands across the UK. Happy to meet in person or on a video call, wherever suits."},
+    {m:/(industry|industries|business type|work with|kind of|niche|any business|sector)/i,a:"We work with ambitious UK businesses across wellness, hospitality, apparel, events, non profits, professional services and more."},
+    {m:/(book|call|meet|chat|talk|next step|process|start|discovery)/i,a:"Easy. Fill the form on the contact page with a few details and we'll come back within 24 hours to schedule a call."},
+    {m:/(example|portfolio|work|case|previous|other clients|see your)/i,a:"Scroll up — eleven live client sites are right there. YK Wellness, Raglo UK, Tony Kosoko Physio, Alderney Week, Utopia Worldwide, Longis Bay, Coasters Cafe, H Barbers, Richard Dale, Trinit.e Massage and Cycling Out Of Poverty."},
+    {m:/(seo|google|rank|search|traffic)/i,a:"SEO is core to what we do. Technical audits, on page optimisation, content strategy, local SEO, monthly reporting."},
+    {m:/(social|instagram|linkedin|tiktok|facebook|content)/i,a:"We run social for brands end to end. Strategy, content, scheduling, community management, growth."},
+    {m:/(ai|chatbot|automation|assistant|artificial)/i,a:"We build AI systems that capture leads, answer questions and qualify prospects around the clock."},
+    {m:/(brand|identity|logo|design)/i,a:"Full brand identity work is part of what we do — logo, colour, type, voice, guidelines."},
+    {m:/(hi|hello|hey|yo|hiya)/i,a:"Hey ✦ great to meet you. What kind of business are you looking to grow?"},
+    {m:/(thank|thanks|cheers|appreciate)/i,a:"Anytime, welcome aboard 🪐"},
+  ];
+  function reply(msg){
+    typing.classList.add('show');body.scrollTop=body.scrollHeight;
+    setTimeout(()=>{
+      typing.classList.remove('show');
+      const hit=replies.find(r=>r.m.test(msg));
+      push('them', hit?hit.a:"Great question. Easiest way to get a proper answer is to book a quick call — fill the form on the contact page.", true);
+    },800+Math.random()*500);
+  }
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+    const v=field.value.trim();
+    if(!v) return;
+    push('me',v);field.value='';reply(v);
+  });
+  document.querySelectorAll('.q-chip').forEach(c=>c.addEventListener('click',()=>{push('me',c.dataset.q);reply(c.dataset.q)}));
+})();
+
+/* ---------- MOON (Three.js) ---------- */
+(function(){
+  const canvas=document.getElementById('moon-canvas');
+  if(!canvas || typeof THREE==='undefined') return;
+  const stage=canvas.parentElement;
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(38,1,.1,100);
+  camera.position.z=6;
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
+  function fit(){
+    const r=stage.getBoundingClientRect();
+    const s=Math.min(r.width,r.height);
+    renderer.setSize(s,s,false);
+    camera.aspect=1;camera.updateProjectionMatrix();
+  }
+  fit();
+  addEventListener('resize',fit);
+
+  // Moon: high-poly sphere with procedural crater displacement
+  const geo=new THREE.IcosahedronGeometry(1.6,6);
+  const pos=geo.attributes.position;
+  const v=new THREE.Vector3();
+  // Simple noise for terrain — deterministic with sin combos
+  function noise(x,y,z){
+    return (
+      Math.sin(x*3.7+y*2.3)*.5 +
+      Math.sin(y*5.1+z*1.9)*.3 +
+      Math.sin(z*4.2+x*3.1)*.25 +
+      Math.sin(x*11+y*9)*.06 +
+      Math.sin(y*17+z*13)*.03
+    );
+  }
+  for(let i=0;i<pos.count;i++){
+    v.fromBufferAttribute(pos,i);
+    const n=noise(v.x,v.y,v.z);
+    const disp=n*.045 + Math.pow(Math.max(0,n),2)*-.04; // craters
+    v.multiplyScalar(1+disp);
+    pos.setXYZ(i,v.x,v.y,v.z);
+  }
+  geo.computeVertexNormals();
+
+  const mat=new THREE.MeshStandardMaterial({
+    color:0x9a94ac,
+    roughness:.95,
+    metalness:.02,
+    flatShading:false
+  });
+  const moon=new THREE.Mesh(geo,mat);
+  moon.rotation.z=.2;
+  scene.add(moon);
+
+  // Lighting: warm purple rim + soft key
+  const amb=new THREE.AmbientLight(0x2a1b3d,.7);scene.add(amb);
+  const key=new THREE.DirectionalLight(0xf0e6ff,1.6);
+  key.position.set(-3,2,4);scene.add(key);
+  const rim=new THREE.DirectionalLight(0x8b5cf6,1.8);
+  rim.position.set(3,-1,-2);scene.add(rim);
+  const fill=new THREE.PointLight(0xa78bfa,.7,15);
+  fill.position.set(2,3,3);scene.add(fill);
+
+  // Interaction
+  let isDrag=false,lx=0,ly=0,rx=0,ry=0,vx=0,vy=0;
+  canvas.addEventListener('pointerdown',e=>{isDrag=true;canvas.setPointerCapture(e.pointerId);lx=e.clientX;ly=e.clientY;vx=vy=0});
+  canvas.addEventListener('pointermove',e=>{if(!isDrag)return;const dx=e.clientX-lx,dy=e.clientY-ly;ry+=dx*.006;rx+=dy*.006;vx=dx*.006;vy=dy*.006;lx=e.clientX;ly=e.clientY});
+  canvas.addEventListener('pointerup',e=>{isDrag=false;try{canvas.releasePointerCapture(e.pointerId)}catch(_){}});
+  canvas.addEventListener('pointercancel',()=>{isDrag=false});
+
+  let visible=true,tabOk=true,raf=null;
+  new IntersectionObserver(es=>{visible=es[0].isIntersecting;if(visible) start()},{threshold:0}).observe(stage);
+  document.addEventListener('visibilitychange',()=>{tabOk=!document.hidden;if(tabOk) start()});
+
+  function loop(){
+    if(!visible||!tabOk){raf=null;return}
+    if(!isDrag){
+      ry+=vx;rx+=vy;
+      vx*=.95;vy*=.95;
+      ry+=.0012; // very gentle idle rotation
+    }
+    rx=Math.max(-.8,Math.min(.8,rx));
+    moon.rotation.y+=(ry-moon.rotation.y)*.1;
+    moon.rotation.x+=(rx-moon.rotation.x)*.1;
+    renderer.render(scene,camera);
+    raf=requestAnimationFrame(loop);
+  }
+  function start(){if(!raf&&visible&&tabOk) loop()}
+  start();
+})();
+</script>
+</body>
+</html>
