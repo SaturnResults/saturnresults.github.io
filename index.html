@@ -230,8 +230,10 @@ nav.hidden{transform:translateY(-110%)}
   margin-bottom:28px;
 }
 .hero h1.hero-long{
-  font-size:clamp(28px,3.4vw,52px);line-height:1.15;letter-spacing:-.01em;max-width:640px;
+  font-size:clamp(38px,5vw,74px);line-height:1.08;letter-spacing:-.015em;max-width:none;
+  padding-bottom:.15em; /* room for descenders during word rise-in */
 }
+.hero h1.hero-long .word{padding-right:.05em}
 .hero h1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-style:italic}
 .hero h1 .word{display:inline-block;opacity:0;transform:translateY(40px);animation:wordIn .9s cubic-bezier(.2,.8,.3,1) forwards}
 .hero h1 .word:nth-child(1){animation-delay:.1s}
