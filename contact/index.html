@@ -1,571 +1,322 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Book a Call · Saturn Results</title>
-<meta name="description" content="Book a call with Saturn Results, a UK marketing agency helping ambitious businesses grow with strategy, web, SEO, social and AI." />
-<meta name="theme-color" content="#08070d">
+<title>Free Audit · Saturn Results</title>
+<meta name="description" content="Get a free online audit of your Google Business Profile, website, social and ads. We tell you honestly if there is room to improve. No cost, no risk."/>
+<meta name="theme-color" content="#050506">
 <link rel="icon" href="/favicon.png" type="image/png" sizes="256x256">
 <link rel="apple-touch-icon" href="/favicon.png">
 
-<!-- Open Graph / WhatsApp / iMessage / Slack preview -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://saturnresults.co.uk/contact/">
 <meta property="og:site_name" content="Saturn Results">
-<meta property="og:title" content="Book a Call · Saturn Results">
-<meta property="og:description" content="Book a call with Saturn Results. Strategy, web, SEO, social and AI for ambitious UK businesses.">
+<meta property="og:title" content="Free Audit · Saturn Results">
+<meta property="og:description" content="A free audit of your Google Business Profile, website, social and ads. Honest answer either way. No cost, no risk.">
 <meta property="og:image" content="https://saturnresults.co.uk/og-image.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="681">
-<meta property="og:image:alt" content="Saturn Results · UK Marketing Agency">
-
-<!-- Twitter / X card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Book a Call · Saturn Results">
-<meta name="twitter:description" content="Book a call with Saturn Results. Strategy, web, SEO, social and AI for ambitious UK businesses.">
+<meta name="twitter:title" content="Free Audit · Saturn Results">
+<meta name="twitter:description" content="A free audit of your Google Business Profile, website, social and ads. Honest answer either way.">
 <meta name="twitter:image" content="https://saturnresults.co.uk/og-image.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#08070d;
-  --bg-2:#0d0b14;
-  --ink:#ffffff;
-  --muted:#a8a4b8;
-  --muted-2:#7a7588;
-  --purple:#8b5cf6;
-  --purple-deep:#5b21b6;
-  --purple-glow:#a78bfa;
-  --border:rgba(255,255,255,.08);
-  --border-2:rgba(255,255,255,.14);
-  --grad:linear-gradient(135deg,#a78bfa 0%,#8b5cf6 50%,#5b21b6 100%);
+  --bg:#050506;--bg-2:#0b0c0e;--bg-3:#121316;
+  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+  --fg:#f4f5f7;--fg-2:rgba(244,245,247,.64);--fg-3:rgba(244,245,247,.40);--fg-4:rgba(244,245,247,.24);
+  --accent:#a78bfa;--accent-deep:#5b21b6;
+  --sans:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Roboto Mono',ui-monospace,monospace;
+  --container:1080px;--wide:1265px;--nav-h:60px;
+  --ease:cubic-bezier(.22,1,.36,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
-::selection{background:var(--purple);color:#fff}
+button{font:inherit;background:none;border:0;cursor:pointer;color:inherit}
+ul{list-style:none}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:clip}
+@media(max-width:768px){html,body{overflow-y:auto!important;height:auto!important;position:static!important;touch-action:pan-y!important}}
+::selection{background:var(--accent);color:#0a0a0b}
+.container{width:100%;max-width:var(--wide);margin:0 auto;padding:0 24px}
 
-/* ============ AMBIENT STARFIELD ============ */
-#stars-canvas{
-  position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:.4;
-}
-.bg-glow{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(ellipse 80% 60% at 80% 20%,rgba(139,92,246,.18),transparent 60%),
-    radial-gradient(ellipse 70% 60% at 10% 90%,rgba(91,33,182,.15),transparent 60%);
-}
-.noise{
-  position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.03;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
+.chip{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 14px 0 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);font-size:12px;color:var(--fg-2)}
+.chip__dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(167,139,250,.7);flex:none}
+.h2{font-size:40px;line-height:50px;letter-spacing:-.04em;font-weight:500;margin-top:18px}
+.h2__a,.h2__b{display:block}
+.h2__b{color:var(--fg-3)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:48px;padding:0 30px;border-radius:999px;font-size:14px;font-weight:500;letter-spacing:-.01em;transition:transform .3s var(--ease),background .3s,box-shadow .3s;white-space:nowrap;border:0;cursor:pointer;font-family:inherit}
+.btn svg{width:14px;height:14px}
+.btn--light{background:rgba(255,255,255,.88);color:#0a0a0b}
+.btn--light:hover{background:#fff;transform:translateY(-1px);box-shadow:0 0 0 1px rgba(255,255,255,.2),0 10px 30px -10px rgba(167,139,250,.6)}
+.btn--light:disabled{opacity:.6;cursor:default;transform:none;box-shadow:none}
+.btn--ghost{background:rgba(255,255,255,.06);color:var(--fg);border:1px solid var(--line-2)}
+.btn--ghost:hover{background:rgba(255,255,255,.1)}
 
-/* ============ NAV ============ */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:24px 48px;transition:background .35s ease,border-color .35s ease,padding .35s ease;
-}
-nav.scrolled{
-  padding:14px 48px;background:rgba(8,7,13,.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);
-}
-@media (max-width:768px){
-  nav,nav.scrolled{padding:18px 22px}
-}
-.nav-logo{display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:.05em}
-.nav-logo img{width:32px;height:32px;object-fit:contain}
-.nav-back{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:10px 22px;border:1px solid var(--border);border-radius:100px;font-size:13px;
-  background:rgba(255,255,255,.02);transition:all .25s;color:var(--muted);
-}
-.nav-back:hover{color:var(--ink);border-color:var(--purple)}
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;height:var(--nav-h);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 clamp(20px,6vw,180px);background:linear-gradient(180deg,rgba(5,5,6,.75),rgba(5,5,6,0));transition:background .4s,transform .45s var(--ease)}
+.nav.is-scrolled{background:rgba(5,5,6,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav.is-hidden{transform:translateY(-100%)}
+.nav__brand{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:16px;letter-spacing:.06em}
+.nav__brand img{width:auto;height:26px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(167,139,250,.55))}
+.nav__links{display:flex;gap:8px;justify-self:center}
+.nav__links a{font-size:14px;color:var(--fg-2);padding:8px 14px;border-radius:999px;transition:color .2s,background .2s}
+.nav__links a:hover{color:var(--fg);background:rgba(255,255,255,.06)}
+.nav__right{display:flex;align-items:center;gap:16px;justify-self:end}
+.nav__cta{display:inline-flex;align-items:center;height:38px;padding:0 18px;border-radius:999px;background:rgba(255,255,255,.12);font-size:14px;font-weight:500;transition:background .25s}
+.nav__cta:hover{background:rgba(255,255,255,.2)}
+@media(max-width:1024px){.nav{grid-template-columns:1fr auto}.nav__links{display:none}}
 
-/* ============ CURSOR ============ */
-.cursor{position:fixed;width:8px;height:8px;background:var(--purple);border-radius:50%;pointer-events:none;z-index:9000;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:transform .15s}
-.cursor-ring{position:fixed;width:40px;height:40px;border:1px solid var(--purple);border-radius:50%;pointer-events:none;z-index:8999;transform:translate(-50%,-50%);transition:transform .25s cubic-bezier(.2,.8,.3,1),width .25s,height .25s}
-.cursor.hover{transform:translate(-50%,-50%) scale(0)}
-.cursor-ring.hover{width:80px;height:80px;border-color:var(--purple-glow)}
-@media (max-width:768px){.cursor,.cursor-ring{display:none}}
+/* page */
+.page{position:relative;padding:118px 0 90px;background:radial-gradient(120% 60% at 50% 0,#171226 0%,var(--bg) 62%)}
+@media(max-width:900px){.page{padding:86px 0 60px}}
+.page__head{max-width:660px;margin-bottom:34px}
+.page__head h1{font-size:clamp(34px,4.6vw,58px);line-height:1.06;letter-spacing:-.04em;font-weight:400;margin-top:18px}
+.page__head h1 em{font-style:normal;color:var(--accent)}
+.page__head p{margin-top:16px;font-size:16px;line-height:24px;color:var(--fg-2);max-width:52ch}
+@media(max-width:900px){.page__head{margin-bottom:24px}.page__head p{font-size:15px;line-height:22px}}
 
-/* ============ LAYOUT ============ */
-.page{
-  position:relative;z-index:5;min-height:100vh;
-  padding:140px 48px 80px;
-  display:flex;align-items:center;justify-content:center;
-}
-.shell{
-  width:100%;max-width:1280px;
-  display:grid;grid-template-columns:1.1fr 1fr;gap:40px;
-}
-@media (max-width:1000px){
-  .page{padding:120px 22px 60px}
-  .shell{grid-template-columns:1fr;gap:24px}
-}
+.shell{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;align-items:start}
+@media(max-width:1000px){.shell{grid-template-columns:1fr;gap:16px}}
 
-/* ============ FORM PANEL ============ */
-.panel{
-  position:relative;border:1px solid var(--border);border-radius:28px;
-  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(139,92,246,.03));
-  backdrop-filter:blur(8px);
-  padding:56px 56px 48px;overflow:hidden;
-}
-.panel::before{
-  content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(167,139,250,.6),transparent);
-}
-@media (max-width:768px){.panel{padding:36px 28px}}
+.panel{border-radius:28px;border:1px solid var(--line);background:#0b0c0e;box-shadow:0 0 0 6px rgba(255,255,255,.02),0 50px 100px -50px rgba(0,0,0,.9);padding:38px 36px 32px}
+@media(max-width:600px){.panel{padding:26px 20px 24px;border-radius:22px}}
+.panel__label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2);padding-bottom:18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.panel__label b{color:var(--accent);font-weight:500}
 
-.eyebrow{
-  display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.3em;
-  text-transform:uppercase;color:var(--purple-glow);margin-bottom:20px;
-}
-.eyebrow::before{content:"";width:24px;height:1px;background:var(--purple)}
-.eyebrow .dot{width:6px;height:6px;background:var(--purple);border-radius:50%;box-shadow:0 0 10px var(--purple)}
-
-h1.headline{
-  font-family:'Instrument Serif',serif;font-weight:400;
-  font-size:clamp(40px,5vw,64px);line-height:1;letter-spacing:-.02em;margin-bottom:20px;
-}
-h1.headline em{font-style:italic;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.lede{color:var(--muted);font-size:16px;line-height:1.65;max-width:520px;margin-bottom:40px}
-
-/* form */
-form{display:grid;gap:18px}
-.row{display:grid;gap:18px;grid-template-columns:1fr 1fr}
-@media (max-width:600px){.row{grid-template-columns:1fr}}
-
+form{display:grid;gap:14px;margin-top:26px}
+.row{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+@media(max-width:600px){.row{grid-template-columns:1fr}}
 .field{position:relative}
-.field label{
-  position:absolute;top:18px;left:18px;font-size:13px;color:var(--muted-2);
-  pointer-events:none;transition:all .25s cubic-bezier(.2,.8,.3,1);letter-spacing:.02em;
-}
-.field input,.field select,.field textarea{
-  width:100%;background:rgba(255,255,255,.02);border:1px solid var(--border);
-  border-radius:14px;padding:24px 18px 10px;font-family:inherit;font-size:15px;color:var(--ink);
-  outline:none;transition:border-color .25s,background .25s;
-}
-.field textarea{resize:none;min-height:130px;padding-top:30px}
-.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a78bfa' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center;cursor:pointer}
-.field input:focus,.field textarea:focus,.field select:focus{
-  border-color:var(--purple);background:rgba(139,92,246,.05);
-}
-.field input:focus + label,
-.field textarea:focus + label,
-.field select:focus + label,
-.field input:not(:placeholder-shown) + label,
-.field textarea:not(:placeholder-shown) + label,
-.field select.has-value + label{
-  top:8px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--purple-glow);
-}
+.field label{position:absolute;top:17px;left:17px;font-size:13px;color:var(--fg-3);pointer-events:none;transition:all .22s var(--ease)}
+.field input,.field select,.field textarea{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:23px 17px 9px;font-family:inherit;font-size:15px;color:var(--fg);outline:none;transition:border-color .22s,background .22s}
+.field textarea{resize:none;min-height:108px;padding-top:28px}
+.field select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a78bfa' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 17px center}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:rgba(167,139,250,.55);background:rgba(167,139,250,.05)}
+.field input:focus+label,.field textarea:focus+label,.field select:focus+label,
+.field input:not(:placeholder-shown)+label,.field textarea:not(:placeholder-shown)+label,
+.field select.has-value+label{top:8px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+form .btn{margin-top:6px;width:100%}
+.fine{margin-top:14px;font-size:12px;line-height:18px;color:var(--fg-4)}
+.ok{display:none;margin-top:14px;padding:16px 18px;border-radius:14px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);font-size:14px;color:var(--accent)}
+.ok.show{display:block}
 
-.submit{
-  margin-top:8px;
-  display:inline-flex;align-items:center;justify-content:center;gap:12px;
-  padding:18px 32px;border-radius:100px;border:none;
-  background:var(--ink);color:var(--bg);
-  font-family:inherit;font-size:14px;font-weight:500;letter-spacing:.04em;
-  cursor:pointer;position:relative;overflow:hidden;
-  transition:transform .3s cubic-bezier(.2,.8,.3,1),box-shadow .3s;
-}
-.submit::before{
-  content:"";position:absolute;inset:0;background:var(--grad);
-  transform:translateY(101%);transition:transform .4s cubic-bezier(.7,0,.3,1);z-index:0;
-}
-.submit:hover::before{transform:translateY(0)}
-.submit:hover{transform:translateY(-2px);color:var(--ink);box-shadow:0 16px 50px rgba(139,92,246,.4)}
-.submit > *{position:relative;z-index:1}
-.submit svg{width:16px;height:16px;transition:transform .3s}
-.submit:hover svg{transform:translateX(4px)}
+.trust{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:26px;padding-top:24px;border-top:1px solid var(--line)}
+.trust div{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--fg-2)}
+.trust i{width:18px;height:18px;border-radius:50%;background:rgba(167,139,250,.16);flex:none;position:relative}
+.trust i::after{content:'';position:absolute;left:6px;top:4px;width:4px;height:7px;border:solid var(--accent);border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
 
-.fineprint{margin-top:16px;font-size:12px;color:var(--muted-2);line-height:1.6}
-.success{
-  display:none;padding:20px;border-radius:14px;
-  background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.3);
-  font-size:14px;color:var(--purple-glow);
-}
-.success.show{display:block}
+/* audit list / chat column */
+.side{display:flex;flex-direction:column;gap:16px}
+.audit li{display:flex;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);font-size:14px}
+.audit li:last-child{border-bottom:0}
+.audit li span{width:26px;height:26px;border-radius:8px;background:rgba(167,139,250,.13);display:flex;align-items:center;justify-content:center;flex:none}
+.audit li svg{width:13px;height:13px;color:var(--accent)}
+.audit ul{margin-top:22px}
 
-/* ============ CHAT PANEL ============ */
-.chat{
-  position:relative;border:1px solid var(--border);border-radius:28px;
-  background:linear-gradient(180deg,#0e0b18 0%,#0a0814 100%);
-  display:flex;flex-direction:column;overflow:hidden;
-  min-height:640px;max-height:780px;
-}
-.chat-head{
-  display:flex;align-items:center;gap:14px;padding:22px 24px;border-bottom:1px solid var(--border);
-  background:rgba(255,255,255,.015);
-}
-.avatar{
-  position:relative;width:44px;height:44px;border-radius:50%;
-  background:var(--grad);display:flex;align-items:center;justify-content:center;
-  font-family:'Instrument Serif',serif;font-size:20px;color:#fff;
-  box-shadow:0 0 30px rgba(139,92,246,.4);
-}
-.avatar::after{
-  content:"";position:absolute;bottom:0;right:0;width:12px;height:12px;
-  background:#10b981;border-radius:50%;border:2px solid #0e0b18;
-  animation:livepulse 1.6s ease-in-out infinite;
-}
-@keyframes livepulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.6)}50%{box-shadow:0 0 0 6px rgba(16,185,129,0)}}
-.chat-head .meta{flex:1}
-.chat-head .name{font-size:14px;font-weight:500}
-.chat-head .status{font-size:11px;color:var(--muted-2);letter-spacing:.05em;margin-top:2px}
-.chat-head .status .live{color:#10b981}
-
-.chat-body{
-  flex:1;padding:26px 24px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;
-  scroll-behavior:smooth;
-}
-.chat-body::-webkit-scrollbar{width:6px}
-.chat-body::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:6px}
-
-.bubble{
-  max-width:82%;padding:13px 16px;border-radius:18px;font-size:14px;line-height:1.55;
-  animation:bubbleIn .4s cubic-bezier(.2,.8,.3,1) backwards;
-}
-@keyframes bubbleIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.bubble.them{
-  align-self:flex-start;background:rgba(255,255,255,.04);border:1px solid var(--border);
-  border-bottom-left-radius:6px;color:var(--ink);
-}
-.bubble.me{
-  align-self:flex-end;background:var(--grad);color:#fff;
-  border-bottom-right-radius:6px;box-shadow:0 8px 30px rgba(139,92,246,.25);
-}
-.bubble.them small{display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--purple-glow);margin-bottom:4px;opacity:.7}
-
-.typing{
-  display:none;align-self:flex-start;padding:14px 18px;background:rgba(255,255,255,.04);
-  border:1px solid var(--border);border-radius:18px;border-bottom-left-radius:6px;
-  gap:5px;align-items:center;
-}
+.chatbox{border-radius:28px;border:1px solid var(--line);background:#0b0c0e;box-shadow:0 0 0 6px rgba(255,255,255,.02);overflow:clip;display:flex;flex-direction:column;min-height:400px}
+.chatbox__head{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line)}
+.chatbox__av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-deep));display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;color:#fff;position:relative;flex:none}
+.chatbox__av::after{content:'';position:absolute;right:0;bottom:0;width:10px;height:10px;border-radius:50%;background:#10b981;border:2px solid #0b0c0e}
+.chatbox__name{font-size:14px;font-weight:500}
+.chatbox__status{font-size:11px;color:var(--fg-3);margin-top:1px}
+.chatbox__body{flex:1;padding:20px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;max-height:290px}
+.bub{max-width:82%;padding:11px 15px;border-radius:16px;font-size:14px;line-height:21px}
+.bub--them{align-self:flex-start;background:rgba(255,255,255,.05);border:1px solid var(--line);border-bottom-left-radius:5px;color:var(--fg-2)}
+.bub--me{align-self:flex-end;background:rgba(167,139,250,.16);border:1px solid rgba(167,139,250,.28);border-bottom-right-radius:5px}
+.typing{display:none;align-self:flex-start;gap:5px;padding:13px 16px;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:16px;border-bottom-left-radius:5px}
 .typing.show{display:flex}
-.typing span{width:7px;height:7px;border-radius:50%;background:var(--purple-glow);opacity:.5;animation:typeBounce 1.2s infinite}
-.typing span:nth-child(2){animation-delay:.15s}
-.typing span:nth-child(3){animation-delay:.3s}
-@keyframes typeBounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+.typing i{width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.5;animation:tb 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes tb{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-4px);opacity:1}}
+.chips{display:flex;gap:8px;flex-wrap:wrap;padding:0 18px 12px}
+.q{font-size:12px;padding:8px 13px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--fg-2);cursor:pointer;transition:all .25s}
+.q:hover{border-color:var(--accent);background:rgba(167,139,250,.08);color:var(--fg)}
+.chatbox__form{display:flex;gap:10px;padding:14px 18px;border-top:1px solid var(--line)}
+.chatbox__form input{flex:1;height:42px;padding:0 18px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--fg);font:inherit;outline:none}
+.chatbox__form input:focus{border-color:rgba(167,139,250,.5)}
+.chatbox__form button{width:42px;height:42px;border-radius:999px;background:rgba(255,255,255,.88);color:#0a0a0b;display:flex;align-items:center;justify-content:center;flex:none}
+.chatbox__form svg{width:15px;height:15px}
 
-.suggestions{
-  display:flex;gap:8px;flex-wrap:wrap;padding:0 24px 12px;
-}
-.chip{
-  font-size:12px;padding:8px 14px;border-radius:100px;border:1px solid var(--border);
-  background:rgba(255,255,255,.02);color:var(--muted);cursor:pointer;
-  transition:all .25s;
-}
-.chip:hover{border-color:var(--purple);background:rgba(139,92,246,.08);color:var(--ink)}
+/* founders */
+.team{padding:100px 0 40px}
+.team__grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:720px;margin:34px auto 0}
+@media(max-width:600px){.team__grid{grid-template-columns:1fr 1fr;gap:14px;max-width:420px}}
+.person{text-align:center}
+.person__ph{border-radius:20px;overflow:clip;border:1px solid var(--line);background:var(--bg-3);aspect-ratio:5/4;transition:border-color .3s,transform .5s var(--ease)}
+.person__ph img{width:100%;height:100%;object-fit:cover}
+.person:hover .person__ph{transform:translateY(-3px);border-color:var(--line-2)}
+.person h3{margin-top:16px;font-size:18px;font-weight:500;letter-spacing:-.02em}
+.person span{display:block;margin-top:4px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
+.person a{display:inline-flex;margin-top:12px;width:36px;height:36px;border-radius:999px;border:1px solid var(--line);align-items:center;justify-content:center;color:var(--fg-2);transition:all .25s}
+.person a:hover{border-color:var(--accent);color:var(--accent);background:rgba(167,139,250,.08)}
+.person a svg{width:16px;height:16px}
 
-.chat-input{
-  display:flex;gap:10px;padding:16px 18px;border-top:1px solid var(--border);
-  background:rgba(255,255,255,.015);
-}
-.chat-input input{
-  flex:1;background:rgba(255,255,255,.04);border:1px solid var(--border);
-  padding:14px 18px;border-radius:100px;color:var(--ink);font-family:inherit;font-size:14px;outline:none;
-  transition:border-color .25s,background .25s;
-}
-.chat-input input:focus{border-color:var(--purple);background:rgba(139,92,246,.06)}
-.chat-input button{
-  width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;
-  background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;
-  transition:transform .25s,box-shadow .25s;
-}
-.chat-input button:hover{transform:scale(1.05);box-shadow:0 8px 24px rgba(139,92,246,.4)}
-.chat-input button svg{width:16px;height:16px}
+/* footer */
+.footer{background:var(--bg);padding:70px 0 40px;border-top:1px solid var(--line)}
+.footer__grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+@media(max-width:820px){.footer__grid{grid-template-columns:1fr 1fr}.footer__brand{grid-column:1/-1}}
+.footer__brand img{width:auto;height:28px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(167,139,250,.5))}
+.footer__brand p{margin-top:20px;font-size:14px;color:var(--fg-2);max-width:32ch}
+.footer__col{display:flex;flex-direction:column;gap:14px}
+.footer__col h5{font-size:15px;font-weight:500;margin-bottom:8px}
+.footer__col a{font-size:15px;color:var(--fg-2)}
+.footer__col a:hover{color:var(--fg)}
+.footer__bottom{margin-top:56px;padding-top:30px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--fg-2)}
 
-/* trust strip */
-.trust{
-  margin-top:30px;display:flex;gap:30px;flex-wrap:wrap;align-items:center;
-  font-size:12px;color:var(--muted-2);
-}
-.trust .item{display:flex;align-items:center;gap:8px}
-.trust .item svg{width:14px;height:14px;color:var(--purple-glow)}
-
-/* ============ TEAM ============ */
-.team-section{
-  position:relative;z-index:5;
-  padding:60px 48px 100px;
-}
-.team-head{max-width:1200px;margin:0 auto 50px;text-align:center}
-.team-head .eyebrow{justify-content:center}
-.team-head h2{
-  font-family:'Instrument Serif',serif;font-weight:400;
-  font-size:clamp(36px,5vw,60px);line-height:1;letter-spacing:-.02em;margin-top:14px;
-}
-.team-head h2 em{font-style:italic;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.team-head p{color:var(--muted);max-width:540px;margin:18px auto 0;font-size:15px;line-height:1.6}
-.team-grid{
-  max-width:1100px;margin:0 auto;
-  display:grid;grid-template-columns:repeat(2,1fr);gap:50px;
-}
-.team-card{position:relative;text-align:center}
-.team-photo{
-  position:relative;width:100%;max-width:240px;margin:0 auto;
-  aspect-ratio:5/4;overflow:hidden;border-radius:18px;
-  border:1px solid var(--border);background:var(--bg-2);
-  transition:transform .6s cubic-bezier(.2,.8,.3,1),border-color .4s,box-shadow .4s;
-}
-.team-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.2,.8,.3,1),filter .5s;filter:saturate(.95)}
-.team-card:hover .team-photo{transform:translateY(-4px);border-color:rgba(139,92,246,.4);box-shadow:0 30px 80px rgba(139,92,246,.18)}
-.team-card:hover .team-photo img{transform:scale(1.05);filter:saturate(1.05)}
-.team-name{
-  font-family:'Instrument Serif',serif;font-weight:400;letter-spacing:-.02em;
-  font-size:clamp(30px,3vw,42px);margin:24px 0 6px;line-height:1;
-}
-.team-role{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
-.team-socials{display:flex;justify-content:center;gap:14px;margin-top:18px}
-.team-socials a{
-  width:40px;height:40px;border-radius:12px;
-  display:inline-flex;align-items:center;justify-content:center;
-  border:1px solid rgba(167,139,250,.3);
-  background:rgba(139,92,246,.06);color:var(--purple-glow);
-  transition:all .3s;
-}
-.team-socials a:hover{background:var(--purple);border-color:var(--purple);color:#fff;transform:translateY(-3px);box-shadow:0 12px 30px rgba(139,92,246,.4)}
-.team-socials svg{width:18px;height:18px}
-@media (max-width:768px){
-  .team-section{padding:40px 22px 80px}
-  .team-grid{grid-template-columns:1fr 1fr;gap:24px;max-width:380px}
-  .team-photo{max-width:140px;border-radius:14px}
-  .team-name{font-size:18px;margin:14px 0 4px}
-  .team-role{font-size:9px;letter-spacing:.2em}
-  .team-socials{margin-top:12px;gap:10px}
-  .team-socials a{width:34px;height:34px}
-  .team-socials svg{width:15px;height:15px}
-}
-
-/* ============ AUDIO STICKY BUTTON ============ */
-.audio-sticky{
-  position:fixed;right:24px;bottom:24px;z-index:90;
-  width:54px;height:54px;border-radius:50%;padding:0;
-  display:flex;align-items:center;justify-content:center;
-  border:1px solid var(--border);background:rgba(8,7,13,.7);backdrop-filter:blur(16px);
-  cursor:pointer;
-  transform:translateY(120%) scale(.6);opacity:0;
-  transition:transform .5s cubic-bezier(.2,.8,.3,1),opacity .35s,border-color .25s,background .25s;
-}
-.audio-sticky.visible{opacity:1;transform:translateY(0) scale(1)}
-.audio-sticky:hover{border-color:var(--purple);background:rgba(139,92,246,.18)}
-.audio-sticky::before{
-  content:"";position:absolute;inset:-3px;border-radius:50%;
-  background:conic-gradient(from 0deg,transparent,var(--purple) 25%,transparent 50%);
-  opacity:0;animation:spin 3s linear infinite;z-index:-1;
-}
-.audio-sticky.playing::before{opacity:.5}
-@keyframes spin{to{transform:rotate(360deg)}}
-.audio-sticky .ico{width:18px;height:18px;color:var(--ink)}
-.audio-sticky.playing .ico{color:var(--purple-glow)}
-.audio-sticky .ico-pause{display:none}
-.audio-sticky.playing .ico-play{display:none}
-.audio-sticky.playing .ico-pause{display:inline-block}
-@media (max-width:768px){.audio-sticky{display:none!important}}
-
-/* ============ FOOTER (interactive particle field) ============ */
-footer{
-  position:relative;border-top:1px solid var(--border);
-  padding:80px 48px 40px;overflow:hidden;
-  background:linear-gradient(180deg,var(--bg) 0%,#120a1f 100%);
-  z-index:5;margin-top:80px;
-}
-.footer-content{
-  position:relative;z-index:2;max-width:1400px;margin:0 auto;
-  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:50px;
-  margin-bottom:60px;pointer-events:none;
-}
-.footer-content > *{pointer-events:auto}
-.footer-brand h3{
-  font-family:'Instrument Serif',serif;font-size:48px;font-weight:400;line-height:1;margin-bottom:16px;letter-spacing:-.02em;
-}
-.footer-brand h3 em{font-style:italic;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.footer-brand p{color:var(--muted);font-size:14px;line-height:1.6;max-width:340px}
-.footer-col h4{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--purple);margin-bottom:20px}
-.footer-col a{display:block;font-size:14px;color:var(--muted);padding:6px 0;transition:color .25s,transform .25s}
-.footer-col a:hover{color:var(--ink);transform:translateX(4px)}
-.footer-bottom{
-  position:relative;z-index:2;max-width:1400px;margin:0 auto;
-  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;
-  padding-top:30px;border-top:1px solid var(--border);
-  font-size:12px;color:var(--muted);
-}
-.footer-bottom .copy{display:flex;align-items:center;gap:14px}
-.footer-bottom .copy img{width:28px;height:28px;object-fit:contain}
-@media (max-width:900px){
-  footer{padding:60px 22px 32px}
-  .footer-content{grid-template-columns:1fr 1fr;gap:36px}
-  .footer-brand{grid-column:1/-1}
-  .footer-brand h3{font-size:36px}
-}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.is-in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}}
 </style>
 </head>
 <body>
 
-<canvas id="stars-canvas"></canvas>
-<div class="bg-glow"></div>
-<div class="noise"></div>
-<div class="cursor"></div>
-<div class="cursor-ring"></div>
-
-<!-- Sticky audio toggle (desktop only) -->
-<button class="audio-sticky" id="audioSticky" type="button" aria-label="Toggle ambient soundtrack">
-  <svg class="ico ico-play" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l16 9-16 9V3z"/></svg>
-  <svg class="ico ico-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="3" width="5" height="18" rx="1"/><rect x="14" y="3" width="5" height="18" rx="1"/></svg>
-</button>
-
-<nav id="nav">
-  <a class="nav-logo" href="/">
-    <img src="/SRWHITELOGO.png" alt="Saturn Results"/>
-    <span>Saturn Results</span>
-  </a>
-  <a class="nav-back" href="/">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    Back to home
-  </a>
+<nav class="nav" id="nav">
+  <a class="nav__brand" href="/"><img src="/SRWHITELOGO.png" alt=""/> SATURN</a>
+  <div class="nav__links">
+    <a href="/#about">About</a>
+    <a href="/#process">How it works</a>
+    <a href="/#work">Work</a>
+    <a href="/#pricing">Pricing</a>
+  </div>
+  <div class="nav__right">
+    <a class="nav__cta" href="/">Back to site</a>
+  </div>
 </nav>
 
-<main class="page">
-  <div class="shell">
+<section class="page">
+  <div class="container">
+    <div class="page__head">
+      <span class="chip"><span class="chip__dot"></span>Step 01 · Free audit</span>
+      <h1>Find out if there is <em>room to grow.</em></h1>
+      <p>We audit your Google Business Profile, website, social and ads, then tell you honestly whether there is room for improvement. If there is not, we will say so. No cost, no risk, no obligation.</p>
+    </div>
 
-    <!-- LEAD FORM -->
-    <section class="panel">
-      <div class="eyebrow"><span class="dot"></span> Book a Call · No Obligation</div>
-      <h1 class="headline">Let's talk about your <em>growth.</em></h1>
-      <p class="lede">Share a few details about your business and where you want to go. We'll come back within 24 hours to schedule a call.</p>
+    <div class="shell">
 
-      <form id="leadForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
-        <input type="hidden" name="access_key" value="ac6bd08f-23c7-4311-abe6-b49c47fe5f20">
-        <input type="hidden" name="subject" value="New call request — Saturn Results">
-        <input type="hidden" name="from_name" value="Saturn Results · saturnresults.co.uk">
-        <input type="hidden" name="redirect" value="https://saturnresults.co.uk/contact/?sent=1">
-        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
-        <div class="row">
-          <div class="field">
-            <input type="text" id="name" name="name" placeholder=" " required autocomplete="name"/>
-            <label for="name">Your name</label>
+      <!-- FORM -->
+      <div class="panel reveal">
+        <div class="panel__label"><span>Request your audit</span><b>Free</b></div>
+
+        <form id="leadForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+          <input type="hidden" name="access_key" value="ac6bd08f-23c7-4311-abe6-b49c47fe5f20">
+          <input type="hidden" name="subject" value="New free audit request — Saturn Results">
+          <input type="hidden" name="from_name" value="Saturn Results · saturnresults.co.uk">
+          <input type="hidden" name="redirect" value="https://saturnresults.co.uk/contact/?sent=1">
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+          <div class="row">
+            <div class="field"><input type="text" id="name" name="name" placeholder=" " required autocomplete="name"/><label for="name">Your name</label></div>
+            <div class="field"><input type="text" id="company" name="company" placeholder=" " autocomplete="organization"/><label for="company">Business name</label></div>
+          </div>
+          <div class="row">
+            <div class="field"><input type="email" id="email" name="email" placeholder=" " required autocomplete="email"/><label for="email">Email address</label></div>
+            <div class="field"><input type="tel" id="phone" name="phone" placeholder=" " autocomplete="tel"/><label for="phone">Phone (optional)</label></div>
           </div>
           <div class="field">
-            <input type="text" id="company" name="company" placeholder=" " autocomplete="organization"/>
-            <label for="company">Business name</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="field">
-            <input type="email" id="email" name="email" placeholder=" " required autocomplete="email"/>
-            <label for="email">Email address</label>
+            <input type="url" id="website" name="website" placeholder=" " autocomplete="url"/>
+            <label for="website">Website or Google listing (optional)</label>
           </div>
           <div class="field">
-            <input type="tel" id="phone" name="phone" placeholder=" " autocomplete="tel"/>
-            <label for="phone">Phone (optional)</label>
+            <select id="industry" name="industry" required>
+              <option value="" disabled selected hidden></option>
+              <option>Wellness &amp; Health</option>
+              <option>Hospitality &amp; Food</option>
+              <option>Retail &amp; Ecommerce</option>
+              <option>Professional Services</option>
+              <option>Trades &amp; Home Services</option>
+              <option>Events &amp; Tourism</option>
+              <option>Non profit</option>
+              <option>Other</option>
+            </select>
+            <label for="industry">Industry</label>
           </div>
-        </div>
-        <div class="field">
-          <select id="industry" name="industry" required>
-            <option value="" disabled selected hidden></option>
-            <option>Wellness & Health</option>
-            <option>Hospitality & Food</option>
-            <option>Retail & E-commerce</option>
-            <option>Professional Services</option>
-            <option>Events & Tourism</option>
-            <option>Non-Profit</option>
-            <option>Other</option>
-          </select>
-          <label for="industry">Industry</label>
-        </div>
-        <div class="field">
-          <textarea id="brief" name="brief" placeholder=" " rows="4"></textarea>
-          <label for="brief">What does your business do? (optional)</label>
-        </div>
-        <button type="submit" class="submit">
-          <span>Book my call</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </button>
-        <div class="fineprint">By submitting, you agree to be contacted by Saturn Results regarding your enquiry. We never share your details.</div>
-        <div class="success" id="success">
-          ✦ Thank you, your request is in. We'll be in touch within 24 hours to schedule your call.
-        </div>
-      </form>
+          <div class="field">
+            <textarea id="brief" name="brief" placeholder=" " rows="3"></textarea>
+            <label for="brief">What are you hoping to improve? (optional)</label>
+          </div>
 
-      <div class="trust">
-        <div class="item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Free consultation
-        </div>
-        <div class="item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          24 hour response
-        </div>
-        <div class="item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Senior led, no juniors
-        </div>
-        <div class="item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Transparent pricing
-        </div>
-      </div>
-    </section>
+          <button type="submit" class="btn btn--light">
+            <span>Get my free audit</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+          <div class="fine">By submitting, you agree to be contacted by Saturn Results about your audit. We never share your details.</div>
+          <div class="ok" id="ok">✦ Thank you, your request is in. We will send your audit back within 24 hours.</div>
+        </form>
 
-    <!-- CHAT -->
-    <section class="chat">
-      <div class="chat-head">
-        <div class="avatar">S</div>
-        <div class="meta">
-          <div class="name">Saturn Studio</div>
-          <div class="status"><span class="live">●</span> Online · typically replies in minutes</div>
+        <div class="trust">
+          <div><i></i>Completely free</div>
+          <div><i></i>24 hour turnaround</div>
+          <div><i></i>Honest answer either way</div>
+          <div><i></i>No obligation to continue</div>
         </div>
       </div>
-      <div class="chat-body" id="chatBody">
-        <div class="bubble them">
-          <small>Saturn Studio</small>
-          Hey there ✦ Got a quick question before booking? Ask away.
-        </div>
-        <div class="typing" id="typing"><span></span><span></span><span></span></div>
-      </div>
-      <div class="suggestions" id="suggestions">
-        <div class="chip" data-q="What services do you offer?">What do you do?</div>
-        <div class="chip" data-q="How much does it cost?">How much is it?</div>
-        <div class="chip" data-q="What's the next step?">Next steps?</div>
-        <div class="chip" data-q="Where are you based?">Where are you based?</div>
-      </div>
-      <form class="chat-input" id="chatInput">
-        <input type="text" id="chatField" placeholder="Type your message…" autocomplete="off"/>
-        <button type="submit" aria-label="Send">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-        </button>
-      </form>
-    </section>
 
+      <!-- SIDE -->
+      <div class="side">
+        <div class="panel audit reveal">
+          <div class="panel__label"><span>What we look at</span><b>4 areas</b></div>
+          <ul>
+            <li><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Google Business Profile</li>
+            <li><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18"/></svg></span>Your website</li>
+            <li><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></span>Social media</li>
+            <li><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 14l4-4 4 4 5-5"/></svg></span>Paid ads</li>
+          </ul>
+        </div>
+
+        <div class="chatbox reveal">
+          <div class="chatbox__head">
+            <div class="chatbox__av">S</div>
+            <div>
+              <div class="chatbox__name">Saturn Results</div>
+              <div class="chatbox__status">Online · typically replies in seconds</div>
+            </div>
+          </div>
+          <div class="chatbox__body" id="chatBody">
+            <div class="bub bub--them">Hey ✦ Got a question before you request the audit? Ask away.</div>
+            <div class="typing" id="typing"><i></i><i></i><i></i></div>
+          </div>
+          <div class="chips">
+            <div class="q" data-q="What is in the free audit?">What's in the audit?</div>
+            <div class="q" data-q="Is the audit really free?">Really free?</div>
+            <div class="q" data-q="What happens after the audit?">What happens after?</div>
+            <div class="q" data-q="Where are you based?">Where are you?</div>
+          </div>
+          <form class="chatbox__form" id="chatForm">
+            <input id="chatField" type="text" placeholder="Type your question…" autocomplete="off">
+            <button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+          </form>
+        </div>
+      </div>
+
+    </div>
   </div>
-</main>
+</section>
 
-<!-- TEAM -->
-<section class="team-section">
-  <div class="team-head">
-    <div class="eyebrow"><span class="dot"></span> The Studio</div>
-    <h2>Meet the <em>founders.</em></h2>
-    <p>Two builders, one studio. You'll be working directly with us from first sketch to launch.</p>
-  </div>
-  <div class="team-grid">
-    <div class="team-card">
-      <div class="team-photo"><img src="/harry.webp" alt="Harry Bingham, Co-Founder" loading="lazy"/></div>
-      <h3 class="team-name">Harry Bingham</h3>
-      <div class="team-role">Co-Founder</div>
-      <div class="team-socials">
+<section class="team">
+  <div class="container" style="text-align:center">
+    <span class="chip"><span class="chip__dot"></span>The studio</span>
+    <h2 class="h2" style="max-width:620px;margin:18px auto 0">
+      <span class="h2__a">Meet the founders.</span>
+      <span class="h2__b">You work with us directly.</span>
+    </h2>
+    <div class="team__grid">
+      <div class="person reveal">
+        <div class="person__ph"><img src="/harry.webp" alt="Harry Bingham" loading="lazy"></div>
+        <h3>Harry Bingham</h3><span>Co-Founder</span>
         <a href="https://www.linkedin.com/in/harry-bingham-0b278a351/" target="_blank" rel="noopener" aria-label="Harry on LinkedIn">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v14H.22V8zm7.5 0h4.37v1.92h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 7v7.44h-4.56V15.4c0-1.7-.03-3.9-2.37-3.9-2.37 0-2.74 1.85-2.74 3.77V22H7.72V8z"/></svg>
         </a>
       </div>
-    </div>
-    <div class="team-card">
-      <div class="team-photo"><img src="/giulio.webp" alt="Giulio Frabboni, Co-Founder" loading="lazy"/></div>
-      <h3 class="team-name">Giulio Frabboni</h3>
-      <div class="team-role">Co-Founder</div>
-      <div class="team-socials">
+      <div class="person reveal">
+        <div class="person__ph"><img src="/giulio.webp" alt="Giulio Frabboni" loading="lazy"></div>
+        <h3>Giulio Frabboni</h3><span>Co-Founder</span>
         <a href="https://www.linkedin.com/in/giulio-frabboni-a6526822b/" target="_blank" rel="noopener" aria-label="Giulio on LinkedIn">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v14H.22V8zm7.5 0h4.37v1.92h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 7v7.44h-4.56V15.4c0-1.7-.03-3.9-2.37-3.9-2.37 0-2.74 1.85-2.74 3.77V22H7.72V8z"/></svg>
         </a>
@@ -574,401 +325,107 @@ footer{
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-content">
-    <div class="footer-brand">
-      <h3>Build something <em>orbital.</em></h3>
-      <p>A UK marketing agency helping ambitious businesses grow with strategy, web, SEO, social and AI. Based at Venospace, Exeter.</p>
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <img src="/SRWHITELOGO.png" alt="Saturn Results">
+        <p>A UK marketing agency helping ambitious businesses grow with strategy, web, SEO, social and AI.</p>
+      </div>
+      <div class="footer__col"><h5>Agency</h5><a href="/#about">About</a><a href="/#process">How it works</a><a href="/#work">Work</a><a href="/#pricing">Pricing</a></div>
+      <div class="footer__col"><h5>Clients</h5><a href="/#work">Tony Kosoko</a><a href="/#work">YK Wellness</a><a href="/#work">Raglo UK</a><a href="/#work">Alderney Week</a></div>
+      <div class="footer__col"><h5>Connect</h5><a href="mailto:contact@saturnresults.com">Email us</a><a href="/portal/">Client portal</a></div>
     </div>
-    <div class="footer-col">
-      <h4>Studio</h4>
-      <a href="/#work">Work</a>
-      <a href="/#services">Services</a>
-      <a href="/contact/">Contact</a>
+    <div class="footer__bottom">
+      <span>© 2026 Saturn Results. All rights reserved.</span>
+      <span>contact@saturnresults.com</span>
     </div>
-    <div class="footer-col">
-      <h4>Clients</h4>
-      <a href="/#work">Trinit.e</a>
-      <a href="/#work">Alderney Week</a>
-      <a href="/#work">YK Wellness</a>
-      <a href="https://saturnresults.co.uk/H-BARBERS/" target="_blank" rel="noopener">H Barbers</a>
-    </div>
-    <div class="footer-col">
-      <h4>Connect</h4>
-      <a href="mailto:contact@saturnresults.com">Email</a>
-      <a href="/portal/">Client Portal</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="copy">
-      <img src="/SRWHITELOGO.png" alt=""/>
-      <span>© 2026 Saturn Results · Built with care</span>
-    </div>
-    <div>contact@saturnresults.com</div>
   </div>
 </footer>
 
 <script>
-/* ====== AUDIO ENGINE (mirror of homepage) ====== */
-const SR_Audio=(function(){
-  let ctx=null,master=null,musicBus=null,sfxBus=null,reverb=null;
-  let voices=[];
-  let isPlaying=false,started=false;
-  let shimmerTimer=null,arpTimer=null,chordTimer=null;
-  let chordIdx=0;
-  const PROG=[
-    [65.41,130.81,196.00,233.08,311.13,392.00],
-    [51.91,103.83,164.81,207.65,311.13,415.30],
-    [43.65, 87.31,174.61,220.00,261.63,349.23],
-    [58.27,116.54,174.61,233.08,349.23,466.16],
-  ];
-  function ensure(){
-    if(ctx) return true;
-    const AC=window.AudioContext||window.webkitAudioContext;
-    if(!AC) return false;
-    ctx=new AC();
-    master=ctx.createGain();master.gain.value=0;master.connect(ctx.destination);
-    musicBus=ctx.createGain();musicBus.gain.value=.6;musicBus.connect(master);
-    sfxBus=ctx.createGain();sfxBus.gain.value=.95;sfxBus.connect(master);
-    reverb=ctx.createConvolver();
-    const ir=ctx.createBuffer(2,ctx.sampleRate*4,ctx.sampleRate);
-    for(let c=0;c<2;c++){const d=ir.getChannelData(c);for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2.6)}
-    reverb.buffer=ir;
-    const wet=ctx.createGain();wet.gain.value=.55;
-    reverb.connect(wet);wet.connect(musicBus);
-    return true;
-  }
-  function makeVoice(freq,gainVal,attack=4,detune=0){
-    const o=ctx.createOscillator();o.type='sine';o.frequency.value=freq;o.detune.value=detune;
-    const g=ctx.createGain();g.gain.value=0;
-    const lfo=ctx.createOscillator();lfo.frequency.value=.06+Math.random()*.06;
-    const lfoG=ctx.createGain();lfoG.gain.value=gainVal*.35;
-    lfo.connect(lfoG);lfoG.connect(g.gain);
-    o.connect(g);g.connect(musicBus);g.connect(reverb);
-    o.start();lfo.start();
-    g.gain.linearRampToValueAtTime(gainVal,ctx.currentTime+attack);
-    return {osc:o,gain:g,target:gainVal};
-  }
-  function fadeVoice(v,target,time){const t=ctx.currentTime;v.gain.gain.cancelScheduledValues(t);v.gain.gain.linearRampToValueAtTime(target,t+time)}
-  function morphToChord(){
-    if(!isPlaying) return;
-    const chord=PROG[chordIdx%PROG.length];chordIdx++;
-    while(voices.length<chord.length) voices.push(makeVoice(chord[voices.length],.05,4));
-    voices.forEach((v,i)=>{
-      const f=chord[i%chord.length];
-      v.osc.frequency.cancelScheduledValues(ctx.currentTime);
-      v.osc.frequency.linearRampToValueAtTime(f,ctx.currentTime+5);
-      const targets=[.085,.06,.05,.04,.035,.03];
-      fadeVoice(v,targets[i]||.025,5);
+/* nav: shrink + hide on scroll down, show on scroll up */
+(function(){
+  const nav=document.getElementById('nav');
+  let last=scrollY, tick=false;
+  addEventListener('scroll',()=>{
+    if(tick) return; tick=true;
+    requestAnimationFrame(()=>{
+      const y=scrollY;
+      nav.classList.toggle('is-scrolled',y>20);
+      if(y<80) nav.classList.remove('is-hidden');
+      else if(y>last+4) nav.classList.add('is-hidden');
+      else if(y<last-4) nav.classList.remove('is-hidden');
+      last=y; tick=false;
     });
-    chordTimer=setTimeout(morphToChord,16000);
-  }
-  function arpNote(){
-    if(!isPlaying) return;
-    const root=PROG[(chordIdx-1+PROG.length)%PROG.length][0];
-    const scale=[1,1.122,1.335,1.498,1.682];const oct=[2,4,4,8];
-    const f=root*scale[Math.floor(Math.random()*scale.length)]*oct[Math.floor(Math.random()*oct.length)];
-    const o=ctx.createOscillator();o.type='triangle';o.frequency.value=f;
-    const g=ctx.createGain();g.gain.value=0;
-    o.connect(g);g.connect(reverb);g.connect(musicBus);
-    const t=ctx.currentTime;
-    g.gain.linearRampToValueAtTime(.045,t+.4);g.gain.linearRampToValueAtTime(0,t+2.4);
-    o.start(t);o.stop(t+2.5);
-    arpTimer=setTimeout(arpNote,3500+Math.random()*5500);
-  }
-  function shimmer(){
-    if(!isPlaying) return;
-    const root=PROG[(chordIdx-1+PROG.length)%PROG.length][0];
-    const f=root*[8,10,12,16][Math.floor(Math.random()*4)];
-    const o=ctx.createOscillator();o.type='sine';o.frequency.value=f;
-    const g=ctx.createGain();g.gain.value=0;
-    o.connect(g);g.connect(reverb);g.connect(musicBus);
-    const t=ctx.currentTime;
-    g.gain.linearRampToValueAtTime(.025,t+.8);g.gain.linearRampToValueAtTime(0,t+3.5);
-    o.start(t);o.stop(t+3.6);
-    shimmerTimer=setTimeout(shimmer,5000+Math.random()*8000);
-  }
-  function startMusic(){
-    if(!ensure()) return;
-    if(ctx.state==='suspended') ctx.resume();
-    if(!started){
-      started=true;
-      const chord=PROG[0];const targets=[.085,.06,.05,.04,.035,.03];
-      chord.forEach((f,i)=>voices.push(makeVoice(f,targets[i]||.025,4)));
-      chordIdx=1;
-    }else{
-      const targets=[.085,.06,.05,.04,.035,.03];
-      voices.forEach((v,i)=>fadeVoice(v,targets[i]||.025,2));
-    }
-    master.gain.cancelScheduledValues(ctx.currentTime);
-    master.gain.linearRampToValueAtTime(.75,ctx.currentTime+2);
-    isPlaying=true;
-    if(!chordTimer) chordTimer=setTimeout(morphToChord,16000);
-    if(!arpTimer) arpTimer=setTimeout(arpNote,4000);
-    if(!shimmerTimer) shimmerTimer=setTimeout(shimmer,3000);
-    try{sessionStorage.setItem('saturn_music','on')}catch(_){}
-  }
-  function stopMusic(){
-    if(!ctx||!isPlaying) return;
-    isPlaying=false;
-    master.gain.cancelScheduledValues(ctx.currentTime);
-    master.gain.linearRampToValueAtTime(0,ctx.currentTime+1.2);
-    if(shimmerTimer){clearTimeout(shimmerTimer);shimmerTimer=null}
-    if(arpTimer){clearTimeout(arpTimer);arpTimer=null}
-    if(chordTimer){clearTimeout(chordTimer);chordTimer=null}
-    try{sessionStorage.setItem('saturn_music','off')}catch(_){}
-  }
-  function isOn(){return isPlaying}
-  function wasOn(){try{return sessionStorage.getItem('saturn_music')==='on'}catch(_){return false}}
-  function tone(freq,dur=.08,type='sine',vol=.22,detune=0){
-    if(!ctx||!isPlaying||ctx.state==='suspended') return;
-    const o=ctx.createOscillator();o.type=type;o.frequency.value=freq;o.detune.value=detune;
-    const g=ctx.createGain();g.gain.value=0;o.connect(g);g.connect(sfxBus);
-    const t=ctx.currentTime;
-    g.gain.linearRampToValueAtTime(vol,t+.005);g.gain.exponentialRampToValueAtTime(.0001,t+dur);
-    o.start(t);o.stop(t+dur+.02);
-  }
-  function click(){tone(880,.08,'sine',.32);tone(1320,.07,'triangle',.18,30)}
-  function hover(){tone(1480,.05,'sine',.12)}
-  function whoosh(intensity){
-    if(!ctx||!isPlaying||ctx.state==='suspended') return;
-    const dur=.22;
-    const buf=ctx.createBuffer(1,ctx.sampleRate*dur,ctx.sampleRate);
-    const d=buf.getChannelData(0);for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*(1-i/d.length);
-    const src=ctx.createBufferSource();src.buffer=buf;
-    const filt=ctx.createBiquadFilter();filt.type='bandpass';filt.frequency.value=1500+intensity*4000;filt.Q.value=6;
-    const g=ctx.createGain();g.gain.value=Math.min(.16,.04+intensity*.13);
-    src.connect(filt);filt.connect(g);g.connect(sfxBus);
-    const t=ctx.currentTime;g.gain.exponentialRampToValueAtTime(.0001,t+dur);
-    src.start();src.stop(t+dur+.02);
-  }
-  return {start:startMusic,stop:stopMusic,toggle:()=>{isPlaying?stopMusic():startMusic()},isOn,wasOn,click,hover,whoosh};
+  },{passive:true});
 })();
 
-/* ====== Wire sticky button + auto-resume ====== */
-(function(){
-  const stickyBtn=document.getElementById('audioSticky');
-  if(!stickyBtn) return;
-  stickyBtn.classList.add('visible'); // contact has no hero, show immediately
-  function syncUI(){stickyBtn.classList.toggle('playing',SR_Audio.isOn())}
-  stickyBtn.addEventListener('click',()=>{SR_Audio.toggle();syncUI()});
-  if(SR_Audio.wasOn() && !SR_Audio.isOn()){
-    stickyBtn.classList.add('playing');
-    const resumer=()=>{SR_Audio.start();syncUI();
-      window.removeEventListener('pointerdown',resumer);
-      window.removeEventListener('keydown',resumer);
-      window.removeEventListener('scroll',resumer);
-    };
-    window.addEventListener('pointerdown',resumer,{once:true});
-    window.addEventListener('keydown',resumer,{once:true});
-    window.addEventListener('scroll',resumer,{once:true,passive:true});
-  }
-  // SFX
-  document.querySelectorAll('a,button,input,select,textarea,.chip').forEach(el=>{
-    el.addEventListener('mouseenter',()=>SR_Audio.hover());
-    el.addEventListener('click',()=>SR_Audio.click());
-  });
-  let lastY=window.scrollY,whooshCool=0;
-  window.addEventListener('scroll',()=>{
-    const y=window.scrollY;const vel=Math.abs(y-lastY);lastY=y;
-    const now=performance.now();
-    if(vel>40 && now>whooshCool){SR_Audio.whoosh(Math.min(1,vel/120));whooshCool=now+300}
-  });
-})();
+/* reveal */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target)}}),{threshold:.1,rootMargin:'0px 0px -40px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-/* ========== Cursor ========== */
-const cursor=document.querySelector('.cursor');
-const ring=document.querySelector('.cursor-ring');
-let mx=0,my=0,rx=0,ry=0;
-window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
-function loop(){rx+=(mx-rx)*.15;ry+=(my-ry)*.15;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)}loop();
-document.querySelectorAll('a,button,input,select,textarea,.chip').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cursor.classList.add('hover');ring.classList.add('hover')});
-  el.addEventListener('mouseleave',()=>{cursor.classList.remove('hover');ring.classList.remove('hover')});
-});
+/* select floating label */
+document.querySelectorAll('select').forEach(s=>s.addEventListener('change',()=>s.classList.toggle('has-value',!!s.value)));
 
-/* ========== Nav scroll ========== */
-window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>20)});
-
-/* ========== Starfield ========== */
-(function(){
-  const c=document.getElementById('stars-canvas');
-  const ctx=c.getContext('2d');
-  let w,h,stars;
-  function resize(){w=c.width=innerWidth;h=c.height=innerHeight;
-    stars=Array.from({length:Math.floor((w*h)/9000)},()=>({
-      x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.2+.2,
-      a:Math.random()*.6+.2,tw:Math.random()*.02+.005,p:Math.random()*Math.PI*2
-    }));
-  }
-  resize();window.addEventListener('resize',resize);
-  function frame(){
-    ctx.clearRect(0,0,w,h);
-    stars.forEach(s=>{s.p+=s.tw;const a=s.a+Math.sin(s.p)*.3;
-      ctx.beginPath();ctx.fillStyle=`rgba(220,220,255,${a})`;ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill()});
-    requestAnimationFrame(frame);
-  }frame();
-})();
-
-/* ========== Select label trick ========== */
-document.querySelectorAll('select').forEach(s=>{
-  s.addEventListener('change',()=>s.classList.toggle('has-value',!!s.value));
-});
-
-/* ========== Form submit ========== */
+/* ---- lead form ---- */
 const form=document.getElementById('leadForm');
-const success=document.getElementById('success');
-/* ============================================================
-   GOOGLE SHEETS LEAD CAPTURE — SETUP IN 5 MINUTES
-   ============================================================
-   1) Create a sheet at https://sheets.new — name it "Saturn Results Leads"
-      Row 1 headers (exact): timestamp | name | company | email | phone | industry | brief
-
-   2) Extensions → Apps Script. Delete placeholder. Paste:
-
-      const SHEET_NAME = 'Sheet1';
-      function doPost(e) {
-        try {
-          const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
-          const data = JSON.parse(e.postData.contents);
-          sheet.appendRow([
-            new Date(),
-            data.name || '',
-            data.company || '',
-            data.email || '',
-            data.phone || '',
-            data.industry || '',
-            data.brief || ''
-          ]);
-          return ContentService.createTextOutput(JSON.stringify({ok:true}))
-            .setMimeType(ContentService.MimeType.JSON);
-        } catch (err) {
-          return ContentService.createTextOutput(JSON.stringify({ok:false,error:err.toString()}))
-            .setMimeType(ContentService.MimeType.JSON);
-        }
-      }
-
-   3) Save (💾). Then: Deploy → New deployment → ⚙ Web app
-      • Execute as: Me
-      • Who has access: Anyone
-      • Click Deploy → Authorize → "Advanced → Go to project (unsafe) → Allow"
-
-   4) Copy the Web app URL. Paste it into SHEET_ENDPOINT below
-      (replace the whole string between the quotes).
-
-   5) Email alerts on new leads (optional):
-      In the sheet → Tools → Notification rules → Any changes → Email right away.
-
-   When you re-edit the Apps Script later, you MUST redeploy:
-   Deploy → Manage deployments → ✏ → Version: New version → Deploy
-   The URL stays the same.
-   ============================================================ */
-// Show success state if the native fallback redirected back with ?sent=1
+const ok=document.getElementById('ok');
 if(new URLSearchParams(location.search).get('sent')==='1'){
-  success.classList.add('show');
-  form.querySelector('button[type=submit] span').textContent='Sent ✓';
-  form.querySelector('button[type=submit]').disabled=true;
+  ok.classList.add('show');
+  const b=form.querySelector('button[type=submit]'); b.disabled=true; b.querySelector('span').textContent='Sent ✓';
 }
-
 form.addEventListener('submit',async e=>{
   e.preventDefault();
   const data=Object.fromEntries(new FormData(form).entries());
-  if(!data.name||!data.email){
-    pushBubble('them','Please add your name and email so we can get back to you.',true);
-    return;
-  }
+  if(!data.name||!data.email){ push('them','Please add your name and email so we can send the audit back.'); return; }
   const btn=form.querySelector('button[type=submit]');
-  const label=btn.querySelector('span');
-  const original=label.textContent;
-  btn.disabled=true;label.textContent='Sending…';
-
-  // Personalised subject — overrides the hidden default
+  const label=btn.querySelector('span'); const original=label.textContent;
+  btn.disabled=true; label.textContent='Sending…';
   const fd=new FormData(form);
-  fd.set('subject',`New call request — ${data.name}`);
-
+  fd.set('subject',`New free audit request — ${data.name}${data.company?' · '+data.company:''}`);
   try{
     const res=await fetch(form.action,{method:'POST',body:fd});
     const json=await res.json().catch(()=>({success:false}));
-    if(!json.success) throw new Error(json.message||'Submission failed');
-    success.classList.add('show');
-    label.textContent='Sent ✓';
-    pushBubble('them',`Got your details, thanks ${data.name.split(' ')[0]}! We'll come back within 24 hours to schedule your call.`,true);
+    if(!json.success) throw new Error(json.message||'failed');
+    ok.classList.add('show'); label.textContent='Sent ✓';
+    push('them',`Got it, thanks ${data.name.split(' ')[0]}. We'll audit your Google profile, site, social and ads and come back within 24 hours.`);
   }catch(err){
-    // AJAX failed → fall back to native form submit so the email still goes out
-    btn.disabled=false;label.textContent=original;
-    pushBubble('them',`Sending your request the long way round…`,true);
+    btn.disabled=false; label.textContent=original;
+    push('them','Sending your request the long way round…');
     setTimeout(()=>form.submit(),300);
   }
 });
 
-/* ========== Chat ========== */
-const body=document.getElementById('chatBody');
-const typing=document.getElementById('typing');
-const chatForm=document.getElementById('chatInput');
-const chatField=document.getElementById('chatField');
-
-function scrollDown(){body.scrollTop=body.scrollHeight}
-
-function pushBubble(who,text,withName=false){
-  const b=document.createElement('div');
-  b.className='bubble '+who;
-  if(who==='them' && withName){
-    b.innerHTML=`<small>Saturn Studio</small>${escape(text)}`;
-  }else{
-    b.textContent=text;
-  }
-  body.insertBefore(b,typing);
-  scrollDown();
-}
-function escape(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'})[c])}
-
+/* ---- chat ---- */
+const body=document.getElementById('chatBody'), typing=document.getElementById('typing');
+const chatForm=document.getElementById('chatForm'), chatField=document.getElementById('chatField');
+function push(who,text){const b=document.createElement('div');b.className='bub bub--'+who;b.textContent=text;body.insertBefore(b,typing);body.scrollTop=body.scrollHeight}
 const replies=[
-  {match:/(what.*(do|service|offer)|service|capabilit|help with|specialis|specializ)/i,a:"We're a UK marketing agency. Strategy, professional web design, SEO, social and AI, all under one roof. Book a call and we'll walk you through what a joined up plan looks like for your business."},
-  {match:/(how long|time|fast|quick|turnaround|when.*live|how quick|how soon)/i,a:"Most websites launch within a week. Ongoing marketing runs monthly. We'll give you an honest timeline as soon as we've heard the brief."},
-  {match:/(price|pricing|cost|how much|fee|charge|expensive|cheap|budget|package|invest)/i,a:"Website builds start at £1,497 for a bespoke 5 page site. Ongoing marketing engagements are quoted per scope. The homepage has the full pricing tiers, or book a call and we'll tailor a plan."},
-  {match:/(retainer|ongoing|monthly|subscription|contract|recurring)/i,a:"Ongoing marketing (SEO, social, AI, content) runs on a rolling monthly engagement. Websites are a one time build fee. No lock in."},
-  {match:/(full build|launch|delivery|ready|live|finish|website|site)/i,a:"Every site is hand built for the brand. Custom design, fast performance, senior led. Most launch within a week."},
-  {match:/(based|where|location|office|exeter|devon|uk|london|remote)/i,a:"We're based at Venospace in Exeter and work with brands across the UK. Happy to meet in person or on a video call, wherever suits."},
-  {match:/(industry|industries|business type|work with|kind of|niche|any business|sector)/i,a:"We work with ambitious UK businesses across wellness, hospitality, apparel, events, non profits, professional services and more. If you've got a business worth growing, we can help."},
-  {match:/(book|call|meet|chat|talk|next step|how does this work|process|start|discovery)/i,a:"Easy. Fill the form on the left with a few details and we'll come back within 24 hours to schedule a call."},
-  {match:/(example|portfolio|work|case|previous|other clients|see your)/i,a:"Have a look at our work on the homepage. Recent projects include YK Wellness, Raglo UK, Tony Kosoko Physio, Alderney Week, Utopia Worldwide, Longis Bay, Coasters Cafe, H Barbers, Richard Dale, Trinit.e Massage and Cycling Out Of Poverty."},
-  {match:/(seo|google|rank|search|traffic)/i,a:"SEO is core to what we do. Technical audits, on page optimisation, content strategy, local SEO, monthly reporting."},
-  {match:/(social|instagram|linkedin|tiktok|facebook|content)/i,a:"We run social for brands end to end. Strategy, content, scheduling, community management, growth."},
-  {match:/(ai|chatbot|automation|assistant|artificial)/i,a:"We build AI systems that capture leads, answer questions and qualify prospects around the clock. All trained on your business and voice."},
-  {match:/(brand|identity|logo|design)/i,a:"Full brand identity work is part of what we do — logo, colour, type, voice, guidelines. Cohesive systems that travel across every touchpoint."},
-  {match:/(secure|safe|trust|legitimate|scam|real|legit)/i,a:"Completely. We're a real Exeter based agency at Venospace with eleven live client sites on the homepage. Drop your details and we'll be in touch."},
-  {match:/(hi|hello|hey|yo|hiya)/i,a:"Hey ✦ great to meet you. What kind of business are you looking to grow?"},
-  {match:/(thank|thanks|cheers|appreciate)/i,a:"Anytime, welcome aboard 🪐"},
+  {m:/(what.*(in|include).*(audit)|audit.*(cover|include)|what.*audit)/i,a:"We check four things: your Google Business Profile, your website, your social media and any paid ads you're running. You get a plain English summary of what's working and what isn't."},
+  {m:/(free|cost|charge|catch|really free|price of.*audit)/i,a:"The audit is genuinely free. No card, no call you have to sit through. If we find nothing worth changing we'll tell you that and you've lost nothing."},
+  {m:/(after|next step|then what|what happens)/i,a:"If there's room to improve, we put together a focused 30 day marketing plan and run it. If you're not happy after those 30 days, you get 100% of your money back."},
+  {m:/(guarantee|money back|refund|risk)/i,a:"100% money back guarantee after the first 30 days. If you're not happy with the work, you get every penny back."},
+  {m:/(how long|time|fast|turnaround|how soon|when)/i,a:"The audit comes back within 24 hours. Most website builds are live within a week."},
+  {m:/(price|pricing|how much|fee|budget|invest)/i,a:"Website builds start at £1,497. Ongoing marketing is quoted per scope. Full pricing is on the homepage."},
+  {m:/(based|where|location|office|exeter|devon|uk|remote)/i,a:"We're based at Venospace in Exeter and work with brands across the UK. Happy to meet in person or on a video call."},
+  {m:/(seo|google|rank|search|traffic)/i,a:"SEO is core to what we do. Technical audits, on page work, content strategy, local SEO and monthly reporting."},
+  {m:/(social|instagram|linkedin|tiktok|facebook|content)/i,a:"We run social end to end. Strategy, content, scheduling, community management and growth."},
+  {m:/(ai|chatbot|automation|assistant)/i,a:"We build AI assistants trained on your business that capture leads and qualify prospects around the clock."},
+  {m:/(website|site|build|design)/i,a:"Every site is hand built for the brand. Custom design, fast performance, senior led, usually live within a week."},
+  {m:/^(hi|hello|hey|yo|hiya)/i,a:"Hey ✦ great to meet you. What kind of business are you looking to grow?"},
+  {m:/(thank|thanks|cheers)/i,a:"Anytime 🪐"}
 ];
-
-function botReply(msg){
-  typing.classList.add('show');scrollDown();
+function reply(msg){
+  typing.classList.add('show'); body.scrollTop=body.scrollHeight;
   setTimeout(()=>{
     typing.classList.remove('show');
-    const hit=replies.find(r=>r.match.test(msg));
-    const ans=hit?hit.a:"Great question. Easiest way to get a proper answer is to fill the form on the left, we'll come back to you personally within the day.";
-    pushBubble('them',ans,true);
-  },900+Math.random()*700);
+    const hit=replies.find(r=>r.m.test(msg));
+    push('them',hit?hit.a:"Good question. Pop it in the form's last box and we'll answer it properly alongside your audit.");
+  },700+Math.random()*500);
 }
-
-chatForm.addEventListener('submit',e=>{
-  e.preventDefault();
-  const v=chatField.value.trim();
-  if(!v) return;
-  pushBubble('me',v);
-  chatField.value='';
-  botReply(v);
-});
-
-document.querySelectorAll('.chip').forEach(c=>{
-  c.addEventListener('click',()=>{
-    const q=c.dataset.q;
-    pushBubble('me',q);
-    botReply(q);
-  });
-});
-
+chatForm.addEventListener('submit',e=>{e.preventDefault();const v=chatField.value.trim();if(!v)return;push('me',v);chatField.value='';reply(v)});
+document.querySelectorAll('.q').forEach(b=>b.addEventListener('click',()=>{push('me',b.dataset.q);reply(b.dataset.q)}));
 </script>
 </body>
 </html>
