@@ -89,7 +89,7 @@ body{
 }
 
 /* ---------- hero ---------- */
-.hero{position:relative;height:1270px;overflow:clip;background:var(--bg)}
+.hero{position:relative;height:1376px;overflow:clip;background:var(--bg)}
 .hero__sky{position:absolute;inset:0;background:radial-gradient(200% 83% at 50% 0px,#0a0810 0%,#171226 42%,#4d3179 100%)}
 .hero__sky::after{content:'';position:absolute;inset:0;background:radial-gradient(60% 40% at 50% 100%,rgba(167,139,250,.22),rgba(167,139,250,0) 70%)}
 .hero__stars{position:absolute;inset:0;z-index:1;opacity:.5;pointer-events:none}
@@ -100,7 +100,7 @@ body{
 .hero__content{position:relative;z-index:3;padding-top:160px;text-align:center;display:flex;flex-direction:column;align-items:center}
 
 /* device: bezel open at the bottom, bleeds into the fade */
-.hero__device{position:absolute;z-index:3;left:50%;top:594px;width:960px;margin-left:-480px;will-change:transform}
+.hero__device{position:absolute;z-index:3;left:50%;top:700px;width:960px;margin-left:-480px;will-change:transform}
 .device{padding:6px 6px 0;border-radius:24px 24px 0 0;background:rgba(23,23,23,.85);box-shadow:0 -1px 0 rgba(255,255,255,.08) inset,0 40px 120px -20px rgba(0,0,0,.8)}
 .device__screen{border-radius:18px 18px 0 0;overflow:hidden;background:#0f1012;display:block;aspect-ratio:1920/1101}
 .device__screen img{width:100%;height:100%;object-fit:cover;object-position:50% 0;display:block}
@@ -114,12 +114,12 @@ body{
 .hero__sub{margin-top:16px;font-size:14px;line-height:21px;color:rgba(255,255,255,.8);max-width:460px}
 .hero__cta{margin-top:46px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 @media(max-width:900px){
-  .hero{height:900px}
+  .hero{height:958px}
   .hero__content{padding-top:132px}
   .hero__title{font-size:34px;line-height:1.25}
   .layer--far{bottom:330px;width:max(1200px,150%)}
   .layer--mid{bottom:250px;width:max(1100px,140%)}
-  .hero__device{top:632px;left:16px;right:16px;width:auto;margin:0}
+  .hero__device{top:690px;left:16px;right:16px;width:auto;margin:0}
   .device{padding:4px 4px 0;border-radius:16px 16px 0 0}
   .device__screen{border-radius:12px 12px 0 0}
   .hero::after{height:200px}
