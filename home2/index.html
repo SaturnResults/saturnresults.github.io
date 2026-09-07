@@ -159,7 +159,8 @@ body{
 
 /* ---------- sticky deck stack ---------- */
 .stack{position:relative;margin-top:8px}
-.deck{position:sticky;top:120px;display:grid;grid-template-columns:1fr 1fr;height:560px;margin-bottom:48px;border-radius:28px;overflow:clip;background:#0b0c0e;border:1px solid var(--line);box-shadow:0 0 0 6px rgba(255,255,255,.02),0 50px 100px -50px rgba(0,0,0,.9);transform-origin:50% 0}
+.deck{position:sticky;top:120px;display:grid;grid-template-columns:1fr 1.22fr;height:540px;margin-bottom:48px;border-radius:28px;overflow:clip;background:#0b0c0e;border:1px solid var(--line);box-shadow:0 0 0 6px rgba(255,255,255,.02),0 50px 100px -50px rgba(0,0,0,.9);transform-origin:50% 0}
+.deck--flip{grid-template-columns:1.22fr 1fr}
 .deck--flip .deck__copy{order:2}
 .deck__copy{padding:56px 48px;display:flex;flex-direction:column}
 .deck__label{display:inline-flex;align-items:center;gap:10px;font-size:14px;color:var(--fg-3)}
@@ -452,7 +453,7 @@ body{
           </ul>
           <div class="deck__foot">Most builds live within a week →</div>
         </div>
-        <div class="deck__media"><img src="/yk-site-screenshot.png" alt="Web design" loading="lazy"></div>
+        <div class="deck__media"><img src="/deck-web.jpg" alt="Bespoke website design and development" loading="lazy"></div>
       </article>
 
       <article class="deck deck--flip">
@@ -467,7 +468,7 @@ body{
           </ul>
           <div class="deck__foot">Included in Studio and Orbit →</div>
         </div>
-        <div class="deck__media contain"><img src="/raglo-uk.png" alt="Brand identity" loading="lazy"></div>
+        <div class="deck__media"><img src="/deck-brand.jpg" alt="Brand identity systems" loading="lazy"></div>
       </article>
 
       <article class="deck">
@@ -482,7 +483,7 @@ body{
           </ul>
           <div class="deck__foot">Rolling monthly engagement →</div>
         </div>
-        <div class="deck__media"><img src="/longis-bay.png" alt="SEO and growth" loading="lazy"></div>
+        <div class="deck__media"><img src="/deck-seo.jpg" alt="SEO and growth" loading="lazy"></div>
       </article>
 
       <article class="deck deck--flip">
@@ -497,7 +498,7 @@ body{
           </ul>
           <div class="deck__foot">Try the assistant below →</div>
         </div>
-        <div class="deck__media"><img src="/alderney-week.avif" alt="Social and AI" loading="lazy"></div>
+        <div class="deck__media"><img src="/deck-ai.jpg" alt="Social media and AI systems" loading="lazy"></div>
       </article>
     </div>
   </div>
