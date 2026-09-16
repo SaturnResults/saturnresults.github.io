@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Slate · Booking system for clinics · Saturn Results</title>
+<meta name="description" content="Slate is a booking system built into your own website and branding, with card rates we guarantee to beat what you pay now. No per therapist billing, no commission on your clients."/>
+<meta name="theme-color" content="#050506">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="256x256">
+<link rel="apple-touch-icon" href="/favicon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://saturnresults.co.uk/slate/">
+<meta property="og:site_name" content="Saturn Results">
+<meta property="og:title" content="Slate · Booking built into your own site">
+<meta property="og:description" content="A booking system in your branding, on your domain, with card rates we guarantee to beat what you pay now.">
+<!-- TODO: replace with a dedicated Slate OG image once the ring visual is exported -->
+<meta property="og:image" content="https://saturnresults.co.uk/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="681">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Slate · Booking built into your own site">
+<meta name="twitter:description" content="A booking system in your branding, on your domain, with card rates we guarantee to beat what you pay now.">
+<meta name="twitter:image" content="https://saturnresults.co.uk/og-image.jpg">
+<link rel="canonical" href="https://saturnresults.co.uk/slate/">
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050506;--bg-2:#0b0c0e;--bg-3:#121316;
+  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+  --fg:#f4f5f7;--fg-2:rgba(244,245,247,.64);--fg-3:rgba(244,245,247,.40);--fg-4:rgba(244,245,247,.24);
+  --accent:#FB7511;--accent-deep:#B44205;
+  --sans:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Roboto Mono',ui-monospace,monospace;
+  --container:1080px;--wide:1265px;--nav-h:60px;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{font:inherit;background:none;border:0;cursor:pointer;color:inherit}
+ul{list-style:none}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:clip}
+@media(max-width:768px){html,body{overflow-y:auto!important;height:auto!important;position:static!important;touch-action:pan-y!important}}
+::selection{background:var(--accent);color:#0a0a0b}
+.container{width:100%;max-width:var(--wide);margin:0 auto;padding:0 24px}
+.container--tight{max-width:var(--container)}
+
+.chip{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 14px 0 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);font-size:12px;color:var(--fg-2)}
+.chip__dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(251,117,17,.7);flex:none}
+.h2{font-size:40px;line-height:50px;letter-spacing:-.04em;font-weight:500;margin-top:18px}
+.h2__a,.h2__b{display:block}
+.h2__b{color:var(--fg-3)}
+@media(max-width:700px){.h2{font-size:30px;line-height:38px}}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:48px;padding:0 30px;border-radius:999px;font-size:14px;font-weight:500;letter-spacing:-.01em;transition:transform .3s var(--ease),background .3s,box-shadow .3s;white-space:nowrap;border:0;cursor:pointer;font-family:inherit}
+.btn svg{width:14px;height:14px}
+.btn--light{background:rgba(255,255,255,.88);color:#0a0a0b}
+.btn--light:hover{background:#fff;transform:translateY(-1px);box-shadow:0 0 0 1px rgba(255,255,255,.2),0 10px 30px -10px rgba(251,117,17,.6)}
+.btn--light:disabled{opacity:.6;cursor:default;transform:none;box-shadow:none}
+.btn--ghost{background:rgba(255,255,255,.06);color:var(--fg);border:1px solid var(--line-2)}
+.btn--ghost:hover{background:rgba(255,255,255,.1)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;height:var(--nav-h);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 clamp(20px,6vw,180px);background:linear-gradient(180deg,rgba(5,5,6,.75),rgba(5,5,6,0));transition:background .4s,transform .45s var(--ease)}
+.nav.is-scrolled{background:rgba(5,5,6,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav.is-hidden{transform:translateY(-100%)}
+.nav__brand{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:16px;letter-spacing:.06em}
+.nav__brand img{width:auto;height:26px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(251,117,17,.55))}
+.nav__links{display:flex;gap:8px;justify-self:center}
+.nav__links a{font-size:14px;color:var(--fg-2);padding:8px 14px;border-radius:999px;transition:color .2s,background .2s}
+.nav__links a:hover{color:var(--fg);background:rgba(255,255,255,.06)}
+.nav__links a.is-here{color:var(--fg);background:rgba(255,255,255,.06)}
+.nav__right{display:flex;align-items:center;gap:16px;justify-self:end}
+.nav__cta{display:inline-flex;align-items:center;height:38px;padding:0 18px;border-radius:999px;background:rgba(255,255,255,.12);font-size:14px;font-weight:500;transition:background .25s}
+.nav__cta:hover{background:rgba(255,255,255,.2)}
+@media(max-width:1024px){.nav{grid-template-columns:1fr auto}.nav__links{display:none}}
+
+/* ---------- hero ---------- */
+.page{position:relative;padding:118px 0 80px;background:radial-gradient(120% 62% at 50% 0,#1E1108 0%,var(--bg) 62%);overflow:clip}
+@media(max-width:900px){.page{padding:92px 0 56px}}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+@media(max-width:980px){.hero{grid-template-columns:1fr;gap:40px}}
+.hero__head h1{font-size:clamp(34px,4.7vw,60px);line-height:1.05;letter-spacing:-.04em;font-weight:400;margin-top:18px}
+.hero__head h1 em{font-style:normal;color:var(--accent)}
+.hero__head p{margin-top:18px;font-size:16px;line-height:25px;color:var(--fg-2);max-width:50ch}
+.hero__cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.hero__by{margin-top:26px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-4)}
+@media(max-width:420px){.nav__cta{padding:0 14px;font-size:13px}}
+
+/* hero image: artwork is glow-on-black, so screen blending dissolves its edges into the page */
+.shot{position:relative;width:100%;max-width:470px;margin:0 auto;display:block}
+.shot img{display:block;width:100%;height:auto;mix-blend-mode:screen}
+@supports not (mix-blend-mode:screen){
+  .shot img{-webkit-mask-image:radial-gradient(closest-side,#000 62%,transparent 97%);mask-image:radial-gradient(closest-side,#000 62%,transparent 97%)}
+}
+@media(max-width:980px){.shot{max-width:340px}}
+
+/* ---------- section frame ---------- */
+.sec{padding:96px 0;border-top:1px solid var(--line)}
+@media(max-width:900px){.sec{padding:66px 0}}
+.sec__head{max-width:660px;margin-bottom:44px}
+.sec__head p{margin-top:16px;font-size:16px;line-height:25px;color:var(--fg-2);max-width:54ch}
+
+/* ---------- three promises ---------- */
+.promise{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:900px){.promise{grid-template-columns:1fr}}
+.card{border-radius:24px;border:1px solid var(--line);background:var(--bg-2);padding:30px 28px 28px;
+  box-shadow:0 0 0 6px rgba(255,255,255,.02);transition:border-color .3s,transform .5s var(--ease)}
+.card:hover{border-color:var(--line-2);transform:translateY(-3px)}
+.card__no{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--accent)}
+.card h3{margin-top:16px;font-size:20px;font-weight:500;letter-spacing:-.025em;line-height:1.25}
+.card p{margin-top:12px;font-size:14px;line-height:22px;color:var(--fg-2)}
+
+/* ---------- the swap table ---------- */
+.swap{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+@media(max-width:860px){.swap{grid-template-columns:1fr}}
+.pane{border-radius:24px;border:1px solid var(--line);background:var(--bg-2);padding:30px 28px 26px;box-shadow:0 0 0 6px rgba(255,255,255,.02)}
+.pane--ours{border-color:rgba(251,117,17,.32);background:linear-gradient(180deg,rgba(251,117,17,.07),rgba(251,117,17,0) 52%),var(--bg-2)}
+.pane__top{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.pane__top h3{font-size:18px;font-weight:500;letter-spacing:-.02em}
+.pane__top span{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
+.pane--ours .pane__top span{color:var(--accent)}
+.pane ul{margin-top:8px}
+.pane li{display:flex;gap:13px;align-items:flex-start;padding:15px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:21px;color:var(--fg-2)}
+.pane li:last-child{border-bottom:0}
+.pane li b{color:var(--fg);font-weight:500}
+.mark{width:20px;height:20px;border-radius:7px;flex:none;position:relative;margin-top:1px}
+.mark--no{background:rgba(255,255,255,.06)}
+.mark--no::before,.mark--no::after{content:'';position:absolute;left:5px;top:9px;width:10px;height:1.5px;background:var(--fg-3)}
+.mark--no::before{transform:rotate(45deg)}.mark--no::after{transform:rotate(-45deg)}
+.mark--yes{background:rgba(251,117,17,.16)}
+.mark--yes::after{content:'';position:absolute;left:7px;top:4.5px;width:4px;height:8px;border:solid var(--accent);border-width:0 1.6px 1.6px 0;transform:rotate(45deg)}
+
+/* ---------- guarantee ---------- */
+.gtee{border-radius:28px;border:1px solid rgba(251,117,17,.3);background:linear-gradient(180deg,rgba(251,117,17,.09),rgba(251,117,17,0) 60%),var(--bg-2);
+  padding:44px 42px;box-shadow:0 0 0 6px rgba(255,255,255,.02),0 50px 110px -60px rgba(251,117,17,.5)}
+@media(max-width:700px){.gtee{padding:30px 22px;border-radius:22px}}
+.gtee h2{font-size:clamp(26px,3.4vw,38px);line-height:1.15;letter-spacing:-.035em;font-weight:400;margin-top:16px;max-width:20ch}
+.gtee h2 em{font-style:normal;color:var(--accent)}
+.gtee>p{margin-top:16px;font-size:16px;line-height:25px;color:var(--fg-2);max-width:56ch}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:38px}
+@media(max-width:820px){.steps{grid-template-columns:1fr}}
+.step{padding:22px 22px 20px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid var(--line)}
+.step b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--accent)}
+.step h4{margin-top:12px;font-size:16px;font-weight:500;letter-spacing:-.02em}
+.step p{margin-top:8px;font-size:13px;line-height:20px;color:var(--fg-2)}
+
+/* ---------- features ---------- */
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:24px;overflow:clip}
+@media(max-width:900px){.feat{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.feat{grid-template-columns:1fr}}
+.feat>div{background:var(--bg-2);padding:28px 26px 26px}
+.feat h4{font-size:15px;font-weight:500;letter-spacing:-.02em;display:flex;align-items:center;gap:11px}
+.feat h4 i{width:26px;height:26px;border-radius:9px;background:rgba(251,117,17,.13);flex:none;position:relative}
+.feat h4 i::after{content:'';position:absolute;left:9px;top:7px;width:4px;height:8px;border:solid var(--accent);border-width:0 1.6px 1.6px 0;transform:rotate(45deg)}
+.feat p{margin-top:11px;font-size:13px;line-height:21px;color:var(--fg-2)}
+
+/* ---------- pricing ---------- */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start}
+@media(max-width:900px){.plans{grid-template-columns:1fr}}
+.plan{border-radius:24px;border:1px solid var(--line);background:var(--bg-2);padding:30px 28px 28px;box-shadow:0 0 0 6px rgba(255,255,255,.02)}
+.plan--raised{border-color:rgba(251,117,17,.34);background:linear-gradient(180deg,rgba(251,117,17,.08),rgba(251,117,17,0) 50%),var(--bg-2);
+  box-shadow:0 0 0 6px rgba(255,255,255,.02),0 40px 90px -50px rgba(251,117,17,.65)}
+.plan__label{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
+.plan__label b{color:var(--accent);font-weight:500}
+.plan__price{display:flex;align-items:baseline;gap:8px;margin-top:20px}
+.plan__price b{font-size:40px;font-weight:500;letter-spacing:-.045em}
+.plan__price span{font-size:13px;color:var(--fg-3)}
+.plan__blurb{margin-top:10px;font-size:14px;line-height:21px;color:var(--fg-2);min-height:42px}
+.plan .btn{width:100%;margin-top:22px}
+.plan__rows{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.plan__rows li{display:flex;gap:11px;align-items:flex-start;padding:9px 0;font-size:13.5px;line-height:20px;color:var(--fg-2)}
+.plan__rows i{width:17px;height:17px;border-radius:6px;background:rgba(251,117,17,.14);flex:none;position:relative;margin-top:1px}
+.plan__rows i::after{content:'';position:absolute;left:6px;top:4px;width:3.5px;height:7px;border:solid var(--accent);border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+.plan__fine{margin-top:18px;font-size:12px;line-height:18px;color:var(--fg-4)}
+.setup{margin-top:20px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  padding:20px 24px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.02);font-size:14px;color:var(--fg-2)}
+.setup b{color:var(--fg);font-weight:500}
+
+/* ---------- faq ---------- */
+.faq{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:24px;overflow:clip}
+.faq details{background:var(--bg-2)}
+.faq summary{list-style:none;cursor:pointer;padding:22px 26px;font-size:15px;font-weight:500;letter-spacing:-.015em;display:flex;justify-content:space-between;gap:20px;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:'';width:9px;height:9px;border:solid var(--fg-3);border-width:0 1.5px 1.5px 0;transform:rotate(45deg);flex:none;transition:transform .3s var(--ease);margin-top:-4px}
+.faq details[open] summary::after{transform:rotate(-135deg);margin-top:2px}
+.faq summary:hover{color:var(--fg)}
+.faq p{padding:0 26px 24px;font-size:14px;line-height:22px;color:var(--fg-2);max-width:66ch}
+
+/* ---------- cta ---------- */
+.cta{padding:100px 0;border-top:1px solid var(--line);background:radial-gradient(90% 70% at 50% 100%,rgba(251,117,17,.11),rgba(5,5,6,0) 70%)}
+@media(max-width:900px){.cta{padding:70px 0}}
+.cta__box{max-width:640px;margin:0 auto;text-align:center}
+.cta__box h2{font-size:clamp(28px,3.6vw,42px);line-height:1.12;letter-spacing:-.04em;font-weight:400;margin-top:18px}
+.cta__box h2 em{font-style:normal;color:var(--accent)}
+.cta__box>p{margin-top:16px;font-size:16px;line-height:25px;color:var(--fg-2)}
+form{display:grid;gap:14px;margin-top:34px;text-align:left}
+.row{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+@media(max-width:600px){.row{grid-template-columns:1fr}}
+.field{position:relative}
+.field label{position:absolute;top:17px;left:17px;font-size:13px;color:var(--fg-3);pointer-events:none;transition:all .22s var(--ease)}
+.field input,.field select,.field textarea{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:23px 17px 9px;font-family:inherit;font-size:15px;color:var(--fg);outline:none;transition:border-color .22s,background .22s}
+.field textarea{resize:none;min-height:96px;padding-top:28px}
+.field select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23FB7511' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 17px center}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:rgba(251,117,17,.55);background:rgba(251,117,17,.05)}
+.field input:focus+label,.field textarea:focus+label,.field select:focus+label,
+.field input:not(:placeholder-shown)+label,.field textarea:not(:placeholder-shown)+label,
+.field select.has-value+label{top:8px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+form .btn{margin-top:6px;width:100%}
+.fine{margin-top:14px;font-size:12px;line-height:18px;color:var(--fg-4);text-align:center}
+.ok{display:none;margin-top:14px;padding:16px 18px;border-radius:14px;background:rgba(251,117,17,.1);border:1px solid rgba(251,117,17,.3);font-size:14px;color:var(--accent);text-align:center}
+.ok.show{display:block}
+
+/* footer */
+.footer{background:var(--bg);padding:70px 0 40px;border-top:1px solid var(--line)}
+.footer__grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+@media(max-width:820px){.footer__grid{grid-template-columns:1fr 1fr}.footer__brand{grid-column:1/-1}}
+.footer__brand img{width:auto;height:28px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(251,117,17,.5))}
+.footer__brand p{margin-top:20px;font-size:14px;color:var(--fg-2);max-width:32ch}
+.footer__fine{margin-top:12px!important;font-size:13px!important;color:var(--fg-4)!important}
+.footer__col{display:flex;flex-direction:column;gap:14px}
+.footer__col h5{font-size:15px;font-weight:500;margin-bottom:8px}
+.footer__col a{font-size:15px;color:var(--fg-2)}
+.footer__col a:hover{color:var(--fg)}
+.footer__bottom{margin-top:56px;padding-top:30px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--fg-2)}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.is-in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a class="nav__brand" href="/"><img src="/SRWHITELOGO.png" alt=""/> SATURN</a>
+  <div class="nav__links">
+    <a href="/#about">About</a>
+    <a href="/#process">How it works</a>
+    <a href="/slate/" class="is-here">Slate</a>
+    <a href="/#work">Work</a>
+    <a href="/#pricing">Pricing</a>
+  </div>
+  <div class="nav__right">
+    <a class="nav__cta" href="#start">Get your rate checked</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="page">
+  <div class="container">
+    <div class="hero">
+
+      <div class="hero__head">
+        <span class="chip"><span class="chip__dot"></span>New · Slate by Saturn Results</span>
+        <h1>Bookings that live on <em>your website,</em> not someone else's.</h1>
+        <p>Slate is a complete booking system for clinics and wellness businesses. Built into your own site, wearing your own branding, on your own domain. Your clients book with you, pay you, and never see anybody else's name on the way through.</p>
+        <div class="hero__cta">
+          <a class="btn btn--light" href="#start">Get your rate checked
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="#pricing">See pricing</a>
+        </div>
+        <p class="hero__by">Booking · Deposits · Reminders · Rebooking</p>
+      </div>
+
+      <div class="shot">
+        <img src="/slate/slate-hero.jpg" width="1024" height="1536"
+             alt="The Slate booking app on a phone, showing a clinic's available appointments for the day">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ THREE PROMISES ============ -->
+<section class="sec">
+  <div class="container">
+    <div class="sec__head reveal">
+      <span class="chip"><span class="chip__dot"></span>Why clinics move</span>
+      <h2 class="h2">
+        <span class="h2__a">Three reasons, and</span>
+        <span class="h2__b">they are all measurable.</span>
+      </h2>
+    </div>
+
+    <div class="promise reveal">
+      <div class="card">
+        <span class="card__no">01</span>
+        <h3>Lower card fees than you pay today</h3>
+        <p>We check your current statement before we quote. If we cannot beat the rate you are on, we will tell you straight and you carry on as you are. Nothing to sign to find out.</p>
+      </div>
+      <div class="card">
+        <span class="card__no">02</span>
+        <h3>Built into your site and your branding</h3>
+        <p>Not a link out to a marketplace. The booking journey runs on your domain, in your colours, with your logo at the top and your treatments in your words. Clients never leave your site.</p>
+      </div>
+      <div class="card">
+        <span class="card__no">03</span>
+        <h3>Simple enough to run from reception</h3>
+        <p>One calendar, one client list, one place to look. If your team can use a diary they can use Slate, and we train them on it before you go live.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE SWAP ============ -->
+<section class="sec">
+  <div class="container">
+    <div class="sec__head reveal">
+      <span class="chip"><span class="chip__dot"></span>The difference</span>
+      <h2 class="h2">
+        <span class="h2__a">A marketplace rents you</span>
+        <span class="h2__b">your own clients.</span>
+      </h2>
+      <p>Booking marketplaces are genuinely good at sending you a first appointment. The trouble starts afterwards, because the client, the card fee and the rebooking all stay on their platform rather than yours.</p>
+    </div>
+
+    <div class="swap reveal">
+
+      <div class="pane">
+        <div class="pane__top">
+          <h3>A booking marketplace</h3>
+          <span>Today</span>
+        </div>
+        <ul>
+          <li><span class="mark mark--no"></span><span>Billed <b>per team member, every month.</b> Hire a fourth therapist and the bill goes up again.</span></li>
+          <li><span class="mark mark--no"></span><span>A <b>commission on new clients</b> the marketplace introduces, taken out of the treatment price.</span></li>
+          <li><span class="mark mark--no"></span><span>Your clients browse a directory that <b>lists the clinic down the road</b> next to you.</span></li>
+          <li><span class="mark mark--no"></span><span>Card processing on <b>their rate</b>, which you cannot negotiate.</span></li>
+          <li><span class="mark mark--no"></span><span>Your booking page carries <b>their branding</b>, not yours.</span></li>
+        </ul>
+      </div>
+
+      <div class="pane pane--ours">
+        <div class="pane__top">
+          <h3>Slate</h3>
+          <span>With us</span>
+        </div>
+        <ul>
+          <li><span class="mark mark--yes"></span><span>One <b>flat monthly price</b> for the clinic. Add therapists without the bill moving.</span></li>
+          <li><span class="mark mark--yes"></span><span><b>No commission, ever.</b> A client who books with you is yours, and so is the full treatment price.</span></li>
+          <li><span class="mark mark--yes"></span><span>Nobody else advertised to your clients. <b>No competitors, no directory.</b></span></li>
+          <li><span class="mark mark--yes"></span><span>Card rates <b>quoted against your statement</b> and guaranteed to beat what you pay now.</span></li>
+          <li><span class="mark mark--yes"></span><span><b>Your logo, your colours, your domain.</b> It looks like part of your website because it is.</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUARANTEE ============ -->
+<section class="sec">
+  <div class="container">
+    <div class="gtee reveal">
+      <span class="chip"><span class="chip__dot"></span>The rate promise</span>
+      <h2>We beat what you pay now, or we <em>tell you so.</em></h2>
+      <p>Every clinic is on a different rate, so we do not publish a headline percentage and hope it fits. We read your actual statement, quote against it, and put the saving in writing before you commit to anything.</p>
+
+      <div class="steps">
+        <div class="step">
+          <b>01</b>
+          <h4>Send one statement</h4>
+            <p>Last month's from whoever processes your cards now. That is the whole first step.</p>
+        </div>
+        <div class="step">
+          <b>02</b>
+          <h4>We work out the real number</h4>
+          <p>Percentage, pence per transaction, monthly minimums and any fees buried further down. We total it properly.</p>
+        </div>
+        <div class="step">
+          <b>03</b>
+          <h4>You get a straight answer</h4>
+          <p>A written quote showing what the same month would have cost on Slate. If we cannot beat it, we say so and leave you alone.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section class="sec">
+  <div class="container">
+    <div class="sec__head reveal">
+      <span class="chip"><span class="chip__dot"></span>What is inside</span>
+      <h2 class="h2">
+        <span class="h2__a">Everything a clinic runs on,</span>
+        <span class="h2__b">in one place.</span>
+      </h2>
+    </div>
+
+    <div class="feat reveal">
+      <div>
+        <h4><i></i>Online booking, 24 hours</h4>
+        <p>Clients book the treatment, the practitioner and the time themselves, from your site or from your Google listing, while you are closed.</p>
+      </div>
+      <div>
+        <h4><i></i>Deposits and no show cover</h4>
+        <p>Take a deposit or hold a card at the point of booking. The quietest way there is to cut no shows without a difficult conversation.</p>
+      </div>
+      <div>
+        <h4><i></i>Automatic reminders</h4>
+        <p>Confirmation on booking, a reminder before the appointment, by email or text. Sent in your clinic's name, not ours.</p>
+      </div>
+      <div>
+        <h4><i></i>Rebooking that happens by itself</h4>
+        <p>A nudge goes out when a client is due back. This is the part that quietly pays for the system, and it is the part marketplaces do not do.</p>
+      </div>
+      <div>
+        <h4><i></i>One client record</h4>
+        <p>History, notes, contact details and every appointment in one place, exportable whenever you want it. It is your list, not ours.</p>
+      </div>
+      <div>
+        <h4><i></i>Review requests</h4>
+        <p>After a treatment, happy clients get asked for a Google review automatically, which is the review that actually wins you new ones.</p>
+      </div>
+      <div>
+        <h4><i></i>Calendar sync</h4>
+        <p>Two way sync with Google or Apple Calendar for every practitioner, so nobody gets booked into their own lunch.</p>
+      </div>
+      <div>
+        <h4><i></i>Runs on a phone</h4>
+        <p>Your team can check the day, move an appointment or take a payment from a phone between clients.</p>
+      </div>
+      <div>
+        <h4><i></i>We move your data across</h4>
+        <p>Existing clients, treatments, prices, staff and future appointments. We do the migration and run both systems in parallel until you are happy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="sec" id="pricing">
+  <div class="container">
+    <div class="sec__head reveal">
+      <span class="chip"><span class="chip__dot"></span>Pricing</span>
+      <h2 class="h2">
+        <span class="h2__a">Priced per clinic,</span>
+        <span class="h2__b">not per person.</span>
+      </h2>
+      <p>Tiers exist so a solo therapist is not paying for a six room clinic. Inside a tier you can hire whoever you like without the price moving.</p>
+    </div>
+
+    <div class="plans reveal">
+
+      <div class="plan">
+        <div class="plan__label"><span>Solo</span></div>
+        <div class="plan__price"><b>£69</b><span>per month</span></div>
+        <p class="plan__blurb">For one or two practitioners working out of a single room.</p>
+        <a class="btn btn--ghost" href="#start">Get your rate checked</a>
+        <ul class="plan__rows">
+          <li><i></i>Up to 2 practitioners</li>
+          <li><i></i>Unlimited bookings</li>
+          <li><i></i>Deposits and card payments</li>
+          <li><i></i>Email reminders, 200 texts included</li>
+          <li><i></i>Automatic rebooking nudges</li>
+          <li><i></i>Google review requests</li>
+          <li><i></i>Full branding on your domain</li>
+        </ul>
+      </div>
+
+      <div class="plan plan--raised">
+        <div class="plan__label"><span>Clinic</span><b>Most popular</b></div>
+        <div class="plan__price"><b>£99</b><span>per month</span></div>
+        <p class="plan__blurb">For a working clinic with a reception desk and a few treatment rooms.</p>
+        <a class="btn btn--light" href="#start">Get your rate checked</a>
+        <ul class="plan__rows">
+          <li><i></i>Up to 6 practitioners</li>
+          <li><i></i>Everything in Solo</li>
+          <li><i></i>400 texts included</li>
+          <li><i></i>Per practitioner calendars and sync</li>
+          <li><i></i>Treatment packages and course booking</li>
+          <li><i></i>Client records and export</li>
+          <li><i></i>Priority support</li>
+        </ul>
+      </div>
+
+      <div class="plan">
+        <div class="plan__label"><span>Group</span></div>
+        <div class="plan__price"><b>£149</b><span>per month</span></div>
+        <p class="plan__blurb">For larger teams, or more than one location under one roof.</p>
+        <a class="btn btn--ghost" href="#start">Get your rate checked</a>
+        <ul class="plan__rows">
+          <li><i></i>7 or more practitioners</li>
+          <li><i></i>Everything in Clinic</li>
+          <li><i></i>800 texts included</li>
+          <li><i></i>Multiple locations</li>
+          <li><i></i>Staff permissions and rotas</li>
+          <li><i></i>Reporting across the team</li>
+          <li><i></i>Named account contact</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="setup reveal">
+      <span><b>£249 setup, once.</b> We build it, brand it, migrate your existing clients and train your team.</span>
+      <span>Texts beyond the included allowance are 6p each. Three month minimum term, then monthly.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="sec">
+  <div class="container container--tight">
+    <div class="sec__head reveal">
+      <span class="chip"><span class="chip__dot"></span>The awkward questions</span>
+      <h2 class="h2">
+        <span class="h2__a">What everybody asks</span>
+        <span class="h2__b">on the first call.</span>
+      </h2>
+    </div>
+
+    <div class="faq reveal">
+      <details>
+        <summary>What happens to next week's diary while we switch?</summary>
+        <p>Nothing. We import your future appointments and run both systems side by side for two weeks, so your old booking page keeps working while Slate fills up behind it. You pick the day you turn the old one off, and we are on the phone that morning.</p>
+      </details>
+      <details>
+        <summary>Am I tied in?</summary>
+        <p>Three months minimum, then it is month to month and you can leave with 30 days' notice. Your client list is exported to you in full on the way out. We would rather you stayed because it works than because you were stuck.</p>
+      </details>
+      <details>
+        <summary>Who owns the client data?</summary>
+        <p>You do. We are the processor, you are the controller, and it is written down in a data agreement you sign before we touch anything. You can export the whole list yourself at any point without asking us.</p>
+      </details>
+      <details>
+        <summary>I am mid contract with my card machine provider.</summary>
+        <p>Very common, and it is not a blocker. Tell us when your term ends and we will set Slate up on your existing processing now, then move the payments across when you are free. Nothing about the booking system depends on switching.</p>
+      </details>
+      <details>
+        <summary>Will I lose the reviews I have built up?</summary>
+        <p>Reviews on a third party marketplace stay there, and that is true of any move. What we do is point Slate at your Google listing from day one, because Google reviews are the ones new clients actually read before they book.</p>
+      </details>
+      <details>
+        <summary>My team are not technical.</summary>
+        <p>That is most of the clinics we work with. We set it up for you rather than handing over a login and wishing you luck, we train the team in a session before go live, and there is a person at the end of the phone afterwards.</p>
+      </details>
+      <details>
+        <summary>Do you build the website too?</summary>
+        <p>We do, and Slate is built into it properly when we do. If you already have a site you are happy with, that is fine, Slate goes into that one instead.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta" id="start">
+  <div class="container">
+    <div class="cta__box reveal">
+      <span class="chip"><span class="chip__dot"></span>No cost, no obligation</span>
+      <h2>Send us one statement and we will tell you <em>what you are really paying.</em></h2>
+      <p>You will get the total back in plain English, plus what the same month would have cost on Slate. If there is nothing in it for you, we will say so.</p>
+
+      <form id="leadForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+        <input type="hidden" name="access_key" value="ac6bd08f-23c7-4311-abe6-b49c47fe5f20">
+        <input type="hidden" name="from_name" value="Saturn Results · Slate page">
+        <input type="hidden" name="subject" value="New Slate enquiry">
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="row">
+          <div class="field">
+            <input type="text" id="name" name="name" placeholder=" " autocomplete="name" required>
+            <label for="name">Your name</label>
+          </div>
+          <div class="field">
+            <input type="text" id="company" name="company" placeholder=" " autocomplete="organization">
+            <label for="company">Clinic name</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <input type="email" id="email" name="email" placeholder=" " autocomplete="email" required>
+            <label for="email">Email</label>
+          </div>
+          <div class="field">
+            <input type="tel" id="phone" name="phone" placeholder=" " autocomplete="tel">
+            <label for="phone">Phone</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <select id="current" name="current_system">
+              <option value=""></option>
+              <option>A booking marketplace</option>
+              <option>Clinic software</option>
+              <option>Phone, paper or a spreadsheet</option>
+              <option>Something else</option>
+            </select>
+            <label for="current">What you book on now</label>
+          </div>
+          <div class="field">
+            <select id="team" name="team_size">
+              <option value=""></option>
+              <option>Just me</option>
+              <option>2 to 3</option>
+              <option>4 to 6</option>
+              <option>7 or more</option>
+            </select>
+            <label for="team">Practitioners</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <textarea id="notes" name="notes" placeholder=" "></textarea>
+          <label for="notes">Anything we should know</label>
+        </div>
+
+        <button type="submit" class="btn btn--light"><span>Get my rate checked</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </form>
+
+      <div class="ok" id="ok">Got it. We will come back to you within one working day and tell you where to send the statement.</div>
+      <p class="fine">We will never share your statement or your client data with anyone. Slate is built and supported by Saturn Results in the UK.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <img src="/SRWHITELOGO.png" alt="Saturn Results">
+        <p>A UK marketing agency helping ambitious businesses grow with strategy, web, SEO, social and AI.</p>
+        <p class="footer__fine">Based at Venospace, Exeter. Working with brands across the United Kingdom.</p>
+      </div>
+      <div class="footer__col">
+        <h5>Agency</h5>
+        <a href="/#about">About</a><a href="/#process">How it works</a><a href="/#services">Services</a><a href="/#work">Work</a><a href="/#pricing">Pricing</a>
+      </div>
+      <div class="footer__col">
+        <h5>Slate</h5>
+        <a href="/slate/">Overview</a><a href="/slate/#pricing">Pricing</a><a href="/slate/#start">Rate check</a>
+      </div>
+      <div class="footer__col">
+        <h5>Connect</h5>
+        <a href="/contact/">Book a call</a>
+        <a href="mailto:contact@saturnresults.com">Email us</a>
+        <a href="/portal/">Client portal</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Saturn Results. All rights reserved.</span>
+      <span>contact@saturnresults.com</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* nav hide on scroll down */
+(()=>{const nav=document.getElementById('nav');let last=0,tick=false;
+  addEventListener('scroll',()=>{
+    if(tick)return; tick=true;
+    requestAnimationFrame(()=>{
+      const y=scrollY;
+      nav.classList.toggle('is-scrolled',y>20);
+      if(y<80) nav.classList.remove('is-hidden');
+      else if(y>last+4) nav.classList.add('is-hidden');
+      else if(y<last-4) nav.classList.remove('is-hidden');
+      last=y; tick=false;
+    });
+  },{passive:true});
+})();
+
+/* reveal */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target)}}),{threshold:.1,rootMargin:'0px 0px -40px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* select floating label */
+document.querySelectorAll('select').forEach(s=>s.addEventListener('change',()=>s.classList.toggle('has-value',!!s.value)));
+
+/* lead form */
+const form=document.getElementById('leadForm'), ok=document.getElementById('ok');
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const data=Object.fromEntries(new FormData(form).entries());
+  const btn=form.querySelector('button[type=submit]'), label=btn.querySelector('span'), original=label.textContent;
+  if(!data.name||!data.email){ label.textContent='Name and email please'; setTimeout(()=>label.textContent=original,2200); return; }
+  btn.disabled=true; label.textContent='Sending…';
+  const fd=new FormData(form);
+  fd.set('subject',`New Slate enquiry — ${data.name}${data.company?' · '+data.company:''}`);
+  try{
+    const res=await fetch(form.action,{method:'POST',body:fd});
+    const json=await res.json().catch(()=>({success:false}));
+    if(!json.success) throw new Error(json.message||'failed');
+    ok.classList.add('show'); label.textContent='Sent ✓';
+  }catch(err){
+    btn.disabled=false; label.textContent=original;
+    setTimeout(()=>form.submit(),300);
+  }
+});
+</script>
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "546ee579b0c540e2ad0546f6efb0b90b"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
