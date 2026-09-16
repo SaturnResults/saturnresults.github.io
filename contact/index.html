@@ -427,5 +427,8 @@ function reply(msg){
 chatForm.addEventListener('submit',e=>{e.preventDefault();const v=chatField.value.trim();if(!v)return;push('me',v);chatField.value='';reply(v)});
 document.querySelectorAll('.q').forEach(b=>b.addEventListener('click',()=>{push('me',b.dataset.q);reply(b.dataset.q)}));
 </script>
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "546ee579b0c540e2ad0546f6efb0b90b"}'></script>
+<!-- End Cloudflare Web Analytics -->
 </body>
 </html>
