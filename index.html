@@ -204,6 +204,7 @@ body{
 .collab{padding:40px 0 110px;background:var(--bg)}
 .collab .chip__dot{background:#FB7511;box-shadow:0 0 8px rgba(251,117,17,.7)}
 .collab__art{width:100%;margin-bottom:34px}
+.collab__art picture{display:block}
 .collab__art img{display:block;width:100%;height:auto;mix-blend-mode:screen}
 .collab__foot{display:grid;grid-template-columns:1fr 420px;gap:40px;align-items:start}
 .collab__foot p{font-size:16px;line-height:25px;color:var(--fg-2)}
@@ -459,8 +460,11 @@ body{
 <!-- SATURN x SLATE -->
 <section class="collab">
   <div class="collab__art reveal">
-    <img src="/saturn-x-slate.jpg" width="2900" height="1091" loading="lazy"
-         alt="Saturn Results and Slate brand lockup">
+    <picture>
+      <source media="(max-width:900px)" srcset="/saturn-x-slate-mobile.jpg" width="1800" height="1399">
+      <img src="/saturn-x-slate.jpg" width="2900" height="1091" loading="lazy"
+           alt="Saturn Results and Slate brand lockup">
+    </picture>
   </div>
 
   <div class="container container--wide">
