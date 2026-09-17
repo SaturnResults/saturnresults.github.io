@@ -25,6 +25,9 @@
 <meta name="twitter:image" content="https://saturnresults.co.uk/og-image.jpg">
 <link rel="canonical" href="https://saturnresults.co.uk/slate/">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="/slate/slate-hero.webp" type="image/webp" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -40,6 +43,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
+picture{display:contents}
 button{font:inherit;background:none;border:0;cursor:pointer;color:inherit}
 ul{list-style:none}
 body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px;line-height:1.5;
@@ -166,7 +170,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .feat p{margin-top:11px;font-size:13px;line-height:21px;color:var(--fg-2)}
 
 /* ---------- pricing ---------- */
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start}
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;max-width:860px}
 @media(max-width:900px){.plans{grid-template-columns:1fr}}
 .plan{border-radius:24px;border:1px solid var(--line);background:var(--bg-2);padding:30px 28px 28px;box-shadow:0 0 0 6px rgba(255,255,255,.02)}
 .plan--raised{border-color:rgba(251,117,17,.34);background:linear-gradient(180deg,rgba(251,117,17,.08),rgba(251,117,17,0) 50%),var(--bg-2);
@@ -242,7 +246,7 @@ form .btn{margin-top:6px;width:100%}
 <body>
 
 <nav class="nav" id="nav">
-  <a class="nav__brand" href="/"><img src="/SRWHITELOGO.png" alt=""/> SATURN</a>
+  <a class="nav__brand" href="/"><picture><source type="image/webp" srcset="/SRWHITELOGO.webp"><img src="/SRWHITELOGO.png" alt=""/></picture> SATURN</a>
   <div class="nav__links">
     <a href="/#about">About</a>
     <a href="/#process">How it works</a>
@@ -274,8 +278,8 @@ form .btn{margin-top:6px;width:100%}
       </div>
 
       <div class="shot">
-        <img src="/slate/slate-hero.jpg" width="1024" height="1536"
-             alt="The Slate booking app on a phone, showing a clinic's available appointments for the day">
+        <picture><source type="image/webp" srcset="/slate/slate-hero.webp"><img src="/slate/slate-hero.jpg" width="1024" height="1536" fetchpriority="high" decoding="async"
+             alt="The Slate booking app on a phone, showing a clinic's available appointments for the day"></picture>
       </div>
 
     </div>
@@ -392,7 +396,7 @@ form .btn{margin-top:6px;width:100%}
 
       <div class="poweredby">
         <span>Card payments powered by</span>
-        <img src="/slate/teya-logo.png" width="440" height="163" loading="lazy" alt="Teya">
+        <picture><source type="image/webp" srcset="/slate/teya-logo.webp"><img src="/slate/teya-logo.png" width="440" height="163" loading="lazy" alt="Teya"></picture>
       </div>
     </div>
   </div>
@@ -443,6 +447,14 @@ form .btn{margin-top:6px;width:100%}
         <p>Your team can check the day, move an appointment or take a payment from a phone between clients.</p>
       </div>
       <div>
+        <h4><i></i>Intake and consent forms</h4>
+        <p>Health questionnaires and consent sent out before the appointment and signed on a phone, so the paperwork is done before anyone walks in.</p>
+      </div>
+      <div>
+        <h4><i></i>Classes and group sessions</h4>
+        <p>Group rehab, pilates, a workshop. Set the number of seats and clients book into the same slot until it is full.</p>
+      </div>
+      <div>
         <h4><i></i>We move your data across</h4>
         <p>Existing clients, treatments, prices, staff and future appointments. We do the migration and run both systems in parallel until you are happy.</p>
       </div>
@@ -459,53 +471,40 @@ form .btn{margin-top:6px;width:100%}
         <span class="h2__a">Priced per clinic,</span>
         <span class="h2__b">not per person.</span>
       </h2>
-      <p>Tiers exist so a solo therapist is not paying for a six room clinic. Inside a tier you can hire whoever you like without the price moving.</p>
+      <p>One price for a clinic, whether you are one therapist or six. You only move up if you open a second location or grow past six practitioners, so hiring never costs you more in software.</p>
     </div>
 
     <div class="plans reveal">
 
-      <div class="plan">
-        <div class="plan__label"><span>Solo</span></div>
-        <div class="plan__price"><b>£69</b><span>per month</span></div>
-        <p class="plan__blurb">For one or two practitioners working out of a single room.</p>
-        <a class="btn btn--ghost" href="#start">Get your rate checked</a>
-        <ul class="plan__rows">
-          <li><i></i>Up to 2 practitioners</li>
-          <li><i></i>Unlimited bookings</li>
-          <li><i></i>Deposits and card payments</li>
-          <li><i></i>Email reminders, 200 texts included</li>
-          <li><i></i>Automatic rebooking nudges</li>
-          <li><i></i>Google review requests</li>
-          <li><i></i>Full branding on your domain</li>
-        </ul>
-      </div>
-
       <div class="plan plan--raised">
         <div class="plan__label"><span>Clinic</span><b>Most popular</b></div>
-        <div class="plan__price"><b>£99</b><span>per month</span></div>
-        <p class="plan__blurb">For a working clinic with a reception desk and a few treatment rooms.</p>
+        <div class="plan__price"><b>£49</b><span>per month</span></div>
+        <p class="plan__blurb">One location, up to six practitioners. Everything below is included.</p>
         <a class="btn btn--light" href="#start">Get your rate checked</a>
         <ul class="plan__rows">
-          <li><i></i>Up to 6 practitioners</li>
-          <li><i></i>Everything in Solo</li>
-          <li><i></i>400 texts included</li>
-          <li><i></i>Per practitioner calendars and sync</li>
-          <li><i></i>Treatment packages and course booking</li>
-          <li><i></i>Client records and export</li>
-          <li><i></i>Priority support</li>
+          <li><i></i>Unlimited bookings, unlimited clients</li>
+          <li><i></i>Deposits and online card payments</li>
+          <li><i></i>Email reminders, 200 texts included</li>
+          <li><i></i>Automatic rebooking nudges</li>
+          <li><i></i>Intake and consent forms</li>
+          <li><i></i>Classes and group sessions</li>
+          <li><i></i>Google review requests</li>
+          <li><i></i>Client records and full export</li>
+          <li><i></i>Your branding, on your domain</li>
         </ul>
       </div>
 
       <div class="plan">
         <div class="plan__label"><span>Group</span></div>
-        <div class="plan__price"><b>£149</b><span>per month</span></div>
-        <p class="plan__blurb">For larger teams, or more than one location under one roof.</p>
+        <div class="plan__price"><b>£89</b><span>per month</span></div>
+        <p class="plan__blurb">Two or more locations, or seven or more practitioners.</p>
         <a class="btn btn--ghost" href="#start">Get your rate checked</a>
         <ul class="plan__rows">
-          <li><i></i>7 or more practitioners</li>
           <li><i></i>Everything in Clinic</li>
-          <li><i></i>800 texts included</li>
           <li><i></i>Multiple locations</li>
+          <li><i></i>Unlimited practitioners</li>
+          <li><i></i>500 texts included</li>
+          <li><i></i>Per practitioner calendars and sync</li>
           <li><i></i>Staff permissions and rotas</li>
           <li><i></i>Reporting across the team</li>
           <li><i></i>Named account contact</li>
@@ -516,7 +515,7 @@ form .btn{margin-top:6px;width:100%}
 
     <div class="setup reveal">
       <span><b>£249 setup, once.</b> We build it, brand it, migrate your existing clients and train your team.</span>
-      <span>Texts beyond the included allowance are 6p each. Rolling monthly, no minimum term, cancel with 30 days' notice.</span>
+      <span>Texts beyond the included allowance are 6p each. Card terminal for the front desk available through Teya, priced separately. Rolling monthly, no minimum term, cancel with 30 days' notice.</span>
     </div>
   </div>
 </section>
@@ -556,6 +555,18 @@ form .btn{margin-top:6px;width:100%}
       <details>
         <summary>My team are not technical.</summary>
         <p>That is most of the clinics we work with. We set it up for you rather than handing over a login and wishing you luck, we train the team in a session before go live, and there is a person at the end of the phone afterwards.</p>
+      </details>
+      <details>
+        <summary>How quickly can we be taking bookings?</summary>
+        <p>Within a week in most cases. We build and brand it, import your clients, services and future appointments, then train your team before you go live. The two weeks of parallel running happen after that, so nothing is rushed on your side.</p>
+      </details>
+      <details>
+        <summary>I already have a website. Do I need a new one?</summary>
+        <p>No. Slate gives us an embed code that drops into a page on your existing site, so it works with anything that lets you paste in a snippet, which is almost everything: WordPress, Squarespace, Wix, Shopify or a hand built site. If your site makes that awkward we will tell you on the first call rather than after you have paid.</p>
+      </details>
+      <details>
+        <summary>Can we take payment at the front desk?</summary>
+        <p>Yes. Deposits and online payments are built in, and for card payments in the clinic there is a Teya terminal that runs on the same rates we quote you. The terminal is priced separately from your monthly fee, and we will put the cost in writing with your rate check.</p>
       </details>
       <details>
         <summary>Do you build the website too?</summary>
@@ -644,7 +655,7 @@ form .btn{margin-top:6px;width:100%}
   <div class="container">
     <div class="footer__grid">
       <div class="footer__brand">
-        <img src="/SRWHITELOGO.png" alt="Saturn Results">
+        <picture><source type="image/webp" srcset="/SRWHITELOGO.webp"><img src="/SRWHITELOGO.png" alt="Saturn Results"></picture>
         <p>A UK marketing agency helping ambitious businesses grow with strategy, web, SEO, social and AI.</p>
         <p class="footer__fine">Based at Venospace, Exeter. Working with brands across the United Kingdom.</p>
       </div>

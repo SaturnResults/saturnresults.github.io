@@ -22,6 +22,8 @@
 <meta name="twitter:title" content="Saturn Results · UK Marketing Agency">
 <meta name="twitter:description" content="We help UK businesses grow with strategy, professional design, SEO and AI. Start with a free audit.">
 <meta name="twitter:image" content="https://saturnresults.co.uk/og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -46,6 +48,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
+picture{display:contents}
 button{font:inherit;background:none;border:0;cursor:pointer;color:inherit}
 ul{list-style:none}
 body{
@@ -204,7 +207,6 @@ body{
 .collab{padding:40px 0 110px;background:var(--bg)}
 .collab .chip__dot{background:#FB7511;box-shadow:0 0 8px rgba(251,117,17,.7)}
 .collab__art{width:100%;margin-bottom:34px}
-.collab__art picture{display:block}
 .collab__art img{display:block;width:100%;height:auto;mix-blend-mode:screen}
 .collab__foot{display:grid;grid-template-columns:1fr 420px;gap:40px;align-items:start}
 .collab__foot p{font-size:16px;line-height:25px;color:var(--fg-2)}
@@ -333,7 +335,7 @@ body{
 
 <!-- NAV -->
 <nav class="nav" id="nav">
-  <a class="nav__brand" href="/"><img src="/SRWHITELOGO.png" alt=""/> SATURN</a>
+  <a class="nav__brand" href="/"><picture><source type="image/webp" srcset="/SRWHITELOGO.webp"><img src="/SRWHITELOGO.png" alt=""/></picture> SATURN</a>
   <div class="nav__links">
     <a href="#about">About</a>
     <a href="#process">How it works</a>
@@ -383,7 +385,7 @@ body{
   <div class="hero__device" data-parallax="0.14">
     <div class="device">
       <div class="device__screen">
-        <img src="/hero-device.jpg" alt="A website built by Saturn Results" loading="eager" fetchpriority="high">
+        <picture><source type="image/webp" srcset="/hero-device.webp"><img src="/hero-device.jpg" alt="A website built by Saturn Results" loading="eager" fetchpriority="high"></picture>
       </div>
     </div>
   </div>
@@ -461,7 +463,9 @@ body{
 <section class="collab">
   <div class="collab__art reveal">
     <picture>
+      <source media="(max-width:900px)" type="image/webp" srcset="/saturn-x-slate-mobile.webp" width="1800" height="1399">
       <source media="(max-width:900px)" srcset="/saturn-x-slate-mobile.jpg" width="1800" height="1399">
+      <source type="image/webp" srcset="/saturn-x-slate.webp" width="2900" height="1091">
       <img src="/saturn-x-slate.jpg" width="2900" height="1091" loading="lazy"
            alt="Saturn Results and Slate brand lockup">
     </picture>
@@ -514,7 +518,7 @@ body{
           </ul>
           <div class="deck__foot">Most builds live within a week →</div>
         </div>
-        <div class="deck__media"><img src="/deck-web.jpg" alt="Bespoke website design and development" loading="lazy"></div>
+        <div class="deck__media"><picture><source type="image/webp" srcset="/deck-web.webp"><img src="/deck-web.jpg" alt="Bespoke website design and development" loading="lazy"></picture></div>
       </article>
 
       <article class="deck deck--flip">
@@ -529,7 +533,7 @@ body{
           </ul>
           <div class="deck__foot">Included in Studio and Orbit →</div>
         </div>
-        <div class="deck__media"><img src="/deck-brand.jpg" alt="Brand identity systems" loading="lazy"></div>
+        <div class="deck__media"><picture><source type="image/webp" srcset="/deck-brand.webp"><img src="/deck-brand.jpg" alt="Brand identity systems" loading="lazy"></picture></div>
       </article>
 
       <article class="deck">
@@ -544,7 +548,7 @@ body{
           </ul>
           <div class="deck__foot">Rolling monthly engagement →</div>
         </div>
-        <div class="deck__media"><img src="/deck-seo.jpg" alt="SEO and growth" loading="lazy"></div>
+        <div class="deck__media"><picture><source type="image/webp" srcset="/deck-seo.webp"><img src="/deck-seo.jpg" alt="SEO and growth" loading="lazy"></picture></div>
       </article>
 
       <article class="deck deck--flip">
@@ -559,7 +563,7 @@ body{
           </ul>
           <div class="deck__foot">Try the assistant below →</div>
         </div>
-        <div class="deck__media"><img src="/deck-ai.jpg" alt="Social media and AI systems" loading="lazy"></div>
+        <div class="deck__media"><picture><source type="image/webp" srcset="/deck-ai.webp"><img src="/deck-ai.jpg" alt="Social media and AI systems" loading="lazy"></picture></div>
       </article>
     </div>
   </div>
@@ -581,19 +585,19 @@ body{
 
     <div class="work__grid">
       <article class="wcard reveal" data-preview="https://tonykosokophysiotherapy.com/">
-        <div class="wcard__media"><span class="wcard__n">01</span><span class="wcard__tag">Healthcare</span><img src="/tony-kosoko.jpg" alt="Tony Kosoko Physiotherapy" loading="lazy"></div>
+        <div class="wcard__media"><span class="wcard__n">01</span><span class="wcard__tag">Healthcare</span><picture><source type="image/webp" srcset="/tony-kosoko.webp"><img src="/tony-kosoko.jpg" alt="Tony Kosoko Physiotherapy" loading="lazy"></picture></div>
         <div class="wcard__body"><h3>Tony Kosoko Physio</h3><p>A calm, trusted digital home for a specialist physiotherapy practice. Clear services and a booking flow built to convert enquiries into appointments.</p>
         <div class="wcard__foot"><span class="wcard__scope">Web · Brand</span><a class="wcard__visit" href="https://tonykosokophysiotherapy.com/" target="_blank" rel="noopener">Visit<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div>
       </article>
 
       <article class="wcard reveal" data-preview="https://srmarketing.live/index.html">
-        <div class="wcard__media"><span class="wcard__n">02</span><span class="wcard__tag">Wellness</span><img src="/yk-wellness.jpg" alt="YK Wellness" loading="lazy"></div>
+        <div class="wcard__media"><span class="wcard__n">02</span><span class="wcard__tag">Wellness</span><picture><source type="image/webp" srcset="/yk-wellness.webp"><img src="/yk-wellness.jpg" alt="YK Wellness" loading="lazy"></picture></div>
         <div class="wcard__body"><h3>YK Wellness</h3><p>A premium clinic experience. Multi page service architecture, a conversion focused booking flow and a serene, trust building brand identity.</p>
         <div class="wcard__foot"><span class="wcard__scope">Brand · Web · SEO</span><a class="wcard__visit" href="https://srmarketing.live/index.html" target="_blank" rel="noopener">Visit<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div>
       </article>
 
       <article class="wcard reveal" data-preview="https://saturnresults.co.uk/raglouk-demo/">
-        <div class="wcard__media"><span class="wcard__n">03</span><span class="wcard__tag">Apparel</span><img src="/raglo-uk.jpg" alt="Raglo UK" loading="lazy"></div>
+        <div class="wcard__media"><span class="wcard__n">03</span><span class="wcard__tag">Apparel</span><picture><source type="image/webp" srcset="/raglo-uk.webp"><img src="/raglo-uk.jpg" alt="Raglo UK" loading="lazy"></picture></div>
         <div class="wcard__body"><h3>Raglo UK</h3><p>A confident, modern brand presence built for an ambitious UK label. Editorial product layouts and a buying experience that feels effortless.</p>
         <div class="wcard__foot"><span class="wcard__scope">Web · Brand</span><a class="wcard__visit" href="https://saturnresults.co.uk/raglouk-demo/" target="_blank" rel="noopener">Visit<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div>
       </article>
@@ -605,31 +609,31 @@ body{
       </article>
 
       <article class="wcard reveal" data-preview="https://saturnresults.co.uk/utopia-worldwide/">
-        <div class="wcard__media"><span class="wcard__n">05</span><span class="wcard__tag">Lifestyle</span><img src="/utopia-worldwide.png" alt="Utopia Worldwide" loading="lazy"></div>
+        <div class="wcard__media"><span class="wcard__n">05</span><span class="wcard__tag">Lifestyle</span><picture><source type="image/webp" srcset="/utopia-worldwide.webp"><img src="/utopia-worldwide.png" alt="Utopia Worldwide" loading="lazy"></picture></div>
         <div class="wcard__body"><h3>Utopia Worldwide</h3><p>A bold, future facing brand site for a worldwide lifestyle label. Editorial typography, immersive imagery and a story driven flow.</p>
         <div class="wcard__foot"><span class="wcard__scope">Web · Brand</span><a class="wcard__visit" href="https://saturnresults.co.uk/utopia-worldwide/" target="_blank" rel="noopener">Visit<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div>
       </article>
 
       <article class="wcard reveal" data-preview="https://longisbay.com/">
-        <div class="wcard__media"><span class="wcard__n">06</span><span class="wcard__tag">Garden</span><img src="/longis-bay.png" alt="Longis Bay" loading="lazy"></div>
+        <div class="wcard__media"><span class="wcard__n">06</span><span class="wcard__tag">Garden</span><picture><source type="image/webp" srcset="/longis-bay.webp"><img src="/longis-bay.png" alt="Longis Bay" loading="lazy"></picture></div>
         <div class="wcard__body"><h3>Longis Bay</h3><p>A grounded, beautifully shot site for a garden business. Plant catalogue, services and enquiries packaged in a calm, nature led layout.</p>
         <div class="wcard__foot"><span class="wcard__scope">Web · Brand</span><a class="wcard__visit" href="https://longisbay.com/" target="_blank" rel="noopener">Visit<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div>
       </article>
 
       <article class="wcard reveal" data-preview="https://srdemo.site/">
-        <div class="wcard__media"><span class="wcard__n">07</span><span class="wcard__tag">Cafe</span><img src="/coasters-cafe.png" alt="Coasters Cafe" loading="lazy"></div>
+        <div class="wcard__media"><span class="wcard__n">07</span><span class="wcard__tag">Cafe</span><picture><source type="image/webp" srcset="/coasters-cafe.webp"><img src="/coasters-cafe.png" alt="Coasters Cafe" loading="lazy"></picture></div>
         <div class="wcard__body"><h3>Coasters Cafe</h3><p>A warm, appetising site for a local cafe. Menu, opening hours and atmosphere wrapped in a layout that pulls people through the door.</p>
         <div class="wcard__foot"><span class="wcard__scope">Web · Brand</span><a class="wcard__visit" href="https://srdemo.site/" target="_blank" rel="noopener">Visit<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div>
       </article>
 
       <article class="wcard reveal" data-preview="https://saturnresults.co.uk/H-BARBERS/">
-        <div class="wcard__media"><span class="wcard__n">08</span><span class="wcard__tag">Services</span><img src="/h-barbers.jpg" alt="H Barbers" loading="lazy"></div>
+        <div class="wcard__media"><span class="wcard__n">08</span><span class="wcard__tag">Services</span><picture><source type="image/webp" srcset="/h-barbers.webp"><img src="/h-barbers.jpg" alt="H Barbers" loading="lazy"></picture></div>
         <div class="wcard__body"><h3>H Barbers</h3><p>A bold, modern site for a sharp local barbershop. Slick booking, atmospheric photography and a presence that matches the chair side experience.</p>
         <div class="wcard__foot"><span class="wcard__scope">Web · Booking</span><a class="wcard__visit" href="https://saturnresults.co.uk/H-BARBERS/" target="_blank" rel="noopener">Visit<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div>
       </article>
 
       <article class="wcard reveal" data-preview="https://saturnresults.co.uk/RICHARD-DALE/">
-        <div class="wcard__media"><span class="wcard__n">09</span><span class="wcard__tag">Hospitality</span><img src="/richard-dale.jpg" alt="Richard Dale" loading="lazy"></div>
+        <div class="wcard__media"><span class="wcard__n">09</span><span class="wcard__tag">Hospitality</span><picture><source type="image/webp" srcset="/richard-dale.webp"><img src="/richard-dale.jpg" alt="Richard Dale" loading="lazy"></picture></div>
         <div class="wcard__body"><h3>Richard Dale</h3><p>A polished local presence built around clean typography and strong imagery. Designed to convert browsers into bookings and showcase the craft.</p>
         <div class="wcard__foot"><span class="wcard__scope">Web · Brand</span><a class="wcard__visit" href="https://saturnresults.co.uk/RICHARD-DALE/" target="_blank" rel="noopener">Visit<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a></div></div>
       </article>
@@ -787,7 +791,7 @@ body{
   <div class="container container--wide">
     <div class="footer__grid">
       <div class="footer__brand">
-        <img src="/SRWHITELOGO.png" alt="Saturn Results">
+        <picture><source type="image/webp" srcset="/SRWHITELOGO.webp"><img src="/SRWHITELOGO.png" alt="Saturn Results"></picture>
         <p>A UK marketing agency helping ambitious businesses grow with strategy, web, SEO, social and AI.</p>
         <p class="footer__fine">Based at Venospace, Exeter. Working with brands across the United Kingdom.</p>
       </div>
