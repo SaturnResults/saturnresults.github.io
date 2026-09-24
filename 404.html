@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Page not found · Saturn Results</title>
+<meta name="description" content="That page is not here. Head back to the homepage, or pick up where you meant to go."/>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#050506">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="256x256">
+<link rel="apple-touch-icon" href="/favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050506;--bg-2:#0b0c0e;
+  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+  --fg:#f4f5f7;--fg-2:rgba(244,245,247,.64);--fg-3:rgba(244,245,247,.40);--fg-4:rgba(244,245,247,.24);
+  --accent:#a78bfa;--accent-deep:#5b21b6;
+  --sans:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Roboto Mono',ui-monospace,monospace;
+  --wide:1265px;--nav-h:60px;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+picture{display:contents}
+ul{list-style:none}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:clip;
+  min-height:100vh;display:flex;flex-direction:column}
+::selection{background:var(--accent);color:#0a0a0b}
+.container{width:100%;max-width:var(--wide);margin:0 auto;padding:0 24px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(20px,6vw,180px);background:linear-gradient(180deg,rgba(5,5,6,.75),rgba(5,5,6,0))}
+.nav__brand{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:16px;letter-spacing:.06em}
+.nav__brand img{width:auto;height:26px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(167,139,250,.55))}
+.nav__cta{display:inline-flex;align-items:center;height:38px;padding:0 18px;border-radius:999px;background:rgba(255,255,255,.12);font-size:14px;font-weight:500;transition:background .25s}
+.nav__cta:hover{background:rgba(255,255,255,.2)}
+
+/* stage */
+.lost{flex:1;display:flex;align-items:center;padding:150px 0 110px;
+  background:radial-gradient(120% 70% at 50% 0,#171226 0%,var(--bg) 62%)}
+@media(max-width:900px){.lost{padding:110px 0 70px}}
+.lost__inner{max-width:680px}
+
+.code{display:inline-flex;align-items:center;gap:14px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-3)}
+.code i{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px rgba(167,139,250,.8);flex:none}
+
+h1{font-size:clamp(38px,7vw,74px);line-height:1.02;letter-spacing:-.045em;font-weight:400;margin-top:20px}
+h1 em{font-style:normal;color:var(--accent)}
+.lost p{margin-top:20px;font-size:16px;line-height:25px;color:var(--fg-2);max-width:46ch}
+
+.links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:20px;overflow:clip;margin-top:44px;max-width:620px}
+@media(max-width:620px){.links{grid-template-columns:1fr}}
+.links a{background:var(--bg-2);padding:20px 22px;transition:background .25s}
+.links a:hover{background:#14161a}
+.links b{display:block;font-size:15px;font-weight:500;letter-spacing:-.015em}
+.links span{display:block;margin-top:5px;font-size:13px;line-height:19px;color:var(--fg-3)}
+.links a:hover b{color:var(--accent)}
+
+.foot{padding:0 0 46px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-4)}
+.foot a{color:var(--fg-3)}
+.foot a:hover{color:var(--fg-2)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav__brand" href="/"><picture><source type="image/webp" srcset="/SRWHITELOGO.webp"><img src="/SRWHITELOGO.png" alt=""/></picture> SATURN</a>
+  <a class="nav__cta" href="/">Back to site</a>
+</nav>
+
+<main class="lost">
+  <div class="container">
+    <div class="lost__inner">
+      <span class="code"><i></i>Error 404</span>
+      <h1>This page is <em>not here.</em></h1>
+      <p>Either it moved, or the link that sent you was wrong. Nothing is broken on your end. Here is where most people are heading.</p>
+
+      <div class="links">
+        <a href="/">
+          <b>Homepage</b>
+          <span>What we do, how it works, and the work itself</span>
+        </a>
+        <a href="/slate/">
+          <b>Slate</b>
+          <span>Our booking system for clinics and wellness businesses</span>
+        </a>
+        <a href="/contact/">
+          <b>Free audit</b>
+          <span>We look at your site, search and social, and tell you straight</span>
+        </a>
+        <a href="/portal/">
+          <b>Client portal</b>
+          <span>Already working with us? Sign in here</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="foot">
+  <div class="container">
+    Still stuck? <a href="mailto:contact@saturnresults.com">contact@saturnresults.com</a>
+  </div>
+</div>
+
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "546ee579b0c540e2ad0546f6efb0b90b"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
