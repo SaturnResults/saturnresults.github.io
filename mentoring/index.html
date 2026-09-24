@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mentoring · Saturn Results</title>
+<meta name="description" content="A small mentoring group for marketing students in Exeter. Two group calls a week, the templates and tools we use on live client work, and one goal: land your first paying client. £50 a month, ten places."/>
+<meta name="theme-color" content="#050506">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="256x256">
+<link rel="apple-touch-icon" href="/favicon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://saturnresults.co.uk/mentoring/">
+<meta property="og:site_name" content="Saturn Results">
+<meta property="og:title" content="Learn to land your first client · Saturn Results Mentoring">
+<meta property="og:description" content="Two group calls a week, the templates and tools we use on real client work, and one goal: your first paying client. £50 a month. Ten places.">
+<meta property="og:image" content="https://saturnresults.co.uk/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="681">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Learn to land your first client · Saturn Results Mentoring">
+<meta name="twitter:description" content="Two group calls a week with a working agency. Ten places, £50 a month, cancel any time.">
+<meta name="twitter:image" content="https://saturnresults.co.uk/og-image.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050506;--bg-2:#0b0c0e;--bg-3:#121316;
+  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+  --fg:#f4f5f7;--fg-2:rgba(244,245,247,.64);--fg-3:rgba(244,245,247,.40);--fg-4:rgba(244,245,247,.24);
+  --accent:#a78bfa;--accent-deep:#5b21b6;
+  --sans:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Roboto Mono',ui-monospace,monospace;
+  --container:1080px;--wide:1265px;--nav-h:60px;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+picture{display:contents}
+button{font:inherit;background:none;border:0;cursor:pointer;color:inherit}
+ul{list-style:none}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:clip}
+@media(max-width:768px){html,body{overflow-y:auto!important;height:auto!important;position:static!important;touch-action:pan-y!important}}
+::selection{background:var(--accent);color:#0a0a0b}
+.container{width:100%;max-width:var(--wide);margin:0 auto;padding:0 24px}
+.narrow{max-width:var(--container);margin:0 auto}
+
+.chip{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 14px 0 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);font-size:12px;color:var(--fg-2)}
+.chip__dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(167,139,250,.7);flex:none}
+.h2{font-size:40px;line-height:50px;letter-spacing:-.04em;font-weight:500;margin-top:18px}
+.h2__a,.h2__b{display:block}
+.h2__b{color:var(--fg-3)}
+@media(max-width:700px){.h2{font-size:28px;line-height:36px}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:48px;padding:0 30px;border-radius:999px;font-size:14px;font-weight:500;letter-spacing:-.01em;transition:transform .3s var(--ease),background .3s,box-shadow .3s;white-space:nowrap;border:0;cursor:pointer;font-family:inherit}
+.btn svg{width:14px;height:14px}
+.btn--light{background:rgba(255,255,255,.88);color:#0a0a0b}
+.btn--light:hover{background:#fff;transform:translateY(-1px);box-shadow:0 0 0 1px rgba(255,255,255,.2),0 10px 30px -10px rgba(167,139,250,.6)}
+.btn--light:disabled{opacity:.6;cursor:default;transform:none;box-shadow:none}
+.btn--ghost{background:rgba(255,255,255,.06);color:var(--fg);border:1px solid var(--line-2)}
+.btn--ghost:hover{background:rgba(255,255,255,.1)}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;height:var(--nav-h);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 clamp(20px,6vw,180px);background:linear-gradient(180deg,rgba(5,5,6,.75),rgba(5,5,6,0));transition:background .4s,transform .45s var(--ease)}
+.nav.is-scrolled{background:rgba(5,5,6,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav.is-hidden{transform:translateY(-100%)}
+.nav__brand{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:16px;letter-spacing:.06em}
+.nav__brand img{width:auto;height:26px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(167,139,250,.55))}
+.nav__links{display:flex;gap:8px;justify-self:center}
+.nav__links a{font-size:14px;color:var(--fg-2);padding:8px 14px;border-radius:999px;transition:color .2s,background .2s}
+.nav__links a:hover{color:var(--fg);background:rgba(255,255,255,.06)}
+.nav__right{display:flex;align-items:center;gap:16px;justify-self:end}
+.nav__cta{display:inline-flex;align-items:center;height:38px;padding:0 18px;border-radius:999px;background:rgba(255,255,255,.12);font-size:14px;font-weight:500;transition:background .25s}
+.nav__cta:hover{background:rgba(255,255,255,.2)}
+@media(max-width:1024px){.nav{grid-template-columns:1fr auto}.nav__links{display:none}}
+
+/* hero */
+.page{position:relative;padding:126px 0 0;background:radial-gradient(120% 60% at 50% 0,#171226 0%,var(--bg) 62%)}
+@media(max-width:900px){.page{padding:92px 0 0}}
+.page__head{max-width:720px}
+.page__head h1{font-size:clamp(34px,5vw,62px);line-height:1.04;letter-spacing:-.04em;font-weight:400;margin-top:18px}
+.page__head h1 em{font-style:normal;color:var(--accent)}
+.page__head p{margin-top:18px;font-size:16px;line-height:25px;color:var(--fg-2);max-width:54ch}
+@media(max-width:900px){.page__head p{font-size:15px;line-height:23px}}
+.hero__cta{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.terms{display:flex;gap:10px 26px;margin-top:30px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap;max-width:720px}
+.terms div{font-size:13px;color:var(--fg-2);display:flex;align-items:center;gap:8px}
+.terms b{color:var(--fg);font-weight:500}
+.terms i{width:5px;height:5px;border-radius:50%;background:var(--accent);flex:none;opacity:.8}
+
+/* sections */
+.sec{padding:110px 0}
+@media(max-width:900px){.sec{padding:74px 0}}
+.sec__head{max-width:660px}
+.lede{margin-top:22px;font-size:16px;line-height:26px;color:var(--fg-2);max-width:60ch}
+.lede + .lede{margin-top:16px}
+.lede b{color:var(--fg);font-weight:500}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:44px}
+@media(max-width:860px){.cards{grid-template-columns:1fr;gap:12px}}
+.card{border-radius:24px;border:1px solid var(--line);background:var(--bg-2);padding:30px 28px 28px;transition:border-color .35s,transform .5s var(--ease)}
+.card:hover{border-color:var(--line-2);transform:translateY(-3px)}
+.card__ico{width:38px;height:38px;border-radius:12px;background:rgba(167,139,250,.13);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.card__ico svg{width:17px;height:17px;color:var(--accent)}
+.card h3{font-size:19px;font-weight:500;letter-spacing:-.02em}
+.card p{margin-top:10px;font-size:14px;line-height:22px;color:var(--fg-2)}
+
+/* steps */
+.steps{margin-top:44px;border-top:1px solid var(--line)}
+.step{display:grid;grid-template-columns:86px 1fr;gap:24px;padding:30px 0;border-bottom:1px solid var(--line);align-items:start}
+@media(max-width:700px){.step{grid-template-columns:1fr;gap:10px;padding:24px 0}}
+.step__n{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--accent);padding-top:5px}
+.step h3{font-size:20px;font-weight:500;letter-spacing:-.02em}
+.step p{margin-top:9px;font-size:14px;line-height:23px;color:var(--fg-2);max-width:62ch}
+
+/* two columns */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:44px}
+@media(max-width:860px){.cols{grid-template-columns:1fr;gap:12px}}
+.col{border-radius:24px;border:1px solid var(--line);background:var(--bg-2);padding:30px 28px}
+.col--no{background:transparent}
+.col h3{font-size:16px;font-weight:500;display:flex;align-items:center;gap:10px}
+.col h3 span{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.col--yes h3 span{background:rgba(167,139,250,.16)}
+.col--no h3 span{background:rgba(255,255,255,.06)}
+.col h3 svg{width:11px;height:11px}
+.col--yes h3 svg{color:var(--accent)}
+.col--no h3 svg{color:var(--fg-3)}
+.col ul{margin-top:20px;display:flex;flex-direction:column}
+.col li{padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:21px;color:var(--fg-2)}
+.col li:last-child{border-bottom:0;padding-bottom:0}
+.col--no li{color:var(--fg-3)}
+
+/* price */
+.price{border-radius:28px;border:1px solid var(--line);background:var(--bg-2);box-shadow:0 0 0 6px rgba(255,255,255,.02),0 50px 100px -50px rgba(0,0,0,.9);padding:44px 42px;margin-top:44px;display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+@media(max-width:860px){.price{grid-template-columns:1fr;gap:30px;padding:30px 24px;border-radius:22px}}
+.price__fig{display:flex;align-items:baseline;gap:8px;margin-top:20px}
+.price__fig b{font-size:58px;font-weight:400;letter-spacing:-.04em;line-height:1}
+.price__fig span{font-size:14px;color:var(--fg-3)}
+.price__note{margin-top:16px;font-size:14px;line-height:22px;color:var(--fg-2);max-width:38ch}
+.price ul li{display:flex;gap:11px;align-items:flex-start;padding:10px 0;font-size:14px;line-height:21px;color:var(--fg-2);border-bottom:1px solid var(--line)}
+.price ul li:last-child{border-bottom:0}
+.price ul svg{width:13px;height:13px;color:var(--accent);flex:none;margin-top:4px}
+
+/* places */
+.places{display:inline-flex;align-items:center;gap:12px;margin-top:26px;padding:11px 18px;border-radius:999px;border:1px solid rgba(167,139,250,.28);background:rgba(167,139,250,.08);font-size:13px;color:var(--fg)}
+.places b{color:var(--accent);font-weight:500;font-family:var(--mono);font-size:12px;letter-spacing:.06em}
+.dots{display:flex;gap:4px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--accent);opacity:.9}
+.dots i.is-gone{background:rgba(255,255,255,.16)}
+
+/* faq */
+.faq{margin-top:44px;border-top:1px solid var(--line)}
+details{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;padding:24px 44px 24px 0;font-size:17px;font-weight:500;letter-spacing:-.01em;position:relative;transition:color .25s}
+summary::-webkit-details-marker{display:none}
+summary:hover{color:var(--accent)}
+summary::after{content:'';position:absolute;right:8px;top:31px;width:9px;height:9px;border-right:1.5px solid var(--fg-3);border-bottom:1.5px solid var(--fg-3);transform:rotate(45deg);transition:transform .3s var(--ease)}
+details[open] summary::after{transform:rotate(-135deg)}
+details p{padding:0 40px 26px 0;font-size:14px;line-height:23px;color:var(--fg-2);max-width:70ch;margin-top:-4px}
+
+/* form */
+.applied{padding:110px 0 100px;background:radial-gradient(90% 60% at 50% 100%,#14101f 0%,var(--bg) 60%)}
+@media(max-width:900px){.applied{padding:74px 0 70px}}
+.shell{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:start;margin-top:40px}
+@media(max-width:1000px){.shell{grid-template-columns:1fr;gap:16px}}
+.panel{border-radius:28px;border:1px solid var(--line);background:#0b0c0e;box-shadow:0 0 0 6px rgba(255,255,255,.02),0 50px 100px -50px rgba(0,0,0,.9);padding:38px 36px 32px}
+@media(max-width:600px){.panel{padding:26px 20px 24px;border-radius:22px}}
+.panel__label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2);padding-bottom:18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.panel__label b{color:var(--accent);font-weight:500}
+form{display:grid;gap:14px;margin-top:26px}
+.row{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+@media(max-width:600px){.row{grid-template-columns:1fr}}
+.field{position:relative}
+.field label{position:absolute;top:17px;left:17px;font-size:13px;color:var(--fg-3);pointer-events:none;transition:all .22s var(--ease)}
+.field input,.field select,.field textarea{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:23px 17px 9px;font-family:inherit;font-size:15px;color:var(--fg);outline:none;transition:border-color .22s,background .22s}
+.field textarea{resize:none;min-height:108px;padding-top:28px}
+.field select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a78bfa' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 17px center}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:rgba(167,139,250,.55);background:rgba(167,139,250,.05)}
+.field input:focus+label,.field textarea:focus+label,.field select:focus+label,
+.field input:not(:placeholder-shown)+label,.field textarea:not(:placeholder-shown)+label,
+.field select.has-value+label{top:8px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+form .btn{margin-top:6px;width:100%}
+.fine{margin-top:14px;font-size:12px;line-height:18px;color:var(--fg-4)}
+.err{display:none;margin-top:12px;font-size:13px;color:#fca5a5}
+.err.show{display:block}
+.ok{display:none;margin-top:14px;padding:16px 18px;border-radius:14px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);font-size:14px;line-height:21px;color:var(--accent)}
+.ok.show{display:block}
+
+/* mentor card */
+.side{display:flex;flex-direction:column;gap:16px}
+.mentor{display:flex;gap:18px;align-items:center}
+.mentor__ph{width:78px;height:78px;border-radius:18px;overflow:clip;border:1px solid var(--line);background:var(--bg-3);flex:none}
+.mentor__ph img{width:100%;height:100%;object-fit:cover}
+.mentor h3{font-size:18px;font-weight:500;letter-spacing:-.02em}
+.mentor span{display:block;margin-top:4px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
+.mentor__q{margin-top:22px;padding-top:20px;border-top:1px solid var(--line);font-size:14px;line-height:23px;color:var(--fg-2)}
+
+/* footer */
+.footer{background:var(--bg);padding:70px 0 40px;border-top:1px solid var(--line)}
+.footer__grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+@media(max-width:820px){.footer__grid{grid-template-columns:1fr 1fr}.footer__brand{grid-column:1/-1}}
+.footer__brand img{width:auto;height:28px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(167,139,250,.5))}
+.footer__brand p{margin-top:20px;font-size:14px;color:var(--fg-2);max-width:32ch}
+.footer__col{display:flex;flex-direction:column;gap:14px}
+.footer__col h5{font-size:15px;font-weight:500;margin-bottom:8px}
+.footer__col a{font-size:15px;color:var(--fg-2)}
+.footer__col a:hover{color:var(--fg)}
+.footer__bottom{margin-top:56px;padding-top:30px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--fg-2)}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.is-in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a class="nav__brand" href="/"><picture><source type="image/webp" srcset="/SRWHITELOGO.webp"><img src="/SRWHITELOGO.png" alt=""/></picture> SATURN</a>
+  <div class="nav__links">
+    <a href="#why">Why</a>
+    <a href="#included">What you get</a>
+    <a href="#weeks">How it runs</a>
+    <a href="#price">Price</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <div class="nav__right">
+    <a class="nav__cta" href="#apply">Apply</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page">
+  <div class="container">
+    <div class="page__head">
+      <span class="chip"><span class="chip__dot"></span>Mentoring · Ten places</span>
+      <h1>Learn to land your <em>first client.</em></h1>
+      <p>A small group for marketing students who would rather run a real campaign than write another essay about one. Two calls a week with a working agency, the templates and tools we use on live client work, and one goal to aim at.</p>
+      <div class="hero__cta">
+        <a class="btn btn--light" href="#apply">
+          <span>Apply for a place</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a class="btn btn--ghost" href="#included">See what you get</a>
+      </div>
+      <div class="terms">
+        <div><i></i><b>£50</b> a month</div>
+        <div><i></i><b>2</b> group calls a week</div>
+        <div><i></i>Cancel <b>any time</b></div>
+        <div><i></i><b>10</b> places, then it closes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="sec" id="why">
+  <div class="container narrow">
+    <div class="sec__head">
+      <span class="chip"><span class="chip__dot"></span>Why this exists</span>
+      <h2 class="h2">
+        <span class="h2__a">A degree teaches you marketing.</span>
+        <span class="h2__b">It does not teach you to get paid for it.</span>
+      </h2>
+      <p class="lede">We built Saturn Results in Exeter the slow way, by getting things wrong in front of real businesses with real money on the line. The parts that actually decide whether you make a living from this are not on any syllabus. <b>What to charge. How to open a cold conversation. What to say when a client goes quiet for a week.</b></p>
+      <p class="lede">So this is not a course. There are no modules, no certificate and nothing to print out at the end. It is two calls a week with people who are doing the work right now, the same templates and software we use on client accounts, and a group small enough that nobody gets lost in it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section class="sec" id="included" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="container narrow">
+    <div class="sec__head">
+      <span class="chip"><span class="chip__dot"></span>What you get</span>
+      <h2 class="h2">
+        <span class="h2__a">Everything we would want</span>
+        <span class="h2__b">to have had at your stage.</span>
+      </h2>
+    </div>
+    <div class="cards">
+
+      <div class="card reveal">
+        <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14"/><rect x="3" y="6" width="12" height="12" rx="2"/></svg></div>
+        <h3>Two group calls a week</h3>
+        <p>Live, every week, with the people running the agency. Ten on the call at most, so there is no waiting your turn and nowhere to hide. Come with a question and you will leave with an answer.</p>
+      </div>
+
+      <div class="card reveal">
+        <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 9v11"/></svg></div>
+        <h3>The templates we actually use</h3>
+        <p>Outreach emails, pitch structures, audit frameworks, proposals and follow up scripts. Not tidied up examples written for a class, the real wording that has won Saturn Results work.</p>
+      </div>
+
+      <div class="card reveal">
+        <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <h3>Access to the software</h3>
+        <p>The paid tools we run client campaigns on. Do proper keyword research, read ad data and build sites without paying for a stack no student can justify.</p>
+      </div>
+
+      <div class="card reveal">
+        <div class="card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <h3>A line to us between calls</h3>
+        <p>About to send a pitch and want someone to read it first? Send it. Questions between calls get answered, which is usually the difference between doing the thing and putting it off.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT RUNS -->
+<section class="sec" id="weeks">
+  <div class="container narrow">
+    <div class="sec__head">
+      <span class="chip"><span class="chip__dot"></span>How it runs</span>
+      <h2 class="h2">
+        <span class="h2__a">One call to learn it.</span>
+        <span class="h2__b">One call to check your work.</span>
+      </h2>
+    </div>
+    <div class="steps">
+
+      <div class="step reveal">
+        <div class="step__n">CALL 01</div>
+        <div>
+          <h3>We take one thing and go deep</h3>
+          <p>Google Ads structure. A local SEO audit from scratch. How to price a website without guessing. How to run a first call with a business owner and not freeze. One topic a week, taught properly, always something you can use within days.</p>
+        </div>
+      </div>
+
+      <div class="step reveal">
+        <div class="step__n">CALL 02</div>
+        <div>
+          <h3>You bring what you have done</h3>
+          <p>Your outreach, your pitch, the site you are halfway through, the client who has not replied. We go through it together in front of the group, because watching someone else get their work pulled apart is where most of the learning happens. This is the call that moves people.</p>
+        </div>
+      </div>
+
+      <div class="step reveal">
+        <div class="step__n">IN BETWEEN</div>
+        <div>
+          <h3>You do the work</h3>
+          <p>None of this works if you only show up and listen. Expect a few hours a week actually sending emails, building things and getting told no. The people who land a client are always the ones who did the unglamorous part, every single time.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FIT -->
+<section class="sec" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="container narrow">
+    <div class="sec__head">
+      <span class="chip"><span class="chip__dot"></span>Honest fit</span>
+      <h2 class="h2">
+        <span class="h2__a">Ten places is not many.</span>
+        <span class="h2__b">Worth checking it is for you.</span>
+      </h2>
+    </div>
+    <div class="cols">
+
+      <div class="col col--yes reveal">
+        <h3><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>This is for you if</h3>
+        <ul>
+          <li>You are studying marketing, or you want to work in it whatever you are studying</li>
+          <li>You would rather have a portfolio of real work than another line on a CV</li>
+          <li>You can give it a few hours a week on top of your degree</li>
+          <li>You want to freelance on the side, or walk into an agency interview with something to show</li>
+          <li>You are fine being told your pitch is not good enough yet</li>
+        </ul>
+      </div>
+
+      <div class="col col--no reveal">
+        <h3><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12"/></svg></span>It is not for you if</h3>
+        <ul>
+          <li>You want a certificate to put on LinkedIn</li>
+          <li>You are after passive income and would rather skip the awkward part</li>
+          <li>You cannot make the calls most weeks</li>
+          <li>You want a guaranteed job at the end of it</li>
+          <li>You want someone to do the work for you</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRICE -->
+<section class="sec" id="price">
+  <div class="container narrow">
+    <div class="sec__head">
+      <span class="chip"><span class="chip__dot"></span>The price</span>
+      <h2 class="h2">
+        <span class="h2__a">Fifty pounds a month.</span>
+        <span class="h2__b">Leave whenever you want.</span>
+      </h2>
+    </div>
+
+    <div class="price reveal">
+      <div>
+        <div class="price__fig"><b>£50</b><span>per month</span></div>
+        <p class="price__note">Roughly one night out. Monthly, so there is no contract, no notice period and no awkward conversation if you want to stop.</p>
+        <div class="places">
+          <span class="dots" id="dots" aria-hidden="true"></span>
+          <span><b id="placesLeft">10 of 10</b> places open</span>
+        </div>
+        <a class="btn btn--light" href="#apply" style="margin-top:26px">
+          <span>Apply for a place</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Two live group calls every week</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Our outreach emails, pitch decks and proposal templates</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Access to the software we run client work on</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Your work reviewed in front of the group</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Questions answered between calls</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>A group capped at ten, permanently</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" id="faq" style="background:var(--bg-2);border-top:1px solid var(--line)">
+  <div class="container narrow">
+    <div class="sec__head">
+      <span class="chip"><span class="chip__dot"></span>Questions</span>
+      <h2 class="h2">
+        <span class="h2__a">The things worth asking</span>
+        <span class="h2__b">before you hand over £50.</span>
+      </h2>
+    </div>
+
+    <div class="faq">
+      <details>
+        <summary>Do I need any experience?</summary>
+        <p>No. Most people will join with none at all, and the first few weeks assume that. If you have already run a campaign or built a site you will simply move faster through the early stuff.</p>
+      </details>
+      <details>
+        <summary>I am already doing a marketing degree. Why would I need this?</summary>
+        <p>Your degree will give you frameworks, theory and a way of thinking, and that genuinely matters. What it will not give you is a price to quote, a script for a cold conversation or any idea what to do when a client stops replying. That gap is the whole reason this exists.</p>
+      </details>
+      <details>
+        <summary>Is there a job at the end of it?</summary>
+        <p>No, and we are not going to pretend otherwise to get you to sign up. What we will say is that when Saturn Results has freelance work going spare, the people in this group who have shown up and done the work are the first ones we ask. That is the honest version.</p>
+      </details>
+      <details>
+        <summary>What happens if I miss a call?</summary>
+        <p>Let us know beforehand. There are two a week, so missing one occasionally is not a problem. Missing most of them is, and if that becomes the pattern we would rather pass the place to someone waiting for it.</p>
+      </details>
+      <details>
+        <summary>Can I cancel?</summary>
+        <p>Any time you like. It is a monthly payment rather than a contract, so you stop when you want to stop. Your place then goes to the next person on the list.</p>
+      </details>
+      <details>
+        <summary>When does it start?</summary>
+        <p>As soon as the ten places are filled. Apply and we will tell you exactly how many are left and when the first call is likely to run.</p>
+      </details>
+      <details>
+        <summary>Do I have to be in Exeter?</summary>
+        <p>The calls are online, so no. Saturn Results is Exeter based and most of the group will come from there, but if you can make the calls it does not matter where you are.</p>
+      </details>
+      <details>
+        <summary>Why only ten people?</summary>
+        <p>Because eleven would already be too many. Past ten, calls stop being a conversation and turn into a webinar, nobody gets their work looked at properly, and the whole thing quietly stops being worth £50.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- APPLY -->
+<section class="applied" id="apply">
+  <div class="container narrow">
+    <div class="sec__head">
+      <span class="chip"><span class="chip__dot"></span>Apply</span>
+      <h2 class="h2">
+        <span class="h2__a">Tell us a bit about you.</span>
+        <span class="h2__b">Two minutes, then we will be in touch.</span>
+      </h2>
+    </div>
+
+    <div class="shell">
+
+      <div class="panel reveal">
+        <div class="panel__label"><span>Application</span><b>Ten places</b></div>
+
+        <form id="applyForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+          <input type="hidden" name="access_key" value="ac6bd08f-23c7-4311-abe6-b49c47fe5f20">
+          <input type="hidden" name="subject" value="New mentoring application — Saturn Results">
+          <input type="hidden" name="from_name" value="Saturn Results Mentoring · saturnresults.co.uk">
+          <input type="hidden" name="redirect" value="https://saturnresults.co.uk/mentoring/?sent=1">
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+          <div class="row">
+            <div class="field"><input type="text" id="name" name="name" placeholder=" " required autocomplete="name"/><label for="name">Your name</label></div>
+            <div class="field"><input type="email" id="email" name="email" placeholder=" " required autocomplete="email"/><label for="email">Email address</label></div>
+          </div>
+
+          <div class="row">
+            <div class="field"><input type="text" id="university" name="university" placeholder=" " autocomplete="organization"/><label for="university">University</label></div>
+            <div class="field"><input type="text" id="course" name="course" placeholder=" "/><label for="course">Course</label></div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <select id="year" name="year" required>
+                <option value="" disabled selected hidden></option>
+                <option>First year</option>
+                <option>Second year</option>
+                <option>Third year</option>
+                <option>Masters</option>
+                <option>Recently graduated</option>
+                <option>Not at university</option>
+              </select>
+              <label for="year">Year of study</label>
+            </div>
+            <div class="field">
+              <select id="experience" name="experience" required>
+                <option value="" disabled selected hidden></option>
+                <option>None at all</option>
+                <option>Coursework only</option>
+                <option>A bit of freelance or a side project</option>
+                <option>A placement or internship</option>
+                <option>I already have clients</option>
+              </select>
+              <label for="experience">Experience so far</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <textarea id="why" name="why" placeholder=" " rows="3" required></textarea>
+            <label for="why">Why do you want one of the ten places?</label>
+          </div>
+
+          <div class="field">
+            <textarea id="goal" name="goal" placeholder=" " rows="2"></textarea>
+            <label for="goal">Where would you like to be in a year? (optional)</label>
+          </div>
+
+          <button type="submit" class="btn btn--light">
+            <span>Send my application</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+          <div class="fine">No payment now. We read every application and reply either way, usually within a couple of days. We never share your details.</div>
+          <div class="err" id="err"></div>
+          <div class="ok" id="ok">✦ Application received. We will read it properly and come back to you within a couple of days, either way.</div>
+        </form>
+      </div>
+
+      <div class="side">
+        <div class="panel reveal">
+          <div class="panel__label"><span>Who you will be learning from</span><b>Saturn Results</b></div>
+          <div class="mentor" style="margin-top:26px">
+            <div class="mentor__ph"><img src="/harry-sm.webp" width="240" height="240" alt="Harry Bingham" loading="lazy"></div>
+            <div>
+              <h3>Harry Bingham</h3>
+              <span>Co Founder</span>
+            </div>
+          </div>
+          <p class="mentor__q">Saturn Results is a marketing agency in Exeter. We build websites, run Google and Meta ads, do SEO and manage social for businesses around the South West. Everything taught on these calls is something we are doing for a paying client that same week.</p>
+          <p class="mentor__q">If you want to see the standard of the work first, the <a href="/#work" style="color:var(--accent)">client projects are here</a>.</p>
+        </div>
+
+        <div class="panel reveal">
+          <div class="panel__label"><span>Still deciding</span><b>Fair enough</b></div>
+          <p class="mentor__q" style="border-top:0;padding-top:22px;margin-top:0">Email <a href="mailto:contact@saturnresults.com" style="color:var(--accent)">contact@saturnresults.com</a> with any question at all and you will get a straight answer, even if the answer is that this is not right for you.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <picture><source type="image/webp" srcset="/SRWHITELOGO.webp"><img src="/SRWHITELOGO.png" alt="Saturn Results"></picture>
+        <p>A UK marketing agency helping ambitious businesses grow with strategy, web, SEO, social and AI.</p>
+      </div>
+      <div class="footer__col"><h5>Agency</h5><a href="/#about">About</a><a href="/#process">How it works</a><a href="/#work">Work</a><a href="/#pricing">Pricing</a></div>
+      <div class="footer__col"><h5>Students</h5><a href="#included">What you get</a><a href="#price">Price</a><a href="#faq">FAQ</a><a href="#apply">Apply</a></div>
+      <div class="footer__col"><h5>Connect</h5><a href="mailto:contact@saturnresults.com">Email us</a><a href="/contact/">Free audit</a><a href="/portal/">Client portal</a></div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Saturn Results. All rights reserved.</span>
+      <span>contact@saturnresults.com</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------------------------------------------------------------
+   PLACES TAKEN — edit this one number as people join.
+   0 = all ten open. 7 = "3 of 10 places open".
+   --------------------------------------------------------------- */
+const PLACES_TAKEN = 0;
+const TOTAL_PLACES = 10;
+
+(function(){
+  const left = Math.max(0, TOTAL_PLACES - PLACES_TAKEN);
+  document.getElementById('placesLeft').textContent = left + ' of ' + TOTAL_PLACES;
+  const dots = document.getElementById('dots');
+  for(let i=0;i<TOTAL_PLACES;i++){
+    const d = document.createElement('i');
+    if(i < PLACES_TAKEN) d.className = 'is-gone';
+    dots.appendChild(d);
+  }
+})();
+
+/* nav: shrink + hide on scroll down, show on scroll up */
+(function(){
+  const nav=document.getElementById('nav');
+  let last=scrollY, tick=false;
+  addEventListener('scroll',()=>{
+    if(tick) return; tick=true;
+    requestAnimationFrame(()=>{
+      const y=scrollY;
+      nav.classList.toggle('is-scrolled',y>20);
+      if(y<80) nav.classList.remove('is-hidden');
+      else if(y>last+4) nav.classList.add('is-hidden');
+      else if(y<last-4) nav.classList.remove('is-hidden');
+      last=y; tick=false;
+    });
+  },{passive:true});
+})();
+
+/* reveal */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target)}}),{threshold:.1,rootMargin:'0px 0px -40px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* select floating label */
+document.querySelectorAll('select').forEach(s=>s.addEventListener('change',()=>s.classList.toggle('has-value',!!s.value)));
+
+/* only one FAQ open at a time */
+document.querySelectorAll('.faq details').forEach(d=>{
+  d.addEventListener('toggle',()=>{
+    if(d.open) document.querySelectorAll('.faq details').forEach(o=>{if(o!==d) o.open=false});
+  });
+});
+
+/* ---- application form ---- */
+const form=document.getElementById('applyForm');
+const ok=document.getElementById('ok');
+const err=document.getElementById('err');
+
+if(new URLSearchParams(location.search).get('sent')==='1'){
+  ok.classList.add('show');
+  const b=form.querySelector('button[type=submit]'); b.disabled=true; b.querySelector('span').textContent='Sent ✓';
+}
+
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  err.classList.remove('show');
+  const data=Object.fromEntries(new FormData(form).entries());
+  if(!data.name||!data.email||!data.why){
+    err.textContent='Please add your name, email and a line on why you want a place.';
+    err.classList.add('show');
+    return;
+  }
+  const btn=form.querySelector('button[type=submit]');
+  const label=btn.querySelector('span'); const original=label.textContent;
+  btn.disabled=true; label.textContent='Sending…';
+  const fd=new FormData(form);
+  fd.set('subject',`Mentoring application — ${data.name}${data.university?' · '+data.university:''}`);
+  try{
+    const res=await fetch(form.action,{method:'POST',body:fd});
+    const json=await res.json().catch(()=>({success:false}));
+    if(!json.success) throw new Error(json.message||'failed');
+    ok.classList.add('show'); label.textContent='Sent ✓';
+  }catch(e2){
+    btn.disabled=false; label.textContent=original;
+    setTimeout(()=>form.submit(),300);
+  }
+});
+</script>
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "546ee579b0c540e2ad0546f6efb0b90b"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
