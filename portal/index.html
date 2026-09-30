@@ -171,6 +171,26 @@ nav.scrolled{background:rgba(8,7,13,.75);backdrop-filter:blur(20px);border-botto
 .contact-item .l{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
 .contact-item .v{font-size:14px}
 .contact-item a.v:hover{color:var(--purple-glow)}
+
+/* ---- website performance (only rendered for clients with a stats block) ---- */
+.statTiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:26px}
+.statTile{border:1px solid var(--border);border-radius:16px;padding:18px 18px 16px;background:rgba(255,255,255,.02)}
+.statTile .v{font-size:30px;font-weight:600;line-height:1;letter-spacing:-.02em;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  font-variant-numeric:tabular-nums}
+.statTile .l{font-size:12px;color:var(--muted);margin-top:8px}
+.statSplit{display:grid;grid-template-columns:1.25fr 1fr;gap:30px}
+.statHead{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);margin-bottom:16px}
+.pageBar{margin-bottom:15px}
+.pageBar .top{display:flex;justify-content:space-between;gap:14px;font-size:13.5px;margin-bottom:7px}
+.pageBar .top span:last-child{color:var(--muted);font-variant-numeric:tabular-nums}
+.pageBar .track{height:7px;border-radius:4px;background:rgba(255,255,255,.06);overflow:hidden}
+.pageBar .fill{height:100%;border-radius:4px;background:var(--grad)}
+#statTargets .row{padding-bottom:12px;margin-bottom:12px}
+#statTargets .row b{color:var(--purple-glow);font-weight:600;font-variant-numeric:tabular-nums}
+#statTargets .row .was{color:var(--muted-2);font-variant-numeric:tabular-nums}
+.statNote{font-size:12px;color:var(--muted-2);margin-top:22px;line-height:1.6}
+@media (max-width:760px){ .statSplit{grid-template-columns:1fr;gap:26px} }
 </style>
 </head>
 <body>
@@ -283,6 +303,23 @@ nav.scrolled{background:rgba(8,7,13,.75);backdrop-filter:blur(20px);border-botto
         <h2>Deliverables</h2>
         <div class="sub">Everything we've shipped for you.</div>
         <div class="deliverables" id="deliverables"></div>
+      </div>
+
+      <div class="card full" id="statsCard" style="display:none">
+        <h2>Website performance</h2>
+        <div class="sub" id="statsPeriod"></div>
+        <div class="statTiles" id="statTiles"></div>
+        <div class="statSplit">
+          <div>
+            <div class="statHead">Most viewed pages</div>
+            <div class="pageBars" id="statPages"></div>
+          </div>
+          <div>
+            <div class="statHead">Targets for next month</div>
+            <div class="kv" id="statTargets"></div>
+          </div>
+        </div>
+        <div class="statNote" id="statsNote"></div>
       </div>
 
       <div class="card" id="asksCard" style="display:none">
@@ -463,6 +500,77 @@ const CLIENTS = {
       {name:"Studio plan service agreement",status:"signed",date:"Signed April 2026",href:"mailto:contact@saturnresults.com?subject=Copy%20of%20YK%20service%20agreement"}
     ]
   },
+  "TONYKOSOKO-2026": {
+    name:"Tony Kosoko Physiotherapy",
+    tagline:"Site is live and performing. Booking system in build.",
+    details:{
+      "Plan":"Website care",
+      "Scope":"Web \u00b7 SEO \u00b7 AI chat \u00b7 Booking",
+      "Live site":{href:"https://tonykosokophysiotherapy.com/",text:"tonykosokophysiotherapy.com"},
+      "Live since":"August 2026",
+      "Account manager":"Harry Bingham"
+    },
+    steps:[
+      ["Discovery & brief",1,"Done"],
+      ["Design",1,"Done"],
+      ["Build",1,"Done"],
+      ["Launch",1,"Live"],
+      ["Booking system",2,"In build"]
+    ],
+    deliverables:[
+      {n:"Live website, 12 pages",m:"tonykosokophysiotherapy.com",href:"https://tonykosokophysiotherapy.com/"},
+      {n:"On-page SEO across every page",m:"Delivered"},
+      {n:"AI chat assistant",m:"Live on every page"},
+      {n:"Enquiry form",m:"Delivered"},
+      {n:"Privacy-first analytics",m:"Live \u2014 no cookie banner needed"},
+      {n:"Monthly website report",m:"Delivered monthly"},
+      {n:"Online booking system",m:"In build"}
+    ],
+    stats:{
+      period:"29 August to 28 September 2026",
+      tiles:[
+        {v:"460",l:"Page views"},
+        {v:"240",l:"Visits"},
+        {v:"5",l:"Enquiries"},
+        {v:"226ms",l:"Load time"}
+      ],
+      pages:[["Home",220],["Fees & Insurance",60],["Book an Assessment",40],["About Tony",28],["Services",26]],
+      targets:[["Page views","460","600"],["Enquiries","5","7"],["Google reviews","\u2014","5"]],
+      note:"Page figures are measured from a sample, so treat them as close rather than exact. Targets, not promises."
+    },
+    asks:[
+      {item:"Set up your Google Business Profile",status:"pending",due:"This week",bullets:[
+        "This is the biggest single thing on the list.",
+        "When someone searches \u201cphysiotherapist near me\u201d, Google shows a map of three clinics above every normal result. Without a profile you cannot appear there at all.",
+        "Free, about twenty minutes, but Google verifies by posting a postcard, so start it early.",
+        "Send Harry the link once it exists \u2014 Google has particular rules for practitioners working inside someone else\u2019s premises."
+      ]},
+      {item:"Ask past patients for Google reviews",status:"pending",due:"This month",bullets:[
+        "Reviews are the strongest influence on where you appear in that map.",
+        "The six patients who already sent you testimonials are the obvious place to start."
+      ]},
+      {item:"Tell us what happened to the five enquiries",status:"pending",due:"When you can",bullets:[
+        "Roughly how many became appointments. Then the report can show what the site is worth, not just how many people it reached."
+      ]},
+      {item:"Confirm when payment is taken",status:"pending",due:"Quick one",bullets:[
+        "The fees page says at the end of each appointment. Your terms and conditions say at the time of it. One of them needs changing."
+      ]}
+    ],
+    weOwe:[
+      {item:"Connect Google Search Console",status:"active",due:"October"},
+      {item:"Finish the online booking system",status:"active",due:"October"},
+      {item:"Fix the home page layout shift",status:"active",due:"October"},
+      {item:"Monthly website report",status:"active",due:"Last working day of each month"}
+    ],
+    payments:[
+      {label:"Website care",amount:"\u00a325/mo",status:"paid",date:"Ongoing"},
+      {label:"Booking system \u2014 setup and first month",amount:"\u00a3249",status:"paid",date:"Paid September 2026"},
+      {label:"Booking system \u2014 monthly",amount:"\u00a370/mo",status:"pending",date:"Starts one month after go-live"}
+    ],
+    contracts:[
+      {name:"Booking System Agreement",status:"signed",date:"Accepted on payment, September 2026"}
+    ]
+  },
   "TRINITE-2025": {
     name:"Trinit.e Massage",
     tagline:"Wellness site — live.",
@@ -489,6 +597,36 @@ const CLIENTS = {
 
 const $=s=>document.querySelector(s);
 const loginView=$('#loginView'), dashView=$('#dashView');
+
+function renderStats(st){
+  const card=$('#statsCard');
+  if(!st){ card.style.display='none'; return; }
+  card.style.display='';
+  $('#statsPeriod').textContent=st.period||'';
+  $('#statsNote').textContent=st.note||'';
+
+  const tiles=$('#statTiles'); tiles.innerHTML='';
+  (st.tiles||[]).forEach(t=>{
+    tiles.insertAdjacentHTML('beforeend',
+      `<div class="statTile"><div class="v">${t.v}</div><div class="l">${t.l}</div></div>`);
+  });
+
+  const pages=$('#statPages'); pages.innerHTML='';
+  const top=Math.max(1,...(st.pages||[]).map(p=>p[1]));
+  (st.pages||[]).forEach(([name,n])=>{
+    pages.insertAdjacentHTML('beforeend',
+      `<div class="pageBar">
+        <div class="top"><span>${name}</span><span>${n}</span></div>
+        <div class="track"><div class="fill" style="width:${(n/top*100).toFixed(1)}%"></div></div>
+      </div>`);
+  });
+
+  const tg=$('#statTargets'); tg.innerHTML='';
+  (st.targets||[]).forEach(([label,was,target])=>{
+    tg.insertAdjacentHTML('beforeend',
+      `<div class="row"><span>${label}</span><div><span class="was">${was}</span> &rarr; <b>${target}</b></div></div>`);
+  });
+}
 
 function render(client){
   $('#clientName').textContent=client.name;
@@ -524,6 +662,10 @@ function render(client){
         ${d.href?'<span class="arrow">↗</span>':''}
       </${tag}>`);
   });
+
+  // website performance — only for clients that carry a stats block,
+  // so every other client renders exactly as before
+  renderStats(client.stats);
 
   // asks / weOwe lists
   renderRowList('#asksCard','#asksList',client.asks,(it)=>({
@@ -836,6 +978,12 @@ $('#adminCopy').addEventListener('click',adminCopy);
 $('#adminReset').addEventListener('click',adminReset);
 
 // auto-resume session (and accept ?key= or #key= one-tap login link)
+/* Declared here, not below: the boot IIFE under this runs during initial
+   script execution and reaches currentClient through render(), so a `let`
+   further down left every ?key= deep link throwing on the temporal dead
+   zone and stranding the client on the login screen. */
+let currentClient=null;
+
 (function(){
   // 1) URL key takes priority (works with ?key=… and #key=… )
   const urlKey = (new URLSearchParams(location.search).get('key'))
@@ -853,7 +1001,6 @@ $('#adminReset').addEventListener('click',adminReset);
 function galleryKey(name){return 'sr_files_'+name.replace(/\W+/g,'_')}
 function loadFiles(name){try{return JSON.parse(localStorage.getItem(galleryKey(name))||'[]')}catch(_){return[]}}
 function saveFiles(name,arr){try{localStorage.setItem(galleryKey(name),JSON.stringify(arr))}catch(_){}}
-let currentClient=null;
 
 function renderGallery(name){
   currentClient=name;
