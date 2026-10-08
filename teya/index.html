@@ -66,8 +66,7 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
 .lockup img.sr{width:auto;height:21px;object-fit:contain}
 .lockup__x{color:rgba(244,245,242,.72);font-size:19px;font-weight:500;line-height:1;transform:translateY(-1px)}
 .lockup__teya{display:inline-flex;align-items:center}
-.lockup__teya img{height:26px;width:auto;object-fit:contain}
-.lockup__teya b{font-size:20px;font-weight:700;letter-spacing:-.03em;color:var(--teya)}
+.lockup__teya b{font-size:23px;font-weight:700;letter-spacing:-.035em;line-height:1;color:var(--teya)}
 
 /* ---------- nav ---------- */
 .nav{position:sticky;top:0;z-index:50;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;
@@ -76,7 +75,7 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
 .nav__cta{display:inline-flex;align-items:center;height:36px;padding:0 17px;border-radius:999px;background:var(--teya);color:#121412;
   font-size:13px;font-weight:600;transition:transform .25s var(--ease),box-shadow .25s}
 .nav__cta:hover{transform:translateY(-1px);box-shadow:0 8px 24px -8px rgba(224,250,0,.6)}
-@media(max-width:520px){.nav{padding:0 18px}.lockup{gap:11px}.lockup img.sr{height:17px}.lockup__teya img{height:21px}.lockup__x{font-size:16px}}
+@media(max-width:520px){.nav{padding:0 18px}.lockup{gap:11px}.lockup img.sr{height:17px}.lockup__teya b{font-size:19px}.lockup__x{font-size:16px}}
 
 /* ---------- shared ---------- */
 .chip{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 14px 0 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);font-size:12px;color:var(--fg-2)}
@@ -204,9 +203,7 @@ form .btn{margin-top:6px;width:100%}
   <a class="lockup" href="/">
     <picture><source type="image/webp" srcset="/sr-logo-white.webp"><img class="sr" src="/sr-logo-white.png" alt="Saturn Results"/></picture>
     <span class="lockup__x" aria-hidden="true">&times;</span>
-    <span class="lockup__teya">
-      <picture><source type="image/webp" srcset="/teya-logo.webp"><img src="/teya-logo.png" alt="Teya"/></picture>
-    </span>
+    <span class="lockup__teya"><b>teya</b></span>
   </a>
   <a class="nav__cta" href="#claim">Claim yours</a>
 </nav>
@@ -479,9 +476,7 @@ form .btn{margin-top:6px;width:100%}
       <a class="lockup" href="/">
         <picture><source type="image/webp" srcset="/sr-logo-white.webp"><img class="sr" src="/sr-logo-white.png" alt="Saturn Results"/></picture>
     <span class="lockup__x" aria-hidden="true">&times;</span>
-    <span class="lockup__teya">
-      <picture><source type="image/webp" srcset="/teya-logo.webp"><img src="/teya-logo.png" alt="Teya"/></picture>
-    </span>
+    <span class="lockup__teya"><b>teya</b></span>
       </a>
       <div class="footer__meta">
         © 2026 Saturn Results · Exeter, UK · <a href="mailto:contact@saturnresults.com">contact@saturnresults.com</a><br>
