@@ -62,11 +62,11 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
 .ribbon svg{width:13px;height:13px;flex:none}
 @media(max-width:560px){.ribbon__in{font-size:11px;padding:8px 16px}}
 
-.lockup{display:inline-flex;align-items:center;gap:13px}
-.lockup img.sr{width:auto;height:25px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(167,139,250,.55))}
-.lockup__x{color:rgba(244,245,242,.34);font-size:14px;font-weight:400;line-height:1}
+.lockup{display:inline-flex;align-items:center;gap:15px}
+.lockup img.sr{width:auto;height:21px;object-fit:contain}
+.lockup__x{color:rgba(244,245,242,.72);font-size:19px;font-weight:500;line-height:1;transform:translateY(-1px)}
 .lockup__teya{display:inline-flex;align-items:center}
-.lockup__teya img{height:19px;width:auto;object-fit:contain}
+.lockup__teya img{height:26px;width:auto;object-fit:contain}
 .lockup__teya b{font-size:20px;font-weight:700;letter-spacing:-.03em;color:var(--teya)}
 
 /* ---------- nav ---------- */
@@ -76,7 +76,7 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
 .nav__cta{display:inline-flex;align-items:center;height:36px;padding:0 17px;border-radius:999px;background:var(--teya);color:#121412;
   font-size:13px;font-weight:600;transition:transform .25s var(--ease),box-shadow .25s}
 .nav__cta:hover{transform:translateY(-1px);box-shadow:0 8px 24px -8px rgba(224,250,0,.6)}
-@media(max-width:520px){.nav{padding:0 18px}.lockup img.sr{height:22px}.lockup__teya img{height:17px}}
+@media(max-width:520px){.nav{padding:0 18px}.lockup{gap:11px}.lockup img.sr{height:17px}.lockup__teya img{height:21px}.lockup__x{font-size:16px}}
 
 /* ---------- shared ---------- */
 .chip{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 14px 0 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);font-size:12px;color:var(--fg-2)}
@@ -101,7 +101,7 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
 @media(max-width:900px){.page__head p{font-size:15px;line-height:23px}}
 .hero__cta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;align-items:center}
 .hero__cta > span{font-size:13px;color:rgba(244,245,242,.56)}
-.terms{display:flex;gap:10px 26px;margin-top:32px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap;max-width:780px}
+.terms{display:flex;gap:12px 28px;margin-top:38px;flex-wrap:wrap;max-width:780px}
 .terms div{font-size:13px;color:var(--fg-2);display:flex;align-items:center;gap:8px}
 .terms b{color:var(--fg);font-weight:600}
 .terms i{width:5px;height:5px;border-radius:50%;background:var(--teya);flex:none}
@@ -202,11 +202,10 @@ form .btn{margin-top:6px;width:100%}
 
 <nav class="nav" id="nav">
   <a class="lockup" href="/">
-    <picture><source type="image/webp" srcset="/SRWHITELOGO.webp"><img class="sr" src="/SRWHITELOGO.png" alt="Saturn Results"/></picture>
+    <picture><source type="image/webp" srcset="/sr-logo-white.webp"><img class="sr" src="/sr-logo-white.png" alt="Saturn Results"/></picture>
     <span class="lockup__x" aria-hidden="true">&times;</span>
     <span class="lockup__teya">
-      <img src="/teya-logo.svg" alt="Teya" onerror="this.remove()"/>
-      <b>teya</b>
+      <picture><source type="image/webp" srcset="/teya-logo.webp"><img src="/teya-logo.png" alt="Teya"/></picture>
     </span>
   </a>
   <a class="nav__cta" href="#claim">Claim yours</a>
@@ -478,12 +477,11 @@ form .btn{margin-top:6px;width:100%}
   <div class="container">
     <div class="footer__in">
       <a class="lockup" href="/">
-        <picture><source type="image/webp" srcset="/SRWHITELOGO.webp"><img class="sr" src="/SRWHITELOGO.png" alt="Saturn Results"/></picture>
-        <span class="lockup__x" aria-hidden="true">&times;</span>
-        <span class="lockup__teya">
-          <img src="/teya-logo.svg" alt="Teya" onerror="this.remove()"/>
-          <b>teya</b>
-        </span>
+        <picture><source type="image/webp" srcset="/sr-logo-white.webp"><img class="sr" src="/sr-logo-white.png" alt="Saturn Results"/></picture>
+    <span class="lockup__x" aria-hidden="true">&times;</span>
+    <span class="lockup__teya">
+      <picture><source type="image/webp" srcset="/teya-logo.webp"><img src="/teya-logo.png" alt="Teya"/></picture>
+    </span>
       </a>
       <div class="footer__meta">
         © 2026 Saturn Results · Exeter, UK · <a href="mailto:contact@saturnresults.com">contact@saturnresults.com</a><br>
