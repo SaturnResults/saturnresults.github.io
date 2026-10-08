@@ -64,7 +64,7 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
 
 .lockup{display:inline-flex;align-items:center;gap:13px}
 .lockup img.sr{width:auto;height:25px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(167,139,250,.55))}
-.lockup__x{color:var(--fg-4);font-size:14px;font-weight:400;line-height:1}
+.lockup__x{color:rgba(244,245,242,.34);font-size:14px;font-weight:400;line-height:1}
 .lockup__teya{display:inline-flex;align-items:center}
 .lockup__teya img{height:19px;width:auto;object-fit:contain}
 .lockup__teya b{font-size:20px;font-weight:700;letter-spacing:-.03em;color:var(--teya)}
@@ -100,7 +100,7 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
 .page__head p{margin-top:18px;font-size:16.5px;line-height:26px;color:var(--fg-2);max-width:58ch}
 @media(max-width:900px){.page__head p{font-size:15px;line-height:23px}}
 .hero__cta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;align-items:center}
-.hero__cta span{font-size:13px;color:var(--fg-3)}
+.hero__cta > span{font-size:13px;color:rgba(244,245,242,.56)}
 .terms{display:flex;gap:10px 26px;margin-top:32px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap;max-width:780px}
 .terms div{font-size:13px;color:var(--fg-2);display:flex;align-items:center;gap:8px}
 .terms b{color:var(--fg);font-weight:600}
@@ -120,13 +120,13 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
 .card{border-radius:20px;border:1px solid var(--line);background:var(--bg-2);padding:24px 22px 22px;transition:border-color .35s,transform .5s var(--ease)}
 .card:hover{border-color:var(--line-2);transform:translateY(-3px)}
 .card__top{display:flex;align-items:center;gap:11px;margin-bottom:14px}
-.card__n{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--fg-4)}
+.card__n{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:rgba(244,245,242,.48)}
 .card__ico{width:32px;height:32px;border-radius:10px;background:rgba(224,250,0,.12);display:flex;align-items:center;justify-content:center;flex:none}
 .card__ico svg{width:15px;height:15px;color:var(--teya)}
 .card h3{font-size:17px;font-weight:600;letter-spacing:-.02em}
 .card > p{margin-top:8px;font-size:13.5px;line-height:21px;color:var(--fg-2)}
 .card ul{margin-top:14px;padding-top:13px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:7px}
-.card li{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:18px;color:var(--fg-3)}
+.card li{display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:19px;color:rgba(244,245,242,.58)}
 .card li::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--teya);opacity:.55;flex:none;margin-top:7px}
 /* the hook card */
 .card--hero{border-color:rgba(224,250,0,.4);background:linear-gradient(165deg,rgba(224,250,0,.07),var(--bg-2) 60%)}
@@ -155,7 +155,7 @@ form{display:grid;gap:13px;margin-top:24px}
 .row{display:grid;gap:13px;grid-template-columns:1fr 1fr}
 @media(max-width:600px){.row{grid-template-columns:1fr}}
 .field{position:relative}
-.field label{position:absolute;top:17px;left:17px;font-size:13px;color:var(--fg-3);pointer-events:none;transition:all .22s var(--ease);white-space:nowrap;overflow:hidden;max-width:calc(100% - 34px)}
+.field label{position:absolute;top:17px;left:17px;font-size:13px;color:rgba(244,245,242,.56);pointer-events:none;transition:all .22s var(--ease);white-space:nowrap;overflow:hidden;max-width:calc(100% - 34px)}
 .field input,.field select,.field textarea{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:13px;padding:23px 17px 9px;font-family:inherit;font-size:15px;color:var(--fg);outline:none;transition:border-color .22s,background .22s}
 .field textarea{resize:none;min-height:86px;padding-top:28px}
 .field select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23e0fa00' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 17px center}
@@ -164,7 +164,7 @@ form{display:grid;gap:13px;margin-top:24px}
 .field input:not(:placeholder-shown)+label,.field textarea:not(:placeholder-shown)+label,
 .field select.has-value+label{top:8px;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--teya)}
 form .btn{margin-top:6px;width:100%}
-.fine{margin-top:13px;font-size:12px;line-height:18px;color:var(--fg-4)}
+.fine{margin-top:13px;font-size:12.5px;line-height:19px;color:rgba(244,245,242,.54)}
 .err{display:none;margin-top:12px;font-size:13px;color:#fca5a5}
 .err.show{display:block}
 .ok{display:none;margin-top:14px;padding:16px 18px;border-radius:13px;background:rgba(224,250,0,.09);border:1px solid rgba(224,250,0,.3);font-size:14px;line-height:21px;color:var(--teya)}
@@ -181,7 +181,7 @@ form .btn{margin-top:6px;width:100%}
 /* ---------- footer ---------- */
 .footer{background:var(--bg);padding:48px 0 40px;border-top:1px solid var(--line)}
 .footer__in{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
-.footer__meta{font-size:12.5px;color:var(--fg-3);text-align:right;line-height:20px}
+.footer__meta{font-size:12.5px;color:rgba(244,245,242,.56);text-align:right;line-height:20px}
 .footer__meta a{color:var(--fg-2)}
 @media(max-width:600px){.footer__meta{text-align:left}}
 
@@ -203,7 +203,7 @@ form .btn{margin-top:6px;width:100%}
 <nav class="nav" id="nav">
   <a class="lockup" href="/">
     <picture><source type="image/webp" srcset="/SRWHITELOGO.webp"><img class="sr" src="/SRWHITELOGO.png" alt="Saturn Results"/></picture>
-    <span class="lockup__x">&times;</span>
+    <span class="lockup__x" aria-hidden="true">&times;</span>
     <span class="lockup__teya">
       <img src="/teya-logo.svg" alt="Teya" onerror="this.remove()"/>
       <b>teya</b>
@@ -466,7 +466,7 @@ form .btn{margin-top:6px;width:100%}
         <div class="panel reveal">
           <div class="panel__label"><span>Who runs it</span><b>Saturn Results</b></div>
           <p class="note">We are a marketing agency in Exeter and an official partner of Teya. We build websites, run Google and Facebook ads, do SEO and manage social media for businesses across the UK.</p>
-          <p class="note">Have a look at <a href="/#work">the work we have done</a>, or email <a href="mailto:contact@saturnresults.com">contact@saturnresults.com</a> with any question before you fill anything in.</p>
+          <p class="note">Have a look at <a href="/#work">the work we have done</a>, or email <a href="mailto:contact@saturnresults.com">contact@saturnresults.com</a> with any question.</p>
         </div>
       </div>
 
@@ -479,7 +479,7 @@ form .btn{margin-top:6px;width:100%}
     <div class="footer__in">
       <a class="lockup" href="/">
         <picture><source type="image/webp" srcset="/SRWHITELOGO.webp"><img class="sr" src="/SRWHITELOGO.png" alt="Saturn Results"/></picture>
-        <span class="lockup__x">&times;</span>
+        <span class="lockup__x" aria-hidden="true">&times;</span>
         <span class="lockup__teya">
           <img src="/teya-logo.svg" alt="Teya" onerror="this.remove()"/>
           <b>teya</b>
