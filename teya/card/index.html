@@ -25,15 +25,15 @@
 a{color:inherit;text-decoration:none}
 img,svg{max-width:100%;display:block}
 ul{list-style:none}
-html{height:100%;overflow:hidden}
-/* svh is the viewport with the browser bars SHOWING, so nothing can end up
-   behind Safari's address bar or bottom toolbar. position:fixed/inset:0 was
-   sizing to the layout viewport, which extends behind both and got clipped. */
+html{height:100%}
+/* min-height, not height: fills the screen so it reads as one card, but can
+   grow and scroll rather than clipping if a device is shorter than expected.
+   svh is the viewport with the browser bars showing. */
 body{
   margin:0;
-  height:100vh;          /* older browsers */
-  height:100svh;
-  overflow:hidden;overscroll-behavior:none;touch-action:manipulation;
+  min-height:100vh;      /* older browsers */
+  min-height:100svh;
+  touch-action:manipulation;
   background:var(--bg);color:var(--fg);font-family:var(--sans);
   -webkit-font-smoothing:antialiased;
   display:flex;flex-direction:column;
@@ -45,12 +45,12 @@ body{
 .band__in{padding:10px 20px;text-align:center;font-size:13px;font-weight:600;letter-spacing:.01em}
 @media(max-height:680px){.band__in{padding:7px 20px;font-size:12px}}
 
-.stage{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:clamp(8px,1.8vh,22px);padding:clamp(10px,1.8vh,30px) 22px calc(clamp(10px,1.8vh,30px) + env(safe-area-inset-bottom))}
+.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:clamp(7px,1.35vh,18px);padding:clamp(10px,1.5vh,24px) 22px calc(clamp(10px,1.5vh,24px) + env(safe-area-inset-bottom))}
 
 /* lockup */
 /* default for every viewport: centred column. only short landscape overrides it */
-.copyCol{display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.8vh,22px)}
+.copyCol{display:flex;flex-direction:column;align-items:center;gap:clamp(7px,1.35vh,18px)}
 .lockup{display:inline-flex;align-items:baseline;gap:13px;flex:none}
 .lockup img{height:13px;width:auto}
 .lockup__x{color:rgba(244,245,242,.7);font-size:18px;line-height:1;transform:translateY(-1px)}
@@ -62,7 +62,7 @@ h1{
 }
 h1 em{font-style:normal;color:var(--teya)}
 
-.what{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 7px;max-width:430px}
+.what{display:flex;flex-wrap:wrap;justify-content:center;gap:5px 6px;max-width:430px}
 .what li{
   display:flex;align-items:center;gap:7px;
   padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);
@@ -71,7 +71,7 @@ h1 em{font-style:normal;color:var(--teya)}
 .what i{width:4px;height:4px;border-radius:50%;background:var(--teya);flex:none}
 
 /* qr */
-.qrwrap{display:flex;flex-direction:column;align-items:center;gap:10px;flex:none}
+.qrwrap{display:flex;flex-direction:column;align-items:center;gap:9px;flex:none}
 .qr{
   width:clamp(132px,21vh,210px);aspect-ratio:1;padding:clamp(8px,1.1vh,13px);
   border-radius:20px;background:#fff;
@@ -81,7 +81,7 @@ h1 em{font-style:normal;color:var(--teya)}
 .scan{display:flex;align-items:center;gap:9px;font-size:clamp(14px,2vh,16px);font-weight:600}
 .scan svg{width:17px;height:17px;color:var(--teya);flex:none}
 
-.terms{display:flex;gap:8px 20px;flex-wrap:wrap;justify-content:center;flex:none}
+.terms{display:flex;gap:5px 18px;flex-wrap:wrap;justify-content:center;flex:none}
 .terms span{display:flex;align-items:center;gap:7px;font-size:clamp(12px,1.7vh,13.5px);color:var(--fg-3)}
 .terms b{color:var(--fg);font-weight:600}
 .terms i{width:4px;height:4px;border-radius:50%;background:var(--teya);flex:none}
