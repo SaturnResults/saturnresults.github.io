@@ -103,6 +103,21 @@ form{display:grid;gap:14px;margin-top:26px}
 .field input:focus+label,.field textarea:focus+label,.field select:focus+label,
 .field input:not(:placeholder-shown)+label,.field textarea:not(:placeholder-shown)+label,
 .field select.has-value+label{top:8px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+/* Safari and Chrome repaint autofilled fields with their own pale background,
+   which left the labels unreadable on top. Repaint them back. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+select:-webkit-autofill{
+  -webkit-text-fill-color:var(--fg);
+  -webkit-box-shadow:0 0 0 100px var(--bg-3) inset;
+  box-shadow:0 0 0 100px var(--bg-3) inset;
+  caret-color:var(--fg);
+  border-radius:14px;
+  transition:background-color 100000s ease-in-out 0s;
+}
 form .btn{margin-top:6px;width:100%}
 .fine{margin-top:14px;font-size:12px;line-height:18px;color:var(--fg-4)}
 .ok{display:none;margin-top:14px;padding:16px 18px;border-radius:14px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);font-size:14px;color:var(--accent)}

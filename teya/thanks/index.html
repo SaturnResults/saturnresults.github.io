@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Thanks, your check is booked in · Saturn Results × Teya</title>
+<meta name="description" content="Your free presence and security check is booked in. We will come back to you within 48 hours."/>
+<meta name="theme-color" content="#050805">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="256x256">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050805;--bg-2:#0b0d0b;--bg-3:#121412;
+  --line:rgba(255,255,255,.09);
+  --fg:#f4f5f2;--fg-2:rgba(244,245,242,.68);--fg-3:rgba(244,245,242,.56);
+  --teya:#e0fa00;
+  --sans:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Roboto Mono',ui-monospace,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+img,svg{max-width:100%;display:block}
+ul,ol{list-style:none}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow-x:clip;
+  background-image:radial-gradient(110% 50% at 50% 0,#13170a 0%,var(--bg) 58%)}
+.wrap{max-width:680px;margin:0 auto;padding:0 22px}
+
+.ribbon{background:var(--teya);color:#121412}
+.ribbon__in{max-width:680px;margin:0 auto;padding:9px 22px;text-align:center;font-size:12.5px;font-weight:600}
+
+header.top{padding:38px 0 0;display:flex;justify-content:center}
+.lockup{display:inline-flex;align-items:baseline;gap:13px}
+.lockup img{height:12px;width:auto}
+.lockup__x{color:rgba(244,245,242,.72);font-size:17px;line-height:1;transform:translateY(-1px)}
+.lockup b{font-size:21px;font-weight:700;letter-spacing:-.035em;line-height:1;color:var(--teya)}
+
+.hero{text-align:center;padding:40px 0 10px}
+.tick{width:66px;height:66px;margin:0 auto 24px;border-radius:50%;background:var(--teya);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 10px rgba(224,250,0,.1),0 22px 50px -20px rgba(224,250,0,.55);
+  animation:pop .55s var(--ease) both}
+.tick svg{width:30px;height:30px;color:#121412}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+@media(prefers-reduced-motion:reduce){.tick{animation:none}}
+h1{font-size:clamp(29px,5.4vw,42px);line-height:1.08;letter-spacing:-.035em;font-weight:600}
+h1 em{font-style:normal;color:var(--teya)}
+.lede{margin:16px auto 0;font-size:16px;line-height:26px;color:var(--fg-2);max-width:46ch}
+
+section{padding:40px 0;border-top:1px solid var(--line);margin-top:40px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teya)}
+h2{margin-top:11px;font-size:22px;line-height:1.22;letter-spacing:-.03em;font-weight:600}
+
+ol.steps{margin-top:22px;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding:15px 0 15px 46px;border-bottom:1px solid var(--line)}
+ol.steps li:last-child{border-bottom:0;padding-bottom:0}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:15px;width:28px;height:28px;border-radius:50%;
+  background:rgba(224,250,0,.14);color:var(--teya);font-family:var(--mono);font-size:12px;
+  display:flex;align-items:center;justify-content:center}
+ol.steps b{display:block;font-weight:600;font-size:15.5px}
+ol.steps span{display:block;margin-top:4px;font-size:14px;line-height:22px;color:var(--fg-2)}
+ol.steps i{font-style:normal;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--fg-3);display:block;margin-top:6px}
+
+.tipbox{margin-top:22px;padding:20px 22px;border-radius:16px;background:var(--bg-2);border:1px solid var(--line);
+  border-left:3px solid var(--teya)}
+.tipbox h3{font-size:15.5px;font-weight:600}
+.tipbox p{margin-top:8px;font-size:14.5px;line-height:23px;color:var(--fg-2)}
+.tipbox code{font-family:var(--mono);font-size:13.5px;color:var(--teya)}
+
+.outro{margin-top:26px;font-size:14.5px;line-height:24px;color:var(--fg-2)}
+.outro a{color:var(--teya)}
+.back{display:inline-flex;align-items:center;gap:9px;margin-top:26px;height:46px;padding:0 24px;border-radius:999px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);font-size:14.5px;font-weight:600;
+  transition:background .25s}
+.back:hover{background:rgba(255,255,255,.12)}
+.back svg{width:14px;height:14px}
+
+footer{padding:34px 0 52px;margin-top:38px;border-top:1px solid var(--line);font-size:12.5px;color:var(--fg-3);line-height:21px;text-align:center}
+footer a{color:var(--fg-2)}
+</style>
+</head>
+<body>
+
+<div class="ribbon"><div class="ribbon__in">Included free with your new Teya subscription</div></div>
+
+<div class="wrap">
+
+  <header class="top">
+    <span class="lockup">
+      <picture><source type="image/webp" srcset="/sr-logo-white.webp"><img src="/sr-logo-white.png" alt="Saturn Results"></picture>
+      <span class="lockup__x" aria-hidden="true">&times;</span>
+      <b>teya</b>
+    </span>
+  </header>
+
+  <div class="hero">
+    <div class="tick">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+    </div>
+    <h1 id="headline">Thanks, that is <em>everything we need.</em></h1>
+    <p class="lede">Your check is booked in. Nothing else for you to do, and nothing to pay, now or later.</p>
+  </div>
+
+  <section>
+    <div class="kicker">What happens now</div>
+    <h2>Three things, and two of them are ours</h2>
+    <ol class="steps">
+      <li>
+        <b>We start today</b>
+        <span>A real person goes through all 24 points by hand: your Google listing, your website, your social media, your site security and two nearby rivals who are getting it right.</span>
+        <i>Today</i>
+      </li>
+      <li>
+        <b>Your write up lands by email</b>
+        <span>Plain English, no jargon and no score out of a hundred. What is working, what is costing you customers, what to fix first and what can safely wait.</span>
+        <i>Within 48 hours</i>
+      </li>
+      <li>
+        <b>A short call if you want one</b>
+        <span>We go through it together at a time that suits you. If you would rather just read it and get on with it, that is completely fine too.</span>
+        <i>Whenever suits you</i>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="kicker">One small favour</div>
+    <h2>Make sure it reaches you</h2>
+    <div class="tipbox">
+      <h3>Add us to your contacts</h3>
+      <p>Our write up comes from <code>contact@saturnresults.com</code>. First emails from a new address have a habit of landing in spam or promotions, and it would be a shame to do the work and have you never see it. Adding us now takes a few seconds.</p>
+    </div>
+    <p class="outro">If nothing has arrived within 48 hours, check that folder first, then give us a nudge at <a href="mailto:contact@saturnresults.com">contact@saturnresults.com</a> and we will send it again.</p>
+    <a class="back" href="/">
+      <span>Have a look at our work while you wait</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+  </section>
+
+  <footer>
+    Saturn Results · Exeter, UK · <a href="mailto:contact@saturnresults.com">contact@saturnresults.com</a><br>
+    Teya is a trade mark of its respective owner.
+  </footer>
+
+</div>
+
+<script>
+/* the claim form stashes the first name in sessionStorage rather than the URL,
+   so nothing personal ends up in the address bar or in analytics */
+(function(){
+  let n='';
+  try{ n=(sessionStorage.getItem('sr_first_name')||'').trim(); sessionStorage.removeItem('sr_first_name'); }catch(e){}
+  if(!n) return;
+  if(n.length>24 || /[<>]/.test(n)) return;
+  const h=document.getElementById('headline');
+  h.textContent='';
+  h.append('Thanks '+n+', that is ');
+  const em=document.createElement('em'); em.textContent='everything we need.';
+  h.append(em);
+})();
+</script>
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "546ee579b0c540e2ad0546f6efb0b90b"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
