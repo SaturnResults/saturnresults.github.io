@@ -22,13 +22,17 @@
   --mono:'Roboto Mono',ui-monospace,monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
+a{color:inherit;text-decoration:none}
 img,svg{max-width:100%;display:block}
 ul{list-style:none}
 html{height:100%;overflow:hidden}
-/* pinned to the visual viewport: nothing to scroll, no rubber band on iOS,
-   and it tracks the address bar showing or hiding on its own */
+/* svh is the viewport with the browser bars SHOWING, so nothing can end up
+   behind Safari's address bar or bottom toolbar. position:fixed/inset:0 was
+   sizing to the layout viewport, which extends behind both and got clipped. */
 body{
-  position:fixed;inset:0;
+  margin:0;
+  height:100vh;          /* older browsers */
+  height:100svh;
   overflow:hidden;overscroll-behavior:none;touch-action:manipulation;
   background:var(--bg);color:var(--fg);font-family:var(--sans);
   -webkit-font-smoothing:antialiased;
@@ -37,16 +41,16 @@ body{
 }
 
 /* top band */
-.band{background:var(--teya);color:#121412;flex:none}
+.band{background:var(--teya);color:#121412;flex:none;padding-top:env(safe-area-inset-top)}
 .band__in{padding:10px 20px;text-align:center;font-size:13px;font-weight:600;letter-spacing:.01em}
 @media(max-height:680px){.band__in{padding:7px 20px;font-size:12px}}
 
 .stage{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:clamp(9px,2vh,24px);padding:clamp(12px,2.2vh,34px) 22px calc(clamp(12px,2.2vh,34px) + env(safe-area-inset-bottom))}
+  gap:clamp(8px,1.8vh,22px);padding:clamp(10px,1.8vh,30px) 22px calc(clamp(10px,1.8vh,30px) + env(safe-area-inset-bottom))}
 
 /* lockup */
 /* default for every viewport: centred column. only short landscape overrides it */
-.copyCol{display:flex;flex-direction:column;align-items:center;gap:clamp(9px,2vh,24px)}
+.copyCol{display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.8vh,22px)}
 .lockup{display:inline-flex;align-items:baseline;gap:13px;flex:none}
 .lockup img{height:13px;width:auto}
 .lockup__x{color:rgba(244,245,242,.7);font-size:18px;line-height:1;transform:translateY(-1px)}
@@ -69,7 +73,7 @@ h1 em{font-style:normal;color:var(--teya)}
 /* qr */
 .qrwrap{display:flex;flex-direction:column;align-items:center;gap:10px;flex:none}
 .qr{
-  width:clamp(138px,23vh,220px);aspect-ratio:1;padding:clamp(8px,1.2vh,14px);
+  width:clamp(132px,21vh,210px);aspect-ratio:1;padding:clamp(8px,1.1vh,13px);
   border-radius:20px;background:#fff;
   box-shadow:0 0 0 1px rgba(224,250,0,.35),0 24px 60px -24px rgba(224,250,0,.3);
 }
@@ -82,8 +86,13 @@ h1 em{font-style:normal;color:var(--teya)}
 .terms b{color:var(--fg);font-weight:600}
 .terms i{width:4px;height:4px;border-radius:50%;background:var(--teya);flex:none}
 
-.url{font-family:var(--mono);font-size:12px;color:var(--fg-3);text-align:center;flex:none}
-.url b{color:var(--teya);font-weight:500}
+.tap{display:inline-flex;align-items:center;justify-content:center;gap:9px;flex:none;
+  height:clamp(44px,5.6vh,48px);padding:0 22px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);
+  font-size:clamp(13px,1.8vh,14.5px);font-weight:600;color:var(--fg);
+  -webkit-tap-highlight-color:transparent;transition:background .2s,border-color .2s}
+.tap:active{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3)}
+.tap svg{width:15px;height:15px;color:var(--teya);flex:none}
 
 /* landscape: put the QR beside the words */
 @media(orientation:landscape) and (max-height:560px){
@@ -134,7 +143,10 @@ h1 em{font-style:normal;color:var(--teya)}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9V5a2 2 0 012-2h4M15 3h4a2 2 0 012 2v4M21 15v4a2 2 0 01-2 2h-4M9 21H5a2 2 0 01-2-2v-4"/><path d="M7 12h10"/></svg>
       <span>Point your camera here</span>
     </div>
-    <p class="url">saturnresults.co.uk<b>/teya</b></p>
+    <a class="tap" href="/teya/?ref=nathan">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>
+      <span>Or tap here to fill it in</span>
+    </a>
   </div>
 
 </main>
