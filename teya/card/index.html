@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Your Free Check · Saturn Results × Teya</title>
+<meta name="description" content="A free check of your online presence and security, included with your new Teya subscription."/>
+<meta name="theme-color" content="#050805">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="256x256">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050805;--bg-2:#0b0d0b;
+  --line:rgba(255,255,255,.09);
+  --fg:#f4f5f2;--fg-2:rgba(244,245,242,.68);--fg-3:rgba(244,245,242,.56);
+  --teya:#e0fa00;
+  --sans:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Roboto Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+img,svg{max-width:100%;display:block}
+ul{list-style:none}
+html,body{height:100%}
+body{
+  background:var(--bg);color:var(--fg);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;
+  min-height:100svh;overflow-x:clip;
+  background-image:radial-gradient(120% 60% at 50% 0,#14180a 0%,var(--bg) 58%);
+}
+
+/* top band */
+.band{background:var(--teya);color:#121412;flex:none}
+.band__in{padding:10px 20px;text-align:center;font-size:13px;font-weight:600;letter-spacing:.01em}
+@media(max-height:680px){.band__in{padding:7px 20px;font-size:12px}}
+
+.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:clamp(11px,2.3vh,26px);padding:clamp(14px,2.6vh,38px) 22px calc(clamp(14px,2.6vh,38px) + env(safe-area-inset-bottom))}
+
+/* lockup */
+.lockup{display:inline-flex;align-items:baseline;gap:13px;flex:none}
+.lockup img{height:13px;width:auto}
+.lockup__x{color:rgba(244,245,242,.7);font-size:18px;line-height:1;transform:translateY(-1px)}
+.lockup b{font-size:22px;font-weight:700;letter-spacing:-.035em;line-height:1;color:var(--teya)}
+
+h1{
+  text-align:center;max-width:19ch;
+  font-size:clamp(22px,4.3vh,38px);line-height:1.12;letter-spacing:-.035em;font-weight:600;
+}
+h1 em{font-style:normal;color:var(--teya)}
+
+.what{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 7px;max-width:430px}
+.what li{
+  display:flex;align-items:center;gap:7px;
+  padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);
+  font-size:clamp(11.5px,1.5vh,13px);color:var(--fg-2);white-space:nowrap;
+}
+.what i{width:4px;height:4px;border-radius:50%;background:var(--teya);flex:none}
+
+/* qr */
+.qrwrap{display:flex;flex-direction:column;align-items:center;gap:10px;flex:none}
+.qr{
+  width:clamp(150px,25vh,230px);aspect-ratio:1;padding:clamp(9px,1.3vh,15px);
+  border-radius:20px;background:#fff;
+  box-shadow:0 0 0 1px rgba(224,250,0,.35),0 24px 60px -24px rgba(224,250,0,.3);
+}
+.qr svg{width:100%;height:100%;shape-rendering:crispEdges}
+.scan{display:flex;align-items:center;gap:9px;font-size:clamp(14px,2vh,16px);font-weight:600}
+.scan svg{width:17px;height:17px;color:var(--teya);flex:none}
+
+.terms{display:flex;gap:8px 20px;flex-wrap:wrap;justify-content:center;flex:none}
+.terms span{display:flex;align-items:center;gap:7px;font-size:clamp(12px,1.7vh,13.5px);color:var(--fg-3)}
+.terms b{color:var(--fg);font-weight:600}
+.terms i{width:4px;height:4px;border-radius:50%;background:var(--teya);flex:none}
+
+.url{font-family:var(--mono);font-size:12px;color:var(--fg-3);text-align:center;flex:none}
+.url b{color:var(--teya);font-weight:500}
+
+/* landscape: put the QR beside the words */
+@media(orientation:landscape) and (max-height:560px){
+  .stage{flex-direction:row;justify-content:center;gap:34px;flex-wrap:wrap}
+  .copyCol{display:flex;flex-direction:column;align-items:flex-start;gap:14px;max-width:46ch}
+  h1{text-align:left;font-size:clamp(22px,6vh,34px)}
+  .what{justify-content:flex-start}
+  .terms{justify-content:flex-start}
+  .qr{width:clamp(150px,52vh,210px)}
+}
+@media not all and (orientation:landscape){.copyCol{display:contents}}
+</style>
+</head>
+<body>
+
+<div class="band"><div class="band__in">Included free with your new Teya subscription</div></div>
+
+<main class="stage">
+
+  <div class="copyCol">
+    <span class="lockup">
+      <picture><source type="image/webp" srcset="/sr-logo-white.webp"><img src="/sr-logo-white.png" alt="Saturn Results"></picture>
+      <span class="lockup__x" aria-hidden="true">&times;</span>
+      <b>teya</b>
+    </span>
+
+    <h1>A free check of your <em>online presence and security.</em></h1>
+
+    <ul class="what">
+      <li><i></i>Google listing</li>
+      <li><i></i>Your website</li>
+      <li><i></i>Social media</li>
+      <li><i></i>Reviews</li>
+      <li><i></i>Site security</li>
+      <li><i></i>Two local rivals</li>
+    </ul>
+
+    <div class="terms">
+      <span><i></i><b>24</b> checks</span>
+      <span><i></i>Back in <b>48 hours</b></span>
+      <span><i></i><b>No cost</b>, now or later</span>
+    </div>
+  </div>
+
+  <div class="qrwrap">
+    <div class="qr" id="qrBox"></div>
+    <div class="scan">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9V5a2 2 0 012-2h4M15 3h4a2 2 0 012 2v4M21 15v4a2 2 0 01-2 2h-4M9 21H5a2 2 0 01-2-2v-4"/><path d="M7 12h10"/></svg>
+      <span>Point your camera here</span>
+    </div>
+    <p class="url">saturnresults.co.uk<b>/teya</b></p>
+  </div>
+
+</main>
+
+<script>
+fetch('../partner/qr.svg').then(r=>r.text()).then(t=>{document.getElementById('qrBox').innerHTML=t}).catch(()=>{
+  const b=document.getElementById('qrBox');
+  b.style.cssText+='display:flex;align-items:center;justify-content:center;color:#111;font-size:13px;font-weight:600;text-align:center;padding:20px';
+  b.textContent='saturnresults.co.uk/teya';
+});
+</script>
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "546ee579b0c540e2ad0546f6efb0b90b"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

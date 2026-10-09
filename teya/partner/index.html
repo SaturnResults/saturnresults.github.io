@@ -66,6 +66,11 @@ h3{margin-top:26px;font-size:16px;font-weight:600}
 .qr{width:160px;height:160px;padding:13px;border-radius:16px;background:#fff;flex:none}
 .qr svg{width:100%;height:100%;display:block;shape-rendering:crispEdges}
 .qrnote{font-size:14px;line-height:23px;color:var(--fg-2);max-width:34ch}
+.warnrow{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-top:20px}
+.showbtn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:13px;
+  background:var(--teya);color:#121412;font-weight:600;font-size:15px;transition:transform .2s var(--ease),box-shadow .2s;flex:none}
+.showbtn:hover{transform:translateY(-1px);box-shadow:0 14px 32px -14px rgba(224,250,0,.7)}
+.showbtn svg{width:17px;height:17px}
 
 /* script */
 .script{margin-top:18px;padding:24px 24px 22px;border-radius:16px;background:var(--bg-2);border:1px solid var(--line);
@@ -157,6 +162,21 @@ footer a{color:var(--fg-2)}
     </div>
   </section>
 
+  <!-- SHOW CARD -->
+  <section>
+    <div class="kicker">In front of a customer</div>
+    <h2>Open this one, not this page</h2>
+    <p>This page is for you. Never turn it round and show it to anybody, it says “how to give away the free check” across the top. The show card below is the customer safe version: same QR code, nothing internal on it, fits one screen so there is nothing to scroll.</p>
+
+    <div class="warnrow">
+      <a class="showbtn" href="/teya/card/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M11 18h2"/></svg>
+        <span>Open the show card</span>
+      </a>
+      <p class="qrnote" style="max-width:32ch">Add it to your home screen and it opens in one tap. Hold the phone up, let them scan, done.</p>
+    </div>
+  </section>
+
   <!-- SCRIPT -->
   <section>
     <div class="kicker">What to say</div>
@@ -181,7 +201,7 @@ footer a{color:var(--fg-2)}
     <ol class="steps">
       <li><b>Wait until the machine is working</b> and they are pleased. Not before. It has to feel like a thank you, not part of the sale.</li>
       <li><b>Say the line above.</b> Thirty seconds, no build up.</li>
-      <li><b>Show the QR code</b> on your phone and let them scan it with their camera. Their phone, their details, their typing.</li>
+      <li><b>Open the show card</b> and hold your phone up so they can scan it with their camera. Their phone, their details, their typing.</li>
       <li><b>If they cannot scan it</b>, ask for their mobile and send them the text message below while you are stood with them.</li>
       <li><b>If they ask you to just fill it in</b>, you can, but read their email back to them before you send it. One wrong letter and the whole thing is wasted.</li>
       <li><b>That is you done.</b> Saturn Results takes it from there and comes back to them within 48 hours.</li>
