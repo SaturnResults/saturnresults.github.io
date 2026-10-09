@@ -45,6 +45,8 @@ body{
   gap:clamp(9px,2vh,24px);padding:clamp(12px,2.2vh,34px) 22px calc(clamp(12px,2.2vh,34px) + env(safe-area-inset-bottom))}
 
 /* lockup */
+/* default for every viewport: centred column. only short landscape overrides it */
+.copyCol{display:flex;flex-direction:column;align-items:center;gap:clamp(9px,2vh,24px)}
 .lockup{display:inline-flex;align-items:baseline;gap:13px;flex:none}
 .lockup img{height:13px;width:auto}
 .lockup__x{color:rgba(244,245,242,.7);font-size:18px;line-height:1;transform:translateY(-1px)}
@@ -92,7 +94,7 @@ h1 em{font-style:normal;color:var(--teya)}
   .terms{justify-content:flex-start}
   .qr{width:clamp(150px,52vh,210px)}
 }
-@media not all and (orientation:landscape){.copyCol{display:contents}}
+
 </style>
 </head>
 <body>
