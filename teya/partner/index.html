@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Partner Kit · Saturn Results × Teya</title>
+<meta name="description" content="How to offer the free online check to new Teya businesses. Script, link, QR code and message templates."/>
+<meta name="theme-color" content="#050805">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="256x256">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050805;--bg-2:#0b0d0b;--bg-3:#121412;
+  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+  --fg:#f4f5f2;--fg-2:rgba(244,245,242,.68);--fg-3:rgba(244,245,242,.56);
+  --teya:#e0fa00;--teya-2:#cfd617;
+  --say:#7ee787;--dont:#ff9f9f;
+  --sans:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Roboto Mono',ui-monospace,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+img,svg{max-width:100%;display:block}
+button{font:inherit;background:none;border:0;cursor:pointer;color:inherit}
+ul,ol{list-style:none}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow-x:clip}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+
+.ribbon{background:var(--teya);color:#121412}
+.ribbon__in{max-width:760px;margin:0 auto;padding:9px 20px;font-size:12px;font-weight:600;text-align:center}
+
+header.top{padding:34px 0 10px}
+.lockup{display:inline-flex;align-items:baseline;gap:12px}
+.lockup img{height:12px;width:auto}
+.lockup__x{color:rgba(244,245,242,.72);font-size:17px;line-height:1;transform:translateY(-1px)}
+.lockup b{font-size:21px;font-weight:700;letter-spacing:-.035em;line-height:1;color:var(--teya)}
+h1{margin-top:26px;font-size:clamp(30px,6vw,44px);line-height:1.06;letter-spacing:-.04em;font-weight:600}
+h1 em{font-style:normal;color:var(--teya)}
+.sub{margin-top:14px;font-size:16px;line-height:25px;color:var(--fg-2);max-width:56ch}
+
+section{padding:40px 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teya)}
+h2{margin-top:12px;font-size:25px;line-height:1.2;letter-spacing:-.03em;font-weight:600}
+h2 + p{margin-top:12px;color:var(--fg-2);max-width:62ch}
+h3{margin-top:26px;font-size:16px;font-weight:600}
+
+/* link + copy */
+.linkbar{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.linkbar code{flex:1;min-width:240px;display:flex;align-items:center;padding:0 16px;height:50px;border-radius:12px;
+  background:var(--bg-2);border:1px solid var(--line);font-family:var(--mono);font-size:13px;color:var(--teya);
+  overflow:auto;white-space:nowrap}
+.copy{height:50px;padding:0 22px;border-radius:12px;background:var(--teya);color:#121412;font-weight:600;font-size:14px;
+  transition:transform .2s var(--ease),opacity .2s;flex:none}
+.copy:hover{transform:translateY(-1px)}
+.copy.done{background:var(--say)}
+
+/* qr */
+.qrrow{display:flex;gap:22px;margin-top:22px;align-items:center;flex-wrap:wrap}
+.qr{width:160px;height:160px;padding:13px;border-radius:16px;background:#fff;flex:none}
+.qr svg{width:100%;height:100%;display:block;shape-rendering:crispEdges}
+.qrnote{font-size:14px;line-height:23px;color:var(--fg-2);max-width:34ch}
+
+/* script */
+.script{margin-top:18px;padding:24px 24px 22px;border-radius:16px;background:var(--bg-2);border:1px solid var(--line);
+  border-left:3px solid var(--teya)}
+.script p{font-size:17px;line-height:29px}
+.script p + p{margin-top:14px}
+.script .beat{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--teya);margin-bottom:7px}
+
+/* steps */
+ol.steps{margin-top:18px;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding:14px 0 14px 44px;border-bottom:1px solid var(--line);font-size:15px;line-height:24px;color:var(--fg-2)}
+ol.steps li:last-child{border-bottom:0}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:14px;width:27px;height:27px;border-radius:50%;
+  background:rgba(224,250,0,.14);color:var(--teya);font-family:var(--mono);font-size:12px;display:flex;align-items:center;justify-content:center}
+ol.steps b{color:var(--fg);font-weight:600}
+
+/* say / dont */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+@media(max-width:640px){.two{grid-template-columns:1fr}}
+.box{padding:20px 20px 18px;border-radius:16px;background:var(--bg-2);border:1px solid var(--line)}
+.box h4{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.box--say h4{color:var(--say)} .box--dont h4{color:var(--dont)}
+.box h4 svg{width:14px;height:14px}
+.box li{padding:9px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:21px;color:var(--fg-2)}
+.box li:last-child{border-bottom:0;padding-bottom:0}
+.box ul{margin-top:12px}
+
+/* templates */
+.tpl{margin-top:16px;border-radius:14px;border:1px solid var(--line);background:var(--bg-2);overflow:hidden}
+.tpl__h{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.tpl__h span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3)}
+.tpl__c{height:30px;padding:0 14px;border-radius:999px;background:rgba(255,255,255,.1);font-size:12px;font-weight:600;flex:none;transition:background .2s}
+.tpl__c:hover{background:rgba(255,255,255,.18)}
+.tpl__c.done{background:var(--say);color:#0a0a0b}
+.tpl__b{padding:16px;font-size:14.5px;line-height:24px;color:var(--fg-2);white-space:pre-wrap}
+
+/* q&a */
+.qa{margin-top:18px}
+.qa details{border-bottom:1px solid var(--line)}
+.qa summary{list-style:none;cursor:pointer;padding:16px 34px 16px 0;font-size:15.5px;font-weight:600;position:relative}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:'';position:absolute;right:6px;top:22px;width:8px;height:8px;border-right:1.5px solid var(--fg-3);
+  border-bottom:1.5px solid var(--fg-3);transform:rotate(45deg);transition:transform .3s var(--ease)}
+.qa details[open] summary::after{transform:rotate(-135deg)}
+.qa p{padding:0 10px 18px 0;font-size:14.5px;line-height:24px;color:var(--fg-2);margin-top:-4px}
+.qa p em{font-style:normal;color:var(--teya)}
+
+footer{padding:34px 0 50px;border-top:1px solid var(--line);font-size:13px;color:var(--fg-3);line-height:21px;margin-top:10px}
+footer a{color:var(--fg-2)}
+@media print{
+  body{background:#fff;color:#111}
+  .copy,.tpl__c{display:none}
+  section{break-inside:avoid}
+  .qr{border:1px solid #ddd}
+}
+</style>
+</head>
+<body>
+
+<div class="ribbon"><div class="ribbon__in">Internal. For Nathan, not for customers.</div></div>
+
+<div class="wrap">
+
+  <header class="top">
+    <span class="lockup">
+      <picture><source type="image/webp" srcset="/sr-logo-white.webp"><img src="/sr-logo-white.png" alt="Saturn Results"></picture>
+      <span class="lockup__x" aria-hidden="true">&times;</span>
+      <b>teya</b>
+    </span>
+    <h1>How to give away <em>the free check.</em></h1>
+    <p class="sub">Everything you need in one page. Keep it open on your phone while you are out. The whole thing takes about thirty seconds at the end of an install.</p>
+  </header>
+
+  <!-- LINK -->
+  <section>
+    <div class="kicker">Your link</div>
+    <h2>This one is yours</h2>
+    <p>It has your name on the end, so every check that comes in through it is logged as yours. Use this one rather than the plain address.</p>
+
+    <div class="linkbar">
+      <code id="link">https://saturnresults.co.uk/teya/?ref=nathan</code>
+      <button class="copy" data-copy="#link">Copy link</button>
+    </div>
+
+    <div class="qrrow">
+      <div class="qr" id="qrBox"></div>
+      <p class="qrnote">Or show this on your phone and let them scan it with their camera. Best option in person: it goes straight to their phone, so they type their own email and you cannot get it wrong.</p>
+    </div>
+  </section>
+
+  <!-- SCRIPT -->
+  <section>
+    <div class="kicker">What to say</div>
+    <h2>Say it as a thank you, never as an offer</h2>
+    <p>The moment is right after everything is working and they are happy. Do not build it up. The less it sounds like a pitch, the more of them take it.</p>
+
+    <div class="script">
+      <p><span class="beat">The line</span>“Right, you are all set. One more thing, and it is free. Because you have signed up with us, you get an online check from the agency we work with. They go through your Google listing, your website and your socials and tell you what is working and what is not. Costs you nothing, takes them a couple of days.”</p>
+      <p><span class="beat">Then, straight away</span>“Scan this and it is done in two minutes.”</p>
+    </div>
+
+    <h3>Why it is worded that way</h3>
+    <p style="margin-top:8px;color:var(--fg-2)">“It is free” lands before they have a chance to wonder what it costs. “The agency we work with” makes it a benefit of joining rather than you selling something on the side. And handing them the QR while you are still talking is what turns a yes into an actual claim.</p>
+  </section>
+
+  <!-- IN PERSON -->
+  <section>
+    <div class="kicker">In person</div>
+    <h2>Yes, you can do it there and then</h2>
+    <p>This is far and away the best way. Someone who says “email it to me” almost never does it. Someone who scans it while you are stood there does.</p>
+
+    <ol class="steps">
+      <li><b>Wait until the machine is working</b> and they are pleased. Not before. It has to feel like a thank you, not part of the sale.</li>
+      <li><b>Say the line above.</b> Thirty seconds, no build up.</li>
+      <li><b>Show the QR code</b> on your phone and let them scan it with their camera. Their phone, their details, their typing.</li>
+      <li><b>If they cannot scan it</b>, ask for their mobile and send them the text message below while you are stood with them.</li>
+      <li><b>If they ask you to just fill it in</b>, you can, but read their email back to them before you send it. One wrong letter and the whole thing is wasted.</li>
+      <li><b>That is you done.</b> Saturn Results takes it from there and comes back to them within 48 hours.</li>
+    </ol>
+
+    <div class="two">
+      <div class="box box--say">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Do</h4>
+        <ul>
+          <li>Offer it to every single new signup, no picking and choosing</li>
+          <li>Say free early and say it plainly</li>
+          <li>Get the QR in front of them while you are still there</li>
+          <li>Let them type their own email</li>
+          <li>Say “no catch, it is just part of signing up”</li>
+        </ul>
+      </div>
+      <div class="box box--dont">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12"/></svg>Do not</h4>
+        <ul>
+          <li>Ask “would you be interested in a free audit?” It invites a no</li>
+          <li>Promise what the check will find, or that it will get them customers</li>
+          <li>Describe it as a sales call or a consultation</li>
+          <li>Sign them up without telling them a third party will contact them</li>
+          <li>Use it as a way to save a signup that is going badly</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEMPLATES -->
+  <section>
+    <div class="kicker">If you cannot do it there</div>
+    <h2>Send it instead</h2>
+    <p>Same day, while they still remember you. Tap copy and paste it straight into your messages.</p>
+
+    <div class="tpl">
+      <div class="tpl__h"><span>Text or WhatsApp</span><button class="tpl__c" data-copy="#tplSms">Copy</button></div>
+      <div class="tpl__b" id="tplSms">Hi [NAME], Nathan here from Teya, good to meet you today. As promised, here is the free online check that comes with your account. It is run by Saturn Results, the agency we work with. They look over your Google listing, website and socials and tell you what is worth fixing. Costs nothing, takes two minutes to claim.
+
+https://saturnresults.co.uk/teya/?ref=nathan</div>
+    </div>
+
+    <div class="tpl">
+      <div class="tpl__h"><span>Email</span><button class="tpl__c" data-copy="#tplEmail">Copy</button></div>
+      <div class="tpl__b" id="tplEmail">Subject: Your free online check, included with your Teya account
+
+Hi [NAME],
+
+Thanks again for signing up today, and good to meet you.
+
+One thing I mentioned: every new Teya business gets a free online check from Saturn Results, the marketing agency we work with. They go through your Google listing, your website, your social media and your online security, then come back within 48 hours with what is working and what is quietly costing you customers.
+
+It is genuinely free and there is nothing to cancel. It is just part of signing up.
+
+Claim it here, takes about two minutes:
+https://saturnresults.co.uk/teya/?ref=nathan
+
+Any problems, give me a shout.
+
+Nathan</div>
+    </div>
+  </section>
+
+  <!-- OBJECTIONS -->
+  <section>
+    <div class="kicker">If they ask</div>
+    <h2>Straight answers</h2>
+    <div class="qa">
+      <details>
+        <summary>What is the catch?</summary>
+        <p><em>“There isn't one. They do it free for anyone who signs up with us. If they find nothing worth changing they will tell you that. If they do find something you can fix it yourself, or pay them to, entirely up to you.”</em></p>
+      </details>
+      <details>
+        <summary>Are they going to try and sell me something?</summary>
+        <p><em>“They will go through what they found on a call, and if you want them to fix it they will quote you. If you do not, that is the end of it. You keep the findings either way.”</em></p>
+      </details>
+      <details>
+        <summary>I have not got a website</summary>
+        <p><em>“Even better, honestly. Leave that bit blank. They will look at your Google listing and socials, and tell you straight whether you actually need a site or not.”</em></p>
+      </details>
+      <details>
+        <summary>Who are Saturn Results?</summary>
+        <p><em>“A marketing agency in Exeter. They do websites, Google ads and SEO for small businesses. We work with them, that is why you get this.”</em></p>
+      </details>
+      <details>
+        <summary>Why do they want my phone number?</summary>
+        <p><em>“So they can run through what they found with you rather than just emailing a report you will never read. Two minutes on the phone.”</em></p>
+      </details>
+      <details>
+        <summary>How long does it take?</summary>
+        <p><em>“Two minutes to fill in. They come back to you within 48 hours.”</em></p>
+      </details>
+      <details>
+        <summary>Can my business partner do it instead?</summary>
+        <p><em>“Course. Send them the link, whoever looks after the website and the Facebook page is the right person.”</em></p>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    Questions, or a customer chasing theirs, go to <a href="mailto:contact@saturnresults.com">contact@saturnresults.com</a>.<br>
+    The customer facing page is <a href="/teya/?ref=nathan">saturnresults.co.uk/teya</a>. This page is internal and is not listed on the site or in Google.
+  </footer>
+
+</div>
+
+<script>
+/* inline the QR so it prints and works offline once cached */
+fetch('qr.svg').then(r=>r.text()).then(t=>{document.getElementById('qrBox').innerHTML=t;}).catch(()=>{
+  const b=document.getElementById('qrBox');
+  b.style.cssText+='display:flex;align-items:center;justify-content:center;color:#111;font-size:12px;text-align:center;padding:18px';
+  b.textContent='QR unavailable, use the link above';
+});
+
+/* copy buttons */
+document.querySelectorAll('[data-copy]').forEach(btn=>{
+  btn.addEventListener('click',async()=>{
+    const el=document.querySelector(btn.dataset.copy);
+    const text=el.innerText.trim();
+    const label=btn.textContent;
+    try{ await navigator.clipboard.writeText(text); }
+    catch(e){
+      const ta=document.createElement('textarea');
+      ta.value=text; ta.style.cssText='position:fixed;opacity:0';
+      document.body.appendChild(ta); ta.select();
+      try{document.execCommand('copy')}catch(e2){}
+      ta.remove();
+    }
+    btn.textContent='Copied'; btn.classList.add('done');
+    setTimeout(()=>{btn.textContent=label; btn.classList.remove('done')},1600);
+  });
+});
+</script>
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "546ee579b0c540e2ad0546f6efb0b90b"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

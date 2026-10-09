@@ -397,6 +397,7 @@ form .btn{margin-top:6px;width:100%}
           <input type="hidden" name="subject" value="Teya partner check — new request">
           <input type="hidden" name="from_name" value="Saturn Results · Teya partner page">
           <input type="hidden" name="source" value="Teya partner signup">
+          <input type="hidden" name="referred_by" id="referredBy" value="direct link">
           <input type="hidden" name="redirect" value="https://saturnresults.co.uk/teya/?sent=1">
           <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
 
@@ -499,6 +500,12 @@ const form=document.getElementById('teyaForm');
 const ok=document.getElementById('ok');
 const err=document.getElementById('err');
 
+/* who sent them: /teya/?ref=nathan */
+(function(){
+  const ref=(new URLSearchParams(location.search).get('ref')||'').trim().slice(0,40);
+  if(ref) document.getElementById('referredBy').value=ref;
+})();
+
 if(new URLSearchParams(location.search).get('sent')==='1'){
   ok.classList.add('show');
   const b=form.querySelector('button[type=submit]'); b.disabled=true; b.querySelector('span').textContent='Sent ✓';
@@ -517,7 +524,7 @@ form.addEventListener('submit',async e=>{
   const label=btn.querySelector('span'); const original=label.textContent;
   btn.disabled=true; label.textContent='Sending…';
   const fd=new FormData(form);
-  fd.set('subject',`Teya check — ${data.business} (${data.town})${data.growth?' · '+data.growth:''}`);
+  fd.set('subject',`Teya check — ${data.business} (${data.town}) · via ${data.referred_by}`);
   try{
     const res=await fetch(form.action,{method:'POST',body:fd});
     const json=await res.json().catch(()=>({success:false}));
