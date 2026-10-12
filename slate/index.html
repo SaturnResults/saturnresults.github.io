@@ -241,6 +241,143 @@ form .btn{margin-top:6px;width:100%}
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .reveal.is-in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}}
+
+/* ================= TRY IT DEMO ================= */
+.demo{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:26px;margin-top:40px;align-items:start}
+@media(max-width:980px){.demo{grid-template-columns:1fr;gap:20px;max-width:560px;margin-left:auto;margin-right:auto}}
+
+.demo__note{display:inline-flex;align-items:center;gap:9px;margin-top:18px;padding:8px 15px 8px 12px;border-radius:999px;
+  background:rgba(251,117,17,.09);border:1px solid rgba(251,117,17,.28);font-size:12.5px;color:var(--fg-2)}
+.demo__note b{color:var(--accent);font-weight:600}
+.demo__note svg{width:14px;height:14px;color:var(--accent);flex:none}
+
+/* ---- phone ---- */
+.ph{background:rgba(23,23,25,.9);border:1px solid var(--line-2);border-radius:34px;padding:10px;
+  box-shadow:0 0 0 6px rgba(255,255,255,.02),0 50px 90px -46px rgba(0,0,0,.95)}
+.ph__screen{background:#0B0C0E;border-radius:26px;overflow:hidden;min-height:588px;display:flex;flex-direction:column}
+.ph__bar{display:flex;align-items:center;justify-content:space-between;padding:13px 18px 0;font-family:var(--mono);
+  font-size:10px;color:var(--fg-3);letter-spacing:.06em}
+.ph__brand{display:flex;align-items:center;gap:10px;padding:14px 18px 13px;border-bottom:1px solid var(--line)}
+.ph__logo{width:28px;height:28px;border-radius:9px;background:linear-gradient(140deg,var(--accent),var(--accent-deep));
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;flex:none}
+.ph__name{font-size:13.5px;font-weight:600;line-height:1.2}
+.ph__sub{font-size:10.5px;color:var(--fg-3);margin-top:1px}
+
+.steps{display:flex;gap:5px;padding:13px 18px 0}
+.steps i{height:3px;flex:1;border-radius:2px;background:rgba(255,255,255,.1);transition:background .4s var(--ease)}
+.steps i.on{background:var(--accent)}
+
+.ph__body{flex:1;padding:17px 18px 18px;overflow-y:auto;max-height:470px}
+.ph__h{font-size:17px;font-weight:600;letter-spacing:-.02em}
+.ph__p{font-size:12.5px;color:var(--fg-3);margin-top:4px;margin-bottom:14px}
+
+.opt{width:100%;text-align:left;display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:14px;
+  border:1px solid var(--line);background:rgba(255,255,255,.028);margin-bottom:9px;cursor:pointer;
+  transition:border-color .2s,background .2s,transform .2s var(--ease);color:inherit;font-family:inherit}
+.opt:hover{border-color:rgba(251,117,17,.5);background:rgba(251,117,17,.06);transform:translateX(2px)}
+.opt__t{font-size:13.5px;font-weight:600}
+.opt__s{font-size:11.5px;color:var(--fg-3);margin-top:2px}
+.opt__r{margin-left:auto;text-align:right;flex:none}
+.opt__price{font-size:13.5px;font-weight:600;color:var(--accent)}
+.opt__mins{font-size:10.5px;color:var(--fg-3);font-family:var(--mono)}
+.av{width:30px;height:30px;border-radius:50%;background:var(--bg-3);border:1px solid var(--line);flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--fg-2)}
+
+.dates{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:6px;scrollbar-width:none}
+.dates::-webkit-scrollbar{display:none}
+.dts{flex:none;width:58px;padding:9px 0;border-radius:13px;border:1px solid var(--line);background:rgba(255,255,255,.028);
+  text-align:center;cursor:pointer;transition:all .2s;font-family:inherit;color:inherit}
+.dts:hover{border-color:rgba(251,117,17,.5)}
+.dts.sel{background:var(--accent);border-color:var(--accent);color:#120A03}
+.dts b{display:block;font-size:16px;font-weight:700;line-height:1.1}
+.dts span{display:block;font-size:9.5px;font-family:var(--mono);letter-spacing:.06em;opacity:.72;margin-top:2px}
+
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.slot{padding:11px 0;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.028);
+  font-size:12.5px;font-weight:600;cursor:pointer;transition:all .18s;font-family:inherit;color:inherit}
+.slot:hover:not(:disabled){border-color:var(--accent);background:rgba(251,117,17,.1)}
+.slot:disabled{opacity:.26;cursor:not-allowed;text-decoration:line-through}
+.slot.sel{background:var(--accent);border-color:var(--accent);color:#120A03}
+
+.fld{margin-bottom:10px}
+.fld label{display:block;font-size:10.5px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--fg-3);margin-bottom:5px}
+.fld input{width:100%;padding:11px 13px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);
+  color:var(--fg);font-family:inherit;font-size:13.5px;outline:none;transition:border-color .2s,background .2s}
+.fld input:focus{border-color:rgba(251,117,17,.6);background:rgba(251,117,17,.05)}
+.fld input::placeholder{color:var(--fg-4)}
+
+.sumline{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:12.5px}
+.sumline:last-of-type{border-bottom:0}
+.sumline span{color:var(--fg-3)}
+.sumline b{font-weight:600;text-align:right}
+
+.phbtn{width:100%;padding:13px;border-radius:13px;background:var(--accent);color:#120A03;font-weight:700;font-size:14px;
+  border:0;cursor:pointer;font-family:inherit;margin-top:14px;transition:transform .2s var(--ease),box-shadow .2s}
+.phbtn:hover{transform:translateY(-1px);box-shadow:0 12px 26px -12px rgba(251,117,17,.75)}
+.phbtn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.lnk{display:block;width:100%;margin-top:10px;background:none;border:0;color:var(--fg-3);font-size:12px;
+  cursor:pointer;font-family:inherit;text-align:center}
+.lnk:hover{color:var(--fg)}
+
+.done{text-align:center;padding:16px 0 4px}
+.done__tick{width:62px;height:62px;border-radius:50%;background:var(--accent);margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;animation:dpop .5s var(--ease) both;
+  box-shadow:0 0 0 9px rgba(251,117,17,.12)}
+.done__tick svg{width:27px;height:27px;color:#120A03}
+@keyframes dpop{from{transform:scale(.55);opacity:0}to{transform:scale(1);opacity:1}}
+.done h4{font-size:19px;font-weight:600;letter-spacing:-.02em}
+.done p{font-size:12.5px;color:var(--fg-3);margin-top:6px;margin-bottom:16px}
+.ref{display:inline-block;padding:5px 12px;border-radius:8px;background:rgba(255,255,255,.05);
+  border:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--fg-2);margin-bottom:16px}
+.rcpt{text-align:left;padding:14px;border-radius:14px;background:rgba(255,255,255,.028);border:1px solid var(--line)}
+
+/* ---- clinic side ---- */
+.clin{border-radius:24px;border:1px solid var(--line);background:var(--bg-2);overflow:hidden;
+  box-shadow:0 0 0 6px rgba(255,255,255,.02),0 40px 80px -50px rgba(0,0,0,.9)}
+.clin__top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.clin__ttl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2)}
+.clin__live{display:inline-flex;align-items:center;gap:7px;font-size:11px;color:var(--fg-3);font-family:var(--mono)}
+.clin__live i{width:7px;height:7px;border-radius:50%;background:#34d399;animation:lpulse 2.1s infinite}
+@keyframes lpulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+.diary{padding:14px 20px 20px;max-height:470px;overflow-y:auto}
+.dayhdr{font-size:13px;font-weight:600;margin-bottom:12px;color:var(--fg-2)}
+.appt{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);align-items:start}
+.appt:first-of-type{border-top:0}
+.appt__t{font-family:var(--mono);font-size:11px;color:var(--fg-3);padding-top:3px}
+.appt__c{border-radius:11px;padding:10px 12px;background:rgba(255,255,255,.035);border-left:2px solid rgba(255,255,255,.18)}
+.appt__n{font-size:13px;font-weight:600}
+.appt__m{font-size:11px;color:var(--fg-3);margin-top:2px}
+.appt--free .appt__c{background:transparent;border-left:2px dashed rgba(255,255,255,.1);color:var(--fg-4);font-size:11.5px;padding:9px 12px}
+.appt--new .appt__c{background:rgba(251,117,17,.13);border-left:2px solid var(--accent);animation:land .7s var(--ease) both}
+.appt--new .appt__n{color:var(--accent)}
+@keyframes land{from{opacity:0;transform:translateX(-14px) scale(.97)}to{opacity:1;transform:none}}
+.newtag{display:inline-block;margin-left:7px;padding:1px 7px;border-radius:5px;background:var(--accent);color:#120A03;
+  font-size:9px;font-family:var(--mono);letter-spacing:.08em;vertical-align:1px}
+
+.wjh{border-top:1px solid var(--line);padding:16px 20px 20px}
+.wjh__t{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3);margin-bottom:12px}
+.wjh li{display:flex;gap:11px;align-items:flex-start;padding:7px 0;font-size:13px;color:var(--fg-3);
+  opacity:.3;transition:opacity .45s var(--ease),color .45s}
+.wjh li.on{opacity:1;color:var(--fg-2)}
+.wjh li b{color:var(--fg);font-weight:600}
+.wjh__i{width:19px;height:19px;border-radius:50%;background:rgba(255,255,255,.07);flex:none;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;transition:background .45s}
+.wjh li.on .wjh__i{background:var(--accent)}
+.wjh__i svg{width:10px;height:10px;color:transparent;transition:color .45s}
+.wjh li.on .wjh__i svg{color:#120A03}
+
+.keep{margin:14px 20px 20px;padding:15px 17px;border-radius:15px;background:rgba(251,117,17,.08);
+  border:1px solid rgba(251,117,17,.26);opacity:0;transform:translateY(8px);
+  transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.keep.on{opacity:1;transform:none}
+.keep__r{display:flex;justify-content:space-between;align-items:baseline;gap:14px;font-size:13px}
+.keep__r + .keep__r{margin-top:7px}
+.keep__r span{color:var(--fg-2)}
+.keep__r b{font-size:19px;font-weight:700;color:var(--accent)}
+.keep p{font-size:12px;line-height:19px;color:var(--fg-3);margin-top:11px;padding-top:11px;border-top:1px solid rgba(251,117,17,.2)}
+
 </style>
 </head>
 <body>
@@ -251,6 +388,7 @@ form .btn{margin-top:6px;width:100%}
     <a href="/#about">About</a>
     <a href="/#process">How it works</a>
     <a href="/slate/" class="is-here">Slate</a>
+    <a href="#demo">Try it</a>
     <a href="/#work">Work</a>
     <a href="/#pricing">Pricing</a>
   </div>
@@ -458,6 +596,73 @@ form .btn{margin-top:6px;width:100%}
         <h4><i></i>We move your data across</h4>
         <p>Existing clients, treatments, prices, staff and future appointments. We do the migration and run both systems in parallel until you are happy.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRY IT ============ -->
+<section class="sec" id="demo">
+  <div class="container">
+    <div class="sec__head reveal">
+      <span class="chip"><span class="chip__dot"></span>Try it yourself</span>
+      <h2 class="h2">
+        <span class="h2__a">Book an appointment at a clinic</span>
+        <span class="h2__b">that does not exist.</span>
+      </h2>
+      <p>This is the booking journey your clients would get, running live on this page. Go through it as one of them. Keep an eye on the right hand side while you do, because that is your diary filling itself in.</p>
+      <span class="demo__note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+        <span><b>Demo only.</b> Nothing is booked, nobody is contacted, nothing is stored.</span>
+      </span>
+    </div>
+
+    <div class="demo reveal">
+
+      <!-- ---------- what the client sees ---------- -->
+      <div class="ph">
+        <div class="ph__screen">
+          <div class="ph__bar"><span>9:41</span><span>RIVERSIDE PHYSIO</span></div>
+          <div class="ph__brand">
+            <div class="ph__logo">R</div>
+            <div>
+              <div class="ph__name">Riverside Physio</div>
+              <div class="ph__sub">Book an appointment</div>
+            </div>
+          </div>
+          <div class="steps" id="dSteps"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="ph__body" id="dBody"></div>
+        </div>
+      </div>
+
+      <!-- ---------- what the clinic sees ---------- -->
+      <div class="clin">
+        <div class="clin__top">
+          <span class="clin__ttl">Your diary</span>
+          <span class="clin__live"><i></i>LIVE</span>
+        </div>
+        <div class="diary">
+          <div class="dayhdr" id="dDayHdr">Pick a date to see the day</div>
+          <div id="dDiary"></div>
+        </div>
+        <div class="wjh">
+          <div class="wjh__t">What happens the moment they tap book</div>
+          <ul id="dWjh">
+            <li><span class="wjh__i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"><path d="M20 6L9 17l-5-5"/></svg></span><span>The slot is held, so <b>nobody can double book it</b></span></li>
+            <li><span class="wjh__i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"><path d="M20 6L9 17l-5-5"/></svg></span><span>A <b>client record</b> is created on your list, not ours</span></li>
+            <li><span class="wjh__i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"><path d="M20 6L9 17l-5-5"/></svg></span><span>Confirmation goes out <b>in your clinic's name</b></span></li>
+            <li><span class="wjh__i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"><path d="M20 6L9 17l-5-5"/></svg></span><span>A <b>reminder</b> is scheduled for the day before</span></li>
+            <li><span class="wjh__i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"><path d="M20 6L9 17l-5-5"/></svg></span><span>It lands in the practitioner's <b>calendar</b> both ways</span></li>
+            <li><span class="wjh__i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"><path d="M20 6L9 17l-5-5"/></svg></span><span>A <b>rebooking nudge</b> is queued for when they are due back</span></li>
+            <li><span class="wjh__i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"><path d="M20 6L9 17l-5-5"/></svg></span><span>A <b>Google review request</b> is queued for after the treatment</span></li>
+          </ul>
+        </div>
+        <div class="keep" id="dKeep">
+          <div class="keep__r"><span>Treatment price</span><b id="dPrice">&pound;0</b></div>
+          <div class="keep__r"><span>What you keep</span><b id="dKept">&pound;0</b></div>
+          <p>No commission, ever. The client, the record and the full treatment price are yours. Book the same appointment through a marketplace and only the first two of those are even up for discussion.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -723,6 +928,229 @@ form.addEventListener('submit',async e=>{
     setTimeout(()=>form.submit(),300);
   }
 });
+</script>
+<script>
+
+/* ================= TRY IT DEMO ================= */
+(function(){
+  const body = document.getElementById('dBody');
+  if(!body) return;
+  const stepsEl = document.getElementById('dSteps');
+  const diaryEl = document.getElementById('dDiary');
+  const dayHdr  = document.getElementById('dDayHdr');
+  const wjhEl   = document.getElementById('dWjh');
+  const keepEl  = document.getElementById('dKeep');
+
+  const SERVICES = [
+    {id:'assess', n:'Initial assessment',   m:45, p:60},
+    {id:'sports', n:'Sports massage',       m:60, p:55},
+    {id:'follow', n:'Follow up treatment',  m:30, p:42},
+    {id:'rehab',  n:'Rehab session',        m:45, p:50}
+  ];
+  const STAFF = [
+    {id:'any',    n:'First available',  r:'We pick whoever is free soonest', i:'★'},
+    {id:'hannah', n:'Hannah Reed',      r:'Physiotherapist',  i:'HR'},
+    {id:'marcus', n:'Marcus Hale',      r:'Sports therapist', i:'MH'},
+    {id:'priya',  n:'Priya Shah',       r:'Osteopath',        i:'PS'}
+  ];
+  const TIMES = ['08:00','08:45','09:30','10:15','11:00','11:45','13:00','13:45','14:30','15:15','16:00','16:45'];
+  const FILLER = [
+    ['Jo Mitchell','Follow up treatment'], ['Dan Whitely','Sports massage'],
+    ['Aisha Khan','Rehab session'], ['Tom Beard','Initial assessment'],
+    ['Lucy Payne','Follow up treatment'], ['Rav Singh','Sports massage']
+  ];
+
+  let st = {step:0, svc:null, who:null, date:null, time:null, name:'', email:'', phone:''};
+
+  /* stable pseudo randomness so a given day always looks the same */
+  function seed(s){ let h=2166136261; for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);} return (h>>>0)/4294967296; }
+  const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const MONS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  function dates(){
+    const out=[], d=new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate()+1);
+    while(out.length<12){ if(d.getDay()!==0) out.push(new Date(d)); d.setDate(d.getDate()+1); }
+    return out;
+  }
+  const DATES = dates();
+  const key = d => d.toISOString().slice(0,10);
+  const pretty = d => `${DAYS[d.getDay()]} ${d.getDate()} ${MONS[d.getMonth()]}`;
+
+  function taken(d, whoId){
+    const k = key(d)+whoId;
+    return TIMES.filter((t,i)=> seed(k+t+i) < 0.42);
+  }
+
+  function esc(s){ return String(s).replace(/[<>&"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c])); }
+
+  function setSteps(){
+    [...stepsEl.children].forEach((el,i)=> el.classList.toggle('on', i < st.step));
+  }
+
+  /* ---------------- diary ---------------- */
+  function renderDiary(highlight){
+    if(!st.date){ dayHdr.textContent='Pick a date to see the day'; diaryEl.innerHTML=''; return; }
+    const whoName = st.who && st.who.id!=='any' ? st.who.n : 'Hannah Reed';
+    dayHdr.textContent = `${pretty(st.date)} · ${whoName}`;
+    const busy = taken(st.date, st.who ? st.who.id : 'any');
+    let html='';
+    TIMES.forEach((t,i)=>{
+      const isNew = highlight && st.time===t;
+      if(isNew){
+        html += `<div class="appt appt--new"><div class="appt__t">${t}</div><div class="appt__c">
+          <div class="appt__n">${esc(st.name||'New booking')}<span class="newtag">NEW</span></div>
+          <div class="appt__m">${esc(st.svc.n)} · ${st.svc.m} min · &pound;${st.svc.p}</div></div></div>`;
+      } else if(busy.includes(t)){
+        const f = FILLER[Math.floor(seed(key(st.date)+t)*FILLER.length)];
+        html += `<div class="appt"><div class="appt__t">${t}</div><div class="appt__c">
+          <div class="appt__n">${f[0]}</div><div class="appt__m">${f[1]}</div></div></div>`;
+      } else {
+        html += `<div class="appt appt--free"><div class="appt__t">${t}</div><div class="appt__c">Free</div></div>`;
+      }
+    });
+    diaryEl.innerHTML = html;
+    if(highlight){
+      const el = diaryEl.querySelector('.appt--new');
+      if(el) el.scrollIntoView({block:'nearest'});
+    }
+  }
+
+  function runWjh(){
+    const items=[...wjhEl.children];
+    items.forEach((li,i)=> setTimeout(()=> li.classList.add('on'), 260 + i*330));
+    setTimeout(()=>{
+      document.getElementById('dPrice').innerHTML = '&pound;'+st.svc.p;
+      document.getElementById('dKept').innerHTML  = '&pound;'+st.svc.p;
+      keepEl.classList.add('on');
+    }, 260 + items.length*330 + 240);
+  }
+  function resetWjh(){
+    [...wjhEl.children].forEach(li=> li.classList.remove('on'));
+    keepEl.classList.remove('on');
+  }
+
+  /* ---------------- screens ---------------- */
+  function go(n){ st.step=n; render(); }
+
+  function render(){
+    setSteps();
+    const s = st.step;
+    let h='';
+
+    if(s===0){
+      h += `<div class="ph__h">What do you need?</div><div class="ph__p">Choose a treatment to get started.</div>`;
+      SERVICES.forEach(v=>{
+        h += `<button class="opt" data-svc="${v.id}">
+          <div><div class="opt__t">${v.n}</div><div class="opt__s">with a qualified practitioner</div></div>
+          <div class="opt__r"><div class="opt__price">&pound;${v.p}</div><div class="opt__mins">${v.m} MIN</div></div>
+        </button>`;
+      });
+    }
+
+    else if(s===1){
+      h += `<div class="ph__h">Who would you like?</div><div class="ph__p">${esc(st.svc.n)} · ${st.svc.m} minutes</div>`;
+      STAFF.forEach(p=>{
+        h += `<button class="opt" data-who="${p.id}">
+          <span class="av">${p.i}</span>
+          <div><div class="opt__t">${p.n}</div><div class="opt__s">${p.r}</div></div>
+        </button>`;
+      });
+      h += `<button class="lnk" data-back="0">Back</button>`;
+    }
+
+    else if(s===2){
+      h += `<div class="ph__h">Pick a day</div><div class="ph__p">Next two weeks, closed Sundays.</div><div class="dates">`;
+      DATES.forEach((d,i)=>{
+        const sel = st.date && key(st.date)===key(d) ? ' sel' : '';
+        h += `<button class="dts${sel}" data-date="${i}"><b>${d.getDate()}</b><span>${DAYS[d.getDay()].toUpperCase()}</span></button>`;
+      });
+      h += `</div><button class="lnk" data-back="1">Back</button>`;
+    }
+
+    else if(s===3){
+      const busy = taken(st.date, st.who.id);
+      h += `<div class="ph__h">Pick a time</div><div class="ph__p">${pretty(st.date)} · ${esc(st.who.n)}</div><div class="slots">`;
+      TIMES.forEach(t=>{
+        const off = busy.includes(t);
+        h += `<button class="slot${st.time===t?' sel':''}" data-time="${t}"${off?' disabled':''}>${t}</button>`;
+      });
+      h += `</div><button class="lnk" data-back="2">Back to dates</button>`;
+    }
+
+    else if(s===4){
+      h += `<div class="ph__h">Your details</div><div class="ph__p">So we know who is coming.</div>
+        <div class="fld"><label for="dN">Full name</label><input id="dN" type="text" placeholder="Jane Hartley" value="${esc(st.name)}" autocomplete="off"></div>
+        <div class="fld"><label for="dE">Email</label><input id="dE" type="email" placeholder="jane@example.co.uk" value="${esc(st.email)}" autocomplete="off"></div>
+        <div class="fld"><label for="dP">Mobile</label><input id="dP" type="tel" placeholder="07700 900000" value="${esc(st.phone)}" autocomplete="off"></div>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)">
+          <div class="sumline"><span>Treatment</span><b>${esc(st.svc.n)}</b></div>
+          <div class="sumline"><span>With</span><b>${esc(st.who.n)}</b></div>
+          <div class="sumline"><span>When</span><b>${pretty(st.date)}, ${st.time}</b></div>
+          <div class="sumline"><span>Price</span><b>&pound;${st.svc.p}</b></div>
+        </div>
+        <button class="phbtn" id="dBook" disabled>Confirm booking</button>
+        <button class="lnk" data-back="3">Back</button>`;
+    }
+
+    else if(s===5){
+      const ref = 'RP' + String(Math.abs(Math.round(seed(st.name+st.time)*899999)+100000));
+      h += `<div class="done">
+        <div class="done__tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h4>You are booked in</h4>
+        <p>A confirmation is on its way to ${esc(st.email||'your email')}</p>
+        <div class="ref">REF ${ref}</div>
+        <div class="rcpt">
+          <div class="sumline"><span>Treatment</span><b>${esc(st.svc.n)}</b></div>
+          <div class="sumline"><span>With</span><b>${esc(st.who.n)}</b></div>
+          <div class="sumline"><span>When</span><b>${pretty(st.date)}, ${st.time}</b></div>
+          <div class="sumline"><span>Where</span><b>Riverside Physio, Exeter</b></div>
+          <div class="sumline"><span>Price</span><b>&pound;${st.svc.p}</b></div>
+        </div>
+        <button class="lnk" id="dAgain" style="margin-top:16px">Run it again</button>
+      </div>`;
+    }
+
+    body.innerHTML = h;
+    body.scrollTop = 0;
+    if(s===4) wireDetails();
+  }
+
+  function wireDetails(){
+    const n=document.getElementById('dN'), e=document.getElementById('dE'), p=document.getElementById('dP');
+    const btn=document.getElementById('dBook');
+    const check=()=>{
+      st.name=n.value.trim(); st.email=e.value.trim(); st.phone=p.value.trim();
+      btn.disabled = !(st.name.length>1 && /\S+@\S+\.\S+/.test(st.email));
+    };
+    [n,e,p].forEach(el=> el.addEventListener('input', check));
+    check();
+    btn.addEventListener('click', ()=>{
+      btn.disabled=true; btn.textContent='Booking…';
+      setTimeout(()=>{ go(5); renderDiary(true); runWjh(); }, 620);
+    });
+  }
+
+  /* ---------------- events ---------------- */
+  body.addEventListener('click', ev=>{
+    const t = ev.target.closest('[data-svc],[data-who],[data-date],[data-time],[data-back],#dAgain');
+    if(!t) return;
+
+    if(t.id==='dAgain'){
+      st={step:0,svc:null,who:null,date:null,time:null,name:'',email:'',phone:''};
+      resetWjh(); renderDiary(false); dayHdr.textContent='Pick a date to see the day'; diaryEl.innerHTML='';
+      go(0); return;
+    }
+    if(t.dataset.back!==undefined){ go(+t.dataset.back); return; }
+    if(t.dataset.svc){ st.svc=SERVICES.find(v=>v.id===t.dataset.svc); go(1); return; }
+    if(t.dataset.who){ st.who=STAFF.find(v=>v.id===t.dataset.who); go(2); return; }
+    if(t.dataset.date!==undefined && t.dataset.date!==''){
+      st.date=DATES[+t.dataset.date]; st.time=null; renderDiary(false); go(3); return;
+    }
+    if(t.dataset.time){ st.time=t.dataset.time; go(4); return; }
+  });
+
+  render();
+})();
 </script>
 <!-- Cloudflare Web Analytics -->
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "546ee579b0c540e2ad0546f6efb0b90b"}'></script>
