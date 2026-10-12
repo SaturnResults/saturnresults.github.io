@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Google &amp; Meta Ads · Saturn Results</title>
+<meta name="description" content="Google and Meta ads managed properly for UK businesses. You own the account, you see the real numbers, and there is no long contract. Start with a free audit of what you are running now."/>
+<meta name="theme-color" content="#050506">
+<link rel="canonical" href="https://saturnresults.co.uk/ads/">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="256x256">
+<link rel="apple-touch-icon" href="/favicon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://saturnresults.co.uk/ads/">
+<meta property="og:site_name" content="Saturn Results">
+<meta property="og:title" content="Google &amp; Meta Ads · Saturn Results">
+<meta property="og:description" content="Ads managed properly. You own the account, you see the real numbers, and there is no long contract.">
+<meta property="og:image" content="https://saturnresults.co.uk/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="681">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Google &amp; Meta Ads · Saturn Results">
+<meta name="twitter:description" content="Ads managed properly. You own the account and you see the real numbers.">
+<meta name="twitter:image" content="https://saturnresults.co.uk/og-image.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050506;--bg-2:#0b0c0e;--bg-3:#121316;
+  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+  --fg:#f4f5f7;--fg-2:rgba(244,245,247,.64);--fg-3:rgba(244,245,247,.52);--fg-4:rgba(244,245,247,.30);
+  --accent:#a78bfa;--accent-deep:#5b21b6;
+  --google:#7aa7ff;--meta:#8b7bff;
+  --sans:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Roboto Mono',ui-monospace,monospace;
+  --container:1080px;--wide:1265px;--nav-h:60px;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+picture{display:contents}
+button{font:inherit;background:none;border:0;cursor:pointer;color:inherit}
+ul{list-style:none}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:clip}
+@media(max-width:768px){html,body{overflow-y:auto!important;height:auto!important;position:static!important;touch-action:pan-y!important}}
+::selection{background:var(--accent);color:#0a0a0b}
+.container{width:100%;max-width:var(--wide);margin:0 auto;padding:0 24px}
+.narrow{max-width:var(--container);margin:0 auto}
+
+.chip{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 14px 0 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);font-size:12px;color:var(--fg-2)}
+.chip__dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(167,139,250,.7);flex:none}
+.h2{font-size:40px;line-height:50px;letter-spacing:-.04em;font-weight:500;margin-top:18px}
+.h2__a,.h2__b{display:block}
+.h2__b{color:var(--fg-3)}
+@media(max-width:700px){.h2{font-size:28px;line-height:36px}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:48px;padding:0 30px;border-radius:999px;font-size:14px;font-weight:500;letter-spacing:-.01em;transition:transform .3s var(--ease),background .3s,box-shadow .3s;white-space:nowrap;border:0;cursor:pointer;font-family:inherit}
+.btn svg{width:14px;height:14px}
+.btn--light{background:rgba(255,255,255,.88);color:#0a0a0b}
+.btn--light:hover{background:#fff;transform:translateY(-1px);box-shadow:0 0 0 1px rgba(255,255,255,.2),0 10px 30px -10px rgba(167,139,250,.6)}
+.btn--ghost{background:rgba(255,255,255,.06);color:var(--fg);border:1px solid var(--line-2)}
+.btn--ghost:hover{background:rgba(255,255,255,.1)}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;height:var(--nav-h);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 clamp(20px,6vw,180px);background:linear-gradient(180deg,rgba(5,5,6,.75),rgba(5,5,6,0));transition:background .4s,transform .45s var(--ease)}
+.nav.is-scrolled{background:rgba(5,5,6,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav.is-hidden{transform:translateY(-100%)}
+.nav__brand{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:16px;letter-spacing:.06em}
+.nav__brand img{width:auto;height:26px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(167,139,250,.55))}
+.nav__links{display:flex;gap:8px;justify-self:center}
+.nav__links a{font-size:14px;color:var(--fg-2);padding:8px 14px;border-radius:999px;transition:color .2s,background .2s}
+.nav__links a:hover,.nav__links a.is-here{color:var(--fg);background:rgba(255,255,255,.06)}
+.nav__right{display:flex;align-items:center;gap:16px;justify-self:end}
+.nav__cta{display:inline-flex;align-items:center;height:38px;padding:0 18px;border-radius:999px;background:rgba(255,255,255,.12);font-size:14px;font-weight:500;transition:background .25s}
+.nav__cta:hover{background:rgba(255,255,255,.2)}
+@media(max-width:1024px){.nav{grid-template-columns:1fr auto}.nav__links{display:none}}
+
+/* hero */
+.page{position:relative;padding:126px 0 86px;background:radial-gradient(120% 60% at 50% 0,#171226 0%,var(--bg) 62%)}
+@media(max-width:900px){.page{padding:92px 0 60px}}
+.page__head{max-width:780px}
+.page__head h1{font-size:clamp(32px,4.8vw,58px);line-height:1.05;letter-spacing:-.04em;font-weight:400;margin-top:18px}
+.page__head h1 em{font-style:normal;color:var(--accent)}
+.page__head p{margin-top:18px;font-size:16.5px;line-height:26px;color:var(--fg-2);max-width:58ch}
+@media(max-width:900px){.page__head p{font-size:15px;line-height:24px}}
+.hero__cta{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.terms{display:flex;gap:12px 28px;margin-top:38px;flex-wrap:wrap;max-width:780px}
+.terms div{font-size:13px;color:var(--fg-2);display:flex;align-items:center;gap:8px}
+.terms b{color:var(--fg);font-weight:600}
+.terms i{width:5px;height:5px;border-radius:50%;background:var(--accent);flex:none}
+
+/* sections */
+.sec{padding:96px 0}
+@media(max-width:900px){.sec{padding:66px 0}}
+.sec--alt{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.sec__head{max-width:680px}
+.lede{margin-top:20px;font-size:16px;line-height:27px;color:var(--fg-2);max-width:64ch}
+.lede b{color:var(--fg);font-weight:600}
+.lede + .lede{margin-top:16px}
+
+/* two platforms */
+.plat{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:44px}
+@media(max-width:860px){.plat{grid-template-columns:1fr;gap:14px}}
+.pcard{border-radius:24px;border:1px solid var(--line);background:var(--bg-2);padding:32px 30px 28px;position:relative;overflow:hidden}
+.pcard::before{content:'';position:absolute;inset:0 0 auto 0;height:2px;background:linear-gradient(90deg,var(--c),transparent)}
+.pcard--g{--c:var(--google)}
+.pcard--m{--c:var(--meta)}
+.pcard__k{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--c)}
+.pcard h3{margin-top:14px;font-size:24px;font-weight:500;letter-spacing:-.025em}
+.pcard > p{margin-top:12px;font-size:14.5px;line-height:23px;color:var(--fg-2)}
+.pcard ul{margin-top:20px;padding-top:18px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.pcard li{display:flex;gap:11px;align-items:flex-start;font-size:13.5px;line-height:21px;color:var(--fg-3)}
+.pcard li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--c);flex:none;margin-top:8px}
+.pcard__f{margin-top:20px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.035);font-size:13px;line-height:21px;color:var(--fg-2)}
+.pcard__f b{color:var(--fg);font-weight:600}
+
+/* what we do */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
+@media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.grid{grid-template-columns:1fr}}
+.gcard{border-radius:20px;border:1px solid var(--line);background:var(--bg-2);padding:26px 24px;transition:border-color .35s,transform .5s var(--ease)}
+.gcard:hover{border-color:var(--line-2);transform:translateY(-3px)}
+.gcard__ico{width:36px;height:36px;border-radius:11px;background:rgba(167,139,250,.13);display:flex;align-items:center;justify-content:center;margin-bottom:17px}
+.gcard__ico svg{width:16px;height:16px;color:var(--accent)}
+.gcard h4{font-size:16.5px;font-weight:600;letter-spacing:-.02em}
+.gcard p{margin-top:9px;font-size:13.5px;line-height:22px;color:var(--fg-2)}
+
+/* promises */
+.prom{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:44px}
+@media(max-width:780px){.prom{grid-template-columns:1fr}}
+.pr{display:flex;gap:16px;padding:24px 24px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.02)}
+.pr__n{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--accent);padding-top:4px;flex:none}
+.pr h4{font-size:17px;font-weight:600;letter-spacing:-.02em}
+.pr p{margin-top:8px;font-size:13.5px;line-height:22px;color:var(--fg-2)}
+
+/* steps */
+.steps{margin-top:44px;border-top:1px solid var(--line)}
+.step{display:grid;grid-template-columns:86px 1fr;gap:24px;padding:28px 0;border-bottom:1px solid var(--line);align-items:start}
+@media(max-width:700px){.step{grid-template-columns:1fr;gap:9px;padding:22px 0}}
+.step__n{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--accent);padding-top:5px}
+.step h3{font-size:20px;font-weight:500;letter-spacing:-.02em}
+.step p{margin-top:9px;font-size:14px;line-height:23px;color:var(--fg-2);max-width:64ch}
+
+/* faq */
+.faq{margin-top:44px;border-top:1px solid var(--line)}
+details{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;padding:24px 44px 24px 0;font-size:17px;font-weight:500;letter-spacing:-.01em;position:relative;transition:color .25s}
+summary::-webkit-details-marker{display:none}
+summary:hover{color:var(--accent)}
+summary::after{content:'';position:absolute;right:8px;top:31px;width:9px;height:9px;border-right:1.5px solid var(--fg-3);border-bottom:1.5px solid var(--fg-3);transform:rotate(45deg);transition:transform .3s var(--ease)}
+details[open] summary::after{transform:rotate(-135deg)}
+details p{padding:0 40px 26px 0;font-size:14.5px;line-height:24px;color:var(--fg-2);max-width:70ch;margin-top:-4px}
+
+/* cta */
+.cta{padding:100px 0;background:radial-gradient(90% 60% at 50% 100%,#14101f 0%,var(--bg) 60%);text-align:center}
+@media(max-width:900px){.cta{padding:70px 0}}
+.cta h2{font-size:clamp(28px,4vw,44px);line-height:1.1;letter-spacing:-.035em;font-weight:400;margin-top:18px}
+.cta h2 em{font-style:normal;color:var(--accent)}
+.cta p{margin:16px auto 0;font-size:16px;line-height:25px;color:var(--fg-2);max-width:48ch}
+.cta .hero__cta{justify-content:center}
+
+/* footer */
+.footer{background:var(--bg);padding:70px 0 40px;border-top:1px solid var(--line)}
+.footer__grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+@media(max-width:820px){.footer__grid{grid-template-columns:1fr 1fr}.footer__brand{grid-column:1/-1}}
+.footer__brand img{width:auto;height:28px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(167,139,250,.5))}
+.footer__brand p{margin-top:20px;font-size:14px;color:var(--fg-2);max-width:32ch}
+.footer__col{display:flex;flex-direction:column;gap:14px}
+.footer__col h5{font-size:15px;font-weight:500;margin-bottom:8px}
+.footer__col a{font-size:15px;color:var(--fg-2)}
+.footer__col a:hover{color:var(--fg)}
+.footer__bottom{margin-top:56px;padding-top:30px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--fg-2)}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.is-in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a class="nav__brand" href="/"><picture><source type="image/webp" srcset="/SRWHITELOGO.webp"><img src="/SRWHITELOGO.png" alt=""/></picture> SATURN</a>
+  <div class="nav__links">
+    <a href="/#about">About</a>
+    <a href="/#process">How it works</a>
+    <a href="/ads/" class="is-here">Ads</a>
+    <a href="/slate/">Slate</a>
+    <a href="/#work">Work</a>
+    <a href="/#pricing">Pricing</a>
+  </div>
+  <div class="nav__right">
+    <a class="nav__cta" href="/contact/">Free audit</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page">
+  <div class="container">
+    <div class="page__head">
+      <span class="chip"><span class="chip__dot"></span>Google and Meta ads</span>
+      <h1>Ads that bring people through the door, <em>not just clicks.</em></h1>
+      <p>Google and Meta will happily spend your money either way. The job is making sure what comes back is worth more than what went out, and being able to prove it. That is what we are for.</p>
+      <div class="hero__cta">
+        <a class="btn btn--light" href="/contact/">
+          <span>Get a free audit of your ads</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a class="btn btn--ghost" href="#how">How it works</a>
+      </div>
+      <div class="terms">
+        <div><i></i>You own <b>the ad account</b></div>
+        <div><i></i>Ad spend goes <b>to Google and Meta</b>, never through us</div>
+        <div><i></i><b>No long contract</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE TWO PLATFORMS -->
+<section class="sec sec--alt" id="platforms">
+  <div class="container narrow">
+    <div class="sec__head">
+      <span class="chip"><span class="chip__dot"></span>The two platforms</span>
+      <h2 class="h2">
+        <span class="h2__a">They do completely</span>
+        <span class="h2__b">different jobs.</span>
+      </h2>
+      <p class="lede">Most businesses are told to be on both without anyone explaining why. The difference is simple, and once you see it the budget split stops being a guess.</p>
+    </div>
+
+    <div class="plat">
+      <div class="pcard pcard--g reveal">
+        <div class="pcard__k">Google</div>
+        <h3>Catching people already looking</h3>
+        <p>Somebody types emergency plumber near me, or sports massage Exeter. They have the problem right now and they are choosing between you and whoever else appears. Google ads put you in that moment.</p>
+        <ul>
+          <li>Demand that already exists, so it converts faster</li>
+          <li>You pay per click, and you pick the words</li>
+          <li>Local search, maps and your Google listing all feed it</li>
+          <li>Works hardest for urgent, searched for services</li>
+        </ul>
+        <div class="pcard__f"><b>Best when</b> people already know they need what you sell and are actively hunting for it.</div>
+      </div>
+
+      <div class="pcard pcard--m reveal">
+        <div class="pcard__k">Meta · Facebook and Instagram</div>
+        <h3>Reaching people before they look</h3>
+        <p>Nobody opens Instagram to buy a kitchen. Meta ads interrupt, which means the creative has to earn the attention. Done well it builds demand that Google then picks up later.</p>
+        <ul>
+          <li>You choose the audience rather than the words</li>
+          <li>Creative matters more than anything else here</li>
+          <li>Cheap reach, so it suits offers and visual work</li>
+          <li>Retargeting the people who nearly booked</li>
+        </ul>
+        <div class="pcard__f"><b>Best when</b> what you sell is visual, impulsive, or something people did not know they wanted.</div>
+      </div>
+    </div>
+
+    <p class="lede" style="margin-top:34px"><b>The honest version:</b> if people are already searching for what you do, start on Google, because you are buying intent rather than creating it. If almost nobody searches for it, Google has nothing to sell you and Meta is where you start. Most businesses end up on both, but rarely on day one and rarely at an even split.</p>
+  </div>
+</section>
+
+<!-- WHAT WE DO -->
+<section class="sec" id="what">
+  <div class="container narrow">
+    <div class="sec__head">
+      <span class="chip"><span class="chip__dot"></span>What we actually do</span>
+      <h2 class="h2">
+        <span class="h2__a">The work behind</span>
+        <span class="h2__b">a campaign that pays.</span>
+      </h2>
+    </div>
+
+    <div class="grid">
+      <div class="gcard reveal">
+        <div class="gcard__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+        <h4>Research first</h4>
+        <p>What people actually type, what your competitors are bidding on, and what a customer is worth to you. Without that last number nobody can tell you if an ad is working.</p>
+      </div>
+      <div class="gcard reveal">
+        <div class="gcard__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M8 14h8"/></svg></div>
+        <h4>Build the account properly</h4>
+        <p>Structure, match types, negatives, audiences and exclusions. Most accounts we audit are losing money to searches the owner would never have paid for.</p>
+      </div>
+      <div class="gcard reveal">
+        <div class="gcard__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="9" r="1.6"/><path d="M21 16l-5-5L5 21"/></svg></div>
+        <h4>Creative that earns the click</h4>
+        <p>Copy, images and video made for the platform rather than cut down from a brochure. On Meta the creative is the targeting, so this is where most of the result comes from.</p>
+      </div>
+      <div class="gcard reveal">
+        <div class="gcard__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M11 18h2"/></svg></div>
+        <h4>Somewhere worth landing</h4>
+        <p>Sending paid traffic to a slow or vague page is the quickest way to waste a budget. We build the page the ad deserves, and it loads fast on a phone.</p>
+      </div>
+      <div class="gcard reveal">
+        <div class="gcard__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div>
+        <h4>Tracking that tells the truth</h4>
+        <p>Conversion tracking set up so a lead is a lead, not a page view. Calls, forms and bookings all counted, so you can see which campaign actually produced the work.</p>
+      </div>
+      <div class="gcard reveal">
+        <div class="gcard__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M5 10l7-7 7 7"/></svg></div>
+        <h4>Weekly optimisation</h4>
+        <p>Cutting what is not converting, moving budget to what is, testing new creative before the old stops working. Ads decay, so this is the part that never finishes.</p>
+      </div>
+      <div class="gcard reveal">
+        <div class="gcard__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v14H4z"/><path d="M8 20h8M8 9h8M8 13h5"/></svg></div>
+        <h4>Reporting in plain English</h4>
+        <p>What you spent, what came back, what we changed and what we are doing next. No dashboard you need a lesson to read and no metrics chosen to look good.</p>
+      </div>
+      <div class="gcard reveal">
+        <div class="gcard__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <h4>Budget held sensibly</h4>
+        <p>We start smaller than most agencies suggest, prove something works, then scale it. Spending big before you know what converts is how budgets disappear.</p>
+      </div>
+      <div class="gcard reveal">
+        <div class="gcard__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h4>Your account, your data</h4>
+        <p>Everything is built in accounts you own. If you ever leave, the campaigns, the history and the audiences stay with you. We think that is the bare minimum.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMISES -->
+<section class="sec sec--alt" id="promises">
+  <div class="container narrow">
+    <div class="sec__head">
+      <span class="chip"><span class="chip__dot"></span>How we work</span>
+      <h2 class="h2">
+        <span class="h2__a">Four things we will not</span>
+        <span class="h2__b">do to you.</span>
+      </h2>
+      <p class="lede">Most of the bad experiences people have had with ad agencies come down to the same handful of things. So here they are, in writing.</p>
+    </div>
+
+    <div class="prom">
+      <div class="pr reveal">
+        <div class="pr__n">01</div>
+        <div>
+          <h4>We will not hold your ad account</h4>
+          <p>It is set up in your name, on your billing, with us added as a manager. If you walk away you keep everything. Agencies that own your account are relying on it being painful to leave.</p>
+        </div>
+      </div>
+      <div class="pr reveal">
+        <div class="pr__n">02</div>
+        <div>
+          <h4>We will not take a cut of your spend</h4>
+          <p>Your budget goes straight to Google and Meta on your card. We charge a flat management fee, so we have no reason to tell you to spend more than you should.</p>
+        </div>
+      </div>
+      <div class="pr reveal">
+        <div class="pr__n">03</div>
+        <div>
+          <h4>We will not report on impressions</h4>
+          <p>Reach and impressions are easy to grow and easy to hide behind. You get cost per lead, cost per booking and what it cost to get a customer, even in a bad month.</p>
+        </div>
+      </div>
+      <div class="pr reveal">
+        <div class="pr__n">04</div>
+        <div>
+          <h4>We will not tie you in</h4>
+          <p>Thirty days, rolling. Ads take a little while to find their feet, so we will ask you for a fair run at it, but you are staying because it is working rather than because you signed something.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec" id="how">
+  <div class="container narrow">
+    <div class="sec__head">
+      <span class="chip"><span class="chip__dot"></span>Getting started</span>
+      <h2 class="h2">
+        <span class="h2__a">It starts with a free look</span>
+        <span class="h2__b">at what you have now.</span>
+      </h2>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step__n">01</div>
+        <div>
+          <h3>A free audit, whether you are running ads or not</h3>
+          <p>If you have an account, we go through it and tell you where the money is going. If you have never run ads, we tell you honestly whether they would work for what you sell, and roughly what it would take. Some businesses are better off fixing their Google listing first, and we will say so.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step__n">02</div>
+        <div>
+          <h3>A plan with a number attached</h3>
+          <p>Which platform, what budget, what we expect it to produce and how long before we know. You see this before you commit to anything, and if the numbers do not work we will tell you rather than take the fee.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step__n">03</div>
+        <div>
+          <h3>Build, launch and watch it closely</h3>
+          <p>Accounts, tracking, creative and landing pages. The first two weeks are the noisiest, so that is when we are in it daily, cutting what is clearly not working before it eats the month.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step__n">04</div>
+        <div>
+          <h3>Then it is weekly work and a monthly conversation</h3>
+          <p>We optimise through the week and sit down with you once a month with what it cost, what it returned and what is next. If something is not working you will hear it from us first.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec sec--alt" id="faq">
+  <div class="container narrow">
+    <div class="sec__head">
+      <span class="chip"><span class="chip__dot"></span>The awkward questions</span>
+      <h2 class="h2">
+        <span class="h2__a">What everybody asks</span>
+        <span class="h2__b">before they spend a penny.</span>
+      </h2>
+    </div>
+
+    <div class="faq">
+      <details>
+        <summary>How much should I be spending?</summary>
+        <p>It depends entirely on what a customer is worth to you and how competitive your trade is, which is why anybody quoting a figure before asking is guessing. What we will say is that a budget too small to gather data is worse than not starting, because you pay for the learning and never get to use it. We work that number out with you during the audit, and if it is more than you want to spend right now we will tell you to wait.</p>
+      </details>
+      <details>
+        <summary>How long before it works?</summary>
+        <p>You will see clicks on day one and that means nothing. Give it a few weeks before judging it, longer on Meta where the creative needs testing. Anybody promising results in the first week is either lucky or not telling you the truth.</p>
+      </details>
+      <details>
+        <summary>Do I actually own the ad account?</summary>
+        <p>Yes, and we would be wary of anyone who says otherwise. It is created in your name on your billing details, and we are added as a manager. Remove us whenever you like and everything stays exactly where it is.</p>
+      </details>
+      <details>
+        <summary>Google or Meta, if I can only do one?</summary>
+        <p>If people search for what you sell, Google, because you are buying demand that already exists. If they do not, Meta, because you have to create it. We will tell you which one you are during the audit, and occasionally the answer is neither yet.</p>
+      </details>
+      <details>
+        <summary>What if it does not work?</summary>
+        <p>Then we tell you, and we tell you early. Sometimes the ads are fine and the problem is the price, the offer or how fast you ring people back. We would rather point at the real reason than quietly keep billing you while it limps along.</p>
+      </details>
+      <details>
+        <summary>Does the ad spend come through you?</summary>
+        <p>No. Your budget goes straight to Google and Meta on your own card. We never touch it and we never take a percentage of it, so there is nothing in it for us to push your spend up.</p>
+      </details>
+      <details>
+        <summary>I have been burned before, why would this be different?</summary>
+        <p>Fair, and we cannot answer that with words. The audit is free, it tells you what is in your current account and you keep it whatever you decide. If the last agency was doing a good job that will show up, and we will tell you that too.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="start">
+  <div class="container narrow">
+    <span class="chip"><span class="chip__dot"></span>No cost, no obligation</span>
+    <h2>Find out what your ads are <em>really doing.</em></h2>
+    <p>We will go through what you are running now, or tell you whether ads are worth it at all. Free, and the findings are yours either way.</p>
+    <div class="hero__cta">
+      <a class="btn btn--light" href="/contact/">
+        <span>Get your free audit</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a class="btn btn--ghost" href="/#work">See our work</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <picture><source type="image/webp" srcset="/SRWHITELOGO.webp"><img src="/SRWHITELOGO.png" alt="Saturn Results"></picture>
+        <p>A UK marketing agency helping ambitious businesses grow with strategy, web, SEO, social and AI.</p>
+      </div>
+      <div class="footer__col"><h5>Agency</h5><a href="/#about">About</a><a href="/#process">How it works</a><a href="/#work">Work</a><a href="/#pricing">Pricing</a></div>
+      <div class="footer__col"><h5>Services</h5><a href="/ads/">Google &amp; Meta ads</a><a href="/slate/">Slate booking</a><a href="/mentoring/">Mentoring</a><a href="/contact/">Free audit</a></div>
+      <div class="footer__col"><h5>Connect</h5><a href="mailto:contact@saturnresults.com">Email us</a><a href="/portal/">Client portal</a></div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Saturn Results. All rights reserved.</span>
+      <span>contact@saturnresults.com</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* nav: hide on scroll down, show on scroll up */
+(function(){
+  const nav=document.getElementById('nav');
+  let last=scrollY, tick=false;
+  addEventListener('scroll',()=>{
+    if(tick) return; tick=true;
+    requestAnimationFrame(()=>{
+      const y=scrollY;
+      nav.classList.toggle('is-scrolled',y>20);
+      if(y<80) nav.classList.remove('is-hidden');
+      else if(y>last+4) nav.classList.add('is-hidden');
+      else if(y<last-4) nav.classList.remove('is-hidden');
+      last=y; tick=false;
+    });
+  },{passive:true});
+})();
+
+/* reveal */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target)}}),{threshold:.1,rootMargin:'0px 0px -40px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* one FAQ open at a time */
+document.querySelectorAll('.faq details').forEach(d=>{
+  d.addEventListener('toggle',()=>{
+    if(d.open) document.querySelectorAll('.faq details').forEach(o=>{if(o!==d) o.open=false});
+  });
+});
+</script>
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "546ee579b0c540e2ad0546f6efb0b90b"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
