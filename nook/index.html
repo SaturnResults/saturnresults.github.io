@@ -160,6 +160,36 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
 .note{margin-top:18px;padding:16px 18px;border-radius:14px;background:rgba(77,154,255,.08);border:1px solid rgba(77,154,255,.22);font-size:13.5px;line-height:21px;color:var(--fg-2)}
 .note b{color:var(--fg);font-weight:500}
 
+/* claim form */
+.claim{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+@media(max-width:860px){.claim{grid-template-columns:1fr;gap:32px}}
+.claim__box{padding:28px;border-radius:24px;background:var(--bg-3);border:1px solid var(--line-2);box-shadow:0 30px 80px -40px rgba(139,92,246,.45)}
+.fld{display:block;margin-bottom:14px}
+.fld span{display:block;font-size:12px;color:var(--fg-2);margin-bottom:6px}
+.fld em{font-style:normal;color:var(--fg-4)}
+.fld input{width:100%;height:48px;padding:0 16px;border-radius:14px;border:1px solid var(--line-2);background:rgba(255,255,255,.04);color:var(--fg);font:inherit;font-size:15px;outline:none;transition:border-color .2s,background .2s}
+.fld input:focus{border-color:rgba(167,139,250,.7);background:rgba(255,255,255,.06)}
+.fld input::placeholder{color:var(--fg-4)}
+.tick{display:flex;gap:10px;align-items:flex-start;margin:4px 0 18px;font-size:13px;line-height:19px;color:var(--fg-2);cursor:pointer}
+.tick input{margin-top:2px;accent-color:#8b5cf6;width:16px;height:16px;flex:none}
+#claimForm .btn{width:100%}
+.fine{margin-top:14px;font-size:12px;line-height:18px;color:var(--fg-4)}
+.err{display:none;margin-top:12px;font-size:13px;color:#fca5a5}
+.err.show{display:block}
+.meter{margin-top:28px;max-width:420px}
+.meter__bar{height:8px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.meter__bar i{display:block;height:100%;width:100%;border-radius:99px;background:linear-gradient(90deg,#8b5cf6,#a78bfa);transition:width 1s var(--ease)}
+.meter span{display:block;margin-top:10px;font-size:13px;color:var(--fg-2)}
+.meter b{color:var(--fg);font-weight:500}
+.unlocked{text-align:center;padding:12px 4px}
+.unlocked__ic{width:56px;height:56px;margin:0 auto 16px;border-radius:50%;display:grid;place-items:center;background:rgba(75,211,127,.14);color:var(--money)}
+.unlocked__ic svg{width:26px;height:26px}
+.unlocked h3{font-size:24px;font-weight:500;letter-spacing:-.03em}
+.unlocked > p{margin:8px 0 22px;color:var(--fg-2);font-size:15px}
+.unlocked .btn{width:100%}
+.unlocked__more{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.unlocked__more .btn{height:42px;padding:0 12px;font-size:13px}
+
 /* faq */
 .faq{margin-top:40px;border-top:1px solid var(--line)}
 .faq details{border-bottom:1px solid var(--line)}
@@ -206,7 +236,7 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
     <a href="#faq">FAQ</a>
   </div>
   <div class="nav__right">
-    <a class="nav__cta" href="/nook/SaturnNook.zip" download>Download</a>
+    <a class="nav__cta" href="#get">Claim free copy</a>
   </div>
 </nav>
 
@@ -215,19 +245,19 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
   <div class="container">
     <div class="page__head">
       <img class="app-icon" src="/nook/nook-icon.png" alt="Saturn Nook app icon" width="76" height="76">
-      <span class="chip"><span class="chip__dot"></span>Free Mac app · made by Saturn Results</span>
+      <span class="chip"><span class="chip__dot"></span>Free for the first 50 people · <b class="js-left" style="color:var(--fg);font-weight:500">50</b>&nbsp;left</span>
       <h1>Your business, living in your <em>notch</em></h1>
       <p>Saturn Nook turns the notch on your MacBook into a small dashboard for running client work. Hover over it to see your clients, today's to-dos, a billable-hours timer, your calendar and your music, then move away and it tucks itself back in.</p>
       <div class="hero__cta">
-        <a class="btn btn--light" href="/nook/SaturnNook.zip" download>
+        <a class="btn btn--light" href="#get">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
-          <span>Download for Mac</span><small>1.2 MB</small>
+          <span>Claim your free copy</span>
         </a>
         <a class="btn btn--ghost" href="#install">How to install</a>
       </div>
-      <p class="mobile-note">Saturn Nook is a Mac app. Open this page on your Mac to download it.</p>
+      <p class="mobile-note">Saturn Nook is a Mac app. Claim your copy here, then send the link to yourself to open on your Mac.</p>
       <div class="terms">
-        <div><i></i><span><b>Free</b>, no account</span></div>
+        <div><i></i><span><b>Free</b> for the first 50</span></div>
         <div><i></i><span>macOS <b>14 Sonoma</b> or later</span></div>
         <div><i></i><span>Apple Silicon <b>and</b> Intel</span></div>
         <div><i></i><span>Your data <b>stays on your Mac</b></span></div>
@@ -298,8 +328,55 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
   </div>
 </section>
 
+<!-- CLAIM -->
+<section class="sec sec--alt" id="get">
+  <div class="container narrow">
+    <div class="claim reveal">
+      <div>
+        <span class="chip"><span class="chip__dot"></span><span class="js-chip">Free for the first 50</span></span>
+        <h2 class="h2">
+          <span class="h2__a js-title">Claim your free copy.</span>
+          <span class="h2__b js-sub">Only 50 are free.</span>
+        </h2>
+        <p class="lede">Pop your name and email in and the download unlocks straight away. On your phone? You can send the link to yourself and open it on your Mac.</p>
+        <div class="meter" aria-hidden="true"><div class="meter__bar"><i class="js-bar"></i></div><span><b class="js-left">50</b> of 50 free copies left</span></div>
+      </div>
+      <div class="claim__box">
+        <form id="claimForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+          <input type="hidden" name="access_key" value="ac6bd08f-23c7-4311-abe6-b49c47fe5f20">
+          <input type="hidden" name="subject" value="Saturn Nook sign-up">
+          <input type="hidden" name="from_name" value="Saturn Nook · saturnresults.co.uk">
+          <input type="hidden" name="source" value="Saturn Nook free copy">
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+          <label class="fld"><span>Your name</span><input type="text" name="name" required autocomplete="name" placeholder="Alex Smith"></label>
+          <label class="fld"><span>Email</span><input type="email" name="email" required autocomplete="email" placeholder="you@business.co.uk"></label>
+          <label class="fld"><span>Business name <em>(optional)</em></span><input type="text" name="business" autocomplete="organization" placeholder="Your business"></label>
+          <label class="tick"><input type="checkbox" name="marketing_ok" value="yes"> <span>Send me the occasional tip from Saturn Results. Unsubscribe any time.</span></label>
+          <button class="btn btn--light" type="submit"><span class="js-btn">Unlock my free copy</span></button>
+          <p class="err" id="claimErr"></p>
+          <p class="fine">We'll only use your email to reply if you get in touch, or for tips if you tick the box above.</p>
+        </form>
+        <div class="unlocked" id="unlocked" hidden>
+          <div class="unlocked__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+          <h3>You're in<span class="js-first"></span>.</h3>
+          <p>Your free copy of Saturn Nook is ready.</p>
+          <a class="btn btn--light" href="/nook/get-a5dcbec42a/SaturnNook.zip" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+            <span>Download for Mac</span><small>1.2 MB</small>
+          </a>
+          <div class="unlocked__more">
+            <a class="btn btn--ghost js-mailme" href="#">Email the link to myself</a>
+            <button class="btn btn--ghost js-copy" type="button">Copy link</button>
+          </div>
+          <p class="fine">Then follow the install steps below.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- INSTALL -->
-<section class="sec sec--alt" id="install">
+<section class="sec" id="install">
   <div class="container narrow">
     <div class="sec__head reveal">
       <span class="chip"><span class="chip__dot"></span>Install in a minute</span>
@@ -309,7 +386,7 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
       </h2>
     </div>
     <ol class="steps">
-      <li class="step reveal"><div><h3>Download and unzip</h3><p>Click <a href="/nook/SaturnNook.zip" download style="color:var(--accent)">Download for Mac</a>. Your Mac unzips it into <b>Saturn Nook</b> in your Downloads folder.</p></div></li>
+      <li class="step reveal"><div><h3>Claim, download and unzip</h3><p><a href="#get" style="color:var(--accent)">Claim your free copy</a> with your email, then click <b>Download for Mac</b>. Your Mac unzips it into <b>Saturn Nook</b> in your Downloads folder.</p></div></li>
       <li class="step reveal"><div><h3>Move it to Applications</h3><p>Drag <b>Saturn Nook</b> into your <span class="path">Applications</span> folder in Finder.</p></div></li>
       <li class="step reveal"><div><h3>Allow it the first time</h3><p>Double-click it. macOS will say it can't check the app for malicious software. Click <b>Done</b>, open <span class="path">System Settings › Privacy &amp; Security</span>, scroll down and click <b>Open Anyway</b> next to Saturn Nook, then confirm. You only do this once.</p></div></li>
       <li class="step reveal"><div><h3>Hover over your notch</h3><p>That's it. Move your pointer to the top-middle of the screen and the Nook slides open. The <b>⬡</b> icon in your menu bar has <b>Launch at Login</b>, so it's there every time you start your Mac.</p></div></li>
@@ -330,7 +407,7 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
       <details><summary>Is there a Windows version?</summary><p>Not at the moment. Saturn Nook is built with Apple's own tools, so it only runs on a Mac. If you'd use a Windows version, <a href="mailto:contact@saturnresults.com?subject=Saturn%20Nook%20for%20Windows" style="color:var(--accent)">email us</a> and we'll let you know if we make one.</p></details>
       <details><summary>Where is my data stored?</summary><p>Only on your Mac, in <span class="path">~/Library/Application Support/SaturnNook</span>. There's no account, no cloud sync and no tracking. Back up that folder to keep your clients, tasks and hours.</p></details>
       <details><summary>Why does it ask for Calendar and Spotify access?</summary><p>Calendar access shows today's meetings on the home tab. Spotify or Music access lets the play, pause and skip buttons work. Both are optional, and you can change them any time in System Settings › Privacy &amp; Security.</p></details>
-      <details><summary>Is it really free?</summary><p>Yes. No trial, no upgrade and no ads. If it's useful, tell a friend who runs their own business.</p></details>
+      <details><summary>Is it really free?</summary><p>It's free for the first 50 people who sign up, with no trial, upgrade or ads. Once the 50 free copies are gone, you can join the waitlist and we'll email you when it's available again.</p></details>
       <details><summary>How do I remove it?</summary><p>Click the ⬡ icon in the menu bar and choose Quit, then drag Saturn Nook from Applications to the Bin. To remove your data as well, delete the <span class="path">SaturnNook</span> folder in <span class="path">~/Library/Application Support</span>.</p></details>
       <details><summary>Something isn't working</summary><p>Email <a href="mailto:contact@saturnresults.com?subject=Saturn%20Nook" style="color:var(--accent)">contact@saturnresults.com</a> with your Mac model and what happened, and we'll take a look.</p></details>
     </div>
@@ -358,7 +435,7 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
         <p>A UK marketing agency helping ambitious businesses grow with strategy, web, SEO, social and AI.</p>
       </div>
       <div class="footer__col"><h5>Agency</h5><a href="/#about">About</a><a href="/#process">How it works</a><a href="/#work">Work</a><a href="/#pricing">Pricing</a></div>
-      <div class="footer__col"><h5>Saturn Nook</h5><a href="#features">Features</a><a href="#install">Install</a><a href="#faq">FAQ</a><a href="/nook/SaturnNook.zip" download>Download</a></div>
+      <div class="footer__col"><h5>Saturn Nook</h5><a href="#features">Features</a><a href="#install">Install</a><a href="#faq">FAQ</a><a href="#get">Claim free copy</a></div>
       <div class="footer__col"><h5>Connect</h5><a href="mailto:contact@saturnresults.com">Email us</a><a href="/contact/">Book a call</a><a href="/portal/">Client portal</a></div>
     </div>
     <div class="footer__bottom">
@@ -369,6 +446,80 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
 </footer>
 
 <script>
+/* ---------------------------------------------------------------
+   FREE COPIES CLAIMED — edit this one number as people sign up.
+   Each sign-up arrives by email with the subject "Saturn Nook sign-up".
+   0 = all 50 left. 50 = form becomes a waitlist.
+   --------------------------------------------------------------- */
+const COPIES_CLAIMED = 0;
+const FREE_COPIES = 50;
+
+(function(){
+  const left = Math.max(0, FREE_COPIES - COPIES_CLAIMED);
+  const soldOut = left === 0;
+  document.querySelectorAll('.js-left').forEach(el => el.textContent = left);
+  document.querySelectorAll('.js-bar').forEach(el => el.style.width = (left / FREE_COPIES * 100) + '%');
+  const form = document.getElementById('claimForm');
+  if (soldOut) {
+    document.querySelector('.js-chip').textContent = 'All 50 free copies claimed';
+    document.querySelector('.js-title').textContent = 'The free copies have gone.';
+    document.querySelector('.js-sub').textContent = 'Join the waitlist.';
+    document.querySelector('.js-btn').textContent = 'Join the waitlist';
+    form.querySelector('[name=subject]').value = 'Saturn Nook waitlist';
+    document.querySelectorAll('a[href="#get"] span, a.nav__cta[href="#get"]').forEach(el => { if (/Claim/.test(el.textContent)) el.textContent = 'Join the waitlist'; });
+  }
+
+  const err = document.getElementById('claimErr');
+  const done = (name) => {
+    if (soldOut) {
+      form.innerHTML = '<div class="unlocked"><div class="unlocked__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h3>You\'re on the list.</h3><p>We\'ll email you when Saturn Nook is available again.</p></div>';
+      return;
+    }
+    form.hidden = true;
+    const box = document.getElementById('unlocked');
+    box.hidden = false;
+    if (name) box.querySelector('.js-first').textContent = ', ' + name.split(' ')[0];
+    try { localStorage.setItem('nookClaimed', name || '1'); } catch (e) {}
+  };
+  const LINK = 'https://saturnresults.co.uk/nook/get-a5dcbec42a/SaturnNook.zip';
+  document.querySelector('.js-mailme').addEventListener('click', e => {
+    e.preventDefault();
+    const to = (form.email.value || '').trim();
+    location.href = 'mailto:' + encodeURIComponent(to) + '?subject=' + encodeURIComponent('Saturn Nook download') +
+      '&body=' + encodeURIComponent('Open this on your Mac to download Saturn Nook:\n' + LINK + '\n\nInstall steps: https://saturnresults.co.uk/nook/#install');
+  });
+  document.querySelector('.js-copy').addEventListener('click', async e => {
+    try { await navigator.clipboard.writeText(LINK); e.currentTarget.textContent = 'Copied ✓'; } catch (x) { prompt('Copy this link:', LINK); }
+  });
+  try { const prev = localStorage.getItem('nookClaimed'); if (prev && !soldOut) done(prev === '1' ? '' : prev); } catch (e) {}
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    err.classList.remove('show');
+    const name = form.name.value.trim(), email = form.email.value.trim();
+    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      err.textContent = 'Please add your name and a valid email.'; err.classList.add('show'); return;
+    }
+    const btn = form.querySelector('button'), label = btn.querySelector('span'), original = label.textContent;
+    btn.disabled = true; label.textContent = 'Unlocking…';
+    const fd = new FormData(form);
+    const biz = form.business.value.trim();
+    fd.set('subject', (soldOut ? 'Saturn Nook waitlist — ' : 'Saturn Nook sign-up — ') + name + (biz ? ' · ' + biz : ''));
+    fd.set('message', (soldOut ? 'Joined the Saturn Nook waitlist.' : 'Claimed a free copy of Saturn Nook.') +
+      (soldOut ? '' : '\nDownload link: https://saturnresults.co.uk/nook/get-a5dcbec42a/SaturnNook.zip') +
+      '\nMarketing emails OK: ' + (form.marketing_ok.checked ? 'yes' : 'no'));
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: fd, headers: { Accept: 'application/json' } });
+      const json = await res.json().catch(() => ({ success: false }));
+      if (!json.success) throw new Error(json.message || 'failed');
+      done(name);
+    } catch (x) {
+      btn.disabled = false; label.textContent = original;
+      err.textContent = 'That didn\'t go through. Please try again, or email contact@saturnresults.com.'; err.classList.add('show');
+    }
+  });
+})();
+
 /* tab switcher for the demo screen */
 (function(){
   const captions={
