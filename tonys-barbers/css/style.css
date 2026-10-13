@@ -308,7 +308,7 @@ section { padding: clamp(72px, 10vw, 128px) 0; position: relative; }
 /* =============================================
    MOBILE ACTION BAR
    ============================================= */
-.actionbar { display: none; position: fixed; z-index: 900; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); gap: 8px; padding: 8px; background: rgba(20,17,13,.94); border: 1px solid var(--gold-dim); border-radius: 18px; backdrop-filter: blur(12px); box-shadow: 0 14px 40px rgba(0,0,0,.5); transition: transform .35s var(--ease), opacity .3s; }
+.actionbar { display: none; position: fixed; z-index: 900; left: 8px; right: 8px; bottom: max(6px, calc(env(safe-area-inset-bottom) - 14px)); gap: 8px; padding: 8px; background: rgba(20,17,13,.94); border: 1px solid var(--gold-dim); border-radius: 18px; backdrop-filter: blur(12px); box-shadow: 0 14px 40px rgba(0,0,0,.5); transition: transform .35s var(--ease), opacity .3s; }
 .actionbar.hide { transform: translateY(140%); opacity: 0; }
 .actionbar a, .actionbar button { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 10px; border-radius: 12px; font: 600 13px/1 var(--sans); letter-spacing: .06em; }
 .actionbar svg { width: 18px; height: 18px; }
@@ -359,7 +359,7 @@ section { padding: clamp(72px, 10vw, 128px) 0; position: relative; }
   .review-grid { grid-template-columns: 1fr; }
   .map { min-height: 360px; }
   .actionbar { display: flex; }
-  body { padding-bottom: 84px; }
+  body { padding-bottom: 76px; }
 }
 @media (max-width: 560px) {
   .svc-grid { grid-template-columns: 1fr; }
