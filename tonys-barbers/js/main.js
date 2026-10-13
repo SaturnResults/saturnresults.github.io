@@ -104,6 +104,13 @@ sheet?.querySelector('.sheet__copy')?.addEventListener('click', async e => {
 
 // ---------- Mobile action bar: tuck away while the Visit section is on screen ----------
 const bar = document.querySelector('.actionbar');
+// X hides the bar for the rest of the visit
+const hideBar = () => { bar?.classList.add('dismissed'); document.body.classList.add('actionbar-off'); };
+try { if (sessionStorage.getItem('tb-bar-off')) hideBar(); } catch {}
+bar?.querySelector('.actionbar__close')?.addEventListener('click', () => {
+  hideBar();
+  try { sessionStorage.setItem('tb-bar-off', '1'); } catch {}
+});
 const visit = document.getElementById('visit');
 if (bar && visit && 'IntersectionObserver' in window) {
   new IntersectionObserver(([e]) => bar.classList.toggle('hide', e.isIntersecting), { threshold: .25 }).observe(visit);
