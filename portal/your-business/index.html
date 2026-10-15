@@ -36,7 +36,7 @@ img,svg{display:block;max-width:100%}
 nav{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
   padding:16px 36px;background:rgba(8,7,13,.78);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
 .nav-logo{display:flex;align-items:center;gap:11px;font-weight:600;letter-spacing:.05em;font-size:15px}
-.nav-logo img{width:28px;height:28px;object-fit:contain}
+.nav-logo img{width:auto;height:20px;object-fit:contain}
 .nav-mid{display:flex;gap:6px}
 .nav-mid a{font-size:13px;color:var(--muted);padding:8px 14px;border-radius:100px;transition:all .2s}
 .nav-mid a.on{color:var(--ink);background:rgba(255,255,255,.07)}
@@ -141,7 +141,7 @@ nav{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-con
 <div class="noise"></div>
 
 <nav>
-  <a class="nav-logo" href="/"><picture><source type="image/webp" srcset="/SRWHITELOGO.webp"><img src="/SRWHITELOGO.png" alt=""/></picture><span>Saturn Results</span></a>
+  <a class="nav-logo" href="/" aria-label="Saturn Results"><picture><source type="image/webp" srcset="/sr-logo-white.webp"><img src="/sr-logo-white.png" alt="Saturn Results"/></picture></a>
   <div class="nav-mid">
     <a class="on" href="#">Overview</a>
     <a href="#">Deliverables</a>

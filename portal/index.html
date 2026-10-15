@@ -35,7 +35,7 @@ picture{display:contents}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:22px 40px;transition:background .35s,border-color .35s}
 nav.scrolled{background:rgba(8,7,13,.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
 .nav-logo{display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:.05em}
-.nav-logo img{width:32px;height:32px;object-fit:contain}
+.nav-logo img{width:auto;height:20px;object-fit:contain}
 .nav-back{display:inline-flex;align-items:center;gap:9px;padding:10px 20px;border:1px solid var(--border);border-radius:100px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.02);transition:all .25s}
 .nav-back:hover{color:var(--ink);border-color:var(--purple)}
 @media (max-width:700px){nav{padding:16px 20px}.nav-logo span{display:none}}
@@ -200,7 +200,7 @@ nav.scrolled{background:rgba(8,7,13,.75);backdrop-filter:blur(20px);border-botto
 
 <nav id="nav">
   <a class="nav-logo" href="/">
-    <picture><source type="image/webp" srcset="/SRWHITELOGO.webp"><img src="/SRWHITELOGO.png" alt="Saturn Results"/></picture>
+    <picture><source type="image/webp" srcset="/sr-logo-white.webp"><img src="/sr-logo-white.png" alt="Saturn Results"/></picture>
     <span>Saturn Results</span>
   </a>
   <a class="nav-back" href="/">

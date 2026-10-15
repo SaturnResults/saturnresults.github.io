@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Harry Bingham · Saturn Results</title>
+<meta name="description" content="Harry Bingham, co founder of Saturn Results in Exeter. How he works, what he will tell you straight, and what happens on a first call."/>
+<meta name="theme-color" content="#050506">
+<link rel="canonical" href="https://saturnresults.co.uk/harry/">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="256x256">
+<link rel="apple-touch-icon" href="/favicon.png">
+
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://saturnresults.co.uk/harry/">
+<meta property="og:site_name" content="Saturn Results">
+<meta property="og:title" content="Harry Bingham · Saturn Results">
+<meta property="og:description" content="Co founder of Saturn Results. Audit first, foundations before ads, and an honest answer either way.">
+<meta property="og:image" content="https://saturnresults.co.uk/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="681">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Harry Bingham · Saturn Results">
+<meta name="twitter:description" content="Audit first, foundations before ads, and an honest answer either way.">
+<meta name="twitter:image" content="https://saturnresults.co.uk/og-image.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050506;--bg-2:#0b0c0e;--bg-3:#121316;
+  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+  --fg:#f4f5f7;--fg-2:rgba(244,245,247,.66);--fg-3:rgba(244,245,247,.52);--fg-4:rgba(244,245,247,.30);
+  --accent:#a78bfa;--accent-deep:#5b21b6;
+  --sans:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Roboto Mono',ui-monospace,monospace;
+  --container:1080px;--wide:1265px;--nav-h:60px;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+picture{display:contents}
+ul{list-style:none}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:clip}
+@media(max-width:768px){html,body{overflow-y:auto!important;height:auto!important;position:static!important;touch-action:pan-y!important}}
+::selection{background:var(--accent);color:#0a0a0b}
+.container{width:100%;max-width:var(--wide);margin:0 auto;padding:0 24px}
+.narrow{max-width:var(--container);margin:0 auto}
+
+.chip{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 14px 0 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);font-size:12px;color:var(--fg-2)}
+.chip__dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(167,139,250,.7);flex:none}
+.h2{font-size:38px;line-height:48px;letter-spacing:-.04em;font-weight:500;margin-top:18px}
+.h2__a,.h2__b{display:block}
+.h2__b{color:var(--fg-3)}
+@media(max-width:700px){.h2{font-size:27px;line-height:35px}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:48px;padding:0 30px;border-radius:999px;font-size:14px;font-weight:500;letter-spacing:-.01em;transition:transform .3s var(--ease),background .3s,box-shadow .3s;white-space:nowrap;border:0;cursor:pointer;font-family:inherit}
+.btn svg{width:14px;height:14px}
+.btn--light{background:rgba(255,255,255,.88);color:#0a0a0b}
+.btn--light:hover{background:#fff;transform:translateY(-1px);box-shadow:0 0 0 1px rgba(255,255,255,.2),0 10px 30px -10px rgba(167,139,250,.6)}
+.btn--ghost{background:rgba(255,255,255,.06);color:var(--fg);border:1px solid var(--line-2)}
+.btn--ghost:hover{background:rgba(255,255,255,.1)}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;height:var(--nav-h);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 clamp(20px,6vw,180px);background:linear-gradient(180deg,rgba(5,5,6,.75),rgba(5,5,6,0));transition:background .4s,transform .45s var(--ease)}
+.nav.is-scrolled{background:rgba(5,5,6,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav.is-hidden{transform:translateY(-100%)}
+.nav__brand{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:16px;letter-spacing:.06em}
+.nav__brand img{width:auto;height:19px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(167,139,250,.55))}
+.nav__links{display:flex;gap:8px;justify-self:center}
+.nav__links a{font-size:14px;color:var(--fg-2);padding:8px 14px;border-radius:999px;transition:color .2s,background .2s}
+.nav__links a:hover,.nav__links a.is-here{color:var(--fg);background:rgba(255,255,255,.06)}
+.nav__right{display:flex;align-items:center;gap:16px;justify-self:end}
+.nav__cta{display:inline-flex;align-items:center;height:38px;padding:0 18px;border-radius:999px;background:rgba(255,255,255,.12);font-size:14px;font-weight:500;transition:background .25s}
+.nav__cta:hover{background:rgba(255,255,255,.2)}
+@media(max-width:1024px){.nav{grid-template-columns:1fr auto}.nav__links{display:none}}
+
+/* hero */
+.page{position:relative;padding:126px 0 90px;background:radial-gradient(120% 60% at 50% 0,#171226 0%,var(--bg) 62%)}
+@media(max-width:900px){.page{padding:92px 0 62px}}
+.hero{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:54px;align-items:center}
+@media(max-width:900px){.hero{grid-template-columns:1fr;gap:32px}}
+.portrait{border-radius:28px;overflow:clip;border:1px solid var(--line);background:var(--bg-3);position:relative;
+  box-shadow:0 0 0 6px rgba(255,255,255,.02),0 50px 90px -50px rgba(0,0,0,.9)}
+.portrait img{width:100%;height:auto;display:block}
+.portrait::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 56%,rgba(5,5,6,.5))}
+@media(max-width:900px){.portrait{max-width:300px}}
+.hero h1{font-size:clamp(38px,5.2vw,64px);line-height:1.02;letter-spacing:-.04em;font-weight:400;margin-top:18px}
+.hero__role{margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.hero p{margin-top:20px;font-size:16.5px;line-height:27px;color:var(--fg-2);max-width:48ch}
+.hero__cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+
+/* sections */
+.sec{padding:92px 0}
+@media(max-width:900px){.sec{padding:64px 0}}
+.sec--alt{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.sec__head{max-width:680px}
+.lede{margin-top:20px;font-size:16px;line-height:27px;color:var(--fg-2);max-width:64ch}
+.lede + .lede{margin-top:16px}
+.lede b{color:var(--fg);font-weight:600}
+
+/* pull quote */
+.quote{margin-top:40px;padding:34px 36px;border-radius:24px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent)}
+@media(max-width:600px){.quote{padding:26px 22px}}
+.quote p{font-size:21px;line-height:34px;letter-spacing:-.02em;color:var(--fg)}
+@media(max-width:600px){.quote p{font-size:18px;line-height:29px}}
+.quote cite{display:block;margin-top:18px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3);font-style:normal}
+
+/* order of work */
+.order{margin-top:44px;border-top:1px solid var(--line)}
+.ord{display:grid;grid-template-columns:86px 1fr;gap:24px;padding:28px 0;border-bottom:1px solid var(--line);align-items:start}
+@media(max-width:700px){.ord{grid-template-columns:1fr;gap:9px;padding:22px 0}}
+.ord__n{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--accent);padding-top:5px}
+.ord h3{font-size:20px;font-weight:500;letter-spacing:-.02em}
+.ord p{margin-top:9px;font-size:14.5px;line-height:23px;color:var(--fg-2);max-width:64ch}
+
+/* graft */
+.graft{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
+@media(max-width:860px){.graft{grid-template-columns:1fr}}
+.gr{border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.02);padding:26px 24px}
+.gr__k{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
+.gr h4{margin-top:12px;font-size:17px;font-weight:600;letter-spacing:-.02em}
+.gr p{margin-top:10px;font-size:13.5px;line-height:22px;color:var(--fg-2)}
+
+/* facts */
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px}
+@media(max-width:860px){.facts{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.facts{grid-template-columns:1fr}}
+.fact{padding:22px 20px;border-radius:18px;border:1px solid var(--line);background:var(--bg-2)}
+.fact dt{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
+.fact dd{margin-top:9px;font-size:15.5px;font-weight:600;letter-spacing:-.02em;line-height:1.35}
+.fact dd span{display:block;margin-top:5px;font-size:12.5px;font-weight:400;color:var(--fg-2);letter-spacing:0}
+
+/* cta */
+.cta{padding:100px 0;background:radial-gradient(90% 60% at 50% 100%,#14101f 0%,var(--bg) 60%);text-align:center}
+@media(max-width:900px){.cta{padding:70px 0}}
+.cta h2{font-size:clamp(28px,4vw,44px);line-height:1.1;letter-spacing:-.035em;font-weight:400;margin-top:18px}
+.cta h2 em{font-style:normal;color:var(--accent)}
+.cta p{margin:16px auto 0;font-size:16px;line-height:25px;color:var(--fg-2);max-width:50ch}
+.cta .hero__cta{justify-content:center}
+.cta__sig{margin-top:30px;display:inline-flex;align-items:center;gap:13px;font-size:13px;color:var(--fg-3)}
+.cta__sig img{width:40px;height:40px;border-radius:50%;object-fit:cover}
+
+/* footer */
+.footer{background:var(--bg);padding:70px 0 40px;border-top:1px solid var(--line)}
+.footer__grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+@media(max-width:820px){.footer__grid{grid-template-columns:1fr 1fr}.footer__brand{grid-column:1/-1}}
+.footer__brand img{width:auto;height:22px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(167,139,250,.5))}
+.footer__brand p{margin-top:20px;font-size:14px;color:var(--fg-2);max-width:32ch}
+.footer__col{display:flex;flex-direction:column;gap:14px}
+.footer__col h5{font-size:15px;font-weight:500;margin-bottom:8px}
+.footer__col a{font-size:15px;color:var(--fg-2)}
+.footer__col a:hover{color:var(--fg)}
+.footer__bottom{margin-top:56px;padding-top:30px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--fg-2)}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.is-in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a class="nav__brand" href="/" aria-label="Saturn Results"><picture><source type="image/webp" srcset="/sr-logo-white.webp"><img src="/sr-logo-white.png" alt="Saturn Results"/></picture></a>
+  <div class="nav__links">
+    <a href="/#about">About</a>
+    <a href="/#process">How it works</a>
+    <a href="/ads/">Ads</a>
+    <a href="/slate/">Slate</a>
+    <a href="/#work">Work</a>
+    <a href="/#pricing">Pricing</a>
+  </div>
+  <div class="nav__right">
+    <a class="nav__cta" href="/contact/">Free audit</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page">
+  <div class="container narrow">
+    <div class="hero">
+      <div class="portrait reveal">
+        <picture><source type="image/webp" srcset="/harry-bingham.webp"><img src="/harry-bingham.jpg" alt="Harry Bingham, co founder of Saturn Results" width="900" height="1125"></picture>
+      </div>
+      <div>
+        <span class="chip"><span class="chip__dot"></span>Co founder</span>
+        <h1>Harry Bingham</h1>
+        <div class="hero__role">Saturn Results · Exeter</div>
+        <p>I run Saturn Results with Giulio Frabboni, out of Venospace in Exeter. If you get in touch, I am the one who picks it up, does the audit and sits on the call. There is no account manager in between.</p>
+        <div class="hero__cta">
+          <a class="btn btn--light" href="/contact/">
+            <span>Get a free audit</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="/#work">See the work</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE VIEW -->
+<section class="sec sec--alt" id="view">
+  <div class="container narrow">
+    <div class="sec__head">
+      <span class="chip"><span class="chip__dot"></span>How I think about it</span>
+      <h2 class="h2">
+        <span class="h2__a">Nobody can tell you what</span>
+        <span class="h2__b">to fix before they have looked.</span>
+      </h2>
+      <p class="lede">Most agencies lead with whatever they happen to sell. If they build websites, you need a website. If they run ads, you need ads. The diagnosis arrives before anyone has looked at the business, which is the wrong way round and it is why so many owners have paid for something that did nothing.</p>
+    </div>
+
+    <div class="quote reveal">
+      <p>The first thing a business needs is a proper audit and review, to actually find out what that business needs to grow. Once the core foundations are working and in order, and we have reviewed the ads, then we give a tailored plan for that business.</p>
+      <cite>Harry Bingham</cite>
+    </div>
+
+    <div class="order">
+      <div class="ord reveal">
+        <div class="ord__n">FIRST</div>
+        <div>
+          <h3>Look properly</h3>
+          <p>Your Google listing, your site, your socials, your reviews, what you are already spending and what is actually coming back from it. By hand, not a score out of a hundred from a tool.</p>
+        </div>
+      </div>
+      <div class="ord reveal">
+        <div class="ord__n">THEN</div>
+        <div>
+          <h3>Fix the foundations</h3>
+          <p>There is no point paying for traffic to a site that does not convert, or a listing that does not show up. Foundations first is unglamorous and it is the part that saves people the most money.</p>
+        </div>
+      </div>
+      <div class="ord reveal">
+        <div class="ord__n">AFTER THAT</div>
+        <div>
+          <h3>Review the ads</h3>
+          <p>Only once the basics hold does paid spend make sense. If you are already running ads we go through the account and show you where the money is going.</p>
+        </div>
+      </div>
+      <div class="ord reveal">
+        <div class="ord__n">FINALLY</div>
+        <div>
+          <h3>A plan built for your business</h3>
+          <p>Not a package off a price list. What to do, in what order, with what it should return. If the honest answer is that you do not need us yet, that is what you will get.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE CALL -->
+<section class="sec" id="call">
+  <div class="container narrow">
+    <div class="sec__head">
+      <span class="chip"><span class="chip__dot"></span>If we speak</span>
+      <h2 class="h2">
+        <span class="h2__a">I will not pitch you</span>
+        <span class="h2__b">on the first call.</span>
+      </h2>
+      <p class="lede">I spend it learning about the business. What you sell, who buys it, what a customer is worth, what you have already tried and what went wrong with it. There is no deck and nothing to sit through.</p>
+      <p class="lede">Then I go away and do the audit properly. I come back with what I found, my honest opinion on where the business goes next, and a plan. <b>You get that whether you hire us or not.</b></p>
+      <p class="lede">Sometimes that plan says spend money with us. Sometimes it says sort your Google listing out first and come back in three months. I would rather tell you that than take a fee for work that was never going to move the needle.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GRAFT -->
+<section class="sec sec--alt" id="before">
+  <div class="container narrow">
+    <div class="sec__head">
+      <span class="chip"><span class="chip__dot"></span>Before this</span>
+      <h2 class="h2">
+        <span class="h2__a">I did not learn any of this</span>
+        <span class="h2__b">in a lecture theatre.</span>
+      </h2>
+      <p class="lede">Saturn Results started in 2023. Before it, and alongside it, there were early starts and jobs that nobody takes for fun. I would not swap them, because between them they taught me more about customers than any course would have.</p>
+    </div>
+
+    <div class="graft">
+      <div class="gr reveal">
+        <div class="gr__k">Door to door sales</div>
+        <h4>Anglian Home Improvements</h4>
+        <p>Four months working a patch to daily targets, generating every conversation from cold. It teaches you how to open with a stranger, how to take a no without it landing, and how fast somebody decides whether they trust you.</p>
+      </div>
+      <div class="gr reveal">
+        <div class="gr__k">Hospitality</div>
+        <h4>Busy bars and a cellar</h4>
+        <p>Cocktail service and bottomless brunches, then running a cellar, signing off deliveries and training new staff. You learn to read a room, work under pressure and that service is the whole product.</p>
+      </div>
+      <div class="gr reveal">
+        <div class="gr__k">Delivery driving</div>
+        <h4>Amazon routes</h4>
+        <p>Planning a route, managing your own day, hitting a number with nobody watching. Unglamorous, and the reason deadlines here are treated as deadlines.</p>
+      </div>
+    </div>
+
+    <p class="lede" style="margin-top:34px">Those jobs are also why I understand the people we work for. Most of our clients are running something hands on, doing the work and the marketing and the books. I know what a long shift feels like, and I know that an agency which wastes your time is worse than no agency at all.</p>
+  </div>
+</section>
+
+<!-- FACTS -->
+<section class="sec" id="facts">
+  <div class="container narrow">
+    <div class="sec__head">
+      <span class="chip"><span class="chip__dot"></span>The short version</span>
+      <h2 class="h2">
+        <span class="h2__a">Everything else</span>
+        <span class="h2__b">in one place.</span>
+      </h2>
+    </div>
+    <dl class="facts">
+      <div class="fact reveal">
+        <dt>Based</dt>
+        <dd>Exeter<span>Venospace. Devon born, Teignmouth.</span></dd>
+      </div>
+      <div class="fact reveal">
+        <dt>Studied</dt>
+        <dd>Exeter College<span>Geography, Geology and Photography.</span></dd>
+      </div>
+      <div class="fact reveal">
+        <dt>Started the agency</dt>
+        <dd>2023<span>With Giulio Frabboni.</span></dd>
+      </div>
+      <div class="fact reveal">
+        <dt>Works with</dt>
+        <dd>Anyone serious<span>Wherever they are, if they actually want to grow.</span></dd>
+      </div>
+    </dl>
+    <p class="lede" style="margin-top:32px">The photography A level turned out to be the most useful of the three. Half of what we do is making a business look like it deserves to be chosen, and a lot of that comes down to whether the pictures are any good.</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="start">
+  <div class="container narrow">
+    <span class="chip"><span class="chip__dot"></span>No cost, no obligation</span>
+    <h2>Let me look at your business <em>properly first.</em></h2>
+    <p>Tell me what you do and I will go through it the same way I would for a paying client. You keep what I find either way.</p>
+    <div class="hero__cta">
+      <a class="btn btn--light" href="/contact/">
+        <span>Get your free audit</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a class="btn btn--ghost" href="mailto:contact@saturnresults.com">Email me</a>
+    </div>
+    <div class="cta__sig">
+      <picture><source type="image/webp" srcset="/harry-face.webp"><img src="/harry-face.jpg" alt=""></picture>
+      <span>Harry Bingham · contact@saturnresults.com</span>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <picture><source type="image/webp" srcset="/sr-logo-white.webp"><img src="/sr-logo-white.png" alt="Saturn Results"></picture>
+        <p>A UK marketing agency helping ambitious businesses grow with strategy, web, SEO, social and AI.</p>
+      </div>
+      <div class="footer__col"><h5>Agency</h5><a href="/#about">About</a><a href="/#process">How it works</a><a href="/#work">Work</a><a href="/#pricing">Pricing</a></div>
+      <div class="footer__col"><h5>Services</h5><a href="/ads/">Google &amp; Meta ads</a><a href="/slate/">Slate booking</a><a href="/mentoring/">Mentoring</a><a href="/contact/">Free audit</a></div>
+      <div class="footer__col"><h5>Connect</h5><a href="mailto:contact@saturnresults.com">Email us</a><a href="/portal/">Client portal</a></div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Saturn Results. All rights reserved.</span>
+      <span>contact@saturnresults.com</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const nav=document.getElementById('nav');
+  let last=scrollY, tick=false;
+  addEventListener('scroll',()=>{
+    if(tick) return; tick=true;
+    requestAnimationFrame(()=>{
+      const y=scrollY;
+      nav.classList.toggle('is-scrolled',y>20);
+      if(y<80) nav.classList.remove('is-hidden');
+      else if(y>last+4) nav.classList.add('is-hidden');
+      else if(y<last-4) nav.classList.remove('is-hidden');
+      last=y; tick=false;
+    });
+  },{passive:true});
+})();
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target)}}),{threshold:.1,rootMargin:'0px 0px -40px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "546ee579b0c540e2ad0546f6efb0b90b"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
