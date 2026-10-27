@@ -143,15 +143,22 @@ section[id]{scroll-margin-top:84px}
 .hero__note li{display:flex;align-items:flex-start;gap:10px;font-size:15.5px;color:var(--muted)}
 .hero__note svg{width:17px;height:17px;color:var(--blue);flex:none;margin-top:3px}
 
-/* Product shot. The blue glow that came baked into the artwork is gone and the
-   phone is cut out to its own silhouette, so there is no rectangle edge to see
-   against the page whatever colour sits behind it. 220px keeps the phone the
-   same size on screen as it was inside the old 280px glow box.
-   The shadow is drop-shadow, not box-shadow, so it follows the phone rather
-   than a rectangle. */
-.shot{justify-self:center;max-width:220px;width:100%}
-.shot img{width:100%;height:auto;filter:drop-shadow(0 16px 26px rgba(10,16,30,.17))}
-@media (max-width:980px){.shot{max-width:180px}}
+/* Product shot. The phone is cut out to its own silhouette and the blue glow
+   is put back with drop-shadow rather than baked into the artwork: a filter
+   follows the phone's outline, so the glow is there without the white canvas
+   edge that was showing as a hard cut-off against the page.
+   Three layers: a tight bright halo, a wide soft one, and a neutral shadow
+   underneath to sit it on the page. */
+.shot{justify-self:center;max-width:286px;width:100%}
+.shot img{
+  width:100%;height:auto;
+  filter:
+    drop-shadow(0 0 10px rgba(0,102,255,.55))
+    drop-shadow(0 0 30px rgba(0,102,255,.42))
+    drop-shadow(0 0 68px rgba(0,102,255,.26))
+    drop-shadow(0 18px 32px rgba(10,16,30,.16));
+}
+@media (max-width:980px){.shot{max-width:234px}}
 
 /* ---------- sections ---------- */
 .sec{padding:84px 0}
@@ -600,7 +607,7 @@ section[id]{scroll-margin-top:84px}
     <div class="shot">
       <picture>
         <source type="image/webp" srcset="/slate/slate-phone.webp"/>
-        <img src="/slate/slate-phone.png" width="440" height="828"
+        <img src="/slate/slate-phone.png" width="580" height="1091"
              alt="A patient booking an appointment on a clinic's own website, choosing a time on step three of four"
              fetchpriority="high" decoding="async"/>
       </picture>
