@@ -1473,6 +1473,12 @@ section[id]{scroll-margin-top:84px}
       '</div>';
   }
 
+  /* Moving focus to the new step's heading is right once somebody is working
+     through the demo, but not on the first paint: nobody has interacted yet,
+     so Chrome counts the programmatic focus as keyboard focus and draws the
+     focus ring round the heading before the visitor has touched anything. */
+  var booted = false;
+
   function go(n) {
     if (n === 1) renderTreat();
     else if (n === 2) renderPro();
@@ -1480,7 +1486,7 @@ section[id]{scroll-margin-top:84px}
     else if (n === 4) renderDetails();
     else renderDone();
     paintBar();
-    focusHeading();
+    if (booted) focusHeading();
   }
 
   function reset(keepClinic) {
@@ -1541,6 +1547,7 @@ section[id]{scroll-margin-top:84px}
 
   paintChrome();
   go(1);
+  booted = true;
 })();
 
 /* ---------- commission calculator ----------
