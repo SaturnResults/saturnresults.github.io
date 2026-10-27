@@ -85,15 +85,13 @@ section[id]{scroll-margin-top:84px}
 .skip:focus{left:0;top:0}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
-/* ---------- the /Slate mark ---------- */
-.brand{display:inline-flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink)}
-.brand__slash{
-  width:6px;height:25px;background:var(--blue);border-radius:1.5px;
-  transform:skewX(-17deg);flex:none;
-}
-.brand__word{font-size:23px;font-weight:600;letter-spacing:-.035em;line-height:1}
-.brand__by{font-size:12.5px;font-weight:400;color:var(--muted);letter-spacing:0;margin-left:2px}
-@media (max-width:560px){.brand__by{display:none}.brand__word{font-size:21px}.brand__slash{height:23px}}
+/* ---------- the /Slate mark ----------
+   The real artwork, keyed to transparency so no white box appears when a
+   dark section scrolls under the translucent header. */
+.brand{display:inline-flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);flex:none}
+.brand img{height:25px;width:auto;flex:none}
+.brand__by{font-size:12.5px;font-weight:400;color:var(--muted);letter-spacing:0;margin-left:1px;white-space:nowrap}
+@media (max-width:560px){.brand__by{display:none}.brand img{height:23px}}
 
 /* ---------- buttons ---------- */
 .btn{
@@ -117,11 +115,14 @@ section[id]{scroll-margin-top:84px}
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
 }
 .site-head__in{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:72px}
+/* the logo artwork is wider than the text mark it replaced, so the bar needs
+   telling that neither end may be squeezed into wrapping */
+.site-head__in>.btn{flex:none;white-space:nowrap}
 .site-nav{display:flex;gap:2px}
 .site-nav a{padding:9px 11px;border-radius:999px;color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:500;white-space:nowrap}
 .site-nav a:hover{background:var(--tint);color:var(--ink)}
-/* eight items plus the brand and the CTA need the room; below this they go */
-@media (max-width:1150px){.site-nav{display:none}}
+/* eight items plus the logo and the CTA need the room; below this they go */
+@media (max-width:1199px){.site-nav{display:none}}
 
 /* ---------- hero ----------
    Pure white, with nothing painted behind it. The product shot carries its
@@ -142,12 +143,15 @@ section[id]{scroll-margin-top:84px}
 .hero__note li{display:flex;align-items:flex-start;gap:10px;font-size:15.5px;color:var(--muted)}
 .hero__note svg{width:17px;height:17px;color:var(--blue);flex:none;margin-top:3px}
 
-/* Product shot. Sized down to 280px — the artwork is a tall portrait phone,
-   and at the old 430px it was taller than the copy beside it. Its own white
-   background meets the hero's exactly, so it needs no frame and no glow. */
-.shot{justify-self:center;max-width:280px;width:100%}
-.shot img{width:100%;height:auto}
-@media (max-width:980px){.shot{max-width:230px}}
+/* Product shot. The blue glow that came baked into the artwork is gone and the
+   phone is cut out to its own silhouette, so there is no rectangle edge to see
+   against the page whatever colour sits behind it. 220px keeps the phone the
+   same size on screen as it was inside the old 280px glow box.
+   The shadow is drop-shadow, not box-shadow, so it follows the phone rather
+   than a rectangle. */
+.shot{justify-self:center;max-width:220px;width:100%}
+.shot img{width:100%;height:auto;filter:drop-shadow(0 16px 26px rgba(10,16,30,.17))}
+@media (max-width:980px){.shot{max-width:180px}}
 
 /* ---------- sections ---------- */
 .sec{padding:84px 0}
@@ -549,8 +553,10 @@ section[id]{scroll-margin-top:84px}
 <header class="site-head">
   <div class="wrap site-head__in">
     <a class="brand" href="/slate/" aria-label="Slate, by Saturn Results">
-      <span class="brand__slash" aria-hidden="true"></span>
-      <span class="brand__word">Slate</span>
+      <picture>
+        <source type="image/webp" srcset="/slate/slate-logo.webp"/>
+        <img src="/slate/slate-logo.png" width="360" height="87" alt="" decoding="async"/>
+      </picture>
       <span class="brand__by">by Saturn Results</span>
     </a>
     <nav class="site-nav" aria-label="Page sections">
@@ -593,8 +599,8 @@ section[id]{scroll-margin-top:84px}
 
     <div class="shot">
       <picture>
-        <source type="image/webp" srcset="/slate/slate-booking.webp"/>
-        <img src="/slate/slate-booking.jpg" width="620" height="1078"
+        <source type="image/webp" srcset="/slate/slate-phone.webp"/>
+        <img src="/slate/slate-phone.png" width="440" height="828"
              alt="A patient booking an appointment on a clinic's own website, choosing a time on step three of four"
              fetchpriority="high" decoding="async"/>
       </picture>
@@ -858,7 +864,7 @@ section[id]{scroll-margin-top:84px}
      commission rate. Nothing here states or implies what any named platform
      charges, so there is no comparative claim to substantiate under CAP 3.33.
      If you ever hard-code a rate, that stops being true. -->
-<section class="sec" id="cost" data-setup="249" data-monthly="49">
+<section class="sec" id="cost">
   <div class="wrap">
     <div class="sec__head" data-reveal>
       <p class="kicker">Work it out</p>
@@ -906,14 +912,9 @@ section[id]{scroll-margin-top:84px}
           <span>Taken in commission over a year</span>
           <b id="c-yr">£7,920</b>
         </div>
-        <div class="calc__row">
-          <span>Slate over the same year, set-up included</span>
-          <b id="c-slate">£837</b>
-        </div>
         <p class="calc__note" id="c-note">
           Set the rate your own platform charges. We are not quoting anyone else's pricing here, and these
-          figures are only as good as the numbers you put in. Slate's figure is our guide price:
-          set-up once, then a flat monthly fee that does not move with how busy you are.
+          figures are only as good as the numbers you put in.
         </p>
         <div class="calc__cta"><a class="btn btn--primary" href="#start">Book a 15 minute demo</a></div>
       </div>
@@ -924,9 +925,7 @@ section[id]{scroll-margin-top:84px}
 <!-- ============ PRICING ============ -->
 <!-- TODO: confirm these figures before launch. "From £249 set-up and £49 a month" came
      from the brief as a placeholder and has not been verified. Also confirm whether VAT
-     applies and whether the monthly fee has a minimum term. The calculator above reads
-     the same two numbers from data attributes on #cost, so changing them there changes
-     both places at once. -->
+     applies and whether the monthly fee has a minimum term. -->
 <section class="sec sec--tint" id="pricing">
   <div class="wrap">
     <div class="sec__head" data-reveal>
@@ -1553,22 +1552,17 @@ section[id]{scroll-margin-top:84px}
   var bk = document.getElementById('c-bk'), pr = document.getElementById('c-pr'), cm = document.getElementById('c-cm');
   if (!bk || !pr || !cm) return;
 
-  var setup   = +sec.getAttribute('data-setup')   || 0;
-  var monthly = +sec.getAttribute('data-monthly') || 0;
   var fmtGBP = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0 });
 
   function paint() {
     var n = +bk.value, p = +pr.value, rate = +cm.value;
     var perMonth = n * p * (rate / 100);
-    var perYear  = perMonth * 12;
-    var slateYr  = setup + monthly * 12;
 
     document.getElementById('c-bk-v').textContent = n;
     document.getElementById('c-pr-v').textContent = fmtGBP.format(p);
     document.getElementById('c-cm-v').textContent = rate + '%';
     document.getElementById('c-mon').textContent  = fmtGBP.format(Math.round(perMonth));
-    document.getElementById('c-yr').textContent   = fmtGBP.format(Math.round(perYear));
-    document.getElementById('c-slate').textContent = fmtGBP.format(slateYr);
+    document.getElementById('c-yr').textContent   = fmtGBP.format(Math.round(perMonth * 12));
   }
   [bk, pr, cm].forEach(function (r) { r.addEventListener('input', paint); });
   paint();

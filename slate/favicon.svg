@@ -1,7 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Slate">
   <rect width="64" height="64" rx="14" fill="#FFFFFF"/>
-  <!-- the Slate slash: same geometry as the header mark, skewed about the centre
-       so it stays balanced in the tile rather than drifting left -->
-  <rect x="26.5" y="12" width="11" height="40" rx="3" fill="#0066FF"
-        transform="translate(32,32) skewX(-17) translate(-32,-32)"/>
+  <!-- the slash traced off LOGOFINAL: a parallelogram leaning 33.9 degrees,
+       not the 17 degree skew this was drawn with before -->
+  <polygon points="40.32,10 53.16,10 23.59,54 10.75,54" fill="#2868F8"/>
 </svg>
