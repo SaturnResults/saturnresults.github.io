@@ -129,14 +129,30 @@ body{
 @media(max-width:900px){.hide-sm{display:none}}
 .hero__sub{margin-top:16px;font-size:14px;line-height:21px;color:rgba(255,255,255,.8);max-width:460px}
 .hero__cta{margin-top:46px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.hero__slate{margin-top:28px;display:flex;align-items:center;gap:14px;padding:6px 6px 6px 8px;border-radius:999px;background:rgba(10,8,16,.55);border:1px solid rgba(251,117,17,.32);box-shadow:0 10px 40px -14px rgba(251,117,17,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);text-align:left;opacity:0;transform:translateY(10px);animation:slateIn .9s var(--ease) .6s forwards}
+.hero__slate-tag{display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 11px;border-radius:999px;background:rgba(251,117,17,.14);color:#FDA65F;font-size:12px;font-weight:500;flex:none}
+.hero__slate .chip__dot{background:#FB7511;box-shadow:0 0 8px rgba(251,117,17,.7)}
+.hero__slate-text{font-size:13px;line-height:18px;color:rgba(255,255,255,.82)}
+.hero__slate-text strong{font-weight:600;color:#fff}
+.hero__slate-btn{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 16px;border-radius:999px;background:#FB7511;color:#0a0a0b;font-size:13px;font-weight:600;white-space:nowrap;flex:none;transition:transform .3s var(--ease),box-shadow .3s}
+.hero__slate-btn svg{width:13px;height:13px}
+.hero__slate-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px -8px rgba(251,117,17,.8)}
+@keyframes slateIn{to{opacity:1;transform:none}}
 @media(max-width:900px){
-  .hero{height:838px}
+  .hero__cta{margin-top:30px}
+  .hero__slate{margin-top:20px;max-width:100%;flex-wrap:wrap;justify-content:center;gap:10px;padding:12px 14px;border-radius:20px;text-align:center}
+  .hero__slate-text{flex-basis:100%;order:1}
+  .hero__slate-tag{order:0}
+  .hero__slate-btn{order:2}
+}
+@media(max-width:900px){
+  .hero{height:960px}
   .hero__content{padding-top:132px}
   .hero__title{font-size:34px;line-height:1.25}
   .layer--far{bottom:252px;width:max(1200px,150%)}
   .layer--mid{bottom:184px;width:max(1100px,140%)}
   /* device: pulled right up, full width, natural ratio so nothing is cropped */
-  .hero__device{top:590px;left:10px;right:10px;width:auto;margin:0}
+  .hero__device{top:712px;left:10px;right:10px;width:auto;margin:0}
   .device{padding:4px 4px 0;border-radius:16px 16px 0 0}
   .device__screen{border-radius:12px 12px 0 0}
   .hero::after{height:90px}
@@ -342,7 +358,7 @@ body{
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .reveal.is-in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){
-  .reveal,.hero__title .line>span{opacity:1!important;transform:none!important;transition:none!important}
+  .reveal,.hero__title .line>span,.hero__slate{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
   .layer,.cta__layer{transform:translateX(-50%)!important}
 }
 @media(max-width:900px){.h2{font-size:30px;line-height:38px}.section-head{grid-template-columns:1fr;gap:18px;align-items:start}}
@@ -398,6 +414,14 @@ body{
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </a>
       <a class="btn btn--ghost" href="#work">See our work</a>
+    </div>
+    <!-- Slate promo: swap the href for the demo link once it's ready -->
+    <div class="hero__slate">
+      <span class="hero__slate-tag"><span class="chip__dot"></span>New</span>
+      <span class="hero__slate-text">Try our latest product: <strong>Slate</strong>, the booking system for your business.</span>
+      <a class="hero__slate-btn" href="https://seashell-gull-658350.hostingersite.com/book/" target="_blank" rel="noopener" id="slateDemo">Try the demo
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
     </div>
   </div>
 
