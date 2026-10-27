@@ -137,19 +137,14 @@ ul,ol{margin:0;padding:0;list-style:none}
 .hero__note li{display:flex;align-items:flex-start;gap:10px;font-size:15.5px;color:var(--muted)}
 .hero__note svg{width:17px;height:17px;color:var(--blue);flex:none;margin-top:3px}
 
-/* browser frame holding a still of the booking step */
-.frame{border-radius:var(--radius-lg);border:1px solid var(--line);background:var(--white);box-shadow:var(--shadow-lg);overflow:hidden}
-.frame__bar{display:flex;align-items:center;gap:7px;padding:13px 16px;border-bottom:1px solid var(--line);background:var(--tint-2)}
-.frame__bar i{width:10px;height:10px;border-radius:50%;background:var(--line-2);flex:none}
-.frame__url{margin-left:10px;flex:1;height:26px;border-radius:999px;background:var(--white);border:1px solid var(--line);
-  display:flex;align-items:center;padding:0 12px;font-size:11.5px;color:var(--muted);overflow:hidden;white-space:nowrap}
-.frame__body{padding:22px 20px 24px}
-.mini__row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 15px;border:1px solid var(--line);border-radius:12px;margin-bottom:9px}
-.mini__row:last-child{margin-bottom:0}
-.mini__row b{font-size:15px;font-weight:600}
-.mini__row span{font-size:13px;color:var(--muted)}
-.mini__row--on{border-color:var(--blue);background:var(--tint);box-shadow:inset 0 0 0 1px var(--blue)}
-.mini__head{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+/* product shot sitting in the hero */
+.shot{position:relative;justify-self:center;max-width:430px;width:100%}
+.shot img{width:100%;height:auto;border-radius:6px}
+.shot::before{
+  content:"";position:absolute;inset:8% -6% -4% -6%;z-index:-1;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(0,102,255,.16),transparent 72%);
+}
+@media (max-width:980px){.shot{max-width:330px}}
 
 /* ---------- sections ---------- */
 .sec{padding:84px 0}
@@ -409,17 +404,13 @@ ul,ol{margin:0;padding:0;list-style:none}
       </ul>
     </div>
 
-    <div class="frame" aria-hidden="true">
-      <div class="frame__bar">
-        <i></i><i></i><i></i>
-        <span class="frame__url">yourclinic.co.uk/book</span>
-      </div>
-      <div class="frame__body">
-        <p class="mini__head">Choose an appointment</p>
-        <div class="mini__row mini__row--on"><div><b>Initial assessment</b></div><span>45 min</span></div>
-        <div class="mini__row"><div><b>Follow-up treatment</b></div><span>30 min</span></div>
-        <div class="mini__row"><div><b>Extended treatment</b></div><span>60 min</span></div>
-      </div>
+    <div class="shot">
+      <picture>
+        <source type="image/webp" srcset="/slate/slate-booking.webp"/>
+        <img src="/slate/slate-booking.jpg" width="900" height="1573"
+             alt="A patient booking an appointment on a clinic's own website, choosing a time on step three of four"
+             fetchpriority="high" decoding="async"/>
+      </picture>
     </div>
   </div>
 </section>
