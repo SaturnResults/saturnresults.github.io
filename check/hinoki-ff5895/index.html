@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hinoki Brand Directions</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;700&family=Gloock&family=Hanken+Grotesk:wght@400;500;600&family=Jost:wght@300;400;500&family=Newsreader:ital,wght@0,400;1,400&family=Shippori+Mincho:wght@400;600;700&family=Sora:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@500;700&display=swap">
+<style>
+/* Layout: private reference sheet. Neutral shell, seven self-coloured brand boards, each with the same internal grid so they compare directly. */
+:root{
+  --bg:#EDEFF0; --fg:#16191B; --muted:#5B6468; --line:#CDD3D6;
+  --serif-jp:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",Georgia,serif;
+  --sans:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#121516; --fg:#E6E9EA; --muted:#9AA4A8; --line:#2B3235; color-scheme:dark}
+}
+:root[data-theme="dark"]{--bg:#121516; --fg:#E6E9EA; --muted:#9AA4A8; --line:#2B3235; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:16px;line-height:1.55;margin:0}
+.private{background:var(--fg);color:var(--bg);font-size:.875rem;line-height:1.4;padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.private div{max-width:1120px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.private svg{width:16px;height:16px;flex:none}
+.wrap{max-width:1120px;margin:0 auto;padding-block:48px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1{font-size:clamp(2rem,5vw,3.25rem);line-height:1.05;margin:0 0 16px;font-weight:600;letter-spacing:-.02em;text-wrap:balance}
+h2{font-size:1.5rem;line-height:1.2;margin:0 0 8px;font-weight:600;letter-spacing:-.01em}
+p{margin:0 0 12px;max-width:62ch}
+a{color:inherit;text-underline-offset:3px}
+.lede{font-size:1.125rem;color:var(--muted)}
+.meaning{display:grid;grid-template-columns:auto 1fr;gap:24px 40px;margin-top:48px;padding-top:24px;border-top:1px solid var(--line);align-items:start}
+.kanji{font-family:var(--serif-jp);font-size:7rem;line-height:1;font-weight:600}
+.meaning dl{margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px 28px}
+.meaning dt{font-weight:600;margin-bottom:2px}
+.meaning dd{margin:0;color:var(--muted)}
+.overview{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:36px}
+.ov{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-height:170px;border-radius:6px;padding:18px 12px;text-decoration:none;text-align:center;font-family:var(--body);font-size:.875rem}
+.ov svg{width:68px;height:68px}
+.ov:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.board{margin-top:80px;min-width:0}
+.board-head{margin-bottom:16px}
+.board-head p{color:var(--muted)}
+.sheet{display:grid;grid-template-columns:1.15fr 1fr;gap:10px}
+.kit{display:grid;grid-template-columns:1.15fr 1fr .8fr;gap:10px;margin-top:10px}
+.apps{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.tile{border-radius:6px;padding:28px;min-width:0;overflow:hidden;position:relative}
+.on-bg{background:var(--c-bg);color:var(--c-fg);--m0:var(--c-bg);--m1:var(--d1);--m2:var(--d2);--m3:var(--d3)}
+.on-paper{background:var(--c-paper);color:var(--c-ink);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);--m0:var(--c-paper);--m1:var(--p1);--m2:var(--p2);--m3:var(--p3)}
+.on-accent{background:var(--c-acc);color:var(--at);--m0:var(--c-acc);--m1:var(--a1);--m2:var(--a2);--m3:var(--a3)}
+.lock{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;min-height:380px;height:100%}
+.lock .mk{width:136px;height:136px}
+.hlock{display:flex;align-items:center;gap:14px;justify-content:center;height:100%;min-height:190px}
+.hlock .mk{width:60px;height:60px;flex:none}
+.word{font-family:var(--disp);line-height:1}
+.tag{font-family:var(--body);font-size:.8125rem;opacity:.8;max-width:30ch}
+.specs{display:flex;flex-direction:column;gap:22px}
+.swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.sw{min-width:0;font-family:var(--body);font-size:.75rem;line-height:1.3}
+.sw i{display:block;height:64px;border-radius:3px;margin-bottom:6px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.sw b{display:block;font-weight:600}
+.sw span{opacity:.75}
+.type .big{font-family:var(--disp);font-size:2.1rem;line-height:1.1;margin:0 0 8px;max-width:none}
+.type .small{font-family:var(--body);font-size:.9375rem;margin:0;max-width:34ch}
+.type .face{font-family:var(--body);font-size:.75rem;opacity:.7;margin:10px 0 0}
+.sizes{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;height:100%;min-height:190px;font-family:var(--body);font-size:.75rem}
+.sizes .row{display:flex;align-items:flex-end;gap:22px}
+.sizes .row div{display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.9}
+.sizes svg.s1{width:64px;height:64px}.sizes svg.s2{width:36px;height:36px}.sizes svg.s3{width:20px;height:20px}
+.sizes p{margin:0;opacity:.7;text-align:center}
+.iconwrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;height:100%;min-height:190px;font-family:var(--body);font-size:.75rem}
+.icon{width:116px;height:116px;border-radius:27%;background:var(--c-bg);display:grid;place-items:center;--m0:var(--c-bg);--m1:var(--d1);--m2:var(--d2);--m3:var(--d3);box-shadow:0 6px 18px rgba(0,0,0,.22)}
+.icon svg{width:72px;height:72px}
+.iconwrap p{margin:0;opacity:.75}
+.profile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;height:100%;min-height:260px;font-family:var(--body)}
+.avatar{width:104px;height:104px;border-radius:50%;background:var(--c-bg);display:grid;place-items:center;--m0:var(--c-bg);--m1:var(--d1);--m2:var(--d2);--m3:var(--d3)}
+.avatar svg{width:62px;height:62px}
+.profile .nm{font-weight:600;font-size:1rem;margin:0}
+.profile .hd{font-size:.8125rem;margin:0;opacity:.8}
+.profile .bio{font-size:.8125rem;margin:0;max-width:26ch}
+.post{padding:0;aspect-ratio:1;container-type:inline-size;font-family:var(--body)}
+.post svg.art{position:absolute;overflow:visible}
+.post .line{position:absolute;margin:0;font-family:var(--disp);line-height:1.08;max-width:72%}
+.post .foot{position:absolute;left:7cqw;bottom:6cqw;font-size:3.6cqw;letter-spacing:.01em;opacity:.85;margin:0}
+symbol{overflow:visible}
+.note{margin-top:72px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:.875rem}
+.note p{max-width:70ch}
+a:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+@media (max-width:900px){
+  .kit{grid-template-columns:1fr 1fr}
+  .kit>:first-child{grid-column:1 / -1}
+}
+@media (max-width:820px){
+  .sheet,.apps{grid-template-columns:1fr}
+  .post{max-width:520px;width:100%;margin-inline:auto}
+  .meaning{grid-template-columns:1fr}
+  .kanji{font-size:5rem}
+}
+@media (max-width:480px){
+  .tile{padding:20px}
+  .kit{grid-template-columns:1fr}
+  .swatches{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+  .sw i{height:48px}
+  .sw span{display:block;overflow-wrap:anywhere}
+}
+.b1{--c-bg:#1E3A2F;--c-fg:#EEF1EA;--c-paper:#EEF1EA;--c-ink:#1E3A2F;--c-acc:#DCCB9E;--at:#1E3A2F;--d1:#DCCB9E;--d2:#DCCB9E;--d3:#DCCB9E;--p1:#1E3A2F;--p2:#1E3A2F;--p3:#1E3A2F;--a1:#1E3A2F;--a2:#1E3A2F;--a3:#1E3A2F;--disp:'Shippori Mincho','Hiragino Mincho ProN',Georgia,serif;--body:'Hanken Grotesk',system-ui,sans-serif}.b2{--c-bg:#1F2A55;--c-fg:#F5F4F0;--c-paper:#F5F4F0;--c-ink:#121733;--c-acc:#E3A72F;--at:#1F2A55;--d1:#F5F4F0;--d2:#E3A72F;--d3:#E3A72F;--p1:#1F2A55;--p2:#E3A72F;--p3:#E3A72F;--a1:#1F2A55;--a2:#F5F4F0;--a3:#F5F4F0;--disp:'Zen Kaku Gothic New','Hiragino Kaku Gothic ProN',system-ui,sans-serif;--body:'Zen Kaku Gothic New','Hiragino Kaku Gothic ProN',system-ui,sans-serif}.b3{--c-bg:#17454A;--c-fg:#F1F2EE;--c-paper:#F1F2EE;--c-ink:#232A2B;--c-acc:#A5B5A0;--at:#17454A;--d1:#F1F2EE;--d2:#B38B4A;--d3:#B38B4A;--p1:#17454A;--p2:#B38B4A;--p3:#B38B4A;--a1:#17454A;--a2:#F1F2EE;--a3:#F1F2EE;--disp:'Jost','Futura',system-ui,sans-serif;--body:'Newsreader',Georgia,serif}.b4{--c-bg:#3A2A22;--c-fg:#ECEBE6;--c-paper:#ECEBE6;--c-ink:#3A2A22;--c-acc:#EACB45;--at:#3A2A22;--d1:#ECEBE6;--d2:#EACB45;--d3:#EACB45;--p1:#3A2A22;--p2:#7F9C55;--p3:#7F9C55;--a1:#3A2A22;--a2:#3A2A22;--a3:#3A2A22;--disp:'Familjen Grotesk',system-ui,sans-serif;--body:'Hanken Grotesk',system-ui,sans-serif}.b5{--c-bg:#1D2742;--c-fg:#F7F5F4;--c-paper:#F7F5F4;--c-ink:#1D2742;--c-acc:#A9C7DD;--at:#1D2742;--d1:#EBB9B9;--d2:#1D2742;--d3:#A9C7DD;--p1:#EBB9B9;--p2:#1D2742;--p3:#1D2742;--a1:#EBB9B9;--a2:#1D2742;--a3:#F7F5F4;--disp:'Gloock',Georgia,serif;--body:'Hanken Grotesk',system-ui,sans-serif}.b6{--c-bg:#2B3040;--c-fg:#F1EFEA;--c-paper:#F1EFEA;--c-ink:#2B3040;--c-acc:#9E2A3B;--at:#F1EFEA;--d1:#B83A4E;--d2:#F1EFEA;--d3:#F1EFEA;--p1:#9E2A3B;--p2:#F1EFEA;--p3:#F1EFEA;--a1:#F1EFEA;--a2:#9E2A3B;--a3:#9E2A3B;--disp:'Zen Old Mincho','Shippori Mincho',Georgia,serif;--body:'Hanken Grotesk',system-ui,sans-serif}.b7{--c-bg:#DCEBF3;--c-fg:#232B33;--c-paper:#F7FAFC;--c-ink:#232B33;--c-acc:#232B33;--at:#DCEBF3;--d1:#232B33;--d2:#F28C5A;--d3:#F28C5A;--p1:#232B33;--p2:#F28C5A;--p3:#F28C5A;--a1:#DCEBF3;--a2:#F28C5A;--a3:#F28C5A;--disp:'Sora',system-ui,sans-serif;--body:'Hanken Grotesk',system-ui,sans-serif}.b1 .word{font-weight:600;font-size:3rem;letter-spacing:.01em}.b1 .hlock .word{font-size:1.9rem}.b2 .word{font-weight:500;font-size:2.6rem;letter-spacing:.12em;text-indent:.12em}.b2 .hlock .word{font-size:1.6rem;text-indent:0}.b2 .jp{font-family:var(--body);font-weight:700;font-size:1.05rem;letter-spacing:.3em;text-indent:.3em;color:var(--d2)}.b3 .word{font-weight:400;font-size:2.4rem;letter-spacing:.34em;text-indent:.34em}.b3 .hlock .word{font-size:1.4rem;text-indent:0}.b3 .tag{font-size:.95rem;font-style:italic}.b4 .word{font-weight:700;font-size:2.6rem;letter-spacing:-.02em}.b4 .hlock .word{font-size:1.7rem}.b5 .word{font-weight:400;font-size:3.3rem;letter-spacing:-.005em}.b5 .hlock .word{font-size:2rem}.b6 .word{font-weight:700;font-size:3rem;letter-spacing:.04em}.b6 .hlock .word{font-size:1.8rem}.b7 .word{font-weight:600;font-size:2.8rem;letter-spacing:-.03em}.b7 .hlock .word{font-size:1.7rem}</style>
+</head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><clipPath id="hclip"><rect x="17" y="12" width="28" height="96"/><rect x="75" y="12" width="28" height="96"/><rect x="45" y="48" width="30" height="24"/></clipPath><symbol id="ringfield" viewBox="0 0 120 120"><g fill="none" style="stroke:var(--m1)"><ellipse cx="46" cy="60" rx="2.6" ry="2.5" stroke-width="3.8"/><ellipse cx="46" cy="60" rx="7.8" ry="7.4" stroke-width="1.8"/><ellipse cx="46" cy="60" rx="13.0" ry="12.3" stroke-width="3.8"/><ellipse cx="46" cy="60" rx="18.2" ry="17.3" stroke-width="1.8"/><ellipse cx="46" cy="60" rx="23.4" ry="22.2" stroke-width="3.8"/><ellipse cx="46" cy="60" rx="28.6" ry="27.2" stroke-width="1.8"/><ellipse cx="46" cy="60" rx="33.8" ry="32.1" stroke-width="3.8"/><ellipse cx="46" cy="60" rx="39.0" ry="37.0" stroke-width="1.8"/><ellipse cx="46" cy="60" rx="44.2" ry="42.0" stroke-width="3.8"/><ellipse cx="46" cy="60" rx="49.4" ry="46.9" stroke-width="1.8"/><ellipse cx="46" cy="60" rx="54.6" ry="51.9" stroke-width="3.8"/><ellipse cx="46" cy="60" rx="59.8" ry="56.8" stroke-width="1.8"/><ellipse cx="46" cy="60" rx="65.0" ry="61.8" stroke-width="3.8"/><ellipse cx="46" cy="60" rx="70.2" ry="66.7" stroke-width="1.8"/><ellipse cx="46" cy="60" rx="75.4" ry="71.6" stroke-width="3.8"/><ellipse cx="46" cy="60" rx="80.6" ry="76.6" stroke-width="1.8"/><ellipse cx="46" cy="60" rx="85.8" ry="81.5" stroke-width="3.8"/><ellipse cx="46" cy="60" rx="91.0" ry="86.5" stroke-width="1.8"/></g></symbol><symbol id="mA" viewBox="0 0 120 120"><g clip-path="url(#hclip)"><use href="#ringfield" width="120" height="120"/></g></symbol><symbol id="mB" viewBox="0 0 120 120"><circle cx="60" cy="30" r="21" style="fill:var(--m2)"/><g fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--m1)"><path d="M47 47L60 34L73 47"/><path d="M38 74L60 52L82 74"/><path d="M29 101L60 70L91 101"/><path d="M60 70V108"/><path d="M20 111H100" stroke-width="3"/></g></symbol><symbol id="mC" viewBox="0 0 120 120"><circle cx="21" cy="77" r="13.5" stroke-width="2.4" style="fill:var(--m1);stroke:var(--m0)"/><circle cx="21" cy="77" r="7.5" fill="none" stroke-width="1.4" opacity=".45" style="stroke:var(--m0)"/><circle cx="47" cy="77" r="13.5" stroke-width="2.4" style="fill:var(--m1);stroke:var(--m0)"/><circle cx="47" cy="77" r="7.5" fill="none" stroke-width="1.4" opacity=".45" style="stroke:var(--m0)"/><circle cx="73" cy="77" r="13.5" stroke-width="2.4" style="fill:var(--m1);stroke:var(--m0)"/><circle cx="73" cy="77" r="7.5" fill="none" stroke-width="1.4" opacity=".45" style="stroke:var(--m0)"/><circle cx="99" cy="77" r="13.5" stroke-width="2.4" style="fill:var(--m1);stroke:var(--m0)"/><circle cx="99" cy="77" r="7.5" fill="none" stroke-width="1.4" opacity=".45" style="stroke:var(--m0)"/><circle cx="34" cy="62" r="13.5" stroke-width="2.4" style="fill:var(--m1);stroke:var(--m0)"/><circle cx="34" cy="62" r="7.5" fill="none" stroke-width="1.4" opacity=".45" style="stroke:var(--m0)"/><circle cx="60" cy="62" r="13.5" stroke-width="2.4" style="fill:var(--m1);stroke:var(--m0)"/><circle cx="60" cy="62" r="7.5" fill="none" stroke-width="1.4" opacity=".45" style="stroke:var(--m0)"/><circle cx="86" cy="62" r="13.5" stroke-width="2.4" style="fill:var(--m1);stroke:var(--m0)"/><circle cx="86" cy="62" r="7.5" fill="none" stroke-width="1.4" opacity=".45" style="stroke:var(--m0)"/><circle cx="47" cy="47" r="13.5" stroke-width="2.4" style="fill:var(--m1);stroke:var(--m0)"/><circle cx="47" cy="47" r="7.5" fill="none" stroke-width="1.4" opacity=".45" style="stroke:var(--m0)"/><circle cx="73" cy="47" r="13.5" stroke-width="2.4" style="fill:var(--m1);stroke:var(--m0)"/><circle cx="73" cy="47" r="7.5" fill="none" stroke-width="1.4" opacity=".45" style="stroke:var(--m0)"/><circle cx="60" cy="32" r="13.5" stroke-width="2.4" style="fill:var(--m1);stroke:var(--m0)"/><circle cx="60" cy="32" r="7.5" fill="none" stroke-width="1.4" opacity=".45" style="stroke:var(--m0)"/><path d="M60 90V111" fill="none" stroke-width="6" stroke-linecap="round" style="stroke:var(--m1)"/><circle cx="60" cy="9" r="5" style="fill:var(--m2)"/></symbol><symbol id="mD" viewBox="0 0 120 120"><g fill="none" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--m1)"><path d="M24 24V98"/><path d="M24 62C24 46 34 40 46 40C58 40 64 50 64 62V98"/><path d="M94 46V98"/></g><circle cx="94" cy="21" r="10" style="fill:var(--m2)"/></symbol><symbol id="mE" viewBox="0 0 120 120"><path d="M18 110V58A42 42 0 0 1 102 58V110" fill="none" stroke-width="4" stroke-linecap="round" style="stroke:var(--m3)"/><path d="M30 110V58A30 30 0 0 1 90 58V110Z" style="fill:var(--m1)"/><circle cx="60" cy="42" r="5" style="fill:var(--m3)"/><g fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--m2)"><path d="M52 62L60 54L68 62"/><path d="M46 80L60 66L74 80"/><path d="M40 98L60 78L80 98"/><path d="M60 78V108"/></g></symbol><symbol id="mF" viewBox="0 0 120 120"><rect x="8" y="8" width="104" height="104" rx="12" style="fill:var(--m1)"/><rect x="16" y="16" width="88" height="88" rx="6" fill="none" stroke-width="1.5" opacity=".55" style="stroke:var(--m2)"/><text x="60" y="87" text-anchor="middle" font-size="76" font-weight="700" font-family="Shippori Mincho,Hiragino Mincho ProN,serif" style="fill:var(--m2)">檜</text></symbol><symbol id="mG" viewBox="0 0 120 120"><g fill="none" stroke-width="7" stroke-linecap="round" style="stroke:var(--m1)"><path d="M38 90A22 22 0 0 1 82 90"/><path d="M22 90A38 38 0 0 1 98 90" opacity=".65"/><path d="M6 90A54 54 0 0 1 114 90" opacity=".38"/><path d="M14 103H106"/></g><circle cx="60" cy="90" r="11" style="fill:var(--m2)"/></symbol></defs></svg>
+
+<div class="private"><div><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg><span><strong>Private.</strong> Prepared for Yury by Saturn Results. Please do not share this link.</span></div></div>
+
+<main class="wrap">
+  <header>
+    <h1>Seven brands for Hinoki</h1>
+    <p class="lede">Seven different ways the clinic could look and sound. Each one has a logo, a small-size test, an app icon, colours, type, a profile picture and an Instagram post, so you can compare them side by side.</p>
+    <nav class="overview" aria-label="Brand directions"><a class="ov b1 on-bg" href="#rings" style="--c-bg:#1E3A2F;--c-fg:#EEF1EA;--c-paper:#EEF1EA;--c-ink:#1E3A2F;--c-acc:#DCCB9E;--at:#1E3A2F;--d1:#DCCB9E;--d2:#DCCB9E;--d3:#DCCB9E;--p1:#1E3A2F;--p2:#1E3A2F;--p3:#1E3A2F;--a1:#1E3A2F;--a2:#1E3A2F;--a3:#1E3A2F;--disp:'Shippori Mincho','Hiragino Mincho ProN',Georgia,serif;--body:'Hanken Grotesk',system-ui,sans-serif"><svg role="img" aria-label=""><use href="#mA"/></svg><span>A Annual Rings</span></a><a class="ov b2 on-bg" href="#sun" style="--c-bg:#1F2A55;--c-fg:#F5F4F0;--c-paper:#F5F4F0;--c-ink:#121733;--c-acc:#E3A72F;--at:#1F2A55;--d1:#F5F4F0;--d2:#E3A72F;--d3:#E3A72F;--p1:#1F2A55;--p2:#E3A72F;--p3:#E3A72F;--a1:#1F2A55;--a2:#F5F4F0;--a3:#F5F4F0;--disp:'Zen Kaku Gothic New','Hiragino Kaku Gothic ProN',system-ui,sans-serif;--body:'Zen Kaku Gothic New','Hiragino Kaku Gothic ProN',system-ui,sans-serif"><svg role="img" aria-label=""><use href="#mB"/></svg><span>B Tree of the Sun</span></a><a class="ov b3 on-bg" href="#fan" style="--c-bg:#17454A;--c-fg:#F1F2EE;--c-paper:#F1F2EE;--c-ink:#232A2B;--c-acc:#A5B5A0;--at:#17454A;--d1:#F1F2EE;--d2:#B38B4A;--d3:#B38B4A;--p1:#17454A;--p2:#B38B4A;--p3:#B38B4A;--a1:#17454A;--a2:#F1F2EE;--a3:#F1F2EE;--disp:'Jost','Futura',system-ui,sans-serif;--body:'Newsreader',Georgia,serif"><svg role="img" aria-label=""><use href="#mC"/></svg><span>C Scales</span></a><a class="ov b4 on-bg" href="#hi" style="--c-bg:#3A2A22;--c-fg:#ECEBE6;--c-paper:#ECEBE6;--c-ink:#3A2A22;--c-acc:#EACB45;--at:#3A2A22;--d1:#ECEBE6;--d2:#EACB45;--d3:#EACB45;--p1:#3A2A22;--p2:#7F9C55;--p3:#7F9C55;--a1:#3A2A22;--a2:#3A2A22;--a3:#3A2A22;--disp:'Familjen Grotesk',system-ui,sans-serif;--body:'Hanken Grotesk',system-ui,sans-serif"><svg role="img" aria-label=""><use href="#mD"/></svg><span>D Hi</span></a><a class="ov b5 on-bg" href="#door" style="--c-bg:#1D2742;--c-fg:#F7F5F4;--c-paper:#F7F5F4;--c-ink:#1D2742;--c-acc:#A9C7DD;--at:#1D2742;--d1:#EBB9B9;--d2:#1D2742;--d3:#A9C7DD;--p1:#EBB9B9;--p2:#1D2742;--p3:#1D2742;--a1:#EBB9B9;--a2:#1D2742;--a3:#F7F5F4;--disp:'Gloock',Georgia,serif;--body:'Hanken Grotesk',system-ui,sans-serif"><svg role="img" aria-label=""><use href="#mE"/></svg><span>E Doorway</span></a><a class="ov b6 on-bg" href="#seal" style="--c-bg:#2B3040;--c-fg:#F1EFEA;--c-paper:#F1EFEA;--c-ink:#2B3040;--c-acc:#9E2A3B;--at:#F1EFEA;--d1:#B83A4E;--d2:#F1EFEA;--d3:#F1EFEA;--p1:#9E2A3B;--p2:#F1EFEA;--p3:#F1EFEA;--a1:#F1EFEA;--a2:#9E2A3B;--a3:#9E2A3B;--disp:'Zen Old Mincho','Shippori Mincho',Georgia,serif;--body:'Hanken Grotesk',system-ui,sans-serif"><svg role="img" aria-label=""><use href="#mF"/></svg><span>F Seal</span></a><a class="ov b7 on-bg" href="#rise" style="--c-bg:#DCEBF3;--c-fg:#232B33;--c-paper:#F7FAFC;--c-ink:#232B33;--c-acc:#232B33;--at:#DCEBF3;--d1:#232B33;--d2:#F28C5A;--d3:#F28C5A;--p1:#232B33;--p2:#F28C5A;--p3:#F28C5A;--a1:#DCEBF3;--a2:#F28C5A;--a3:#F28C5A;--disp:'Sora',system-ui,sans-serif;--body:'Hanken Grotesk',system-ui,sans-serif"><svg role="img" aria-label=""><use href="#mG"/></svg><span>G Rise</span></a></nav>
+  </header>
+
+  <section class="meaning" aria-labelledby="meaning-h">
+    <div class="kanji" lang="ja" aria-hidden="true">檜</div>
+    <div>
+      <h2 id="meaning-h">What the name means</h2>
+      <dl>
+        <div><dt>The tree</dt><dd>Hinoki is the Japanese cypress, Chamaecyparis obtusa. It is slow-growing, tall and long-lived.</dd></div>
+        <div><dt>Sacred timber</dt><dd>Since the 7th century it has been the main wood for Japan's great shrines and temples, including Ise Jingū and Hōryū-ji.</dd></div>
+        <div><dt>Baths and scent</dt><dd>It lines hinoki baths in inns and onsen. The wood is smooth, pale yellow to light amber, with a clean, citrus-like smell.</dd></div>
+        <div><dt>The word</dt><dd>Hinoki reads hi-no-ki. Some sources translate it as "tree of the sun".</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="board b1" id="rings">
+    <div class="board-head"><h2>A. Annual Rings</h2><p>Hinoki as timber. The H is cut from a slice of trunk, so the growth rings are the lettering. Deep green and the pale colour of the real wood. Grounded, handmade, calm.</p></div>
+    <div class="sheet">
+      <div class="tile on-bg"><div class="lock">
+        <svg class="mk" role="img" aria-label="A. Annual Rings mark"><use href="#mA"/></svg>
+        <div class="word">hinoki</div><div class="tag">Massage, physiotherapy and acupuncture</div>
+      </div></div>
+      <div class="tile on-paper specs">
+        <div class="swatches"><div class="sw"><i style="background:#1E3A2F"></i><b>Forest</b><span>#1E3A2F</span></div><div class="sw"><i style="background:#6E8F6C"></i><b>Sap</b><span>#6E8F6C</span></div><div class="sw"><i style="background:#DCCB9E"></i><b>Timber</b><span>#DCCB9E</span></div><div class="sw"><i style="background:#4B3527"></i><b>Bark</b><span>#4B3527</span></div><div class="sw"><i style="background:#EEF1EA"></i><b>Mist</b><span>#EEF1EA</span></div></div>
+        <div class="type"><p class="big" style="">Calm hands, close to home.</p><p class="small">Book online, pay upfront and rebook in one tap.</p><p class="face">Shippori Mincho for headlines, Hanken Grotesk for text</p></div>
+      </div>
+    </div>
+    <div class="kit">
+      <div class="tile on-paper"><div class="hlock"><svg class="mk"><use href="#mA"/></svg><div class="word">hinoki</div></div></div>
+      <div class="tile on-bg"><div class="sizes"><div class="row"><div><svg class="s1"><use href="#mA"/></svg>64</div><div><svg class="s2"><use href="#mA"/></svg>36</div><div><svg class="s3"><use href="#mA"/></svg>20</div></div><p>Mark at small sizes</p></div></div>
+      <div class="tile on-accent"><div class="iconwrap"><div class="icon"><svg><use href="#mA"/></svg></div><p>App icon</p></div></div>
+    </div>
+    <div class="apps">
+      <div class="tile on-paper"><div class="profile"><div class="avatar"><svg><use href="#mA"/></svg></div><p class="nm">hinokiclinic</p><p class="hd">Hinoki Clinic</p><p class="bio">Massage, physiotherapy and acupuncture. Portobello Road, London W11. Opening soon.</p></div></div>
+      <div class="tile post on-bg"><svg class="art" style="width:120cqw;height:120cqw;right:-34cqw;top:-30cqw;opacity:.4"><use href="#ringfield"/></svg><p class="line" style="left:7cqw;bottom:16cqw;font-size:9.4cqw;font-weight:600">Opening soon on Portobello Road</p><p class="foot">Hinoki Clinic</p></div>
+    </div>
+  </section>
+  <section class="board b2" id="sun">
+    <div class="board-head"><h2>B. Tree of the Sun</h2><p>Hi-no-ki read as sun and tree. A cypress of stacked tiers stands in front of a low sun, with the kanji 檜 beside the name. Indigo and saffron with plenty of space. Japanese, quiet, precise.</p></div>
+    <div class="sheet">
+      <div class="tile on-bg"><div class="lock">
+        <svg class="mk" role="img" aria-label="B. Tree of the Sun mark"><use href="#mB"/></svg>
+        <div class="word">hinoki</div><div class="jp" lang="ja">檜 ヒノキ</div>
+      </div></div>
+      <div class="tile on-paper specs">
+        <div class="swatches"><div class="sw"><i style="background:#1F2A55"></i><b>Indigo</b><span>#1F2A55</span></div><div class="sw"><i style="background:#E3A72F"></i><b>Saffron</b><span>#E3A72F</span></div><div class="sw"><i style="background:#8C93A8"></i><b>Slate</b><span>#8C93A8</span></div><div class="sw"><i style="background:#121733"></i><b>Ink</b><span>#121733</span></div><div class="sw"><i style="background:#F5F4F0"></i><b>Washi</b><span>#F5F4F0</span></div></div>
+        <div class="type"><p class="big" style="">A quieter kind of recovery.</p><p class="small">Book online, pay upfront and rebook in one tap.</p><p class="face">Zen Kaku Gothic New for headlines and text</p></div>
+      </div>
+    </div>
+    <div class="kit">
+      <div class="tile on-paper"><div class="hlock"><svg class="mk"><use href="#mB"/></svg><div class="word">hinoki</div></div></div>
+      <div class="tile on-bg"><div class="sizes"><div class="row"><div><svg class="s1"><use href="#mB"/></svg>64</div><div><svg class="s2"><use href="#mB"/></svg>36</div><div><svg class="s3"><use href="#mB"/></svg>20</div></div><p>Mark at small sizes</p></div></div>
+      <div class="tile on-accent"><div class="iconwrap"><div class="icon"><svg><use href="#mB"/></svg></div><p>App icon</p></div></div>
+    </div>
+    <div class="apps">
+      <div class="tile on-paper"><div class="profile"><div class="avatar"><svg><use href="#mB"/></svg></div><p class="nm">hinokiclinic</p><p class="hd">Hinoki Clinic</p><p class="bio">Massage, physiotherapy and acupuncture. Portobello Road, London W11. Opening soon.</p></div></div>
+      <div class="tile post on-bg"><svg class="art" style="width:64cqw;height:64cqw;left:18cqw;top:6cqw"><use href="#mB"/></svg><p class="line" style="left:7cqw;bottom:16cqw;font-size:8.6cqw;font-weight:500">A quieter kind of recovery.</p><p class="foot">Hinoki Clinic</p></div>
+    </div>
+  </section>
+  <section class="board b3" id="fan">
+    <div class="board-head"><h2>C. Scales</h2><p>Hinoki foliage is made of tiny overlapping scale-like leaves. Rows of overlapping scales build the cypress, with a brass sun at its tip. Teal, sage and brass with light, wide-set type. Feels like a modern private clinic.</p></div>
+    <div class="sheet">
+      <div class="tile on-bg"><div class="lock">
+        <svg class="mk" role="img" aria-label="C. Scales mark"><use href="#mC"/></svg>
+        <div class="word">HINOKI</div><div class="tag">Clinic and wellness, Portobello Road</div>
+      </div></div>
+      <div class="tile on-paper specs">
+        <div class="swatches"><div class="sw"><i style="background:#17454A"></i><b>Teal</b><span>#17454A</span></div><div class="sw"><i style="background:#A5B5A0"></i><b>Sage</b><span>#A5B5A0</span></div><div class="sw"><i style="background:#B38B4A"></i><b>Brass</b><span>#B38B4A</span></div><div class="sw"><i style="background:#232A2B"></i><b>Charcoal</b><span>#232A2B</span></div><div class="sw"><i style="background:#F1F2EE"></i><b>Chalk</b><span>#F1F2EE</span></div></div>
+        <div class="type"><p class="big" style="font-weight:300">Massage. Physiotherapy. Acupuncture.</p><p class="small">Book online, pay upfront and rebook in one tap.</p><p class="face">Jost for headlines, Newsreader for text</p></div>
+      </div>
+    </div>
+    <div class="kit">
+      <div class="tile on-paper"><div class="hlock"><svg class="mk"><use href="#mC"/></svg><div class="word">HINOKI</div></div></div>
+      <div class="tile on-bg"><div class="sizes"><div class="row"><div><svg class="s1"><use href="#mC"/></svg>64</div><div><svg class="s2"><use href="#mC"/></svg>36</div><div><svg class="s3"><use href="#mC"/></svg>20</div></div><p>Mark at small sizes</p></div></div>
+      <div class="tile on-accent"><div class="iconwrap"><div class="icon"><svg><use href="#mC"/></svg></div><p>App icon</p></div></div>
+    </div>
+    <div class="apps">
+      <div class="tile on-paper"><div class="profile"><div class="avatar"><svg><use href="#mC"/></svg></div><p class="nm">hinokiclinic</p><p class="hd">Hinoki Clinic</p><p class="bio">Massage, physiotherapy and acupuncture. Portobello Road, London W11. Opening soon.</p></div></div>
+      <div class="tile post on-paper"><svg class="art" style="width:74cqw;height:74cqw;right:2cqw;bottom:-6cqw"><use href="#mC"/></svg><p class="line" style="left:7cqw;top:8cqw;font-size:9.4cqw;font-weight:300;max-width:62%">Massage. Physiotherapy. Acupuncture.</p><p class="foot">Hinoki Clinic</p></div>
+    </div>
+  </section>
+  <section class="board b4" id="hi">
+    <div class="board-head"><h2>D. Hi</h2><p>A friendly monogram of the h and i, with the dot as the sun. Bark brown, citrus yellow and leaf green, bold and rounded. Reads clearly at small sizes on Instagram and suits memberships and a younger crowd.</p></div>
+    <div class="sheet">
+      <div class="tile on-bg"><div class="lock">
+        <svg class="mk" role="img" aria-label="D. Hi mark"><use href="#mD"/></svg>
+        <div class="word">hinoki</div><div class="tag">Clinic</div>
+      </div></div>
+      <div class="tile on-paper specs">
+        <div class="swatches"><div class="sw"><i style="background:#3A2A22"></i><b>Bark</b><span>#3A2A22</span></div><div class="sw"><i style="background:#EACB45"></i><b>Citrus</b><span>#EACB45</span></div><div class="sw"><i style="background:#7F9C55"></i><b>Leaf</b><span>#7F9C55</span></div><div class="sw"><i style="background:#9DC4C6"></i><b>Bath water</b><span>#9DC4C6</span></div><div class="sw"><i style="background:#ECEBE6"></i><b>Stone</b><span>#ECEBE6</span></div></div>
+        <div class="type"><p class="big" style="font-weight:700">Hello, Portobello.</p><p class="small">Book online, pay upfront and rebook in one tap.</p><p class="face">Familjen Grotesk for headlines, Hanken Grotesk for text</p></div>
+      </div>
+    </div>
+    <div class="kit">
+      <div class="tile on-paper"><div class="hlock"><svg class="mk"><use href="#mD"/></svg><div class="word">hinoki</div></div></div>
+      <div class="tile on-bg"><div class="sizes"><div class="row"><div><svg class="s1"><use href="#mD"/></svg>64</div><div><svg class="s2"><use href="#mD"/></svg>36</div><div><svg class="s3"><use href="#mD"/></svg>20</div></div><p>Mark at small sizes</p></div></div>
+      <div class="tile on-accent"><div class="iconwrap"><div class="icon"><svg><use href="#mD"/></svg></div><p>App icon</p></div></div>
+    </div>
+    <div class="apps">
+      <div class="tile on-paper"><div class="profile"><div class="avatar"><svg><use href="#mD"/></svg></div><p class="nm">hinokiclinic</p><p class="hd">Hinoki Clinic</p><p class="bio">Massage, physiotherapy and acupuncture. Portobello Road, London W11. Opening soon.</p></div></div>
+      <div class="tile post on-accent"><svg class="art" style="width:78cqw;height:78cqw;right:-6cqw;bottom:-8cqw"><use href="#mD"/></svg><p class="line" style="left:7cqw;top:8cqw;font-size:13cqw;font-weight:700;letter-spacing:-.02em;max-width:80%">Hello, Portobello.</p><p class="foot">Hinoki Clinic</p></div>
+    </div>
+  </section>
+  <section class="board b5" id="door">
+    <div class="board-head"><h2>E. Doorway</h2><p>Notting Hill's painted house fronts. An arched doorway with a cypress standing inside, in the pastels of the street. Friendly, local and bright. The most Portobello of the seven.</p></div>
+    <div class="sheet">
+      <div class="tile on-bg"><div class="lock">
+        <svg class="mk" role="img" aria-label="E. Doorway mark"><use href="#mE"/></svg>
+        <div class="word">Hinoki</div><div class="tag">Clinic</div>
+      </div></div>
+      <div class="tile on-paper specs">
+        <div class="swatches"><div class="sw"><i style="background:#1D2742"></i><b>Navy</b><span>#1D2742</span></div><div class="sw"><i style="background:#A9C7DD"></i><b>Powder</b><span>#A9C7DD</span></div><div class="sw"><i style="background:#EBB9B9"></i><b>Blush</b><span>#EBB9B9</span></div><div class="sw"><i style="background:#B5D8C4"></i><b>Mint</b><span>#B5D8C4</span></div><div class="sw"><i style="background:#F1DC8A"></i><b>Lemon</b><span>#F1DC8A</span></div></div>
+        <div class="type"><p class="big" style="">A calm corner of Portobello Road.</p><p class="small">Book online, pay upfront and rebook in one tap.</p><p class="face">Gloock for headlines, Hanken Grotesk for text</p></div>
+      </div>
+    </div>
+    <div class="kit">
+      <div class="tile on-paper"><div class="hlock"><svg class="mk"><use href="#mE"/></svg><div class="word">Hinoki</div></div></div>
+      <div class="tile on-bg"><div class="sizes"><div class="row"><div><svg class="s1"><use href="#mE"/></svg>64</div><div><svg class="s2"><use href="#mE"/></svg>36</div><div><svg class="s3"><use href="#mE"/></svg>20</div></div><p>Mark at small sizes</p></div></div>
+      <div class="tile on-accent"><div class="iconwrap"><div class="icon"><svg><use href="#mE"/></svg></div><p>App icon</p></div></div>
+    </div>
+    <div class="apps">
+      <div class="tile on-paper"><div class="profile"><div class="avatar"><svg><use href="#mE"/></svg></div><p class="nm">hinokiclinic</p><p class="hd">Hinoki Clinic</p><p class="bio">Massage, physiotherapy and acupuncture. Portobello Road, London W11. Opening soon.</p></div></div>
+      <div class="tile post on-accent"><svg class="art" style="width:84cqw;height:84cqw;right:-8cqw;bottom:-6cqw"><use href="#mE"/></svg><p class="line" style="left:7cqw;top:8cqw;font-size:9.6cqw;max-width:64%">A calm corner of Portobello Road.</p><p class="foot">Hinoki Clinic</p></div>
+    </div>
+  </section>
+  <section class="board b6" id="seal">
+    <div class="board-head"><h2>F. Seal</h2><p>A hanko, the carved stamp used to sign Japanese documents, with 檜 cut into it. Madder red on soft ink blue. Crafted, confident and unmistakably Japanese.</p></div>
+    <div class="sheet">
+      <div class="tile on-bg"><div class="lock">
+        <svg class="mk" role="img" aria-label="F. Seal mark"><use href="#mF"/></svg>
+        <div class="word">hinoki</div><div class="tag">Massage, physiotherapy and acupuncture</div>
+      </div></div>
+      <div class="tile on-paper specs">
+        <div class="swatches"><div class="sw"><i style="background:#9E2A3B"></i><b>Madder</b><span>#9E2A3B</span></div><div class="sw"><i style="background:#2B3040"></i><b>Sumi</b><span>#2B3040</span></div><div class="sw"><i style="background:#3F5A4F"></i><b>Pine ink</b><span>#3F5A4F</span></div><div class="sw"><i style="background:#B9BDC8"></i><b>Mist</b><span>#B9BDC8</span></div><div class="sw"><i style="background:#F1EFEA"></i><b>Washi</b><span>#F1EFEA</span></div></div>
+        <div class="type"><p class="big" style="font-weight:700">Rest, restored.</p><p class="small">Book online, pay upfront and rebook in one tap.</p><p class="face">Zen Old Mincho for headlines, Hanken Grotesk for text</p></div>
+      </div>
+    </div>
+    <div class="kit">
+      <div class="tile on-paper"><div class="hlock"><svg class="mk"><use href="#mF"/></svg><div class="word">hinoki</div></div></div>
+      <div class="tile on-bg"><div class="sizes"><div class="row"><div><svg class="s1"><use href="#mF"/></svg>64</div><div><svg class="s2"><use href="#mF"/></svg>36</div><div><svg class="s3"><use href="#mF"/></svg>20</div></div><p>Mark at small sizes</p></div></div>
+      <div class="tile on-accent"><div class="iconwrap"><div class="icon"><svg><use href="#mF"/></svg></div><p>App icon</p></div></div>
+    </div>
+    <div class="apps">
+      <div class="tile on-paper"><div class="profile"><div class="avatar"><svg><use href="#mF"/></svg></div><p class="nm">hinokiclinic</p><p class="hd">Hinoki Clinic</p><p class="bio">Massage, physiotherapy and acupuncture. Portobello Road, London W11. Opening soon.</p></div></div>
+      <div class="tile post on-paper"><svg class="art" style="width:50cqw;height:50cqw;right:9cqw;bottom:9cqw"><use href="#mF"/></svg><p class="line" style="left:7cqw;top:8cqw;font-size:14cqw;font-weight:700;max-width:70%">Opening soon.</p><p class="foot">Hinoki Clinic, Portobello Road</p></div>
+    </div>
+  </section>
+  <section class="board b7" id="rise">
+    <div class="board-head"><h2>G. Rise</h2><p>Nested arcs rise like a sun or the crown of a tree. Ice, aqua and a spark of ember. Light and modern, built for the recovery and membership side Yury plans for a later site.</p></div>
+    <div class="sheet">
+      <div class="tile on-bg"><div class="lock">
+        <svg class="mk" role="img" aria-label="G. Rise mark"><use href="#mG"/></svg>
+        <div class="word">hinoki</div><div class="tag">Recovery club</div>
+      </div></div>
+      <div class="tile on-paper specs">
+        <div class="swatches"><div class="sw"><i style="background:#232B33"></i><b>Graphite</b><span>#232B33</span></div><div class="sw"><i style="background:#DCEBF3"></i><b>Ice</b><span>#DCEBF3</span></div><div class="sw"><i style="background:#4FB3C8"></i><b>Aqua</b><span>#4FB3C8</span></div><div class="sw"><i style="background:#CBC3E8"></i><b>Lilac mist</b><span>#CBC3E8</span></div><div class="sw"><i style="background:#F28C5A"></i><b>Ember</b><span>#F28C5A</span></div></div>
+        <div class="type"><p class="big" style="font-weight:600">Recovery, on a membership.</p><p class="small">Book online, pay upfront and rebook in one tap.</p><p class="face">Sora for headlines, Hanken Grotesk for text</p></div>
+      </div>
+    </div>
+    <div class="kit">
+      <div class="tile on-paper"><div class="hlock"><svg class="mk"><use href="#mG"/></svg><div class="word">hinoki</div></div></div>
+      <div class="tile on-bg"><div class="sizes"><div class="row"><div><svg class="s1"><use href="#mG"/></svg>64</div><div><svg class="s2"><use href="#mG"/></svg>36</div><div><svg class="s3"><use href="#mG"/></svg>20</div></div><p>Mark at small sizes</p></div></div>
+      <div class="tile on-accent"><div class="iconwrap"><div class="icon"><svg><use href="#mG"/></svg></div><p>App icon</p></div></div>
+    </div>
+    <div class="apps">
+      <div class="tile on-paper"><div class="profile"><div class="avatar"><svg><use href="#mG"/></svg></div><p class="nm">hinokiclinic</p><p class="hd">Hinoki Clinic</p><p class="bio">Massage, physiotherapy and acupuncture. Portobello Road, London W11. Opening soon.</p></div></div>
+      <div class="tile post on-bg"><svg class="art" style="width:76cqw;height:76cqw;right:12cqw;bottom:8cqw"><use href="#mG"/></svg><p class="line" style="left:7cqw;top:8cqw;font-size:9.4cqw;font-weight:600;letter-spacing:-.03em;max-width:82%">Recovery, on a membership.</p><p class="foot">Hinoki Recovery Club</p></div>
+    </div>
+  </section>
+
+  <footer class="note">
+    <p>These are concept sketches for choosing a direction. The chosen one would be refined into final artwork, and the name and logo should be checked for trademark before use. Handles, copy and photography shown are examples.</p>
+    <p>Name background: <a href="https://kokorocares.com/blogs/blog/hinoki-the-sacred-cypress-of-japan">Kokoro Cares on hinoki</a> and the <a href="https://www.tkgje.jp/entries/04000/04402_hinoki.html">Japanese dictionary entry for 檜</a>. Prepared by Saturn Results.</p>
+  </footer>
+</main>
+</body></html>
