@@ -192,6 +192,23 @@ form .btn{margin-top:6px;width:100%}
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .reveal.is-in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}}
+
+/* ---------- WhatsApp / phone ---------- */
+.nav__wa{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px 0 12px;border-radius:999px;background:rgba(37,211,102,.14);border:1px solid rgba(37,211,102,.35);color:#7CF0A8;font-size:14px;font-weight:500;white-space:nowrap;transition:background .25s}
+.nav__wa:hover{background:rgba(37,211,102,.24)}
+.nav__wa svg,.btn--wa svg,.wa-float svg,.wa-link svg{width:17px;height:17px;flex:none}
+.btn--wa{background:#25D366;color:#04220f;font-weight:600}
+.btn--wa:hover{background:#3be07a;transform:translateY(-1px);box-shadow:0 10px 30px -10px rgba(37,211,102,.7)}
+.btn--wa svg{width:17px;height:17px}
+.wa-link{display:inline-flex;align-items:center;gap:7px;color:#7CF0A8!important;font-weight:500}
+.wa-link:hover{color:#a6f7c4!important}
+.wa-float{position:fixed;right:20px;bottom:20px;z-index:48;display:inline-flex;align-items:center;gap:10px;height:54px;padding:0 20px 0 16px;border-radius:999px;background:#25D366;color:#04220f;font-size:15px;font-weight:600;box-shadow:0 12px 34px -8px rgba(37,211,102,.6),0 0 0 1px rgba(255,255,255,.12) inset;transition:transform .3s var(--ease),box-shadow .3s}
+.wa-float:hover{transform:translateY(-2px);box-shadow:0 16px 40px -8px rgba(37,211,102,.8)}
+.wa-float svg{width:24px;height:24px}
+.wa-float small{display:block;font-size:11px;font-weight:500;opacity:.75;line-height:1}
+.wa-float span{line-height:1.15}
+@media(max-width:1280px){.nav__wa-num{display:none}.nav__wa{padding:0 14px 0 12px}}
+@media(max-width:600px){.wa-float{right:14px;bottom:14px;height:56px;width:56px;padding:0;justify-content:center}.wa-float span{display:none}.wa-float svg{width:28px;height:28px}}
 </style>
 </head>
 <body>
@@ -205,6 +222,7 @@ form .btn{margin-top:6px;width:100%}
     <a href="/#pricing">Pricing</a>
   </div>
   <div class="nav__right">
+    <a class="nav__wa" href="https://wa.me/447397149933?text=Hi%20Saturn%20Results%2C%20I%27d%20like%20to%20chat%20about%20my%20business." target="_blank" rel="noopener" aria-label="WhatsApp us on 07397 149933"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.03c-.24.68-1.42 1.3-1.96 1.35-.5.05-.97.23-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.82 0-1.34.7-2 .95-2.27.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.93.86 2.07.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.35-.41.47-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.9 1.05.93 1.93 1.22 2.2 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.07.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.34z"/></svg><span class="nav__wa-num">07397 149933</span></a>
     <a class="nav__cta" href="/">Back to site</a>
   </div>
 </nav>
@@ -347,6 +365,9 @@ form .btn{margin-top:6px;width:100%}
       </div>  </div>
 </section>
 
+
+<!-- WhatsApp floating button -->
+<a class="wa-float" href="https://wa.me/447397149933?text=Hi%20Saturn%20Results%2C%20I%27d%20like%20to%20chat%20about%20my%20business." target="_blank" rel="noopener" aria-label="WhatsApp us on 07397 149933"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.03c-.24.68-1.42 1.3-1.96 1.35-.5.05-.97.23-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.82 0-1.34.7-2 .95-2.27.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.93.86 2.07.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.35-.41.47-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.9 1.05.93 1.93 1.22 2.2 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.07.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.34z"/></svg><span>WhatsApp us<small>07397 149933</small></span></a>
 <footer class="footer">
   <div class="container">
     <div class="footer__grid">
@@ -356,11 +377,11 @@ form .btn{margin-top:6px;width:100%}
       </div>
       <div class="footer__col"><h5>Agency</h5><a href="/#about">About</a><a href="/#process">How it works</a><a href="/#work">Work</a><a href="/#pricing">Pricing</a><a href="/mentoring/">Mentoring</a></div>
       <div class="footer__col"><h5>Clients</h5><a href="/#work">Tony Kosoko</a><a href="/#work">YK Wellness</a><a href="/#work">Raglo UK</a><a href="/#work">Alderney Week</a></div>
-      <div class="footer__col"><h5>Connect</h5><a href="mailto:contact@saturnresults.com">Email us</a><a href="/portal/">Client portal</a></div>
+      <div class="footer__col"><h5>Connect</h5><a class="wa-link" href="https://wa.me/447397149933?text=Hi%20Saturn%20Results%2C%20I%27d%20like%20to%20chat%20about%20my%20business." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.03c-.24.68-1.42 1.3-1.96 1.35-.5.05-.97.23-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.82 0-1.34.7-2 .95-2.27.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.93.86 2.07.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.35-.41.47-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.9 1.05.93 1.93 1.22 2.2 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.07.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.34z"/></svg>WhatsApp us</a><a href="tel:+447397149933">Call 07397 149933</a><a href="mailto:contact@saturnresults.com">Email us</a><a href="/portal/">Client portal</a></div>
     </div>
     <div class="footer__bottom">
       <span>© 2026 Saturn Results. All rights reserved.</span>
-      <span>contact@saturnresults.com</span>
+      <span><a href="tel:+447397149933">07397 149933</a> · contact@saturnresults.com</span>
     </div>
   </div>
 </footer>
