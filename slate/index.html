@@ -400,7 +400,9 @@ section[id]{scroll-margin-top:84px}
 @media (max-width:560px){.price__side{padding:28px 22px}}
 .price__side h3{font-size:19px;color:#fff}
 .price__side p{font-size:15px;color:#C9CDD4}
-.price__side .btn--primary{width:100%}
+.price__side .btn{width:100%}
+.price__side .btn--ghost{background:transparent;border-color:rgba(255,255,255,.3);color:#fff}
+.price__side .btn--ghost:hover{background:rgba(255,255,255,.1);border-color:#fff;color:#fff}
 
 /* ---------- case study placeholder ---------- */
 .placeholder{margin-top:42px;padding:30px 28px;border:1.5px dashed var(--line-2);border-radius:var(--radius-lg);background:var(--tint-2);text-align:center;color:var(--muted)}
@@ -930,33 +932,36 @@ section[id]{scroll-margin-top:84px}
 </section>
 
 <!-- ============ PRICING ============ -->
-<!-- TODO: confirm these figures before launch. "From £249 set-up and £49 a month" came
-     from the brief as a placeholder and has not been verified. Also confirm whether VAT
-     applies and whether the monthly fee has a minimum term. -->
+<!-- The three monthly figures are the live ones and match /slate/pricing/, which
+     is the full breakdown. The old "From £249 set-up" line was an unverified
+     placeholder from the original brief and has been taken out rather than left
+     to contradict the plans. If set-up is chargeable, add it to BOTH pages.
+     TODO: confirm whether these figures include or exclude VAT. -->
 <section class="sec sec--tint" id="pricing">
   <div class="wrap">
     <div class="sec__head" data-reveal>
       <p class="kicker">Pricing</p>
-      <h2>One clear price, whatever size your clinic is.</h2>
-      <p>No commission, no charge per booking and no percentage of your treatment price.</p>
+      <h2>One flat monthly price, whatever size your clinic is.</h2>
+      <p>No commission, no charge per booking and no percentage of your treatment price. £29 a month on your own, £39 if you are staying on the system you already use, £49 if you need the dashboard too.</p>
     </div>
 
     <div class="price" data-reveal>
       <div class="price__main">
-        <p class="price__fig"><b>From £249</b> <span>set-up, then £49 a month</span></p>
+        <p class="price__fig"><b>From £29</b> <span>a month, no commission</span></p>
         <ul class="price__list">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Set up around your services and your hours</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Live on your own website in your branding</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Confirmations, reminders and your cancellation policy</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ongoing support and changes when you need them</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>One price whether you are one practitioner or six</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Add practitioners without the bill moving</li>
         </ul>
-        <p class="price__note">Prices shown are a guide. We will confirm the exact figure for your clinic on the call, before you commit to anything.</p>
+        <p class="price__note"><a href="/slate/pricing/">See the full pricing breakdown</a>, including how the three plans compare with a marketplace and with having a system built from scratch. We will confirm the exact figure for your clinic on the call, before you commit to anything.</p>
       </div>
       <div class="price__side">
-        <h3>Not sure it fits?</h3>
+        <h3>Not sure which one?</h3>
         <p>Fifteen minutes on a call and you will know. If it is not right for your clinic we will say so.</p>
         <a class="btn btn--primary" href="#start">Book a 15 minute demo</a>
+        <a class="btn btn--ghost" href="/slate/pricing/">Compare the plans</a>
       </div>
     </div>
   </div>
