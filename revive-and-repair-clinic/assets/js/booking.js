@@ -36,8 +36,15 @@
     { id: 6, cat: 'Cupping Treatment', name: 'Wet Cupping + Deep Tissue Massage (back only)',
       durs: [{ mins: 60, price: 54, was: 60 }] },
 
-    { id: 7, cat: 'Massage Treatment', name: '30 Minute Deep Tissue Massage',
-      durs: [{ mins: 30, price: 36, was: 40 }] },
+    /* One card, a button per length. Booksy lists only "30 minute deep tissue
+       massage"; the hour is the clinic's own standard rate for an hour of
+       massage, the same £54 as the sports, relaxation and hot stone hours.
+       Seven of their treatments show a "from" price on Booksy, so they have
+       more lengths behind the booking flow that are not public. When Jual
+       sends those, each one is another entry in this list. */
+    { id: 7, cat: 'Massage Treatment', name: 'Deep Tissue Massage',
+      desc: 'Deep tissue oil massage, worked into whatever is giving you trouble.',
+      durs: [{ mins: 30, price: 36, was: 40 }, { mins: 60, price: 54, was: 60 }] },
     { id: 8, cat: 'Massage Treatment', name: 'Graston Therapy + Deep Tissue Massage',
       desc: 'Graston therapy with a deep tissue oil massage.',
       durs: [{ mins: 30, price: 36, was: 40 }] },
@@ -258,7 +265,8 @@
   }
 
   /* ---------------- shell ---------------- */
-  var el;
+  var el, hop;
+  var AUTO = { svc: 1, staff: 1, time: 1 };
   function render() {
     if (S.step === 5) {
       el.innerHTML = '<div class="sbk-card"><section class="sbk-main">' + vDone() + '</section></div>' +
@@ -354,8 +362,19 @@
       var t = e.target.closest('[data-a]');
       if (!t || t.disabled) return;
       if (S.step === 4) readForm();
-      var fn = ACT[t.getAttribute('data-a')];
-      if (fn) { fn(t.getAttribute('data-v')); render(); }
+      var a = t.getAttribute('data-a'), fn = ACT[a];
+      if (!fn) return;
+      fn(t.getAttribute('data-v'));
+      render();
+      /* Choosing a treatment, a therapist or a time is the whole of that step,
+         so it carries you on by itself rather than making you press Continue
+         as well. The pause is long enough to see the choice light up first,
+         and clicking again inside it just replaces the pending hop. Picking a
+         day is not in here: that only loads the times below it. */
+      if (AUTO[a] && S.step < 4) {
+        clearTimeout(hop);
+        hop = setTimeout(function () { ACT.cta(); render(); }, 180);
+      }
     });
     render();
   }
