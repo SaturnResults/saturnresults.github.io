@@ -6,19 +6,59 @@
   /* ---- header ---- */
   var hd = document.getElementById('siteHeader');
   if (hd) {
-    var hero = document.querySelector('.page-hero');
-    var lastY = window.scrollY;
+    /* At the top of the page the header is docked and scrolls away with
+       everything else. Once it has gone it floats as a pill, and the only
+       thing that brings it back is scrolling up.
+
+       Two thresholds rather than one. The old version swapped docked for
+       floating at the foot of the hero, which put the docked header hundreds
+       of pixels above the viewport, so scrolling up through that point made it
+       vanish until you reached the top. Swapping at the header's own height
+       instead means the two sit in the same place when they trade over, and
+       nothing jumps.
+
+       `drift` accumulates movement in one direction and resets when the
+       direction changes, so a few pixels of wobble, or the bounce at the end
+       of a flick, cannot flip it. */
+    var DOCK = 10, FLOAT = 90, TURN = 12;
+    var lastY = window.scrollY, drift = 0, shown = true, floating = false, first = true;
+
+    var show = function (on, instant) {
+      if (on === shown) return;
+      shown = on;
+      if (instant) hd.classList.add('no-anim');
+      hd.classList.toggle('is-hidden', !on);
+      if (instant) requestAnimationFrame(function () { hd.classList.remove('no-anim'); });
+      drift = 0;
+    };
+
     var tick = function () {
-      var y = window.scrollY;
-      var past = hero ? y > hero.offsetHeight - 70 : y > 160;
-      if (past !== hd.classList.contains('is-solid')) {
-        hd.classList.add('no-anim');
-        hd.classList.toggle('is-solid', past);
-        requestAnimationFrame(function () { hd.classList.remove('no-anim'); });
+      var y = Math.max(0, window.scrollY);
+
+      if (!floating && y > FLOAT) {
+        floating = true;
+        hd.classList.add('is-solid');
+        /* you only reach here on the way down, so it leaves straight away
+           rather than appearing for a moment first */
+        if (!first) show(false, true);
+      } else if (floating && y < DOCK) {
+        floating = false;
+        hd.classList.remove('is-solid');
+        show(true);
       }
-      /* hide on the way down, show on the way up, only once it is floating */
-      hd.classList.toggle('is-hidden', past && y > lastY + 6 && y > 260);
+
+      if (floating) {
+        var d = y - lastY;
+        if (d) {
+          if ((d > 0) !== (drift > 0)) drift = 0;
+          drift += d;
+          if (drift > TURN) show(false);
+          else if (drift < -TURN) show(true);
+        }
+      } else drift = 0;
+
       lastY = y;
+      first = false;
     };
     addEventListener('scroll', tick, { passive: true });
     tick();

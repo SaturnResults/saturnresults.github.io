@@ -25,7 +25,10 @@
   --maxw:1240px;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+/* black on the root as well as the body, so the canvas behind the page is black
+   too: that is what fills the strip under a phone's status bar and notch, and
+   what shows when you rubber-band past the top */
+html{scroll-behavior:smooth;background:var(--black)}
 body{margin:0;font-family:"Jost",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--white);background:var(--black);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.55}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
@@ -34,9 +37,10 @@ h1,h2,h3,h4{margin:0}
 @media (min-width:760px){.wrap{
   padding-left:max(clamp(26px,4vw,44px),env(safe-area-inset-left,0px));
   padding-right:max(clamp(26px,4vw,44px),env(safe-area-inset-right,0px))}}
-/* paints the strip behind a phone's status bar, so nothing scrolls into view
-   above the header pill */
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:100;background:var(--black)}
+/* Paints the strip behind a phone's status bar and notch, so the top of the
+   page reads as one black band and nothing scrolls into view up there. It sits
+   above the header, which floats under it. */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:100;background:var(--black);pointer-events:none}
 .skip-link{position:absolute;left:-9999px;top:0;z-index:200;background:var(--gold);color:var(--black);padding:12px 20px;border-radius:0 0 10px 0;font-weight:600}
 .skip-link:focus{left:0}
 :focus-visible{outline:3px solid var(--gold-bright);outline-offset:3px;border-radius:6px}
