@@ -178,25 +178,24 @@
 
     document.getElementById('cal').innerHTML = '<div class="cal-in">' + gut + cols + '</div>';
 
-    /* the numbers above it */
+    /* The numbers above it. Deliberately no money: her treatment prices are
+       real and public, but a week's takings here would be invented, and
+       showing a stranger a made-up income for her own business is not a good
+       way to open. */
     var all = wk.reduce(function (a, d) { return a.concat(d.bookings); }, [])
       .filter(function (b) { return !b.cancelled; });
-    var take = all.reduce(function (a, b) { return a + b.price; }, 0);
     var mins = all.reduce(function (a, b) { return a + b.mins; }, 0);
     var r = seedOf('new:' + iso(S.mon));
     var fresh = Math.max(1, Math.round(all.length * (0.18 + r() * 0.14)));
-    /* 35% + VAT is Treatwell's published commission on a new client's first
-       booking. Shown on the average treatment price for this week. */
-    var avg = all.length ? take / all.length : 0;
-    var comm = Math.round(fresh * avg * 0.35 * 1.2);
+    var busiest = wk.filter(function (d) { return d.hours; })
+      .sort(function (a, b) { return b.bookings.length - a.bookings.length; })[0];
 
     document.getElementById('stats').innerHTML =
       stat('Appointments', all.length, wk.filter(function (d) { return d.hours; }).length + ' working days') +
       stat('Hours booked', (mins / 60).toFixed(1), 'across the week') +
-      stat('Taken', money(take.toLocaleString('en-GB')), 'before card fees') +
       stat('New clients', fresh, 'first visit this week') +
-      '<div class="stat stat--note"><span>Kept, not commissioned</span><b>' + money(comm.toLocaleString('en-GB')) +
-      '</b><em>What ' + fresh + ' new clients at 35% + VAT would have cost on a marketplace</em></div>';
+      stat('Busiest day', busiest ? DAYS[busiest.d.getDay()] + ' ' + busiest.d.getDate() : '—',
+        busiest ? busiest.bookings.length + ' appointments' : '');
 
     /* up next, skipping today if she is closed */
     var next = null;
@@ -239,8 +238,7 @@
         '<span class="sub">' + esc(t12(b.start) + ' – ' + t12(b.start + b.mins)) + '</span></td>' +
         '<td>' + esc(durL(b.mins)) + '</td>' +
         '<td><span class="pill ' + (b.cancelled ? 'cancelled' : past ? '' : 'confirmed') + '">' +
-        (b.cancelled ? 'Cancelled' : past ? 'Completed' : 'Confirmed') + '</span></td>' +
-        '<td class="num"><b>' + money(b.price) + '</b></td></tr>';
+        (b.cancelled ? 'Cancelled' : past ? 'Completed' : 'Confirmed') + '</span></td></tr>';
     }).join('');
   }
 
@@ -251,8 +249,9 @@
       var d = new Date(today); d.setDate(d.getDate() + i);
       dayBookings(iso(d)).forEach(function (b) {
         if (b.cancelled) return;
-        var t = tally[b.who] || (tally[b.who] = { visits: 0, spend: 0, last: null, fav: {} });
-        t.visits++; t.spend += b.price;
+        var t = tally[b.who] || (tally[b.who] = { visits: 0, first: null, last: null, fav: {} });
+        t.visits++;
+        if (!t.first || d < t.first) t.first = new Date(d);
         if (d <= today && (!t.last || d > t.last)) t.last = new Date(d);
         t.fav[b.svc.name] = (t.fav[b.svc.name] || 0) + 1;
       });
@@ -260,8 +259,8 @@
     var list = Object.keys(tally).map(function (n) {
       var t = tally[n];
       var fav = Object.keys(t.fav).sort(function (a, b) { return t.fav[b] - t.fav[a]; })[0];
-      return { name: n, visits: t.visits, spend: t.spend, last: t.last, fav: fav };
-    }).sort(function (a, b) { return b.spend - a.spend; });
+      return { name: n, visits: t.visits, first: t.first, last: t.last, fav: fav };
+    }).sort(function (a, b) { return b.visits - a.visits; });
 
     document.getElementById('clientCount').textContent = list.length + ' clients';
     document.getElementById('clientsBody').innerHTML = list.map(function (c) {
@@ -269,7 +268,7 @@
         esc(c.name) + '</b><span class="sub">' + esc(c.fav) + '</span></div></div></td>' +
         '<td class="num">' + c.visits + '</td>' +
         '<td>' + (c.last ? DAYS[c.last.getDay()] + ' ' + c.last.getDate() + ' ' + MON[c.last.getMonth()] : '—') + '</td>' +
-        '<td class="num"><b>' + money(c.spend.toLocaleString('en-GB')) + '</b></td></tr>';
+        '<td>' + (c.first ? MON[c.first.getMonth()] + ' ' + c.first.getFullYear() : '—') + '</td></tr>';
     }).join('');
   }
 
