@@ -1,0 +1,276 @@
+/* ==========================================================================
+   Mindful Massage by Galina — the studio side (demo)
+
+   The diary is the Simple Bookings staff calendar rebuilt to the same
+   structure as the real one: a 56px time gutter, 60px to the hour, day
+   columns with a 60px head, hatched shading outside working hours, absolutely
+   placed appointment blocks and a red now line. The plugin's own admin.css is
+   the reference. What changes here is the chrome around it: WordPress admin
+   grey becomes her forest and amber, because a therapist should not have to
+   look at wp-admin to see her week.
+   ========================================================================== */
+
+:root{
+  --forest:#273429;
+  --forest-2:#31402F;
+  --forest-deep:#1B241C;
+  --ink:#22291F;
+  --ink-soft:#5F6A5B;
+  --ink-faint:#8B9386;
+  --white:#FFFFFF;
+  --oat:#F5F1E8;
+  --paper:#FBF9F4;
+  --line:#E3DACB;
+  --line-soft:#EFE9DD;
+  --amber:#9A5F1E;
+  --amber-deep:#7A4A16;
+  --amber-bright:#D9A05C;
+  --amber-wash:#F7EEE1;
+  --good:#3F6B45;
+  --good-wash:#E6EFE4;
+  --bad:#9E3B24;
+  --bad-wash:#F6E3DC;
+  --radius:999px;
+}
+*{box-sizing:border-box}
+html{background:var(--forest)}
+body{margin:0;font-family:"Karla",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5;font-size:15px}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+h1,h2,h3{margin:0}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--amber-bright);outline-offset:2px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------------- shell ---------------- */
+.app{display:grid;grid-template-columns:248px 1fr;min-height:100dvh}
+
+.side{background:var(--forest);color:#fff;display:flex;flex-direction:column;gap:6px;
+  padding:20px 16px calc(18px + env(safe-area-inset-bottom,0px));
+  padding-top:calc(20px + env(safe-area-inset-top,0px));
+  position:sticky;top:0;height:100dvh}
+.side__brand{display:flex;align-items:center;gap:10px;padding:0 8px 18px}
+.side__brand svg{width:30px;height:30px;color:var(--amber-bright);flex:0 0 auto}
+.side__brand b{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:16px;line-height:1.15;display:block;
+  letter-spacing:normal;text-transform:none}
+/* only the sub-line, not the wrapper the two sit in */
+.side__brand b + span{display:block;font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--amber-bright);font-weight:700;margin-top:3px}
+.side__nav{display:flex;flex-direction:column;gap:2px}
+.side__nav button{display:flex;align-items:center;gap:11px;width:100%;text-align:left;
+  background:none;border:0;cursor:pointer;color:rgba(236,239,232,.76);
+  padding:11px 12px;border-radius:12px;font-size:15px;transition:background .18s,color .18s}
+.side__nav button svg{width:18px;height:18px;flex:0 0 auto;opacity:.85}
+.side__nav button:hover{background:rgba(255,255,255,.07);color:#fff}
+.side__nav button[aria-current="true"]{background:rgba(217,160,92,.16);color:#fff;font-weight:700}
+.side__nav button[aria-current="true"] svg{color:var(--amber-bright);opacity:1}
+.side__grow{flex:1}
+.side__who{display:flex;align-items:center;gap:10px;padding:12px;border-radius:14px;background:rgba(255,255,255,.06)}
+.side__who b{display:block;font-size:14px}
+.side__who span{display:block;font-size:12px;color:rgba(236,239,232,.6)}
+.side__out{display:block;padding:10px 12px;font-size:13px;color:rgba(236,239,232,.55)}
+.side__out:hover{color:#fff}
+
+.main{min-width:0;display:flex;flex-direction:column}
+
+/* ---------------- top bar ---------------- */
+.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  padding:20px clamp(18px,2.4vw,30px);border-bottom:1px solid var(--line);background:var(--white);
+  position:sticky;top:0;z-index:20}
+.top h1{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:clamp(1.3rem,2vw,1.6rem);letter-spacing:-.01em}
+.top__sub{color:var(--ink-soft);font-size:13.5px;margin-top:1px}
+.top__grow{flex:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:14px;
+  border-radius:var(--radius);border:1px solid transparent;cursor:pointer;white-space:nowrap;padding:10px 20px;
+  transition:background .18s,transform .15s,box-shadow .18s,border-color .18s}
+.btn svg{width:16px;height:16px}
+.btn--amber{background:var(--amber);color:#fff;border-color:var(--amber)}
+.btn--amber:hover{background:var(--amber-deep);transform:translateY(-1px)}
+.btn--ghost{background:var(--white);color:var(--ink);border-color:var(--line)}
+.btn--ghost:hover{border-color:var(--ink-soft)}
+.btn--sm{padding:7px 14px;font-size:13px}
+
+.demobar{display:flex;align-items:center;gap:10px;padding:10px clamp(18px,2.4vw,30px);
+  background:var(--amber-wash);border-bottom:1px solid var(--line);font-size:13px;color:#5A3A12}
+.demobar svg{width:15px;height:15px;flex:0 0 auto}
+.demobar a{text-decoration:underline;text-underline-offset:2px;font-weight:700}
+
+.view{padding:clamp(18px,2.4vw,30px);display:none}
+.view.on{display:block}
+
+/* ---------------- stat row ---------------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:22px}
+.stat{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.stat b{display:block;font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:1.75rem;line-height:1.15;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{display:block;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);
+  font-weight:700;margin-bottom:6px}
+.stat em{display:block;font-style:normal;font-size:12.5px;color:var(--ink-soft);margin-top:4px}
+.stat--note{background:var(--forest);border-color:var(--forest);color:#fff}
+.stat--note span{color:var(--amber-bright)}
+.stat--note em{color:rgba(236,239,232,.7)}
+
+/* ---------------- calendar ---------------- */
+.calnav{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.calnav__range{font-weight:700;font-size:15px;margin-right:4px}
+.iconbtn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--white);
+  display:inline-grid;place-items:center;cursor:pointer;color:var(--ink)}
+.iconbtn:hover{border-color:var(--ink-soft)}
+.iconbtn svg{width:16px;height:16px}
+
+.cal{background:var(--white);border:1px solid var(--line);border-radius:16px;overflow:auto}
+.cal-in{display:flex;min-width:760px}
+.gut{width:56px;flex-shrink:0}
+.col{flex:1 1 0;min-width:112px;border-left:1px solid var(--line-soft)}
+.colh{height:60px;border-bottom:1px solid var(--line-soft);display:flex;flex-direction:column;justify-content:center;
+  gap:1px;padding:0 12px;position:sticky;top:0;background:var(--white);z-index:2}
+.gut .colh{border-bottom:1px solid var(--line-soft);position:sticky;top:0;background:var(--white);z-index:3}
+.colh strong{font-size:13.5px}
+.colh small{color:var(--ink-faint);font-size:12px}
+.colh.is-today strong{color:var(--amber)}
+.colh.is-shut strong{color:var(--ink-faint)}
+.body{position:relative;background-image:repeating-linear-gradient(to bottom,transparent 0 59px,var(--line-soft) 59px 60px)}
+.gut .body{background:none}
+.gut .body span{position:absolute;right:8px;font-size:11px;color:var(--ink-faint);transform:translateY(-6px);
+  font-variant-numeric:tabular-nums}
+.shade{position:absolute;left:0;right:0;
+  background:repeating-linear-gradient(135deg,#F6F3EC 0 6px,#EDE7DB 6px 7px)}
+.blk{position:absolute;left:4px;right:4px;border-radius:9px;padding:5px 8px;overflow:hidden;
+  font-size:12px;line-height:1.35;color:var(--ink);display:block;border:1px solid transparent;cursor:pointer;
+  text-align:left;width:calc(100% - 8px)}
+.blk b,.blk span,.blk em{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.blk em{font-style:normal;color:var(--ink-soft)}
+.blk:hover,.blk:focus{box-shadow:0 0 0 2px var(--ink)}
+.blk.done{opacity:.5}
+.blk--massage{background:#E8EFE6;border-color:#D3E0CF}
+.blk--deep{background:#F6E8D8;border-color:#EBD6BC}
+.blk--short{background:#E9EAF1;border-color:#D7D9E6}
+.blk--preg{background:#F3E6EC;border-color:#E6D1DB}
+.blk.cancelled{background:var(--bad-wash);border-color:#EACCC2;text-decoration:line-through;opacity:.7}
+.now{position:absolute;left:0;right:0;height:2px;background:#C2412D;z-index:3}
+.now::before{content:"";position:absolute;left:-3px;top:-3px;width:8px;height:8px;border-radius:50%;background:#C2412D}
+
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;
+  background:var(--line-soft);color:var(--ink-soft)}
+.pill.confirmed{background:var(--good-wash);color:var(--good)}
+.pill.cancelled{background:var(--bad-wash);color:var(--bad)}
+.pill.paid{background:var(--amber-wash);color:#5A3A12}
+
+.av{border-radius:50%;display:inline-grid;place-items:center;font-weight:700;font-size:12px;
+  background:#D9C7A8;color:var(--ink);flex-shrink:0}
+
+/* ---------------- tables ---------------- */
+.tablewrap{background:var(--white);border:1px solid var(--line);border-radius:16px;overflow:auto}
+table{border-collapse:collapse;width:100%;min-width:620px}
+th{text-align:left;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);
+  font-weight:700;padding:13px 16px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:13px 16px;border-bottom:1px solid var(--line-soft);font-size:14px;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--paper)}
+td b{font-weight:700}
+td .sub{display:block;color:var(--ink-soft);font-size:12.5px;margin-top:1px}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.who{display:flex;align-items:center;gap:10px}
+.who .av{width:34px;height:34px}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{height:34px;padding:0 15px;border-radius:999px;border:1px solid var(--line);background:var(--white);
+  font-size:13.5px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center}
+.chip:hover{border-color:var(--ink-soft)}
+.chip[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:#fff;font-weight:700}
+
+/* ---------------- treatments & hours ---------------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:18px}
+.card h3{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:1.05rem;margin-bottom:4px}
+.card p{margin:0;color:var(--ink-soft);font-size:13px;line-height:1.5}
+.card .durs{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.card .durs span{font-size:12.5px;padding:5px 10px;border-radius:8px;background:var(--paper);
+  border:1px solid var(--line-soft);font-variant-numeric:tabular-nums}
+.card .durs span b{font-weight:700}
+
+.hourrow{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--line-soft)}
+.hourrow:last-child{border-bottom:0}
+.hourrow b{width:110px;flex:0 0 auto}
+.hourrow .times{font-variant-numeric:tabular-nums;color:var(--ink-soft)}
+.hourrow.shut .times{color:var(--ink-faint)}
+.offchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.offchip{background:var(--paper);border:1px solid var(--line-soft);border-radius:999px;padding:7px 14px;font-size:13px}
+.offchip em{font-style:normal;color:var(--bad);font-size:12px}
+
+.grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;align-items:start}
+.panelbox{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:20px}
+.panelbox h2{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:1.15rem;margin-bottom:4px}
+.panelbox .muted{color:var(--ink-soft);font-size:13.5px}
+.upnext{list-style:none;margin:14px 0 0;padding:0}
+.upnext li{display:flex;gap:13px;padding:13px 0;border-bottom:1px solid var(--line-soft);align-items:flex-start}
+.upnext li:last-child{border-bottom:0}
+.upnext time{font-variant-numeric:tabular-nums;font-weight:700;width:62px;flex:0 0 auto;font-size:14px}
+.upnext b{display:block;font-size:14px}
+.upnext span{display:block;color:var(--ink-soft);font-size:12.5px}
+
+/* ---------------- new booking drawer ---------------- */
+.scrim{position:fixed;inset:0;background:rgba(14,19,15,.5);opacity:0;pointer-events:none;
+  transition:opacity .25s;z-index:60}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100dvh;width:min(430px,92vw);background:var(--white);z-index:70;
+  display:flex;flex-direction:column;transform:translateX(102%);visibility:hidden;
+  box-shadow:-24px 0 60px -30px rgba(0,0,0,.6);
+  padding-right:env(safe-area-inset-right,0px);
+  transition:transform .3s cubic-bezier(.4,0,.2,1),visibility 0s linear .3s}
+.drawer.on{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.4,0,.2,1),visibility 0s}
+.drawer__head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px;
+  padding-top:calc(18px + env(safe-area-inset-top,0px));border-bottom:1px solid var(--line)}
+.drawer__head h2{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:1.15rem}
+.drawer__body{flex:1;overflow-y:auto;padding:20px}
+.drawer__foot{padding:16px 20px calc(18px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);
+  display:flex;gap:10px}
+.drawer__foot .btn{flex:1}
+.f{margin-bottom:16px}
+.f label{display:block;font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.f input,.f select,.f textarea{width:100%;font:inherit;font-size:14.5px;color:var(--ink);background:var(--paper);
+  border:1px solid var(--line);border-radius:11px;padding:11px 13px}
+.f textarea{min-height:76px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--amber);
+  box-shadow:0 0 0 3px rgba(154,95,30,.15)}
+.f select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:36px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' fill='none' stroke='%239A5F1E' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat:no-repeat;background-position:right 13px center}
+/* free times, the way the real add-booking screen loads them as chips */
+.free{display:flex;flex-wrap:wrap;gap:7px}
+.free button{font-size:13px;padding:7px 13px;border-radius:9px;border:1px solid var(--line);
+  background:var(--white);cursor:pointer;font-variant-numeric:tabular-nums}
+.free button:hover{border-color:var(--ink-soft)}
+.free button.on{background:var(--amber);border-color:var(--amber);color:#fff;font-weight:700}
+.free em{font-style:normal;color:var(--ink-soft);font-size:13px}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(16px);z-index:90;
+  background:var(--forest);color:#fff;padding:13px 20px;border-radius:999px;font-size:14px;
+  opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;
+  box-shadow:0 18px 40px -18px rgba(0,0,0,.7)}
+.toast.on{opacity:1;transform:translateX(-50%)}
+
+/* ---------------- responsive ---------------- */
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .side{position:sticky;top:0;height:auto;flex-direction:row;align-items:center;gap:10px;
+    padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top,0px));overflow-x:auto;z-index:30}
+  .side__brand{padding:0 6px 0 4px;flex:0 0 auto}
+  .side__brand span{display:none}
+  .side__nav{flex-direction:row;gap:4px}
+  .side__nav button{padding:9px 13px;white-space:nowrap}
+  .side__nav button span{display:none}
+  .side__nav button svg{width:19px;height:19px}
+  .side__grow,.side__who,.side__out{display:none}
+  .top{position:static}
+  .grid2{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .top{padding:14px 16px}
+  .view{padding:16px}
+  .stat b{font-size:1.5rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .drawer,.scrim,.toast,.btn{transition:none}
+}

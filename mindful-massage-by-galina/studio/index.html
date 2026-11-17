@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Studio | Mindful Massage by Galina</title>
+<meta name="description" content="The studio side: diary, bookings, clients and treatments for Mindful Massage by Galina.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#273429">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23273429'/%3E%3Cpath d='M16 25c0-7 3-11.5 8-13-.5 7-3.5 11.5-8 13zM16 25c0-7-3-11.5-8-13 .5 7 3.5 11.5 8 13zM16 25v-6' fill='none' stroke='%23D9A05C' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Karla:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../assets/css/studio.css?v=1">
+</head>
+<body>
+<div class="app">
+
+  <nav class="side" aria-label="Studio">
+    <a class="side__brand" href="../">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 27c0-8 3.4-13 9-14.6C24.4 20.4 21 25.4 16 27zM16 27c0-8-3.4-13-9-14.6C7.6 20.4 11 25.4 16 27zM16 27v-7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span><b>Mindful Massage</b><span>Studio</span></span>
+    </a>
+    <div class="side__nav">
+      <button type="button" data-view="diary" aria-current="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 11h18"/></svg><span>Diary</span></button>
+      <button type="button" data-view="bookings" aria-current="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 4h14v16l-7-4-7 4V4z"/></svg><span>Bookings</span></button>
+      <button type="button" data-view="clients" aria-current="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16.5 5.2a3.5 3.5 0 0 1 0 6.6M18 14.5c2 .9 3.3 2.9 3.3 5.5"/></svg><span>Clients</span></button>
+      <button type="button" data-view="treatments" aria-current="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg><span>Treatments</span></button>
+    </div>
+    <div class="side__grow"></div>
+    <div class="side__who">
+      <span class="av" style="width:36px;height:36px">G</span>
+      <div><b>Galina</b><span>Massage therapist</span></div>
+    </div>
+    <a class="side__out" href="../">&larr; Back to the website</a>
+  </nav>
+
+  <div class="main">
+    <p class="demobar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+      <span>Demo preview. The week below is made up, the names are invented, and nothing you press here is saved.
+      <a href="../">See the booking page clients use &rarr;</a></span>
+    </p>
+
+    <header class="top">
+      <div>
+        <h1 id="title">Diary</h1>
+        <p class="top__sub" id="subtitle">Your week at a glance</p>
+      </div>
+      <div class="top__grow"></div>
+      <button class="btn btn--amber" id="newBooking" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        New booking</button>
+    </header>
+
+    <!-- ---------------- diary ---------------- -->
+    <section class="view on" id="view-diary">
+      <div class="stats" id="stats"></div>
+
+      <div class="grid2">
+        <div>
+          <div class="calnav">
+            <button class="iconbtn" id="prevWeek" type="button" aria-label="Previous week">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <button class="iconbtn" id="nextWeek" type="button" aria-label="Next week">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+            <span class="calnav__range" id="calRange"></span>
+            <button class="btn btn--ghost btn--sm" id="thisWeek" type="button">This week</button>
+          </div>
+          <div class="cal" id="cal"></div>
+        </div>
+
+        <div class="panelbox">
+          <h2>Up next</h2>
+          <div id="upnext"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- bookings ---------------- -->
+    <section class="view" id="view-bookings">
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Client</th><th>When</th><th>Length</th><th>Status</th><th class="num">Price</th></tr></thead>
+          <tbody id="bookingsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ---------------- clients ---------------- -->
+    <section class="view" id="view-clients">
+      <p class="top__sub" style="margin-bottom:14px" id="clientCount"></p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Client</th><th class="num">Visits</th><th>Last in</th><th class="num">Spent</th></tr></thead>
+          <tbody id="clientsBody"></tbody>
+        </table>
+      </div>
+      <p class="top__sub" style="margin-top:14px">Your client list, and it stays yours. Export it whenever you like.</p>
+    </section>
+
+    <!-- ---------------- treatments & hours ---------------- -->
+    <section class="view" id="view-treatments">
+      <div class="grid2">
+        <div>
+          <div class="cards" id="treatments"></div>
+        </div>
+        <div class="panelbox">
+          <h2>Opening hours</h2>
+          <p class="muted">Times outside these are shaded in the diary, and clients cannot book them.</p>
+          <div id="hours" style="margin-top:10px"></div>
+          <h2 style="margin-top:22px">Time off</h2>
+          <div class="offchips">
+            <span class="offchip">24 &ndash; 27 Dec <em>Closed</em></span>
+            <span class="offchip">1 Jan <em>Closed</em></span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="New booking">
+  <div class="drawer__head">
+    <h2>New booking</h2>
+    <button class="iconbtn" id="closeDrawer" type="button" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <div class="drawer__body">
+    <div class="f"><label for="nbName">Client name</label><input id="nbName" type="text" placeholder="Who is coming in?"></div>
+    <div class="f"><label for="nbPhone">Mobile <span style="font-weight:400;color:#5F6A5B">optional</span></label><input id="nbPhone" type="tel" placeholder="07…"></div>
+    <div class="f"><label for="nbSvc">Treatment</label><select id="nbSvc"></select></div>
+    <div class="f"><label for="nbDur">Length</label><select id="nbDur"></select></div>
+    <div class="f"><label for="nbDate">Day</label><input id="nbDate" type="date"></div>
+    <div class="f">
+      <label>Free times</label>
+      <div class="free" id="free"></div>
+      <label style="display:flex;gap:9px;align-items:center;margin-top:12px;font-weight:400;font-size:13.5px;cursor:pointer">
+        <input id="nbAny" type="checkbox" style="width:18px;height:18px;flex:0 0 auto;accent-color:#9A5F1E">
+        Allow outside working hours</label>
+    </div>
+    <div class="f"><label for="nbNotes">Notes <span style="font-weight:400;color:#5F6A5B">optional</span></label><textarea id="nbNotes" placeholder="Pressure, oil preference, anything to remember"></textarea></div>
+  </div>
+  <div class="drawer__foot">
+    <button class="btn btn--ghost" id="cancelDrawer" type="button">Cancel</button>
+    <button class="btn btn--amber" id="saveBooking" type="button">Save booking</button>
+  </div>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../assets/js/studio.js?v=1"></script>
+</body>
+</html>

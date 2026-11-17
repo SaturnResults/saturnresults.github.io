@@ -283,8 +283,7 @@
 
   function render() {
     if (S.step === 5) {
-      el.innerHTML = '<div class="sbk-card"><section class="sbk-main">' + vDone() + '</section></div>' +
-        '<div class="sbk-foot"><span>Demo preview · bookings are not live</span></div>';
+      el.innerHTML = '<div class="sbk-card"><section class="sbk-main">' + vDone() + '</section></div>' + foot();
       return;
     }
     var steps = [
@@ -302,8 +301,13 @@
       '<div class="sbk-grow"></div>' +
       '<div class="sbk-bar"><div class="sbk-bar-t">' + barText() + '</div>' +
       '<button type="button" class="sbk-btn" data-a="cta"' + (st.ok ? '' : ' disabled') + '>' + st.cta + '</button></div>' +
-      '</section>' + vAside(st.ok, st.cta) + '</div>' +
-      '<div class="sbk-foot"><span>Demo preview · bookings are not live</span></div>';
+      '</section>' + vAside(st.ok, st.cta) + '</div>' + foot();
+  }
+
+  /* Same slot the real widget puts its staff login in. */
+  function foot() {
+    return '<div class="sbk-foot"><span>Demo preview · bookings are not live</span>' +
+      '<a href="studio/">Studio login →</a></div>';
   }
 
   var ACT = {
