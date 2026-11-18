@@ -541,6 +541,46 @@
     b.disabled = false;
   };
 
+  /* On a wide screen the dock gives way to a panel that follows you down the
+     page, so the booking reads as a running summary rather than a strip. */
+  var rail = function () {
+    var rows = $('rail-rows');
+    if (!rows) return;
+    var svc = svcById(S.svc);
+    var need = NEEDS.filter(function (x) { return x.id === S.need; })[0];
+    var whoTxt = { f: 'A female therapist', m: 'A male therapist',
+                   any: 'First available' }[S.who];
+    var set = [
+      ['Looking for', need ? need.n : null],
+      ['Treatment',   svc ? svc.n : null],
+      ['Seeing',      whoTxt || null],
+      ['When',        (S.day && S.time != null)
+                        ? dayLong(S.day) + ', ' + hhmm(S.time) : null]
+    ];
+    rows.innerHTML = '';
+    set.forEach(function (r) {
+      var d = el('div');
+      d.innerHTML = '<dt>' + r[0] + '</dt><dd class="' + (r[1] ? '' : 'dim') +
+                    '">' + (r[1] || 'Not yet') + '</dd>';
+      rows.appendChild(d);
+    });
+    $('rail-total').textContent = svc ? money(svc.price) : '\u2014';
+    $('rail-dur').textContent = svc ? dur(svc.mins) + ' \u00b7 pay at the clinic' : '';
+    $('rail-b').disabled = !(at >= 4 && svc && S.day && S.time != null);
+  };
+
+  /* their header is transparent over the dark hero and goes white once you
+     scroll past it, so this mirrors that */
+  var stick = function () {
+    var b = $('bar');
+    if (!b) return;
+    if (document.body.dataset.done === '1' || window.scrollY > 24) {
+      b.setAttribute('data-stuck', '1');
+    } else {
+      b.removeAttribute('data-stuck');
+    }
+  };
+
   var confirm = function () {
     var ok = true;
     if (!S.name.trim()) { $('f-name').dataset.bad = '1'; ok = false; }
@@ -556,6 +596,7 @@
     $('r-tel').textContent = S.tel;
     $('r-note').parentNode.style.display = svc.must ? '' : 'none';
     document.body.dataset.done = '1';
+    stick();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -576,12 +617,12 @@
   /* ── boot ─────────────────────────────────────────────────────────────── */
 
   var paint = function () {
-    paintNeed(); paintWho(); paintSvc(); paintWhen(); paintYou(); dock();
+    paintNeed(); paintWho(); paintSvc(); paintWhen(); paintYou(); dock(); rail();
   };
 
   var todayHours = function () {
     var t = new Date().getDay();
-    var rows = document.querySelectorAll('.hrs [data-d]');
+    var rows = document.querySelectorAll('.f-hrs [data-d]');
     for (var i = 0; i < rows.length; i++) {
       if (+rows[i].dataset.d === t) rows[i].setAttribute('data-today', '1');
     }
@@ -592,6 +633,9 @@
     setStep(0);
     todayHours();
     $('dock-b').onclick = confirm;
+    $('rail-b').onclick = confirm;
     $('again').onclick = function () { location.reload(); };
+    window.addEventListener('scroll', stick, { passive: true });
+    stick();
   });
 })();

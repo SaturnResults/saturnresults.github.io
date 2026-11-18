@@ -8,42 +8,45 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Barlow:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/css/booking.css?v=8dd6d8d7">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/css/booking.css?v=e8dcac59">
 </head>
 <body>
 
-<header class="bar"><div class="wrap">
-  <a class="brand" href="./">
-    <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
-      <rect width="32" height="32" rx="7" fill="var(--brick)"/>
-      <path d="M10 9h12v7a6 6 0 0 1-12 0z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/>
-      <path d="M13 24h6" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
-    </svg>
-    <b>Therapy Clinic London</b>
-  </a>
+<header class="bar" id="bar"><div class="shell bar-in">
+  <a class="logo" href="https://www.therapycliniclondon.com/"><img src="assets/img/tcl-logo.webp" alt="Therapy Clinic London" width="1500" height="542"></a>
+  <nav class="nav">
+    <a href="https://www.therapycliniclondon.com/services">Treatments &amp; Packages</a>
+    <a href="https://www.therapycliniclondon.com/courses">Courses</a>
+    <a href="https://www.therapycliniclondon.com/therapists">Our Therapists</a>
+    <a href="https://www.therapycliniclondon.com/why-us">Why Us</a>
+    <a href="https://www.therapycliniclondon.com/faq">FAQ</a>
+    <a href="https://www.therapycliniclondon.com/contact">Contact</a>
+    <a class="book" href="./">Book Now</a>
+  </nav>
   <a class="call" href="tel:07860610127">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>
     Call
   </a>
 </div></header>
 
-<section class="hero"><div class="wrap">
-  <p class="cred">
-    <span class="stars">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3 6.5 7 1-5 5 1.2 7L12 18l-6.2 3.5L7 14.5l-5-5 7-1z"/></svg>
-      5.0
-    </span>
-    <span>783 reviews</span>
-    <span class="dot" aria-hidden="true"></span>
-    <span>Ilford, IG1</span>
-    <span class="dot" aria-hidden="true"></span>
-    <span>CMA &amp; IPHM registered</span>
-  </p>
-  <h1>Book your treatment in under a minute.</h1>
-  <p class="lede">Osteopathy, sports massage and hijama with Ramiz and the team.
-    Tell us what hurts, choose who you&rsquo;d like to see, and pick a time.</p>
-
+<section class="hero"><div class="shell hero-in">
+  <div>
+    <p class="cred">
+      <span class="stars">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3 6.5 7 1-5 5 1.2 7L12 18l-6.2 3.5L7 14.5l-5-5 7-1z"/></svg>
+        5.0
+      </span>
+      <span>783 reviews</span>
+      <span class="dot" aria-hidden="true"></span>
+      <span>Ilford, IG1</span>
+      <span class="dot" aria-hidden="true"></span>
+      <span>CMA &amp; IPHM registered</span>
+    </p>
+    <h1>Book your treatment in under a minute.</h1>
+    <p class="lede">Osteopathy, sports massage and hijama with Ramiz and the team.
+      Tell us what hurts, choose who you&rsquo;d like to see, and pick a time.</p>
+  </div>
   <div class="soon">
     <span class="soon-k">Next free appointment</span>
     <div class="soon-when" id="soon-when">&nbsp;</div>
@@ -54,12 +57,21 @@
   </div>
 </div></section>
 
-<main class="flow" id="flow"><div class="wrap">
-  <div class="step" id="s-need"  data-state="now"></div>
-  <div class="step" id="s-who"   data-state="wait"></div>
-  <div class="step" id="s-svc"   data-state="wait"></div>
-  <div class="step" id="s-when"  data-state="wait"></div>
-  <div class="step" id="s-you"   data-state="wait"></div>
+<main class="stage"><div class="shell stage-in">
+  <div class="flow" id="flow">
+    <div class="step" id="s-need"  data-state="now"></div>
+    <div class="step" id="s-who"   data-state="wait"></div>
+    <div class="step" id="s-svc"   data-state="wait"></div>
+    <div class="step" id="s-when"  data-state="wait"></div>
+    <div class="step" id="s-you"   data-state="wait"></div>
+  </div>
+  <aside class="rail"><div class="rail-c">
+    <span class="rail-k">Your booking</span>
+    <dl class="rail-rows" id="rail-rows"></dl>
+    <div class="rail-total"><b id="rail-total">&mdash;</b><span id="rail-dur"></span></div>
+    <button class="btn btn-p" id="rail-b" disabled>Confirm booking</button>
+    <p class="rail-fine">No account, no card. Pay at the clinic.</p>
+  </div></aside>
 </div></main>
 
 <div class="dock" id="dock" style="display:none"><div class="wrap"><div class="dock-in">
@@ -67,7 +79,7 @@
   <button class="btn btn-p" id="dock-b">Confirm booking</button>
 </div></div></div>
 
-<section class="done"><div class="wrap">
+<section class="done"><div class="shell"><div class="wrap" style="padding-left:0;padding-right:0">
   <div class="done-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
   <h2>You&rsquo;re booked in.</h2>
   <p class="lede">A text is on its way. If anything changes, ring the clinic on 07860 610127 &mdash; no charge for changing or cancelling.</p>
@@ -90,31 +102,68 @@
     <img src="assets/img/clinic4.jpg" alt="The clinic" loading="lazy">
     <img src="assets/img/clinic5.jpg" alt="The clinic" loading="lazy">
   </div>
-</div></section>
+</div></div></section>
 
-<footer><div class="wrap">
-  <div class="fh">Opening times</div>
-  <div class="hrs">
-    <div data-d="1"><b>Monday</b><span class="shut">Closed</span></div>
-    <div data-d="2"><b>Tuesday</b><span>6 &ndash; 8pm</span></div>
-    <div data-d="3"><b>Wednesday</b><span>10am &ndash; 2pm, 4 &ndash; 6pm</span></div>
-    <div data-d="4"><b>Thursday</b><span>10am &ndash; 2pm, 4 &ndash; 6pm</span></div>
-    <div data-d="5"><b>Friday</b><span class="shut">Closed</span></div>
-    <div data-d="6"><b>Saturday</b><span>11am &ndash; 1pm, 2 &ndash; 6pm</span></div>
-    <div data-d="0"><b>Sunday</b><span>11am &ndash; 1pm, 2 &ndash; 6pm</span></div>
+<footer><div class="shell">
+  <div class="f-logo"><img src="assets/img/tcl-logo.webp" alt="Therapy Clinic London" width="1500" height="542"></div>
+  <div class="f-grid">
+    <div>
+      <p class="f-tag">Expert holistic physical therapy combining medical precision
+        with time-honoured techniques in East London.</p>
+      <div class="socials">
+        <a href="https://www.instagram.com/therapycliniclondon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></a>
+        <a href="https://www.facebook.com/therapycliniclondon" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+        <a href="https://twitter.com/therapycliniklondon" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></a>
+      </div>
+    </div>
+    <div>
+      <h4 class="f-h">Navigation</h4>
+      <ul class="f-list">
+        <li><a href="https://www.therapycliniclondon.com/services">Treatments</a></li>
+        <li><a href="https://www.therapycliniclondon.com/therapists">The Team</a></li>
+        <li><a href="https://www.therapycliniclondon.com/why-us">Why Choose Us</a></li>
+        <li><a href="https://www.therapycliniclondon.com/faq">FAQ</a></li>
+        <li><a href="./">Book Online &rarr;</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="f-h">Contact</h4>
+      <ul class="f-list">
+        <li><span>209 Cranbrook Road, 2nd Floor</span></li>
+        <li><span>Above Hills, Ilford</span></li>
+        <li><span>London, IG1 4TD</span></li>
+        <li><a href="tel:07860610127">07860 610127</a></li>
+        <li><a href="mailto:info@therapycliniclondon.com">info@therapycliniclondon.com</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="f-h">Opening times</h4>
+      <div class="f-hrs">
+        <div data-d="1"><b>Monday</b><span class="shut">Closed</span></div>
+        <div data-d="2"><b>Tuesday</b><span>6 &ndash; 8pm</span></div>
+        <div data-d="3"><b>Wednesday</b><span>10&ndash;2, 4&ndash;6</span></div>
+        <div data-d="4"><b>Thursday</b><span>10&ndash;2, 4&ndash;6</span></div>
+        <div data-d="5"><b>Friday</b><span class="shut">Closed</span></div>
+        <div data-d="6"><b>Saturday</b><span>11&ndash;1, 2&ndash;6</span></div>
+        <div data-d="0"><b>Sunday</b><span>11&ndash;1, 2&ndash;6</span></div>
+      </div>
+    </div>
   </div>
-  <p class="addr">
-    209 Cranbrook Road, 2nd floor (above Hills)<br>Ilford, London IG1 4TD<br>
-    <a href="tel:07860610127">07860 610127</a>
-  </p>
+  <div class="f-bot">
+    <span>&copy; 2026 Therapy Clinic London. All rights reserved.</span>
+    <span class="sp"><a href="https://www.therapycliniclondon.com/privacy">Privacy Policy</a><a href="https://www.therapycliniclondon.com/terms">Terms of Service</a></span>
+  </div>
   <p class="demo">
-    A design demo built by <a href="https://saturnresults.co.uk" style="color:inherit;text-decoration:underline">Saturn Results</a>
+    A design demo built by <a href="https://saturnresults.co.uk">Saturn Results</a>
     for Therapy Clinic London. Treatments, durations and prices are taken from the clinic&rsquo;s live
     Fresha menu; the available times are generated in your browser and are not real,
-    so nothing is booked and no message is sent. Photographs are from the clinic&rsquo;s own listing.
+    so nothing is booked and no message is sent. Photographs, logo and typeface are the clinic&rsquo;s own.
   </p>
 </div></footer>
 
-<script src="assets/js/booking.js?v=42f9d840"></script>
+<script src="assets/js/booking.js?v=9a9b3b37"></script>
 </body>
 </html>
