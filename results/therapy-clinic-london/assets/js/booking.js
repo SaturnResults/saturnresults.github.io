@@ -270,8 +270,9 @@
     return (b ? b.getBoundingClientRect().height : 0) + 14;
   };
 
-  /* Some browsers quietly ignore behavior:"smooth" — if nothing has moved a
-     moment later, jump there instead, so the step is revealed either way. */
+  /* Used only by "take this one", which has to carry you down to the flow.
+     Some browsers quietly ignore behavior:"smooth", so if nothing has moved a
+     moment later, jump there instead rather than appearing to do nothing. */
   var scrollToY = function (y) {
     y = Math.max(0, Math.round(y));
     var from = window.scrollY;
@@ -283,26 +284,6 @@
     }, 220);
   };
 
-  /* Bring a step into view, and only if it is not already there.
-     Pinning every step to the top of the window is right on a phone, where one
-     step fills the screen. On a desktop the next step is usually already
-     visible, and scrolling anyway throws the page down for no reason. */
-  var reveal = function (node) {
-    var top = barBottom();
-    var vh = window.innerHeight;
-    var r = node.getBoundingClientRect();
-
-    if (r.top >= top && r.bottom <= vh - 12) return;   /* already in view */
-
-    var y;
-    if (r.top < top || r.height > vh - top - 12) {
-      y = r.top + window.scrollY - top;                /* sit under the header */
-    } else {
-      y = r.bottom + window.scrollY - vh + 12;         /* just clear the bottom */
-    }
-    scrollToY(y);
-  };
-
   var setStep = function (i) {
     at = i;
     for (var k = 0; k < STEPS.length; k++) {
@@ -311,8 +292,9 @@
       box.dataset.state = k < i ? 'done' : (k === i ? 'now' : 'wait');
     }
     paint();
-    var cur = $('s-' + STEPS[i]);
-    if (cur && i > 0) reveal(cur);
+    /* Deliberately no scrolling here. Choosing an option folds the step above
+       into one line, so the next question comes up to meet you on its own;
+       moving the page as well just takes it out from under the reader. */
   };
 
   var fold = function (box, k, v, step) {
