@@ -398,9 +398,12 @@
     });
     b.appendChild(g);
 
-    /* the one condition the clinic really does impose, put where it is read */
-    var picked = svcById(S.svc);
-    if (picked && picked.must) {
+    /* The one condition the clinic really does impose. It belongs beside the
+       treatments it applies to — shown only once a treatment is chosen, it is
+       never seen, because choosing folds this step away. */
+    var anyMust = false;
+    for (var q = 0; q < list.length; q++) if (list[q].must) anyMust = true;
+    if (anyMust) {
       var w = el('div', 'must');
       w.innerHTML = ICON.warn + '<span><b>A family member must be present.</b> ' +
         'The clinic asks that someone comes with you for the ruqyah session.</span>';
@@ -551,6 +554,7 @@
     $('r-who').textContent = who;
     $('r-cost').textContent = money(svc.price) + ' · ' + dur(svc.mins) + ' · pay at the clinic';
     $('r-tel').textContent = S.tel;
+    $('r-note').parentNode.style.display = svc.must ? '' : 'none';
     document.body.dataset.done = '1';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
