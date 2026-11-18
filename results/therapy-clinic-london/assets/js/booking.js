@@ -263,6 +263,46 @@
   var STEPS = ['need', 'who', 'svc', 'when', 'you'];
   var at = 0;
 
+  /* How far down the page the fixed header reaches right now. It is taller
+     before you scroll than after, so measure it rather than guess. */
+  var barBottom = function () {
+    var b = $('bar');
+    return (b ? b.getBoundingClientRect().height : 0) + 14;
+  };
+
+  /* Some browsers quietly ignore behavior:"smooth" — if nothing has moved a
+     moment later, jump there instead, so the step is revealed either way. */
+  var scrollToY = function (y) {
+    y = Math.max(0, Math.round(y));
+    var from = window.scrollY;
+    if (Math.abs(y - from) < 2) return;
+    try { window.scrollTo({ top: y, behavior: 'smooth' }); }
+    catch (e) { window.scrollTo(0, y); }
+    setTimeout(function () {
+      if (Math.abs(window.scrollY - from) < 2) window.scrollTo(0, y);
+    }, 220);
+  };
+
+  /* Bring a step into view, and only if it is not already there.
+     Pinning every step to the top of the window is right on a phone, where one
+     step fills the screen. On a desktop the next step is usually already
+     visible, and scrolling anyway throws the page down for no reason. */
+  var reveal = function (node) {
+    var top = barBottom();
+    var vh = window.innerHeight;
+    var r = node.getBoundingClientRect();
+
+    if (r.top >= top && r.bottom <= vh - 12) return;   /* already in view */
+
+    var y;
+    if (r.top < top || r.height > vh - top - 12) {
+      y = r.top + window.scrollY - top;                /* sit under the header */
+    } else {
+      y = r.bottom + window.scrollY - vh + 12;         /* just clear the bottom */
+    }
+    scrollToY(y);
+  };
+
   var setStep = function (i) {
     at = i;
     for (var k = 0; k < STEPS.length; k++) {
@@ -272,10 +312,7 @@
     }
     paint();
     var cur = $('s-' + STEPS[i]);
-    if (cur && i > 0) {
-      var y = cur.getBoundingClientRect().top + window.scrollY - 76;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
+    if (cur && i > 0) reveal(cur);
   };
 
   var fold = function (box, k, v, step) {
@@ -609,7 +646,7 @@
     $('soon-what').textContent = 'The clinic is closed Mondays and Fridays, so this is the next one.';
     $('soon-take').onclick = function () {
       S.day = n.day; S.time = n.time;
-      window.scrollTo({ top: $('flow').getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' });
+      scrollToY($('flow').getBoundingClientRect().top + window.scrollY - barBottom());
       setStep(0);
     };
   };
