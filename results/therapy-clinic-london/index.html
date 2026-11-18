@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Book &middot; Therapy Clinic London</title>
+<meta name="description" content="Book osteopathy, sports massage and hijama at Therapy Clinic London, Ilford. Choose your therapist, pick a time, done in under a minute.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Barlow:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/booking.css">
+</head>
+<body>
+
+<header class="bar"><div class="wrap">
+  <a class="brand" href="./">
+    <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+      <rect width="32" height="32" rx="7" fill="var(--brick)"/>
+      <path d="M10 9h12v7a6 6 0 0 1-12 0z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/>
+      <path d="M13 24h6" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+    </svg>
+    <b>Therapy Clinic London</b>
+  </a>
+  <a class="call" href="tel:07860610127">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>
+    Call
+  </a>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <p class="cred">
+    <span class="stars">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3 6.5 7 1-5 5 1.2 7L12 18l-6.2 3.5L7 14.5l-5-5 7-1z"/></svg>
+      5.0
+    </span>
+    <span>783 reviews</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Ilford, IG1</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>CMA &amp; IPHM registered</span>
+  </p>
+  <h1>Book your treatment in under a minute.</h1>
+  <p class="lede">Osteopathy, sports massage and hijama with Ramiz and the team.
+    Tell us what hurts, choose who you&rsquo;d like to see, and pick a time.</p>
+
+  <div class="soon">
+    <span class="soon-k">Next free appointment</span>
+    <div class="soon-when" id="soon-when">&nbsp;</div>
+    <div class="soon-what" id="soon-what">&nbsp;</div>
+    <div class="soon-row">
+      <button class="btn btn-p btn-g" id="soon-take">Take this one</button>
+    </div>
+  </div>
+</div></section>
+
+<main class="flow" id="flow"><div class="wrap">
+  <div class="step" id="s-need"  data-state="now"></div>
+  <div class="step" id="s-who"   data-state="wait"></div>
+  <div class="step" id="s-svc"   data-state="wait"></div>
+  <div class="step" id="s-when"  data-state="wait"></div>
+  <div class="step" id="s-you"   data-state="wait"></div>
+</div></main>
+
+<div class="dock" id="dock" style="display:none"><div class="wrap"><div class="dock-in">
+  <div class="dock-t" id="dock-t"></div>
+  <button class="btn btn-p" id="dock-b">Confirm booking</button>
+</div></div></div>
+
+<section class="done"><div class="wrap">
+  <div class="done-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+  <h2>You&rsquo;re booked in.</h2>
+  <p class="lede">A text is on its way. If anything changes, ring the clinic on 07860 610127 &mdash; no charge for changing or cancelling.</p>
+  <dl class="recap">
+    <div><dt>Treatment</dt><dd id="r-what"></dd></div>
+    <div><dt>When</dt><dd id="r-when"></dd></div>
+    <div><dt>With</dt><dd id="r-who"></dd></div>
+    <div><dt>Cost</dt><dd id="r-cost"></dd></div>
+    <div><dt>Text to</dt><dd id="r-tel"></dd></div>
+    <div><dt>Where</dt><dd>209 Cranbrook Road, 2nd floor (above Hills), Ilford IG1 4TD</dd></div>
+  </dl>
+  <div class="soon-row" style="margin-top:18px">
+    <button class="btn" id="again">Book another</button>
+  </div>
+  <div class="shots">
+    <img src="assets/img/clinic1.jpg" alt="Inside the clinic" loading="lazy">
+    <img src="assets/img/clinic2.jpg" alt="Treatment room" loading="lazy">
+    <img src="assets/img/clinic3.jpg" alt="Treatment in progress" loading="lazy">
+    <img src="assets/img/clinic4.jpg" alt="The clinic" loading="lazy">
+    <img src="assets/img/clinic5.jpg" alt="The clinic" loading="lazy">
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="fh">Opening times</div>
+  <div class="hrs">
+    <div data-d="1"><b>Monday</b><span class="shut">Closed</span></div>
+    <div data-d="2"><b>Tuesday</b><span>6 &ndash; 8pm</span></div>
+    <div data-d="3"><b>Wednesday</b><span>10am &ndash; 2pm, 4 &ndash; 6pm</span></div>
+    <div data-d="4"><b>Thursday</b><span>10am &ndash; 2pm, 4 &ndash; 6pm</span></div>
+    <div data-d="5"><b>Friday</b><span class="shut">Closed</span></div>
+    <div data-d="6"><b>Saturday</b><span>11am &ndash; 1pm, 2 &ndash; 6pm</span></div>
+    <div data-d="0"><b>Sunday</b><span>11am &ndash; 1pm, 2 &ndash; 6pm</span></div>
+  </div>
+  <p class="addr">
+    209 Cranbrook Road, 2nd floor (above Hills)<br>Ilford, London IG1 4TD<br>
+    <a href="tel:07860610127">07860 610127</a>
+  </p>
+  <p class="demo">
+    A design demo built by <a href="https://saturnresults.co.uk" style="color:inherit;text-decoration:underline">Saturn Results</a>
+    for Therapy Clinic London. Treatments, durations and prices are taken from the clinic&rsquo;s live
+    Fresha menu; the available times are generated in your browser and are not real,
+    so nothing is booked and no message is sent. Photographs are from the clinic&rsquo;s own listing.
+  </p>
+</div></footer>
+
+<script src="assets/js/booking.js"></script>
+</body>
+</html>
