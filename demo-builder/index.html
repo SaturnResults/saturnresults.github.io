@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Demo Builder · Saturn Results</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#050506">
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="builder.css?v=1d3abf46">
+</head>
+<body data-pane="edit">
+
+<header class="top">
+  <a class="brand" href="/" aria-label="Saturn Results"><img src="/sr-logo-white.webp" alt="Saturn Results" height="22"></a>
+  <span class="brand-t">Demo builder</span>
+  <div class="top-r">
+    <select id="draft" aria-label="Saved demos"></select>
+    <button class="ib" id="new" type="button" title="Start a new clinic" aria-label="New clinic">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+    <button class="ib" id="open" type="button" title="Open a published demo" aria-label="Open a published demo">
+      <svg viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10H3z"/></svg></button>
+    <button class="ib" id="settings" type="button" title="Settings" aria-label="Settings">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+    <button class="btn btn-p top-pub" id="go-pub" type="button">Publish</button>
+  </div>
+</header>
+
+<div class="app">
+
+<!-- ── edit ─────────────────────────────────────────────────────────────── -->
+<section class="pane pane-edit" id="pane-edit" aria-label="Edit">
+  <div class="card quick">
+    <div class="card-h"><h2>Quick fill</h2><span class="hint">Optional, saves typing</span></div>
+    <p class="help">On their Fresha, Treatwell or Booksy page, open every treatment category, then select all (<kbd>⌘A</kbd>), copy (<kbd>⌘C</kbd>) and paste below. On a phone, paste a treatment list in any shape, one per line: <i>Sports massage, 60 min, £55</i>.</p>
+    <textarea id="qf-text" rows="4" placeholder="Paste their listing page here"></textarea>
+    <div class="row">
+      <button class="btn btn-p" id="qf-go" type="button">Fill in from this</button>
+      <span class="qf-out" id="qf-out" role="status"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h2>The clinic</h2></div>
+    <div class="grid2">
+      <label class="fld span2"><span>Clinic name <b>*</b></span><input data-k="name" autocomplete="off" placeholder="As it appears on their listing"></label>
+      <label class="fld"><span>Owner’s first name</span><input data-k="owner" autocomplete="off" placeholder="For the intro and WhatsApp"></label>
+      <label class="fld"><span>Phone</span><input data-k="phone" inputmode="tel" autocomplete="off" placeholder="07…"></label>
+      <label class="fld"><span>Website</span><input data-k="website" inputmode="url" autocomplete="off" placeholder="theirclinic.co.uk"></label>
+      <label class="fld"><span>Email</span><input data-k="email" inputmode="email" autocomplete="off"></label>
+      <label class="fld span2"><span>Address</span><input data-k="address" autocomplete="off" placeholder="Street, area, postcode"></label>
+      <label class="fld"><span>Area for the trust strip</span><input data-k="area" id="area" autocomplete="off"></label>
+      <label class="fld"><span>Booking listing link</span><input data-k="listing" inputmode="url" autocomplete="off" placeholder="fresha.com/a/…"></label>
+      <label class="fld span2"><span>One line about them, from their own site</span><input data-k="about" autocomplete="off" placeholder="Shown in the footer. Leave blank rather than invent one."></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h2>Trust</h2><span class="hint">Only what their listing actually shows</span></div>
+    <div class="grid2">
+      <label class="fld"><span>Rating</span><input data-k="rating" inputmode="decimal" autocomplete="off" placeholder="5.0"></label>
+      <label class="fld"><span>Number of reviews</span><input data-k="reviews" inputmode="numeric" autocomplete="off" placeholder="110"></label>
+      <label class="fld span2"><span>Registrations or accreditations</span><input data-k="accreditations" autocomplete="off" placeholder="CNHC registered; Member of the CMA"><em>Separate with a semicolon</em></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h2>Treatments <b>*</b></h2><span class="hint" id="t-count"></span></div>
+    <div id="treat"></div>
+    <div class="row">
+      <button class="btn" id="add-cat" type="button">Add a category</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h2>Practitioners</h2><span class="hint">Leave empty for “Any available”</span></div>
+    <div id="team"></div>
+    <div class="row"><button class="btn" id="add-person" type="button">Add a practitioner</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h2>Opening hours</h2><span class="tag" id="hrs-assumed">Assumed</span></div>
+    <div id="hours" class="hours"></div>
+    <p class="help">Type them however you like: <i>9–6</i>, <i>10am–2pm, 4–7pm</i>, <i>Closed</i>.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h2>Look</h2></div>
+    <div class="fld"><span>Logo</span>
+      <div class="drop" id="logo-drop">
+        <div class="drop-img" id="logo-img"></div>
+        <div class="drop-t">
+          <label class="btn">Upload<input type="file" id="logo-file" accept="image/*" hidden></label>
+          <button class="btn" id="logo-url" type="button">Use a link</button>
+          <button class="btn ghost" id="logo-x" type="button">Remove</button>
+          <em>No logo? The name is set as a wordmark in their heading font.</em>
+        </div>
+      </div>
+    </div>
+    <div class="grid2">
+      <label class="fld"><span>Brand colour</span>
+        <span class="color"><input type="color" id="accent-pick"><input data-k="brand.accent" id="accent" autocomplete="off" spellcheck="false"></span></label>
+      <label class="fld"><span>Background</span>
+        <span class="color"><input type="color" id="paper-pick"><input data-k="brand.paper" id="paper" autocomplete="off" spellcheck="false"></span></label>
+      <div class="fld span2"><span>Header and hero</span>
+        <div class="seg" id="hero-seg" role="radiogroup">
+          <button type="button" data-v="light" role="radio">Light</button>
+          <button type="button" data-v="brand" role="radio">Brand colour</button>
+          <button type="button" data-v="dark" role="radio">Dark</button>
+        </div></div>
+      <label class="fld"><span>Heading font <i class="fstat" id="head-stat"></i></span><input data-k="brand.head" list="fonts" autocomplete="off" spellcheck="false"></label>
+      <label class="fld"><span>Body font <i class="fstat" id="body-stat"></i></span><input data-k="brand.body" list="fonts" autocomplete="off" spellcheck="false"></label>
+    </div>
+    <p class="help">Any Google Font by name. Their own font is usually in their site’s source; if it isn’t on Google Fonts, pick the closest.</p>
+    <datalist id="fonts">
+      <option>DM Sans</option><option>Manrope</option><option>Inter</option><option>Outfit</option><option>Jost</option>
+      <option>Montserrat</option><option>Poppins</option><option>Lato</option><option>Nunito Sans</option><option>Work Sans</option>
+      <option>Raleway</option><option>Mulish</option><option>Figtree</option><option>Plus Jakarta Sans</option>
+      <option>Fraunces</option><option>Playfair Display</option><option>Cormorant Garamond</option><option>Lora</option>
+      <option>DM Serif Display</option><option>Libre Baskerville</option><option>Cinzel</option><option>Marcellus</option>
+      <option>EB Garamond</option><option>Gloock</option><option>Bricolage Grotesque</option>
+    </datalist>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h2>Photos</h2><span class="hint">Their own, from their site, listing or Instagram</span></div>
+    <div class="shots" id="shots"></div>
+    <div class="row">
+      <label class="btn">Upload photos<input type="file" id="photo-file" accept="image/*" multiple hidden></label>
+      <button class="btn" id="photo-url" type="button">Add by link</button>
+    </div>
+    <p class="help">Uploads are resized and published with the page. You can also paste an image straight in here (<kbd>⌘V</kbd>).</p>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h2>Words</h2></div>
+    <label class="fld"><span>Intro under the headline</span><input data-k="copy.intro" id="intro" autocomplete="off"></label>
+    <label class="fld"><span>Reassurance line</span><input data-k="copy.reassure" autocomplete="off"></label>
+    <label class="fld"><span>Special condition, if any</span><input data-k="copy.note" autocomplete="off" placeholder="e.g. Female practitioner available on request"><em>Shown before confirming and on the confirmation. Per-treatment conditions go in that treatment’s details.</em></label>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h2>Links</h2></div>
+    <div class="grid2">
+      <label class="fld"><span>Instagram</span><input data-k="links.instagram" autocomplete="off" placeholder="@handle or link"></label>
+      <label class="fld"><span>Facebook</span><input data-k="links.facebook" autocomplete="off"></label>
+      <label class="fld"><span>TikTok</span><input data-k="links.tiktok" autocomplete="off"></label>
+      <label class="fld"><span>Privacy policy</span><input data-k="links.privacy" inputmode="url" autocomplete="off"></label>
+      <label class="fld span2"><span>Terms or cancellation policy</span><input data-k="links.terms" inputmode="url" autocomplete="off"></label>
+    </div>
+  </div>
+  <p class="foot-note">Saved on this device as you type.</p>
+</section>
+
+<!-- ── preview ──────────────────────────────────────────────────────────── -->
+<section class="pane pane-preview" id="pane-preview" aria-label="Preview">
+  <div class="pv-bar">
+    <div class="seg small" id="dev-seg" role="radiogroup" aria-label="Preview width">
+      <button type="button" data-v="phone" role="radio">Phone</button>
+      <button type="button" data-v="desktop" role="radio">Desktop</button>
+    </div>
+    <span class="pv-url" id="pv-url"></span>
+    <button class="ib" id="pv-open" type="button" title="Open the preview in a new tab" aria-label="Open preview in a new tab">
+      <svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></button>
+  </div>
+  <div class="pv-stage" id="pv-stage"><div class="pv-frame" id="pv-frame"><iframe id="pv" title="Demo preview"></iframe></div></div>
+</section>
+
+<!-- ── publish ──────────────────────────────────────────────────────────── -->
+<section class="pane pane-pub" id="pane-pub" aria-label="Publish">
+  <div class="pub-in">
+    <div class="pub-h"><h2>Publish</h2><button class="ib only-sheet" id="pub-x" type="button" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+
+    <label class="fld"><span>Address</span>
+      <span class="slug"><em><span class="wide">saturnresults.co.uk</span>/results/</em><input id="slug" autocomplete="off" spellcheck="false"><em>/</em></span></label>
+    <p class="exists" id="exists" hidden></p>
+
+    <div class="row">
+      <button class="btn btn-p big" id="publish" type="button">Publish it</button>
+      <button class="btn" id="download" type="button">Download</button>
+    </div>
+    <ol class="log" id="log" aria-live="polite"></ol>
+    <div class="live" id="live" hidden>
+      <a id="live-a" target="_blank" rel="noopener"></a>
+      <button class="btn" id="live-copy" type="button">Copy link</button>
+    </div>
+
+    <div class="wa">
+      <div class="card-h"><h3>WhatsApp to the owner</h3><button class="link" id="wa-reset" type="button" hidden>Reset</button></div>
+      <textarea id="wa-text" rows="5"></textarea>
+      <div class="row">
+        <button class="btn" id="wa-copy" type="button">Copy message</button>
+        <a class="btn btn-wa" id="wa-open" target="_blank" rel="noopener">Open in WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="gaps">
+      <div class="card-h"><h3>Left out or assumed</h3><button class="link" id="report" type="button">Copy report</button></div>
+      <ul id="gaps"></ul>
+    </div>
+  </div>
+</section>
+</div>
+
+<nav class="tabs" aria-label="Builder">
+  <button type="button" data-pane="edit">Edit</button>
+  <button type="button" data-pane="preview">Preview</button>
+  <button type="button" data-pane="pub">Publish</button>
+</nav>
+
+<dialog id="dlg-settings" class="dlg">
+  <form method="dialog">
+    <h2>Settings</h2>
+    <label class="fld"><span>Your first name, for the WhatsApp message</span><input id="set-sender" autocomplete="off"></label>
+    <label class="fld"><span>GitHub token</span><input id="set-token" type="password" autocomplete="off" spellcheck="false"></label>
+    <p class="help">Publishing commits the page straight to the website’s repository. Make a <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">fine-grained token</a> with access to <b>only</b> <code>saturnresults.github.io</code> and <b>Contents: Read and write</b>. It is kept in this browser only.</p>
+    <div class="grid2">
+      <label class="fld"><span>Repository</span><input id="set-repo" autocomplete="off" spellcheck="false"></label>
+      <label class="fld"><span>Branch</span><input id="set-branch" autocomplete="off" spellcheck="false"></label>
+    </div>
+    <div class="row">
+      <button class="btn" id="set-check" type="button">Check access</button>
+      <span class="qf-out" id="set-out" role="status"></span>
+    </div>
+    <div class="row end">
+      <button class="btn" value="cancel">Cancel</button>
+      <button class="btn btn-p" id="set-save" value="save">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="parse.js?v=bd011439"></script>
+<script src="generate.js?v=1d9780c8"></script>
+<script src="builder.js?v=7a401214"></script>
+</body>
+</html>
