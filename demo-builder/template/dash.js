@@ -77,9 +77,14 @@
   var apptsOn = function (dstr) {
     if (memo[dstr]) return memo[dstr];
     var out = [];
+    /* past a fortnight a real diary thins out, so keep fewer the further
+       ahead it is; the next two weeks stay exactly as the booking page has them */
+    var ahead = Math.round((parse(dstr) - parse(TODAY)) / 864e5);
+    var keep = ahead > 14 ? Math.max(0.1, 1 - (ahead - 14) / 30) : 1;
     STAFF.forEach(function (p) {
-      var r = rng('dash' + (C.slug || '') + dstr + p.id);
+      var r = rng('dash' + (C.slug || '') + dstr + p.id), thin = rng('thin' + (C.slug || '') + dstr + p.id);
       booked(dstr, p.id).forEach(function (iv) {
+        if (thin() > keep) return;
         var len = iv[1] - iv[0];
         var pool = T.filter(function (t) { return canDo(p, t); });
         if (!pool.length) pool = T;
@@ -209,75 +214,244 @@
     return '<div class="tile"><div class="tile-k">' + esc(t[0]) + '</div><div class="tile-v">' + esc(t[1]) + '</div><div class="tile-s">' + t[2] + '</div></div>';
   }).join('');
 
-  /* ── diary ────────────────────────────────────────────────────────────── */
+  /* ── calendar ─────────────────────────────────────────────────────────── */
 
-  var showDay = shiftsOn(TODAY).length ? TODAY : nextOpen;
-  var paintDays = function () {
-    var box = $('days');
-    box.innerHTML = '';
-    for (var i = 0; i < 7; i++) {
-      var d = shift(TODAY, i), n = apptsOn(d).length;
-      var b = el('button', 'day', esc(dayShort(d)) + '<em>' + (shiftsOn(d).length ? n : 'closed') + '</em>');
-      b.type = 'button';
-      b.setAttribute('aria-pressed', d === showDay);
-      (function (dd) { b.onclick = function () { showDay = dd; paintDays(); paintDiary(); }; })(d);
-      box.appendChild(b);
-    }
+  /* Each person keeps a colour so a week reads at a glance. Only the first
+     three slots of the validated categorical palette stay distinguishable
+     pair by pair, colour-blind or not, so with more than three people the
+     calendar uses the brand colour and shows one person at a time on request.
+     Names are always on the bookings, so colour is never the only clue. */
+  var SERIES = ['#2A78D6', '#EB6834', '#1BAF7A'];
+  var coloured = TEAM.length >= 2 && TEAM.length <= 3;
+  var hueOf = function (pid) {
+    var i = TEAM.map(function (p) { return p.id; }).indexOf(pid);
+    return coloured && SERIES[i] ? SERIES[i] : 'var(--accent)';
+  };
+  var paint = function (node, pid, fresh) {
+    var c = fresh ? 'var(--good)' : hueOf(pid);
+    node.style.borderLeftColor = c;
+    node.style.background = 'color-mix(in srgb, ' + c + ' 13%, var(--raise))';
   };
 
-  var paintDiary = function () {
-    var list = apptsOn(showDay), box = $('agenda'), cols = $('cols');
-    box.innerHTML = ''; cols.innerHTML = '';
-    $('diary').classList.toggle('has-cols', STAFF.length > 1 && STAFF.length <= 5 && list.length > 0);
-    if (!shiftsOn(showDay).length) { box.innerHTML = '<div class="shut">Closed ' + esc(dayShort(showDay)) + '</div>'; return; }
-    if (!list.length) { box.innerHTML = '<div class="shut">Nothing booked yet</div>'; return; }
+  var cal = {
+    view: window.innerWidth >= 700 ? 'week' : 'day',
+    anchor: shiftsOn(TODAY).length ? TODAY : nextOpen,
+    /* past three people "Everyone" is too crowded to start on */
+    who: TEAM.length > 3 ? TEAM[0].id : 'all'
+  };
+  var mine = function (list) { return cal.who === 'all' ? list : list.filter(function (a) { return a.pid === cal.who; }); };
+  var people = function () { return cal.who === 'all' ? STAFF : STAFF.filter(function (p) { return p.id === cal.who; }); };
+  var isPast = function (a) { return a.day < TODAY || (a.day === TODAY && a.end <= nowMin); };
+  var monthStart = function (dstr) { var d = parse(dstr); return ds(new Date(d.getFullYear(), d.getMonth(), 1)); };
+
+  var label = function () {
+    var d = parse(cal.anchor);
+    if (cal.view === 'day') return DAYS[d.getDay()] + ' ' + d.getDate() + ' ' + MONTHS[d.getMonth()] + (cal.anchor === TODAY ? ' · Today' : '');
+    if (cal.view === 'month') return MONTHS[d.getMonth()] + ' ' + d.getFullYear();
+    var a = parse(monday(cal.anchor)), b = parse(shift(monday(cal.anchor), 6));
+    return a.getDate() + (a.getMonth() !== b.getMonth() ? ' ' + MON[a.getMonth()] : '') + ' – ' + b.getDate() + ' ' + MON[b.getMonth()] + ' ' + b.getFullYear();
+  };
+  var move = function (n) {
+    if (cal.view === 'day') cal.anchor = shift(cal.anchor, n);
+    else if (cal.view === 'week') cal.anchor = shift(cal.anchor, 7 * n);
+    else { var d = parse(cal.anchor); cal.anchor = ds(new Date(d.getFullYear(), d.getMonth() + n, 1)); }
+    paintCal();
+  };
+
+  /* overlapping bookings sit side by side, the way a calendar app lays them out */
+  var lanes = function (list) {
+    var group = [], end = -1, out = list.slice().sort(function (a, b) { return a.start - b.start || a.end - b.end; });
+    var settleGroup = function () {
+      var lane = [];
+      group.forEach(function (a) { var i = 0; while (lane[i] > a.start) i++; lane[i] = a.end; a.lane = i; });
+      group.forEach(function (a) { a.lanes = lane.length; });
+    };
+    out.forEach(function (a) {
+      if (group.length && a.start >= end) { settleGroup(); group = []; end = -1; }
+      group.push(a); end = Math.max(end, a.end);
+    });
+    if (group.length) settleGroup();
+    return out;
+  };
+
+  var detail = function (a) {
+    var box = $('cal-detail');
+    box.hidden = false;
+    box.innerHTML = '<span class="dot" style="background:' + (a.fresh ? 'var(--good)' : hueOf(a.pid)) + '"></span><div>' +
+      '<b>' + esc(a.who) + (a.fresh ? '<span class="tagx good">New</span>' : '') + '</b>' +
+      '<p>' + esc(a.t.name) + (a.t.price != null ? ' · ' + gbp(a.t.price) : '') + '</p>' +
+      '<p>' + esc(dayShort(a.day)) + ', ' + hhmm(a.start) + '–' + hhmm(a.end) + (TEAM.length ? ' with ' + esc(staffName(a.pid)) : '') + '</p>' +
+      '<p class="mute">Booked ' + (a.online ? 'online' : 'by phone') + ' ' + ago(a.made) + '. Confirmation and reminder texts sent.</p></div>' +
+      '<button type="button" class="x" aria-label="Close">×</button>';
+    box.querySelector('.x').onclick = function () { box.hidden = true; };
+  };
+  var block = function (a, top, k, cls) {
+    var mini = a.lanes > 3;
+    var b = el('button', 'bk' + (isPast(a) ? ' past' : '') + (a.fresh ? ' fresh' : '') + (cls ? ' ' + cls : '') + (mini ? ' mini' : ''));
+    b.type = 'button';
+    var h = Math.max(20, (a.end - a.start) * k - 2);
+    b.style.top = (a.start - top) * k + 1 + 'px';
+    b.style.height = h + 'px';
+    if (a.lanes > 1) { b.style.left = 'calc(' + (a.lane / a.lanes * 100) + '% + 2px)'; b.style.width = 'calc(' + (100 / a.lanes) + '% - 4px)'; b.style.right = 'auto'; }
+    paint(b, a.pid, a.fresh);
+    b.innerHTML = '<b>' + hhmm(a.start) + ' ' + esc(a.who) + '</b>' + (h > 36 ? '<span>' + esc(a.t.name) + '</span>' : '') +
+      (h > 52 && TEAM.length > 1 ? '<span>' + esc(staffName(a.pid)) + '</span>' : '');
+    b.title = hhmm(a.start) + '–' + hhmm(a.end) + ' · ' + a.who + ' · ' + a.t.name + (TEAM.length ? ' · ' + staffName(a.pid) : '');
+    /* too many side by side to read: a slim bar that still opens on tap */
+    if (mini) { b.innerHTML = ''; b.setAttribute('aria-label', b.title); }
+    b.onclick = function () { detail(a); };
+    return b;
+  };
+  var hourLines = function (col, lo, hi, k) {
+    for (var m = lo; m < hi; m += 60) { var l = el('div', 'hl'); l.style.top = (m - lo) * k + 'px'; col.appendChild(l); }
+  };
+  var axis = function (lo, hi, k) {
+    var h = el('div', 'hrs'); h.style.height = (hi - lo) * k + 'px';
+    for (var m = lo; m <= hi; m += 60) { var s = el('span', '', hhmm(m)); s.style.top = (m - lo) * k + 'px'; h.appendChild(s); }
+    return h;
+  };
+
+  /* one day: a list on phones, a column per person on wide screens */
+  var dayView = function (body) {
+    var list = mine(apptsOn(cal.anchor)), sh = shiftsOn(cal.anchor);
+    if (!sh.length) { body.innerHTML = '<div class="shut">Closed on ' + esc(DAYS[parse(cal.anchor).getDay()]) + 's</div>'; return; }
+    if (!list.length) { body.innerHTML = '<div class="shut">Nothing booked yet</div>'; return; }
+    var ag = el('div', 'agenda');
     list.forEach(function (a) {
-      var past = a.day < TODAY || (a.day === TODAY && a.end <= nowMin);
       var live = a.day === TODAY && a.start <= nowMin && a.end > nowMin;
-      var row = el('div', 'ap' + (past ? ' past' : '') + (live ? ' now' : '') + (a.fresh ? ' fresh' : ''));
-      row.innerHTML = '<div class="ap-t">' + hhmm(a.start) + '<small>' + (a.end - a.start) + ' min</small></div>' +
-        '<div class="ap-c"><b>' + esc(a.who) + (a.fresh ? '<span class="tagx good">New</span>' : '') + (live ? '<span class="tagx">Now</span>' : '') + '</b>' +
+      var row = el('button', 'ap' + (isPast(a) ? ' past' : '') + (live ? ' now' : '') + (a.fresh ? ' fresh' : ''));
+      row.type = 'button';
+      row.innerHTML = '<span class="ap-t">' + hhmm(a.start) + '<small>' + (a.end - a.start) + ' min</small></span>' +
+        '<span class="ap-c"><b>' + esc(a.who) + (a.fresh ? '<span class="tagx good">New</span>' : '') + (live ? '<span class="tagx">Now</span>' : '') + '</b>' +
         '<span>' + esc(a.t.name) + '</span>' +
-        (TEAM.length > 1 ? '<span class="who"><i class="dot"></i>' + esc(staffName(a.pid)) + '</span>' : '') + '</div>' +
-        '<div class="ap-p">' + (a.t.price != null ? gbp(a.t.price) : '') + '<small>' + (a.online ? 'Online' : 'By phone') + '</small></div>';
-      box.appendChild(row);
+        (TEAM.length > 1 ? '<span class="who">' + (coloured ? '<i class="dot" style="background:' + hueOf(a.pid) + '"></i>' : '') + esc(staffName(a.pid)) + '</span>' : '') + '</span>' +
+        '<span class="ap-p">' + (a.t.price != null ? gbp(a.t.price) : '') + '<small>' + (a.online ? 'Online' : 'By phone') + '</small></span>';
+      row.onclick = function () { detail(a); };
+      ag.appendChild(row);
     });
+    body.appendChild(ag);
 
-    /* wide screens: one column per person, on a time grid */
-    var sh = shiftsOn(showDay), open = sh[0][0], close = sh[sh.length - 1][1], k = 1.05;
-    cols.style.setProperty('--n', STAFF.length);
-    cols.appendChild(el('div', 'col-h', ''));
-    STAFF.forEach(function (p) { cols.appendChild(el('div', 'col-h', esc(p.name || 'Diary'))); });
-    var hrs = el('div', 'hrs'); hrs.style.height = (close - open) * k + 'px';
-    for (var m = Math.ceil(open / 60) * 60; m <= close; m += 60) {
-      var s = el('span', '', hhmm(m)); s.style.top = (m - open) * k + 'px'; hrs.appendChild(s);
-    }
-    cols.appendChild(hrs);
-    STAFF.forEach(function (p) {
-      var c = el('div', 'col'); c.style.height = (close - open) * k + 'px';
-      for (var m2 = Math.ceil(open / 60) * 60; m2 < close; m2 += 60) {
-        var l = el('div', 'hl'); l.style.top = (m2 - open) * k + 'px'; c.appendChild(l);
-      }
-      list.filter(function (a) { return a.pid === p.id; }).forEach(function (a) {
-        var past = a.day < TODAY || (a.day === TODAY && a.end <= nowMin);
-        var b = el('div', 'bk' + (past ? ' past' : '') + (a.fresh ? ' fresh' : ''));
-        b.style.top = (a.start - open) * k + 'px';
-        b.style.height = Math.max(22, (a.end - a.start) * k - 3) + 'px';
-        b.innerHTML = '<b>' + hhmm(a.start) + ' ' + esc(a.who) + '</b><span>' + esc(a.t.name) + '</span>';
-        b.title = hhmm(a.start) + '–' + hhmm(a.end) + ' · ' + a.who + ' · ' + a.t.name;
-        c.appendChild(b);
-      });
-      cols.appendChild(c);
+    var ps = people();
+    if (ps.length < 2) return;
+    body.classList.add('has-cols');
+    var lo = Math.floor(sh[0][0] / 60) * 60, hi = Math.ceil(sh[sh.length - 1][1] / 60) * 60, k = 1.05;
+    var g = el('div', 'cols'); g.style.setProperty('--n', ps.length);
+    g.appendChild(el('div', 'col-h', ''));
+    ps.forEach(function (p) { g.appendChild(el('div', 'col-h', (coloured ? '<i class="dot" style="background:' + hueOf(p.id) + '"></i>' : '') + esc(p.name))); });
+    g.appendChild(axis(lo, hi, k));
+    ps.forEach(function (p) {
+      var c = el('div', 'col'); c.style.height = (hi - lo) * k + 'px';
+      sh.forEach(function (x) { var o = el('div', 'open'); o.style.top = (x[0] - lo) * k + 'px'; o.style.height = (x[1] - x[0]) * k + 'px'; c.appendChild(o); });
+      hourLines(c, lo, hi, k);
+      lanes(list.filter(function (a) { return a.pid === p.id; })).forEach(function (a) { c.appendChild(block(a, lo, k)); });
+      if (cal.anchor === TODAY && nowMin > lo && nowMin < hi) { var n = el('div', 'nowl'); n.style.top = (nowMin - lo) * k + 'px'; c.appendChild(n); }
+      g.appendChild(c);
     });
-    if (showDay === TODAY && nowMin > open && nowMin < close) {
-      var nl = el('div', 'nowl'); nl.style.top = (cols.querySelector('.col-h').offsetHeight + (nowMin - open) * k) + 'px';
-      cols.appendChild(nl);
+    body.appendChild(g);
+  };
+
+  /* a week on a time grid; on a phone it scrolls sideways, opened at today */
+  var weekView = function (body) {
+    var first = monday(cal.anchor), days = [], lo = 1440, hi = 0;
+    for (var i = 0; i < 7; i++) days.push(shift(first, i));
+    days.forEach(function (d) { shiftsOn(d).forEach(function (x) { lo = Math.min(lo, x[0]); hi = Math.max(hi, x[1]); }); });
+    if (hi <= lo) { body.innerHTML = '<div class="shut">Closed all week</div>'; return; }
+    lo = Math.floor(lo / 60) * 60; hi = Math.ceil(hi / 60) * 60;
+    var k = 0.9;
+    var wrap = el('div', 'wk'), g = el('div', 'wk-grid');
+    g.appendChild(el('div', 'wk-h'));
+    days.forEach(function (d) {
+      var dd = parse(d), n = mine(apptsOn(d)).length, open = shiftsOn(d).length;
+      var h = el('button', 'wk-h' + (d === TODAY ? ' today' : ''),
+        '<i>' + DAYS[dd.getDay()].slice(0, 3) + '</i><b>' + dd.getDate() + '</b><em>' + (open ? n + ' booked' : 'Closed') + '</em>');
+      h.type = 'button'; h.title = 'Open ' + dayShort(d);
+      h.onclick = function () { cal.view = 'day'; cal.anchor = d; paintCal(); };
+      g.appendChild(h);
+    });
+    g.appendChild(axis(lo, hi, k));
+    days.forEach(function (d) {
+      var c = el('div', 'col' + (d === TODAY ? ' today' : '')); c.style.height = (hi - lo) * k + 'px';
+      shiftsOn(d).forEach(function (x) { var o = el('div', 'open'); o.style.top = (x[0] - lo) * k + 'px'; o.style.height = (x[1] - x[0]) * k + 'px'; c.appendChild(o); });
+      hourLines(c, lo, hi, k);
+      lanes(mine(apptsOn(d))).forEach(function (a) { c.appendChild(block(a, lo, k, 'thin')); });
+      if (d === TODAY && nowMin > lo && nowMin < hi) { var n = el('div', 'nowl'); n.style.top = (nowMin - lo) * k + 'px'; c.appendChild(n); }
+      g.appendChild(c);
+    });
+    wrap.appendChild(g);
+    body.appendChild(wrap);
+    var ti = days.indexOf(TODAY);
+    if (ti > 0 && wrap.scrollWidth > wrap.clientWidth) {
+      var colW = (g.scrollWidth - 44) / 7;
+      wrap.scrollLeft = Math.max(0, ti * colW - colW * 0.25);
     }
   };
-  paintDays();
-  paintDiary();
+
+  /* a month: how full each day is, and a tap opens the day */
+  var monthView = function (body) {
+    var ms = monthStart(cal.anchor), m = parse(ms).getMonth(), first = monday(ms), cells = [];
+    var d = first;
+    do { for (var i = 0; i < 7; i++) { cells.push(d); d = shift(d, 1); } } while (parse(d).getMonth() === m);
+    var counts = cells.map(function (x) { return parse(x).getMonth() === m ? mine(apptsOn(x)) : []; });
+    var most = Math.max.apply(null, counts.map(function (c) { return c.length; }).concat([1]));
+    var g = el('div', 'mo');
+    ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].forEach(function (w) { g.appendChild(el('div', 'mo-w', w)); });
+    var total = 0, takings = 0;
+    cells.forEach(function (x, i) {
+      var inMonth = parse(x).getMonth() === m, list = counts[i], open = shiftsOn(x).length;
+      if (inMonth) { total += list.length; takings += sum(list); }
+      var c = el('button', 'mc' + (inMonth ? '' : ' out') + (x === TODAY ? ' today' : '') + (open ? '' : ' shut'));
+      c.type = 'button';
+      c.innerHTML = '<span class="mc-d">' + parse(x).getDate() + '</span>' +
+        (!inMonth ? '' : !open ? '<span class="mc-x">Closed</span>' : list.length
+          ? '<span class="mc-n"><b>' + list.length + '</b><em> booked</em></span>' + (priced ? '<span class="mc-v">' + gbp(sum(list)) + '</span>' : '') +
+            '<i class="mc-bar"><i style="width:' + Math.round(list.length / most * 100) + '%"></i></i>'
+          : '<span class="mc-x">Free</span>');
+      c.setAttribute('aria-label', dayShort(x) + ': ' + (open ? list.length + ' booked' : 'closed'));
+      c.onclick = function () { cal.view = 'day'; cal.anchor = x; paintCal(); };
+      g.appendChild(c);
+    });
+    body.appendChild(g);
+    body.appendChild(el('p', 'mo-sum', '<b>' + total + '</b> appointments' + (priced ? ', <b>' + gbp(takings) + '</b>' : '') + ' in ' + MONTHS[m] + '. Tap a day to open it.'));
+  };
+
+  var paintKey = function () {
+    var key = $('cal-key');
+    key.innerHTML = '';
+    if (TEAM.length < 2) { key.hidden = true; return; }
+    key.hidden = false;
+    [{ id: 'all', name: 'Everyone' }].concat(TEAM).forEach(function (p) {
+      var b = el('button', 'kp', (p.id === 'all' || !coloured ? '' : '<i class="dot" style="background:' + hueOf(p.id) + '"></i>') + esc(p.name));
+      b.type = 'button';
+      b.setAttribute('aria-pressed', cal.who === p.id);
+      b.onclick = function () { cal.who = p.id; paintCal(); };
+      key.appendChild(b);
+    });
+  };
+
+  var paintCal = function () {
+    $('cal-label').textContent = label();
+    Array.prototype.forEach.call($('cal-view').querySelectorAll('button'), function (b) { b.setAttribute('aria-checked', b.dataset.v === cal.view); });
+    var here = cal.view === 'day' ? cal.anchor === TODAY : cal.view === 'week' ? monday(cal.anchor) === monday(TODAY) : monthStart(cal.anchor) === monthStart(TODAY);
+    $('cal-today').disabled = here;
+    paintKey();
+    $('cal-detail').hidden = true;
+    var body = $('cal-body');
+    body.className = 'cal-body v-' + cal.view;
+    body.innerHTML = '';
+    if (cal.view === 'day') dayView(body);
+    else if (cal.view === 'week') weekView(body);
+    else monthView(body);
+  };
+  $('cal-view').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    cal.view = b.dataset.v; paintCal();
+  });
+  $('cal-prev').onclick = function () { move(-1); };
+  $('cal-next').onclick = function () { move(1); };
+  $('cal-today').onclick = function () { cal.anchor = TODAY; paintCal(); };
+  paintCal();
   var lastDW = window.innerWidth;
-  window.addEventListener('resize', function () { if (window.innerWidth !== lastDW) { lastDW = window.innerWidth; paintDiary(); } });
+  window.addEventListener('resize', function () { if (window.innerWidth !== lastDW) { lastDW = window.innerWidth; paintCal(); } });
 
   /* ── latest bookings ──────────────────────────────────────────────────── */
 

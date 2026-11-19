@@ -535,7 +535,17 @@
       '  <div class="new" id="new" role="status" hidden></div>',
       '  <section class="tiles" id="tiles" aria-label="At a glance"></section>',
       '  <div class="grid">',
-      '    <section class="card diary" id="diary"><div class="card-h"><h2>Diary</h2></div><div class="days" id="days"></div><div class="agenda" id="agenda"></div><div class="cols" id="cols"></div></section>',
+      '    <section class="card cal" id="cal" aria-label="Calendar">',
+      '      <div class="cal-top"><h2>Calendar</h2>',
+      '        <div class="vseg" id="cal-view" role="radiogroup" aria-label="Calendar view"><button type="button" role="radio" data-v="day">Day</button><button type="button" role="radio" data-v="week">Week</button><button type="button" role="radio" data-v="month">Month</button></div></div>',
+      '      <div class="cal-nav"><button class="nb" id="cal-prev" type="button" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>' +
+        '<b id="cal-label" aria-live="polite"></b>' +
+        '<button class="nb" id="cal-next" type="button" aria-label="Forward"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>' +
+        '<button class="today-b" id="cal-today" type="button">Today</button></div>',
+      '      <div class="cal-key" id="cal-key" hidden></div>',
+      '      <div class="cal-body" id="cal-body"></div>',
+      '      <div class="cal-detail" id="cal-detail" role="status" hidden></div>',
+      '    </section>',
       '    <section class="card"><div class="card-h"><h2>Latest bookings</h2><span>Texts go out for you</span></div><ol class="feed" id="feed"></ol></section>',
       '    <section class="card"><div class="card-h"><h2 id="chart-t">Takings by week</h2><span>Last 8 weeks</span></div><div class="chart" id="chart"></div></section>',
       '    <section class="card"><div class="card-h"><h2>Most booked</h2><span>Last 30 days</span></div><ol class="top" id="top"></ol></section>',
