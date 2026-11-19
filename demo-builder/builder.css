@@ -172,6 +172,17 @@ body[data-pane="edit"] .pane-edit,body[data-pane="preview"] .pane-preview,body[d
 .seg button[aria-checked="true"]{background:var(--bg-4);color:var(--fg);box-shadow:inset 0 0 0 1px var(--line-2)}
 .seg.small button{height:30px;padding:0 12px;font-size:12.5px}
 .fstat{font-style:normal;font-weight:500;font-size:11.5px}
+/* font pairings, each set in its own fonts on the clinic's background */
+.fpairs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+.fp{display:flex;flex-direction:column;gap:3px;min-width:0;text-align:left;padding:12px 12px 10px;border-radius:12px;
+  border:2px solid transparent;background:var(--fp-paper,#F8F7F4);color:#16191D;box-shadow:0 0 0 1px var(--line-2);cursor:pointer}
+.fp:hover{box-shadow:0 0 0 1px rgba(255,255,255,.4)}
+.fp[aria-checked="true"]{border-color:var(--accent);box-shadow:none}
+.fp-h{font-size:19px;line-height:1.15;letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fp-b{font-size:12.5px;line-height:1.35;color:#454C57;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fp-n{margin-top:5px;font-family:var(--sans);font-size:11px;font-weight:600;color:#6B7380;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fp-n b{color:#16191D}
+@media (min-width:1400px){ .fpairs{grid-template-columns:repeat(3,minmax(0,1fr))} }
 .fstat.ok{color:var(--ok)} .fstat.bad{color:var(--bad)} .fstat.wait{color:var(--fg-3)}
 
 /* photos */

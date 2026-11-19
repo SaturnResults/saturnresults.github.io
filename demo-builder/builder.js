@@ -93,7 +93,7 @@
       logo: null, photos: [],
       copy: { intro: '', reassure: D.reassure, note: '' },
       links: { instagram: '', facebook: '', tiktok: '', privacy: '', terms: '' },
-      reviewList: [], reviewSource: '', listed: null, found: { logos: [], photos: [] },
+      reviewList: [], reviewSource: '', listed: null, found: { logos: [], photos: [] }, siteFonts: [],
       wa: '', published: null, updated: Date.now()
     };
   };
@@ -166,7 +166,9 @@
         if (k === 'name' && !cfg.slugEdited) { cfg.slug = G.slugify(v); $('slug').value = cfg.slug; checkExists(); }
         if (k === 'brand.accent' && G.rgb(v)) $('accent-pick').value = '#' + G.rgb(v).map(function (n) { return ('0' + n.toString(16)).slice(-2); }).join('');
         if (k === 'brand.paper' && G.rgb(v)) $('paper-pick').value = '#' + G.rgb(v).map(function (n) { return ('0' + n.toString(16)).slice(-2); }).join('');
-        if (k === 'brand.head' || k === 'brand.body') checkFontSoon();
+        if (k === 'brand.head' || k === 'brand.body') { checkFontSoon(); paintPairs(); }
+        if (k === 'name') paintPairNames();
+        if (k === 'brand.paper') paintPairs();
         changed();
       });
     });
@@ -455,6 +457,83 @@
     Promise.all([checkFont(cfg.brand.head), checkFont(cfg.brand.body)]).then(function () { paintFonts(); refresh(); });
   }, 600);
 
+  /* ── font pairings ────────────────────────────────────────────────────── */
+
+  /* Pairs that suit a clinic, each a heading face and a text face. The weights
+     are the ones each family has, so the page never asks Google for a weight
+     it would refuse. */
+  var PAIRS = [
+    ['Soft serif', 'Fraunces', 'DM Sans'],
+    ['Classic', 'Playfair Display', 'DM Sans'],
+    ['Elegant', 'Cormorant Garamond', 'Jost'],
+    ['Warm', 'Lora', 'Mulish'],
+    ['Statement', 'DM Serif Display', 'Outfit'],
+    ['Luxe', 'Cinzel', 'Jost'],
+    ['Spa', 'Marcellus', 'Josefin Sans'],
+    ['Traditional', 'Libre Baskerville', 'Source Sans 3'],
+    ['Modern', 'Manrope', 'Manrope'],
+    ['Fresh', 'Plus Jakarta Sans', 'Plus Jakarta Sans'],
+    ['Friendly', 'Nunito', 'Nunito'],
+    ['Characterful', 'Bricolage Grotesque', 'Figtree']
+  ];
+  var WEIGHTS = {
+    'DM Serif Display': 'wght@400', 'Marcellus': 'wght@400', 'Libre Baskerville': 'wght@400;700'
+  };
+  var specFor = function (f) { return WEIGHTS[f] || 'wght@400;500;600;700'; };
+
+  /* the previews need the fonts in the builder too; fetched once, when the
+     section first comes into view */
+  var previewFonts = {};
+  var loadPreviewFont = function (f, spec) {
+    if (!f || previewFonts[f]) return;
+    previewFonts[f] = 1;
+    var l = el('link'); l.rel = 'stylesheet'; l.href = G.fontHref(f, spec);
+    document.head.appendChild(l);
+  };
+  var pairsSeen = false;
+  var sitePair = function () {
+    var fs = (cfg.siteFonts || []).filter(Boolean);
+    if (!fs.length) return null;
+    var serif = fs.filter(function (f) { return /serif|garamond|playfair|lora|fraunces|baskerville|cormorant|cinzel|marcellus|gloock|prata|bodoni/i.test(f) && !/sans/i.test(f); })[0];
+    var head = serif || fs[0], body = fs.filter(function (f) { return f !== head; })[0] || fs[0];
+    return ['Their website', head, body, true];
+  };
+  var allPairs = function () { var sp = sitePair(); return sp ? [sp].concat(PAIRS) : PAIRS; };
+
+  var paintPairs = function () {
+    var box = $('fpairs');
+    if (!box) return;
+    box.innerHTML = '';
+    box.style.setProperty('--fp-paper', G.rgb(cfg.brand.paper) ? cfg.brand.paper : G.DEFAULTS.paper);
+    var head = (cfg.brand.head || '').trim(), body = (cfg.brand.body || '').trim();
+    allPairs().forEach(function (p) {
+      var on = p[1] === head && p[2] === body;
+      var b = el('button', 'fp'); b.type = 'button';
+      b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', on);
+      var hw = (cfg.fontSpec[p[1]] || specFor(p[1])).indexOf('600') >= 0 ? 600 : ((cfg.fontSpec[p[1]] || specFor(p[1])).indexOf('700') >= 0 ? 700 : 400);
+      b.innerHTML = '<span class="fp-h" style="font-family:\'' + esc(p[1]) + '\', Georgia, serif;font-weight:' + hw + '">' + esc(cfg.name.trim() || 'Your clinic') + '</span>' +
+        '<span class="fp-b" style="font-family:\'' + esc(p[2]) + '\', system-ui, sans-serif">Book your treatment in under a minute.</span>' +
+        '<span class="fp-n"><b>' + esc(p[0]) + '</b> · ' + esc(p[1] === p[2] ? p[1] : p[1] + ' + ' + p[2]) + '</span>';
+      b.onclick = function () {
+        cfg.brand.head = p[1]; cfg.brand.body = p[2];
+        /* a pair from their site gets its weights checked like a typed name */
+        if (!p[3]) [p[1], p[2]].forEach(function (f) { if (!cfg.fontSpec[f]) cfg.fontSpec[f] = specFor(f); });
+        fillFields(); paintFonts(); paintPairs(); checkFontSoon(); changed();
+      };
+      box.appendChild(b);
+      if (pairsSeen) { loadPreviewFont(p[1], p[3] ? '' : specFor(p[1])); loadPreviewFont(p[2], p[3] ? '' : specFor(p[2])); }
+    });
+  };
+  var paintPairNames = function () {
+    Array.prototype.forEach.call(document.querySelectorAll('.fp-h'), function (h) { h.textContent = cfg.name.trim() || 'Your clinic'; });
+  };
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es, io) {
+      if (!es.some(function (e) { return e.isIntersecting; })) return;
+      pairsSeen = true; io.disconnect(); paintPairs();
+    }, { rootMargin: '300px' }).observe($('fonts-card'));
+  } else { pairsSeen = true; }
+
   /* ── images ───────────────────────────────────────────────────────────── */
 
   var loadImg = function (src) {
@@ -634,7 +713,7 @@
   };
   var repaintAll = function () {
     fillFields(); paintSeg('hero-seg', cfg.brand.hero || 'light');
-    paintTreatments(); paintTeam(); paintHours(); paintReviews(); paintLogo(); paintPhotos(); paintFound(); paintFonts();
+    paintTreatments(); paintTeam(); paintHours(); paintReviews(); paintLogo(); paintPhotos(); paintFound(); paintFonts(); paintPairs();
   };
 
   $('qf-go').onclick = function () {
@@ -765,6 +844,7 @@
         if (w.email && !cfg.email) { cfg.email = w.email; got.push('email'); }
         if (w.phone && !cfg.phone) { cfg.phone = w.phone; got.push('phone'); }
         var defFonts = cfg.brand.head === G.DEFAULTS.head && cfg.brand.body === G.DEFAULTS.body;
+        cfg.siteFonts = w.fonts.slice();
         if (w.fonts.length && defFonts) {
           var serif = w.fonts.filter(function (f) { return /serif|garamond|playfair|lora|fraunces|baskerville|cormorant|cinzel|marcellus|gloock|prata|bodoni/i.test(f) && !/sans/i.test(f); })[0];
           cfg.brand.head = serif || w.fonts[0];
@@ -1321,7 +1401,7 @@
     fillFields(); paintSeg('hero-seg', cfg.brand.hero || 'light');
     if (!cfg.reviewList) cfg.reviewList = [];
     cfg.found = Object.assign({ logos: [], photos: [] }, cfg.found || {});
-    paintTreatments(); paintTeam(); paintHours(); paintReviews(); paintLogo(); paintPhotos(); paintFound(); paintFonts(); paintHints();
+    paintTreatments(); paintTeam(); paintHours(); paintReviews(); paintLogo(); paintPhotos(); paintFound(); paintFonts(); paintPairs(); paintHints();
     if (!opts.keepLog) { $('find-log').innerHTML = ''; $('find-out').textContent = ''; }
     $('log').innerHTML = ''; $('live').hidden = !cfg.published;
     if (cfg.published) { $('live-a').href = liveUrl(); $('live-a').textContent = liveUrl(true); }

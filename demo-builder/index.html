@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="builder.css?v=5039bbe8">
+<link rel="stylesheet" href="builder.css?v=ae33783f">
 </head>
 <body data-pane="edit">
 
@@ -127,10 +127,17 @@
           <button type="button" data-v="brand" role="radio">Brand colour</button>
           <button type="button" data-v="dark" role="radio">Dark</button>
         </div></div>
+    </div>
+  </div>
+
+  <div class="card" id="fonts-card">
+    <div class="card-h"><h2>Fonts</h2><span class="hint">Tap a pair to try it</span></div>
+    <div class="fpairs" id="fpairs" role="radiogroup" aria-label="Font pairings"></div>
+    <div class="grid2">
       <label class="fld"><span>Heading font <i class="fstat" id="head-stat"></i></span><input data-k="brand.head" list="fonts" autocomplete="off" spellcheck="false"></label>
       <label class="fld"><span>Body font <i class="fstat" id="body-stat"></i></span><input data-k="brand.body" list="fonts" autocomplete="off" spellcheck="false"></label>
     </div>
-    <p class="help">Any Google Font by name. Their own font is usually in their site’s source; if it isn’t on Google Fonts, pick the closest.</p>
+    <p class="help">Or type any Google Font by name. If their own font isn’t on Google Fonts, pick the closest.</p>
     <datalist id="fonts">
       <option>DM Sans</option><option>Manrope</option><option>Inter</option><option>Outfit</option><option>Jost</option>
       <option>Montserrat</option><option>Poppins</option><option>Lato</option><option>Nunito Sans</option><option>Work Sans</option>
@@ -258,6 +265,6 @@
 <script src="parse.js?v=568ffddd"></script>
 <script src="find.js?v=32e73342"></script>
 <script src="generate.js?v=a00df487"></script>
-<script src="builder.js?v=dc739817"></script>
+<script src="builder.js?v=ca8752f7"></script>
 </body>
 </html>
