@@ -33,6 +33,8 @@ code{font-size:12.5px;background:var(--bg-3);padding:1px 5px;border-radius:5px}
 .ib{width:36px;height:36px;flex:none;display:grid;place-items:center;border-radius:10px;border:1px solid var(--line-2);background:var(--bg-3)}
 .ib:hover{border-color:rgba(255,255,255,.3)}
 .ib svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ib.wide{width:auto;padding:0 12px 0 10px;gap:6px;display:inline-flex;align-items:center;font-size:13px;font-weight:600;white-space:nowrap}
+@media (max-width:640px){.ib.wide{width:36px;padding:0;justify-content:center}.ib-t{display:none}}
 .top .top-pub{display:none}
 
 /* ── buttons & fields ── */

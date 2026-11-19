@@ -99,10 +99,49 @@
   };
 
   var cfg = blank();
-  var save = debounce(function () {
-    cfg.updated = Date.now();
-    putDraft(cfg).then(paintDrafts);
-  }, 400);
+
+  /* Saving is pinned to the draft that changed, so switching clinic inside
+     the 400ms wait can't lose the last edit or save it over the wrong one */
+  var dirty = null;
+  var saveNow = function () {
+    if (!dirty) return Promise.resolve();
+    var d = dirty; dirty = null; d.updated = Date.now();
+    return putDraft(d).then(paintDrafts);
+  };
+  var flush = debounce(saveNow, 400);
+  var save = function () { if (dirty && dirty !== cfg) saveNow(); dirty = cfg; flush(); };
+
+  /* Slow work (reading their site, copying images, publishing) belongs to the
+     draft it started in. If the screen has moved to another clinic by the
+     time it finishes, the result goes into that draft's saved copy instead. */
+  var settle = function (me) {
+    if (me === cfg) return true;
+    me.updated = Date.now(); putDraft(me);
+    return false;
+  };
+
+  /* is this draft already a clinic, and is it the one these links are for? */
+  var hasContent = function (c) {
+    return !!((c.name || '').trim() || c.treatments.some(function (t) { return t.name; }) ||
+      c.logo || c.photos.length || (c.reviewList || []).length);
+  };
+  var linkKey = function (u) {
+    return G.url(u || '').toLowerCase().replace(/^https?:\/\/(www\.)?/, '').replace(/[?#].*$/, '').replace(/\/+$/, '');
+  };
+  var nameKey = function (n) { return String(n || '').toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]/g, ''); };
+  var namesMatch = function (a, b) {
+    var x = nameKey(a), y = nameKey(b);
+    if (x.length < 4 || y.length < 4) return true;
+    return x === y || x.indexOf(y) >= 0 || y.indexOf(x) >= 0;
+  };
+  var sameClinic = function (L, W) {
+    if (!hasContent(cfg)) return 'same';
+    var bf = cfg.builtFrom;
+    if (!bf) return 'unknown';
+    if (L && bf.listing) return linkKey(L) === linkKey(bf.listing) ? 'same' : 'other';
+    if (W && bf.website) return linkKey(W) === linkKey(bf.website) ? 'same' : 'other';
+    return 'unknown';
+  };
 
   /* ── templates ────────────────────────────────────────────────────────── */
 
@@ -478,13 +517,14 @@
 
   /* their logo sets the brand colour when none has been chosen, and a white
      logo needs a dark header to be seen at all */
-  var brandFromLogo = function (img) {
+  var brandFromLogo = function (img, me) {
+    me = me || cfg;
     return loadImg(img.src).then(function (i) {
       var pal = F.paletteOf(i), got = [];
       if (!pal) return got;
-      var isDefault = !cfg.brand.accent || cfg.brand.accent.toUpperCase() === G.DEFAULTS.accent;
-      if (pal.accent && isDefault) { cfg.brand.accent = pal.accent; got.push('brand colour'); }
-      if (pal.whiteOnClear && cfg.brand.hero === 'light') { cfg.brand.hero = pal.accent ? 'brand' : 'dark'; got.push('a darker header for their white logo'); }
+      var isDefault = !me.brand.accent || me.brand.accent.toUpperCase() === G.DEFAULTS.accent;
+      if (pal.accent && isDefault) { me.brand.accent = pal.accent; got.push('brand colour'); }
+      if (pal.whiteOnClear && me.brand.hero === 'light') { me.brand.hero = pal.accent ? 'brand' : 'dark'; got.push('a darker header for their white logo'); }
       return got;
     }, function () { return []; });
   };
@@ -495,9 +535,12 @@
     $('logo-x').hidden = !cfg.logo;
   };
   var setLogo = function (p) {
+    var me = cfg;
     p.then(function (img) {
-      cfg.logo = img; paintLogo(); paintFound();
-      return brandFromLogo(img).then(function (got) {
+      me.logo = img;
+      return brandFromLogo(img, me).then(function (got) {
+        if (!settle(me)) return;
+        paintLogo(); paintFound();
         if (got.length) { fillFields(); paintSeg('hero-seg', cfg.brand.hero); toast('Took ' + got.join(' and ') + ' from the logo'); }
         changed();
       });
@@ -529,15 +572,17 @@
     files = Array.prototype.filter.call(files, function (f) { return /^image\//.test(f.type); });
     if (!files.length) return;
     toast('Adding ' + files.length + ' photo' + (files.length > 1 ? 's' : '') + '…');
+    var me = cfg;
     files.reduce(function (p, f) {
-      return p.then(function () { return readImage(f, 'photo').then(function (img) { img.id = uid(); cfg.photos.push(img); paintPhotos(); }); })
+      return p.then(function () { return readImage(f, 'photo').then(function (img) { img.id = uid(); me.photos.push(img); if (me === cfg) paintPhotos(); }); })
         .catch(function () { toast('One photo couldn’t be read'); });
-    }, Promise.resolve()).then(changed);
+    }, Promise.resolve()).then(function () { if (settle(me)) changed(); });
   };
   $('photo-file').onchange = function () { addPhotos(this.files); this.value = ''; };
   $('photo-url').onclick = function () {
     var u = prompt('Link to a photo (one at a time)');
-    if (u) imageFromUrl(u, 'photo').then(function (img) { img.id = uid(); cfg.photos.push(img); paintPhotos(); changed(); },
+    var me = cfg;
+    if (u) imageFromUrl(u, 'photo').then(function (img) { img.id = uid(); me.photos.push(img); if (settle(me)) { paintPhotos(); changed(); } },
       function () { toast('That link didn’t load as an image'); });
   };
   document.addEventListener('paste', function (e) {
@@ -597,6 +642,13 @@
     if (!text.trim()) { out.className = 'qf-out bad'; out.textContent = 'Paste something first'; return; }
     var r = P.quickFill(text);
     if (!r.platform) r.platform = F.platformOf(cfg.listing);
+    if (hasContent(cfg) && r.name && cfg.name && !namesMatch(r.name, cfg.name)) {
+      var bf = cfg.builtFrom || {};
+      var keepL = linkKey(cfg.listing) && linkKey(cfg.listing) !== linkKey(bf.listing) ? cfg.listing : '';
+      var keepW = linkKey(cfg.website) && linkKey(cfg.website) !== linkKey(bf.website) ? cfg.website : '';
+      freshDraft(keepL, keepW, { keepPaste: true, name: r.name }).then(function () { $('qf-go').onclick(); });
+      return;
+    }
     var got = applyListing(r, true);
     repaintAll(); changed();
     if (got.length) {
@@ -612,7 +664,7 @@
 
   /* ── build from links ─────────────────────────────────────────────────── */
 
-  var finding = false;
+  var finding = false, runs = 0;
   var firstThat = function (list, fn) {
     return list.reduce(function (p, x) { return p.catch(function () { return fn(x); }); }, Promise.reject());
   };
@@ -621,13 +673,51 @@
     return Math.max(img.w, img.h) >= 500 && a < 2.8 && a > 0.35;
   };
 
+  /* Links for a different clinic start a new draft: the one on screen keeps
+     its own links and stays in the list, and the new clinic starts empty, so
+     nothing of the last one carries over. */
+  var freshDraft = function (L, W, opts) {
+    opts = opts || {};
+    var old = cfg, was = (old.name || '').trim() || 'The last clinic';
+    var bf = old.builtFrom;
+    old.listing = bf ? bf.listing || '' : (linkKey(old.listing) === linkKey(L) ? '' : old.listing);
+    old.website = bf ? bf.website || '' : (linkKey(old.website) === linkKey(W) ? '' : old.website);
+    dirty = old;
+    return saveNow().then(allDrafts).then(function (ds) {
+      /* a clinic that already has a draft here opens that one, not a copy */
+      var mine = ds.filter(function (x) {
+        var b = x.builtFrom;
+        if (x.id === old.id) return false;
+        if (b && ((L && linkKey(b.listing) === linkKey(L)) || (!L && W && linkKey(b.website) === linkKey(W)))) return true;
+        return !!(opts.name && x.name && nameKey(x.name) === nameKey(opts.name));
+      }).sort(function (a, b) { return b.updated - a.updated; })[0];
+      var d = mine || blank();
+      if (!mine) { d.listing = L || ''; d.website = W || ''; }
+      else if (W && !d.website) d.website = W;
+      return putDraft(d).then(function () {
+        var paste = $('qf-text').value;
+        load(d, { keepLog: opts.keepLog });
+        if (opts.keepPaste) $('qf-text').value = paste;
+        toast(mine ? 'You already had a draft for ' + (d.name || 'this clinic') + ', so it’s open again. ' + was + ' is saved in the list.'
+          : 'New clinic, so this is a fresh draft. ' + was + ' is saved in the list at the top.', 6000);
+      });
+    });
+  };
+
+  var ABANDON = new Error('moved on');
   $('find-go').onclick = function () {
     if (finding) return;
     var L = G.url(cfg.listing), W = G.url(cfg.website);
     if (!L && !W) { toast('Paste their listing link first'); document.querySelector('[data-k=listing]').focus(); return; }
+    var verdict = sameClinic(L, W);
+    if (verdict === 'other') { freshDraft(L, W).then(function () { $('find-go').onclick(); }); return; }
     finding = true;
     $('find-go').disabled = true;
     $('find-log').innerHTML = ''; $('find-out').textContent = '';
+    var me = cfg, run = ++runs;
+    me.builtFrom = verdict === 'same' ? { listing: L, website: W } : null;
+    /* each step checks the draft on screen is still the one being built */
+    var still = function () { if (cfg !== me || run !== runs) throw ABANDON; };
     var step = function (msg) {
       var li = el('li', 'wait', esc(msg)); $('find-log').appendChild(li);
       return {
@@ -642,6 +732,15 @@
     if (L) p = p.then(function () {
       var s = step('Reading ' + (F.platformOf(L) || 'their listing') + '…');
       return F.listing(L).then(function (r) {
+        still();
+        /* a draft made before links were remembered: tell by the name */
+        if (!me.builtFrom && r.name && me.name && !namesMatch(r.name, me.name)) {
+          return freshDraft(L, W, { keepLog: true }).then(function () { me = cfg; return r; });
+        }
+        return r;
+      }).then(function (r) {
+        still();
+        me.builtFrom = { listing: L, website: W };
         var got = applyListing(r, false);
         photoUrls = photoUrls.concat(r.photos || []);
         repaintAll(); changed();
@@ -649,11 +748,13 @@
         if (r.listed && r.treatments.length < r.listed)
           step('').say('Their listing has ' + r.listed + ' treatments but only shows ' + r.treatments.length + ' until a category is opened. Paste the rest below if you need them.');
         if (!r.treatments.length) step('').bad('No treatments came through. Use “Or paste the page instead” below.');
-      }, function (e) { s.bad('Couldn’t read the listing (' + e.message + '). Use “Or paste the page instead” below.'); });
+      }, function (e) { if (e === ABANDON) throw e; s.bad('Couldn’t read the listing (' + e.message + '). Use “Or paste the page instead” below.'); });
     });
     if (W) p = p.then(function () {
       var s = step('Reading their website…');
       return F.website(W, cfg.name).then(function (w) {
+        still();
+        me.builtFrom = { listing: L, website: W };
         var got = [];
         logoUrls = w.logos;
         photoUrls = photoUrls.concat(w.photos);
@@ -673,9 +774,10 @@
         }
         repaintAll(); changed();
         s.ok('Website: ' + (got.length ? got.join(', ') : 'read') + (w.logos.length ? '' : ', no logo marked as one'));
-      }, function (e) { s.bad('Couldn’t read their website (' + e.message + ')'); });
+      }, function (e) { if (e === ABANDON) throw e; s.bad('Couldn’t read their website (' + e.message + ')'); });
     });
     p = p.then(function () {
+      still();
       cfg.found.logos = logoUrls.slice();
       if (cfg.logo) return;
       if (!logoUrls.length) { step('').say('No logo found, so the name is set as a wordmark in their font'); return; }
@@ -683,11 +785,13 @@
       return firstThat(logoUrls, function (u) {
         return importImage(u, 'logo').then(function (img) { if (img.w < 40 || img.h < 16) throw new Error('tiny'); return img; });
       }).then(function (img) {
+        still();
         cfg.logo = img;
-        return brandFromLogo(img).then(function (got) { s.ok('Logo' + (got.length ? ', and ' + got.join(' and ') + ' from it' : '')); });
-      }, function () { s.bad('Found a logo but couldn’t load it'); });
+        return brandFromLogo(img, me).then(function (got) { s.ok('Logo' + (got.length ? ', and ' + got.join(' and ') + ' from it' : '')); });
+      }, function (e) { if (e === ABANDON) throw e; s.bad('Found a logo but couldn’t load it'); });
     });
     p = p.then(function () {
+      still();
       var isDefault = !cfg.brand.accent || cfg.brand.accent.toUpperCase() === G.DEFAULTS.accent;
       if (isDefault && themeHex && G.rgb(themeHex)) {
         var c = G.rgb(themeHex), mx = Math.max.apply(null, c), mn = Math.min.apply(null, c);
@@ -702,6 +806,7 @@
         if (added >= want || i >= todo.length) return Promise.resolve();
         var u = todo[i++];
         return importImage(u, 'photo').then(function (img) {
+          still();
           if (!goodPhoto(img)) return;
           img.id = uid(); cfg.photos.push(img); added++; paintPhotos();
         }, function () {}).then(next);
@@ -717,6 +822,10 @@
       repaintAll(); changed(); lastHtml = '';
       $('find-out').className = 'qf-out ok';
       $('find-out').textContent = 'Done. Check it against their listing.';
+    }, function (e) {
+      /* switched to another clinic part-way: drop the rest, keep what's saved */
+      if (run === runs) { finding = false; $('find-go').disabled = false; }
+      if (e !== ABANDON) { $('find-out').className = 'qf-out bad'; $('find-out').textContent = 'Something went wrong: ' + e.message; }
     });
   };
 
@@ -742,10 +851,11 @@
       b.title = 'Add this photo';
       b.onclick = function () {
         b.disabled = true;
+        var me = cfg;
         importImage(u, 'photo').then(function (img) {
-          img.id = uid(); cfg.photos.push(img);
-          cfg.found.photos = cfg.found.photos.filter(function (x) { return x !== u; });
-          paintPhotos(); paintFound(); changed();
+          img.id = uid(); me.photos.push(img);
+          me.found.photos = me.found.photos.filter(function (x) { return x !== u; });
+          if (settle(me)) { paintPhotos(); paintFound(); changed(); }
         }, function () { b.remove(); toast('That one wouldn’t load'); });
       };
       $('photo-alts').appendChild(b);
@@ -1036,7 +1146,7 @@
     busy = true;
     $('publish').disabled = true;
     if (attempt === 1) { $('log').innerHTML = ''; $('live').hidden = true; }
-    var slug = cfg.slug, base = 'results/' + slug + '/';
+    var me = cfg, slug = cfg.slug, base = 'results/' + slug + '/';
     var buildId = uid() + uid();
     var files = [], keep = {}, refs = { logo: null, photos: [] };
 
@@ -1088,17 +1198,17 @@
         step = log('Committing');
         return gh('/git/trees', 'POST', { base_tree: tree, tree: entries });
       }).then(function (nt) {
-        return gh('/git/commits', 'POST', { message: 'Add demo: ' + cfg.name.trim(), tree: nt.sha, parents: [head] });
+        return gh('/git/commits', 'POST', { message: 'Add demo: ' + me.name.trim(), tree: nt.sha, parents: [head] });
       }).then(function (nc) {
         return gh('/git/refs/heads/' + settings.branch, 'PATCH', { sha: nc.sha }).then(function () { return nc; });
       }).then(function (nc) {
         step.className = 'ok';
         step.textContent = 'Committed ' + nc.sha.slice(0, 7) + ' to ' + settings.branch;
         /* the next publish of this draft can keep the photos already up */
-        if (cfg.logo && /^data:/.test(cfg.logo.src)) cfg.logo.src = SITE + '/' + base + refs.logo;
-        cfg.photos.forEach(function (p, i) { if (/^data:/.test(p.src)) p.src = SITE + '/' + base + refs.photos[i]; });
-        cfg.published = { slug: slug, at: Date.now(), sha: nc.sha };
-        save();
+        if (me.logo && /^data:/.test(me.logo.src)) me.logo.src = SITE + '/' + base + refs.logo;
+        me.photos.forEach(function (p, i) { if (/^data:/.test(p.src)) p.src = SITE + '/' + base + refs.photos[i]; });
+        me.published = { slug: slug, at: Date.now(), sha: nc.sha };
+        if (settle(me)) save();
         waitLive(slug, buildId);
       });
     }).catch(function (e) {
@@ -1194,9 +1304,14 @@
       sel.appendChild(del);
     });
   };
-  var load = function (d) {
+  var load = function (d, opts) {
+    opts = opts || {};
+    if (dirty) saveNow();
     var b = blank();
+    /* a copy, so nothing on screen shares a list with any other draft */
+    d = JSON.parse(JSON.stringify(d));
     cfg = Object.assign(b, d);
+    if (!opts.keepLog) { runs++; finding = false; $('find-go').disabled = false; }
     ['brand', 'copy', 'links'].forEach(function (k) { cfg[k] = Object.assign({}, b[k], d[k] || {}); });
     cfg.fontSpec = Object.assign({}, b.fontSpec, d.fontSpec || {});
     if (!cfg.hours || cfg.hours.length !== 7) cfg.hours = b.hours;
@@ -1207,7 +1322,7 @@
     if (!cfg.reviewList) cfg.reviewList = [];
     cfg.found = Object.assign({ logos: [], photos: [] }, cfg.found || {});
     paintTreatments(); paintTeam(); paintHours(); paintReviews(); paintLogo(); paintPhotos(); paintFound(); paintFonts(); paintHints();
-    $('find-log').innerHTML = ''; $('find-out').textContent = '';
+    if (!opts.keepLog) { $('find-log').innerHTML = ''; $('find-out').textContent = ''; }
     $('log').innerHTML = ''; $('live').hidden = !cfg.published;
     if (cfg.published) { $('live-a').href = liveUrl(); $('live-a').textContent = liveUrl(true); }
     $('qf-out').textContent = '';
@@ -1233,7 +1348,8 @@
   };
   $('new').onclick = function () {
     var d = blank();
-    putDraft(d).then(function () { load(d); setPane('edit'); $('qf-text').value = ''; toast('New clinic started'); });
+    if (dirty) saveNow();
+    putDraft(d).then(function () { load(d); setPane('edit'); $('qf-text').value = ''; window.scrollTo(0, 0); $('pane-edit').scrollTop = 0; toast('New clinic started. The last one is saved in the list at the top.'); });
   };
 
   /* open a demo that is already live, from the config it carries */
