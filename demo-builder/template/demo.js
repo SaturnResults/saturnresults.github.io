@@ -502,6 +502,14 @@
     var notes = [s.note, C.note].filter(Boolean);
     $('r-note').textContent = notes.join(' ');
     $('r-note').parentNode.hidden = !notes.length;
+    /* kept in this browser only, so the clinic's dashboard demo can show
+       the booking arriving; nothing is sent anywhere */
+    try {
+      var key = 'srdemo:' + C.slug, list = JSON.parse(localStorage.getItem(key) || '[]') || [];
+      list.push({ name: S.name.trim(), svc: s.name, mins: s.mins || null, price: s.price, day: S.day, time: S.time,
+        with: S.pid && byId(S.pid) ? byId(S.pid).name : '', at: Date.now() });
+      localStorage.setItem(key, JSON.stringify(list.slice(-5)));
+    } catch (e) {}
     document.body.dataset.done = '1';
     stick();
     toTop();

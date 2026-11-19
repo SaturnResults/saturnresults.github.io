@@ -218,6 +218,33 @@ body[data-done="1"] .stage,body[data-done="1"] .dock,body[data-done="1"] .hero{d
 .recap .note dd{font-weight:500;color:var(--flag)}
 .done .row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
 
+.owner{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-3)}
+.owner a{color:var(--accent-ink);font-weight:700}
+
+/* ── reviews, under the booking ─────────────────────────────────────────── */
+.reviews{padding-block:34px 4px}
+.rv-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 20px}
+.rv-score{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink-2)}
+.rv-score b{font-size:16px;color:var(--ink)}
+.stars5{position:relative;display:inline-block;width:86px;height:16px;flex:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23D9D6D0' d='M12 2l3 6.5 7 1-5 5 1.2 7L12 18l-6.2 3.5L7 14.5l-5-5 7-1z'/%3E%3C/svg%3E") 0 0/17.2px 16px repeat-x}
+.stars5 > span{position:absolute;inset:0 auto 0 0;overflow:hidden;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23E39B0B' d='M12 2l3 6.5 7 1-5 5 1.2 7L12 18l-6.2 3.5L7 14.5l-5-5 7-1z'/%3E%3C/svg%3E") 0 0/17.2px 16px repeat-x}
+.stars5.sm{width:70px;height:13px;background-size:14px 13px;margin-bottom:8px}
+.stars5.sm > span{background-size:14px 13px}
+.rv-list{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:16px -16px 0;padding:0 16px 6px;scrollbar-width:none}
+.rv-list::-webkit-scrollbar{display:none}
+.rvc{flex:none;width:min(84%,330px);scroll-snap-align:start;margin:0;padding:16px;border-radius:18px;background:var(--raise);
+  border:1px solid var(--line);display:flex;flex-direction:column}
+.rvc blockquote{margin:0;font-size:15px;line-height:1.55;color:var(--ink);flex:1;
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:7;line-clamp:7;overflow:hidden}
+.rvc blockquote::before{content:"“"}
+.rvc blockquote::after{content:"”"}
+.rvc figcaption{margin-top:12px;font-size:13.5px;line-height:1.4}
+.rvc figcaption b{display:block}
+.rvc figcaption span{display:block;color:var(--ink-3)}
+.rv-more{display:inline-block;margin-top:12px;font-size:14px;font-weight:700;color:var(--accent-ink)}
+
 /* ── gallery ────────────────────────────────────────────────────────────── */
 .gallery{padding-block:34px 6px}
 .sec-k{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
@@ -292,6 +319,9 @@ footer{background:var(--foot-bg);color:var(--ink-2);padding-block:42px 26px;marg
 
   .done{padding-block:56px 20px}
   .gallery{padding-block:56px 10px}
+  .reviews{padding-block:56px 4px}
+  .rv-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible;margin-inline:0;padding-inline:0}
+  .rvc{width:auto}
   .shots{grid-template-columns:repeat(4,1fr);gap:10px}
   .f-grid{grid-template-columns:1.3fr 1fr 1fr 1fr;gap:28px}
   .f-grid > :first-child{grid-column:auto}

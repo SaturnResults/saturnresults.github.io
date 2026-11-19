@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="builder.css?v=1d3abf46">
+<link rel="stylesheet" href="builder.css?v=d2a2271c">
 </head>
 <body data-pane="edit">
 
@@ -34,13 +34,23 @@
 <!-- ── edit ─────────────────────────────────────────────────────────────── -->
 <section class="pane pane-edit" id="pane-edit" aria-label="Edit">
   <div class="card quick">
-    <div class="card-h"><h2>Quick fill</h2><span class="hint">Optional, saves typing</span></div>
-    <p class="help">On their Fresha, Treatwell or Booksy page, open every treatment category, then select all (<kbd>⌘A</kbd>), copy (<kbd>⌘C</kbd>) and paste below. On a phone, paste a treatment list in any shape, one per line: <i>Sports massage, 60 min, £55</i>.</p>
-    <textarea id="qf-text" rows="4" placeholder="Paste their listing page here"></textarea>
+    <div class="card-h"><h2>Start here</h2><span class="hint">Two links, one tap</span></div>
+    <label class="fld"><span>Their booking listing <b>*</b></span><input data-k="listing" inputmode="url" autocomplete="off" spellcheck="false" placeholder="fresha.com/a/… · treatwell.co.uk/place/… · booksy.com/…"></label>
+    <label class="fld"><span>Their website</span><input data-k="website" inputmode="url" autocomplete="off" spellcheck="false" placeholder="theirclinic.co.uk, for the logo, photos and colours"></label>
     <div class="row">
-      <button class="btn btn-p" id="qf-go" type="button">Fill in from this</button>
-      <span class="qf-out" id="qf-out" role="status"></span>
+      <button class="btn btn-p" id="find-go" type="button">Build it from these</button>
+      <span class="qf-out" id="find-out" role="status"></span>
     </div>
+    <ol class="log steps" id="find-log" aria-live="polite"></ol>
+    <details class="paste">
+      <summary>Or paste the page instead</summary>
+      <p class="help">If a link won’t open, open their listing, expand every treatment category, select all (<kbd>⌘A</kbd>), copy (<kbd>⌘C</kbd>) and paste here. A plain list works too, one per line: <i>Sports massage, 60 min, £55</i>.</p>
+      <textarea id="qf-text" rows="4" placeholder="Paste their listing page here"></textarea>
+      <div class="row">
+        <button class="btn" id="qf-go" type="button">Fill in from this</button>
+        <span class="qf-out" id="qf-out" role="status"></span>
+      </div>
+    </details>
   </div>
 
   <div class="card">
@@ -49,11 +59,9 @@
       <label class="fld span2"><span>Clinic name <b>*</b></span><input data-k="name" autocomplete="off" placeholder="As it appears on their listing"></label>
       <label class="fld"><span>Owner’s first name</span><input data-k="owner" autocomplete="off" placeholder="For the intro and WhatsApp"></label>
       <label class="fld"><span>Phone</span><input data-k="phone" inputmode="tel" autocomplete="off" placeholder="07…"></label>
-      <label class="fld"><span>Website</span><input data-k="website" inputmode="url" autocomplete="off" placeholder="theirclinic.co.uk"></label>
-      <label class="fld"><span>Email</span><input data-k="email" inputmode="email" autocomplete="off"></label>
+      <label class="fld span2"><span>Email</span><input data-k="email" inputmode="email" autocomplete="off"></label>
       <label class="fld span2"><span>Address</span><input data-k="address" autocomplete="off" placeholder="Street, area, postcode"></label>
-      <label class="fld"><span>Area for the trust strip</span><input data-k="area" id="area" autocomplete="off"></label>
-      <label class="fld"><span>Booking listing link</span><input data-k="listing" inputmode="url" autocomplete="off" placeholder="fresha.com/a/…"></label>
+      <label class="fld span2"><span>Area for the trust strip</span><input data-k="area" id="area" autocomplete="off"></label>
       <label class="fld span2"><span>One line about them, from their own site</span><input data-k="about" autocomplete="off" placeholder="Shown in the footer. Leave blank rather than invent one."></label>
     </div>
   </div>
@@ -65,6 +73,13 @@
       <label class="fld"><span>Number of reviews</span><input data-k="reviews" inputmode="numeric" autocomplete="off" placeholder="110"></label>
       <label class="fld span2"><span>Registrations or accreditations</span><input data-k="accreditations" autocomplete="off" placeholder="CNHC registered; Member of the CMA"><em>Separate with a semicolon</em></label>
     </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h2>Reviews</h2><span class="hint" id="rv-count">Real ones only, shown under the booking</span></div>
+    <label class="fld"><span>Where they’re from</span><input data-k="reviewSource" autocomplete="off" placeholder="Treatwell, Google…"></label>
+    <div id="revs"></div>
+    <div class="row"><button class="btn" id="add-review" type="button">Add a review</button></div>
   </div>
 
   <div class="card">
@@ -99,6 +114,7 @@
           <em>No logo? The name is set as a wordmark in their heading font.</em>
         </div>
       </div>
+      <div class="found" id="logo-found" hidden><span>Other logos found, tap to use:</span><div class="found-row" id="logo-alts"></div></div>
     </div>
     <div class="grid2">
       <label class="fld"><span>Brand colour</span>
@@ -128,6 +144,7 @@
   <div class="card">
     <div class="card-h"><h2>Photos</h2><span class="hint">Their own, from their site, listing or Instagram</span></div>
     <div class="shots" id="shots"></div>
+    <div class="found" id="photo-found" hidden><span>Also found on their pages, tap to add:</span><div class="found-row" id="photo-alts"></div></div>
     <div class="row">
       <label class="btn">Upload photos<input type="file" id="photo-file" accept="image/*" multiple hidden></label>
       <button class="btn" id="photo-url" type="button">Add by link</button>
@@ -158,6 +175,10 @@
 <!-- ── preview ──────────────────────────────────────────────────────────── -->
 <section class="pane pane-preview" id="pane-preview" aria-label="Preview">
   <div class="pv-bar">
+    <div class="seg small" id="view-seg" role="radiogroup" aria-label="Which page">
+      <button type="button" data-v="page" role="radio">Booking</button>
+      <button type="button" data-v="dash" role="radio">Dashboard</button>
+    </div>
     <div class="seg small" id="dev-seg" role="radiogroup" aria-label="Preview width">
       <button type="button" data-v="phone" role="radio">Phone</button>
       <button type="button" data-v="desktop" role="radio">Desktop</button>
@@ -234,8 +255,9 @@
 
 <div class="toast" id="toast" role="status" hidden></div>
 
-<script src="parse.js?v=bd011439"></script>
-<script src="generate.js?v=1d9780c8"></script>
-<script src="builder.js?v=7a401214"></script>
+<script src="parse.js?v=568ffddd"></script>
+<script src="find.js?v=32e73342"></script>
+<script src="generate.js?v=5eb93b88"></script>
+<script src="builder.js?v=4e2b0b54"></script>
 </body>
 </html>

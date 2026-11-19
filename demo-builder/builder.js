@@ -8,7 +8,7 @@
    ─────────────────────────────────────────────────────────────────────────── */
 (function () {
   'use strict';
-  var G = window.SRGen, P = window.SRParse;
+  var G = window.SRGen, P = window.SRParse, F = window.SRFind;
   var SITE = G.SITE;
   var $ = function (id) { return document.getElementById(id); };
   var el = function (t, c, h) { var e = document.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; };
@@ -93,6 +93,7 @@
       logo: null, photos: [],
       copy: { intro: '', reassure: D.reassure, note: '' },
       links: { instagram: '', facebook: '', tiktok: '', privacy: '', terms: '' },
+      reviewList: [], reviewSource: '', listed: null, found: { logos: [], photos: [] },
       wa: '', published: null, updated: Date.now()
     };
   };
@@ -107,9 +108,9 @@
 
   var tpl = null;
   var loadTemplates = function () {
-    return Promise.all(['template/demo.css', 'template/demo.js'].map(function (u) {
+    return Promise.all(['template/demo.css', 'template/demo.js', 'template/dash.css', 'template/dash.js'].map(function (u) {
       return fetch(u, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error(u); return r.text(); });
-    })).then(function (x) { tpl = { css: x[0], js: x[1] }; });
+    })).then(function (x) { tpl = { css: x[0], js: x[1], dcss: x[2], djs: x[3] }; });
   };
 
   /* ── changes ──────────────────────────────────────────────────────────── */
@@ -456,23 +457,36 @@
     });
   };
 
-  /* try to take a copy so the demo doesn't depend on their site staying up;
-     if their server won't allow it, link to it instead */
+  /* take a copy so the demo doesn't depend on their site staying up: their
+     server if it allows it, the image proxy if not */
+  var importImage = function (u, kind) {
+    u = G.url(u);
+    return F.blobOf(u, kind).then(function (b) { return readImage(b, kind); })
+      .then(function (img) { img.from = u; return img; });
+  };
+  /* a link typed by hand: if no copy can be made at all, link to it */
   var imageFromUrl = function (u, kind) {
     u = G.url(u);
-    return fetch(u, { mode: 'cors' }).then(function (r) {
-      if (!r.ok) throw new Error(r.status);
-      return r.blob();
-    }).then(function (b) {
-      if (!/^image\//.test(b.type)) throw new Error('not an image');
-      return readImage(b, kind);
-    }).catch(function () {
+    return importImage(u, kind).catch(function () {
       return loadImg(u).then(function (i) {
         toast('Couldn’t copy that image, so the demo links to it on their site instead', 4500);
         return { src: u, ext: (u.split('?')[0].match(/\.(jpe?g|png|webp|gif|svg|avif)$/i) || [0, 'jpg'])[1].toLowerCase().replace('jpeg', 'jpg'),
-          w: i.naturalWidth, h: i.naturalHeight, remote: true };
+          w: i.naturalWidth, h: i.naturalHeight, remote: true, from: u };
       });
     });
+  };
+
+  /* their logo sets the brand colour when none has been chosen, and a white
+     logo needs a dark header to be seen at all */
+  var brandFromLogo = function (img) {
+    return loadImg(img.src).then(function (i) {
+      var pal = F.paletteOf(i), got = [];
+      if (!pal) return got;
+      var isDefault = !cfg.brand.accent || cfg.brand.accent.toUpperCase() === G.DEFAULTS.accent;
+      if (pal.accent && isDefault) { cfg.brand.accent = pal.accent; got.push('brand colour'); }
+      if (pal.whiteOnClear && cfg.brand.hero === 'light') { cfg.brand.hero = pal.accent ? 'brand' : 'dark'; got.push('a darker header for their white logo'); }
+      return got;
+    }, function () { return []; });
   };
 
   var paintLogo = function () {
@@ -481,7 +495,13 @@
     $('logo-x').hidden = !cfg.logo;
   };
   var setLogo = function (p) {
-    p.then(function (img) { cfg.logo = img; paintLogo(); changed(); }, function () { toast('That image couldn’t be read'); });
+    p.then(function (img) {
+      cfg.logo = img; paintLogo(); paintFound();
+      return brandFromLogo(img).then(function (got) {
+        if (got.length) { fillFields(); paintSeg('hero-seg', cfg.brand.hero); toast('Took ' + got.join(' and ') + ' from the logo'); }
+        changed();
+      });
+    }, function () { toast('That image couldn’t be read'); });
   };
   $('logo-file').onchange = function () { if (this.files[0]) setLogo(readImage(this.files[0], 'logo')); this.value = ''; };
   $('logo-url').onclick = function () {
@@ -537,30 +557,48 @@
     });
   });
 
-  /* ── quick fill ───────────────────────────────────────────────────────── */
+  /* ── what was found ───────────────────────────────────────────────────── */
+
+  /* fills the gaps from a parsed listing; never overwrites what's been typed */
+  var applyListing = function (r, ask) {
+    var got = [];
+    ['name', 'rating', 'reviews', 'phone', 'email', 'address', 'area'].forEach(function (k) {
+      if (r[k] && !String(cfg[k] || '').trim()) { cfg[k] = r[k]; got.push(k === 'reviews' ? 'review count' : k); }
+    });
+    if (got.indexOf('name') >= 0 && !cfg.slugEdited) { cfg.slug = G.slugify(cfg.name); checkExists(); }
+    if (r.hours && (cfg.hoursAssumed || !cfg.hours.some(function (h) { return h; }))) { cfg.hours = r.hours; cfg.hoursAssumed = false; got.push('opening hours'); }
+    if (r.team && r.team.length && !cfg.team.filter(function (p) { return p.name; }).length) {
+      cfg.team = r.team.map(function (p) { return { name: p.name, role: p.role, cats: [] }; });
+      got.push(r.team.length + ' practitioner' + (r.team.length > 1 ? 's' : ''));
+    }
+    if (r.treatments && r.treatments.length) {
+      var have = cfg.treatments.filter(function (t) { return t.name; }).length;
+      var rows = r.treatments.map(function (t) { return Object.assign({ id: uid() }, t); });
+      if (!have || (ask && confirm('Replace your ' + have + ' treatments with the ' + rows.length + ' found?\n\nCancel adds them to the end instead.'))) cfg.treatments = rows;
+      else if (ask) cfg.treatments = cfg.treatments.concat(rows);
+      var cats = catList().length;
+      if (!have || ask) got.unshift(rows.length + ' treatment' + (rows.length > 1 ? 's' : '') + (cats > 1 ? ' in ' + cats + ' categories' : ''));
+    }
+    if (r.listed) cfg.listed = r.listed;
+    if (r.platform && !cfg.reviewSource) cfg.reviewSource = r.platform;
+    if (r.reviewList && r.reviewList.length && !cfg.reviewList.length) {
+      cfg.reviewList = r.reviewList.map(function (x) { return Object.assign({ id: uid() }, x); });
+      got.push(r.reviewList.length + ' review' + (r.reviewList.length > 1 ? 's' : ''));
+    }
+    return got;
+  };
+  var repaintAll = function () {
+    fillFields(); paintSeg('hero-seg', cfg.brand.hero || 'light');
+    paintTreatments(); paintTeam(); paintHours(); paintReviews(); paintLogo(); paintPhotos(); paintFound(); paintFonts();
+  };
 
   $('qf-go').onclick = function () {
     var text = $('qf-text').value, out = $('qf-out');
     if (!text.trim()) { out.className = 'qf-out bad'; out.textContent = 'Paste something first'; return; }
-    var r = P.quickFill(text), got = [];
-    ['name', 'rating', 'reviews', 'phone', 'email', 'address', 'area'].forEach(function (k) {
-      if (r[k] && !String(cfg[k] || '').trim()) { cfg[k] = r[k]; got.push(k === 'reviews' ? 'review count' : k); }
-    });
-    if (got.indexOf('name') >= 0 && !cfg.slugEdited) cfg.slug = G.slugify(cfg.name);
-    if (r.hours && (cfg.hoursAssumed || !cfg.hours.some(function (h) { return h; }))) { cfg.hours = r.hours; cfg.hoursAssumed = false; got.push('opening hours'); }
-    if (r.team.length && !cfg.team.filter(function (p) { return p.name; }).length) {
-      cfg.team = r.team.map(function (p) { return { name: p.name, role: p.role, cats: [] }; });
-      got.push(r.team.length + ' practitioner' + (r.team.length > 1 ? 's' : ''));
-    }
-    if (r.treatments.length) {
-      var have = cfg.treatments.filter(function (t) { return t.name; }).length;
-      var rows = r.treatments.map(function (t) { return Object.assign({ id: uid() }, t); });
-      if (!have || confirm('Replace your ' + have + ' treatments with the ' + rows.length + ' found?\n\nCancel adds them to the end instead.')) cfg.treatments = rows;
-      else cfg.treatments = cfg.treatments.concat(rows);
-      var cats = catList().length;
-      got.unshift(rows.length + ' treatment' + (rows.length > 1 ? 's' : '') + (cats > 1 ? ' in ' + cats + ' categories' : ''));
-    }
-    fillFields(); paintTreatments(); paintTeam(); paintHours(); changed(); checkExists();
+    var r = P.quickFill(text);
+    if (!r.platform) r.platform = F.platformOf(cfg.listing);
+    var got = applyListing(r, true);
+    repaintAll(); changed();
     if (got.length) {
       out.className = 'qf-out ok';
       out.textContent = 'Found ' + got.join(', ') + '. Check them against the listing.';
@@ -568,8 +606,194 @@
       out.className = 'qf-out bad';
       out.textContent = 'Nothing recognisable. Try copying just the treatments section.';
     }
-    if (r.treatments.length && r.treatments.every(function (t) { return t.cat === 'Treatments'; }) && /treatwell/i.test(text))
-      toast('Treatwell hides treatments inside closed categories. Open each one before copying to get them all.', 6000);
+    if (r.listed && r.treatments.length < r.listed)
+      toast('Their listing has ' + r.listed + ' treatments but only ' + r.treatments.length + ' were open when copied. Open the rest and paste again to add them.', 7000);
+  };
+
+  /* ── build from links ─────────────────────────────────────────────────── */
+
+  var finding = false;
+  var firstThat = function (list, fn) {
+    return list.reduce(function (p, x) { return p.catch(function () { return fn(x); }); }, Promise.reject());
+  };
+  var goodPhoto = function (img) {
+    var a = img.w / img.h;
+    return Math.max(img.w, img.h) >= 500 && a < 2.8 && a > 0.35;
+  };
+
+  $('find-go').onclick = function () {
+    if (finding) return;
+    var L = G.url(cfg.listing), W = G.url(cfg.website);
+    if (!L && !W) { toast('Paste their listing link first'); document.querySelector('[data-k=listing]').focus(); return; }
+    finding = true;
+    $('find-go').disabled = true;
+    $('find-log').innerHTML = ''; $('find-out').textContent = '';
+    var step = function (msg) {
+      var li = el('li', 'wait', esc(msg)); $('find-log').appendChild(li);
+      return {
+        ok: function (m) { li.className = 'ok'; li.textContent = m; },
+        bad: function (m) { li.className = 'bad'; li.textContent = m; },
+        say: function (m) { li.className = ''; li.textContent = m; }
+      };
+    };
+    var photoUrls = [], logoUrls = [], themeHex = '';
+
+    var p = Promise.resolve();
+    if (L) p = p.then(function () {
+      var s = step('Reading ' + (F.platformOf(L) || 'their listing') + '…');
+      return F.listing(L).then(function (r) {
+        var got = applyListing(r, false);
+        photoUrls = photoUrls.concat(r.photos || []);
+        repaintAll(); changed();
+        s.ok((F.platformOf(L) || 'Listing') + ': ' + (got.length ? got.join(', ') : 'nothing new'));
+        if (r.listed && r.treatments.length < r.listed)
+          step('').say('Their listing has ' + r.listed + ' treatments but only shows ' + r.treatments.length + ' until a category is opened. Paste the rest below if you need them.');
+        if (!r.treatments.length) step('').bad('No treatments came through. Use “Or paste the page instead” below.');
+      }, function (e) { s.bad('Couldn’t read the listing (' + e.message + '). Use “Or paste the page instead” below.'); });
+    });
+    if (W) p = p.then(function () {
+      var s = step('Reading their website…');
+      return F.website(W, cfg.name).then(function (w) {
+        var got = [];
+        logoUrls = w.logos;
+        photoUrls = photoUrls.concat(w.photos);
+        themeHex = w.theme;
+        ['instagram', 'facebook', 'tiktok', 'privacy', 'terms'].forEach(function (k) {
+          if (w.links[k] && !cfg.links[k]) { cfg.links[k] = w.links[k]; got.push(k === 'privacy' || k === 'terms' ? k + ' link' : k); }
+        });
+        if (w.email && !cfg.email) { cfg.email = w.email; got.push('email'); }
+        if (w.phone && !cfg.phone) { cfg.phone = w.phone; got.push('phone'); }
+        var defFonts = cfg.brand.head === G.DEFAULTS.head && cfg.brand.body === G.DEFAULTS.body;
+        if (w.fonts.length && defFonts) {
+          var serif = w.fonts.filter(function (f) { return /serif|garamond|playfair|lora|fraunces|baskerville|cormorant|cinzel|marcellus|gloock|prata|bodoni/i.test(f) && !/sans/i.test(f); })[0];
+          cfg.brand.head = serif || w.fonts[0];
+          cfg.brand.body = w.fonts.filter(function (f) { return f !== cfg.brand.head; })[0] || w.fonts[0];
+          got.push('their fonts');
+          checkFontSoon();
+        }
+        repaintAll(); changed();
+        s.ok('Website: ' + (got.length ? got.join(', ') : 'read') + (w.logos.length ? '' : ', no logo marked as one'));
+      }, function (e) { s.bad('Couldn’t read their website (' + e.message + ')'); });
+    });
+    p = p.then(function () {
+      cfg.found.logos = logoUrls.slice();
+      if (cfg.logo) return;
+      if (!logoUrls.length) { step('').say('No logo found, so the name is set as a wordmark in their font'); return; }
+      var s = step('Getting their logo…');
+      return firstThat(logoUrls, function (u) {
+        return importImage(u, 'logo').then(function (img) { if (img.w < 40 || img.h < 16) throw new Error('tiny'); return img; });
+      }).then(function (img) {
+        cfg.logo = img;
+        return brandFromLogo(img).then(function (got) { s.ok('Logo' + (got.length ? ', and ' + got.join(' and ') + ' from it' : '')); });
+      }, function () { s.bad('Found a logo but couldn’t load it'); });
+    });
+    p = p.then(function () {
+      var isDefault = !cfg.brand.accent || cfg.brand.accent.toUpperCase() === G.DEFAULTS.accent;
+      if (isDefault && themeHex && G.rgb(themeHex)) {
+        var c = G.rgb(themeHex), mx = Math.max.apply(null, c), mn = Math.min.apply(null, c);
+        if (mx - mn > 40) { cfg.brand.accent = themeHex.toUpperCase(); step('').ok('Brand colour from their site'); }
+      }
+      var want = Math.max(0, 8 - cfg.photos.length), used = {};
+      cfg.photos.forEach(function (ph) { if (ph.from) used[ph.from] = 1; });
+      var todo = photoUrls.filter(function (u) { return !used[G.url(u)]; });
+      if (!want || !todo.length) { cfg.found.photos = todo; if (!todo.length && !cfg.photos.length) step('').say('No photos found, so the gallery is left out'); return; }
+      var s = step('Getting photos…'), added = 0, i = 0;
+      var next = function () {
+        if (added >= want || i >= todo.length) return Promise.resolve();
+        var u = todo[i++];
+        return importImage(u, 'photo').then(function (img) {
+          if (!goodPhoto(img)) return;
+          img.id = uid(); cfg.photos.push(img); added++; paintPhotos();
+        }, function () {}).then(next);
+      };
+      return next().then(function () {
+        cfg.found.photos = todo.slice(i);
+        if (added) s.ok(added + ' photo' + (added > 1 ? 's' : '') + (cfg.found.photos.length ? ', ' + cfg.found.photos.length + ' more to choose from' : ''));
+        else s.bad('Photos were found but none were big enough to use');
+      });
+    });
+    p.then(function () {
+      finding = false; $('find-go').disabled = false;
+      repaintAll(); changed(); lastHtml = '';
+      $('find-out').className = 'qf-out ok';
+      $('find-out').textContent = 'Done. Check it against their listing.';
+    });
+  };
+
+  /* ── the trays of other logos and photos found ────────────────────────── */
+
+  var paintFound = function () {
+    var f = cfg.found || { logos: [], photos: [] };
+    var cur = cfg.logo && cfg.logo.from;
+    var logos = (f.logos || []).filter(function (u) { return G.url(u) !== cur; });
+    $('logo-found').hidden = !logos.length;
+    $('logo-alts').innerHTML = '';
+    logos.forEach(function (u) {
+      var b = el('button', 'alt logo', '<img alt="" loading="lazy" src="' + esc(u) + '">'); b.type = 'button';
+      b.title = 'Use this as the logo';
+      b.onclick = function () { b.disabled = true; setLogo(importImage(u, 'logo')); };
+      $('logo-alts').appendChild(b);
+    });
+    var photos = f.photos || [];
+    $('photo-found').hidden = !photos.length;
+    $('photo-alts').innerHTML = '';
+    photos.forEach(function (u) {
+      var b = el('button', 'alt', '<img alt="" loading="lazy" src="' + esc(F.thumb(u)) + '">'); b.type = 'button';
+      b.title = 'Add this photo';
+      b.onclick = function () {
+        b.disabled = true;
+        importImage(u, 'photo').then(function (img) {
+          img.id = uid(); cfg.photos.push(img);
+          cfg.found.photos = cfg.found.photos.filter(function (x) { return x !== u; });
+          paintPhotos(); paintFound(); changed();
+        }, function () { b.remove(); toast('That one wouldn’t load'); });
+      };
+      $('photo-alts').appendChild(b);
+    });
+  };
+
+  /* ── reviews ──────────────────────────────────────────────────────────── */
+
+  var paintReviews = function () {
+    var box = $('revs');
+    box.innerHTML = '';
+    $('rv-count').textContent = cfg.reviewList.length ? cfg.reviewList.length + ' shown under the booking' : 'Real ones only, shown under the booking';
+    cfg.reviewList.forEach(function (r) {
+      var w = el('div', 'rv');
+      var l = el('div', 'rv-l');
+      var inp = function (key, ph, label) {
+        var i = el('input'); i.value = r[key] || ''; i.placeholder = ph; i.setAttribute('aria-label', label);
+        i.oninput = function () { r[key] = i.value; changed(); };
+        return i;
+      };
+      l.appendChild(inp('name', 'Name, as shown', 'Reviewer name'));
+      l.appendChild(inp('when', 'Month and year', 'When'));
+      var x = el('button', 'more', '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>');
+      x.type = 'button'; x.setAttribute('aria-label', 'Remove review');
+      x.onclick = function () { cfg.reviewList = cfg.reviewList.filter(function (q) { return q !== r; }); paintReviews(); changed(); };
+      l.appendChild(x);
+      w.appendChild(l);
+      var t = el('textarea'); t.rows = 2; t.value = r.text || ''; t.placeholder = 'Their words, exactly'; t.setAttribute('aria-label', 'Review text');
+      t.oninput = function () { r.text = t.value; changed(); };
+      w.appendChild(t);
+      var m = el('div', 'rv-m');
+      m.appendChild(inp('treatment', 'Treatment (optional)', 'Treatment'));
+      var sel = el('select'); sel.setAttribute('aria-label', 'Stars');
+      [['', 'No stars'], ['5', '★★★★★'], ['4', '★★★★'], ['3', '★★★'], ['2', '★★'], ['1', '★']].forEach(function (o) {
+        var op = el('option', '', o[1]); op.value = o[0]; op.selected = String(r.rating || '') === o[0]; sel.appendChild(op);
+      });
+      sel.onchange = function () { r.rating = sel.value ? +sel.value : null; changed(); };
+      m.appendChild(sel);
+      w.appendChild(m);
+      box.appendChild(w);
+    });
+  };
+  $('add-review').onclick = function () {
+    cfg.reviewList.push({ id: uid(), name: '', text: '', when: '', treatment: '', rating: null });
+    paintReviews();
+    var ts = $('revs').querySelectorAll('.rv-l input');
+    if (ts.length) ts[ts.length - 2].focus();
+    changed();
   };
 
   /* ── preview ──────────────────────────────────────────────────────────── */
@@ -605,7 +829,7 @@
   var sourceOf = function (refs) {
     var s = {};
     Object.keys(cfg).forEach(function (k) {
-      if (['treatments', 'id', 'wa', 'logo', 'photos'].indexOf(k) < 0) s[k] = cfg[k];
+      if (['treatments', 'id', 'wa', 'logo', 'photos', 'found'].indexOf(k) < 0) s[k] = cfg[k];
     });
     s = JSON.parse(JSON.stringify(s));
     var real = function (r) { return r && !/^(data|blob):/.test(r) ? r : null; };
@@ -614,17 +838,40 @@
     return s;
   };
 
-  var lastHtml = '';
+  var dashHtml = function (refs, extra) {
+    var up = function (r) { return !r || /^(https?|data|blob):/.test(r) ? r : '../' + r; };
+    return G.buildDash(cfg, { logo: up(refs.logo), photos: (refs.photos || []).map(up), og: refs.og }, tpl, extra || {});
+  };
+
+  var view = 'page', lastHtml = '';
+  var setView = function (v) {
+    view = v; paintSeg('view-seg', v); lastHtml = ''; renderPreview();
+  };
+  $('view-seg').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) setView(b.dataset.v); });
+
   var renderPreview = function () {
     if (!tpl) return;
-    var h = html('preview');
+    var h = view === 'dash' ? dashHtml(refsFor('preview')) : html('preview');
     if (h === lastHtml) return;
+    var same = lastHtml.slice(0, 40) === h.slice(0, 40) && (lastHtml.indexOf('id="dash"') >= 0) === (h.indexOf('id="dash"') >= 0);
     lastHtml = h;
     var f = $('pv'), y = 0;
-    try { y = f.contentWindow.scrollY || 0; } catch (e) {}
-    f.onload = function () { try { f.contentWindow.scrollTo(0, y); } catch (e) {} };
+    try { if (same) y = f.contentWindow.scrollY || 0; } catch (e) {}
+    f.onload = function () {
+      try {
+        f.contentWindow.scrollTo(0, y);
+        /* the page's links to the dashboard and back switch the preview */
+        f.contentDocument.addEventListener('click', function (e) {
+          var a = e.target.closest && e.target.closest('a');
+          if (!a) return;
+          var href = a.getAttribute('href') || '';
+          if (/^dashboard\/?$/.test(href)) { e.preventDefault(); setView('dash'); }
+          else if (/^\.\.\/?(#.*)?$/.test(href)) { e.preventDefault(); setView('page'); }
+        }, true);
+      } catch (e) {}
+    };
     f.srcdoc = h;
-    $('pv-url').textContent = liveUrl(true);
+    $('pv-url').textContent = liveUrl(true) + (view === 'dash' ? 'dashboard/' : '');
   };
 
   var sizeFrame = function () {
@@ -680,7 +927,8 @@
     var hi = cfg.owner && cfg.owner.trim() ? 'Hi ' + cfg.owner.trim().split(' ')[0] : 'Hi';
     return hi + ', it’s ' + (settings.sender || 'Harry') + ' from Saturn Results. Here’s the booking page I built for ' +
       (cfg.name.trim() || 'you') + ': ' + liveUrl(true) + '\n\n' +
-      'Have a go at booking something, it takes under a minute. Let me know what you think!';
+      'Have a go at booking something, it takes under a minute. Then have a look at the dashboard you’d run it all from: ' +
+      liveUrl(true) + 'dashboard/\n\nLet me know what you think!';
   };
   var waNumber = function () {
     var d = String(cfg.phone || '').replace(/[^\d+]/g, '');
@@ -812,6 +1060,7 @@
       refs.og = abs(refs.photos[0]) || abs(refs.logo);
       var page = G.build(cfg, refs, tpl, { buildId: buildId, url: liveUrl(), source: sourceOf(refs) });
       files.push({ path: base + 'index.html', b64: b64text(page) });
+      files.push({ path: base + 'dashboard/index.html', b64: b64text(dashHtml(refs, { buildId: buildId, url: liveUrl() + 'dashboard/' })) });
       step.textContent = 'Reading the site';
 
       var head, tree;
@@ -955,7 +1204,10 @@
     try { localStorage.setItem('srdb.current', cfg.id); } catch (e) {}
     openRows = {}; lastHtml = '';
     fillFields(); paintSeg('hero-seg', cfg.brand.hero || 'light');
-    paintTreatments(); paintTeam(); paintHours(); paintLogo(); paintPhotos(); paintFonts(); paintHints();
+    if (!cfg.reviewList) cfg.reviewList = [];
+    cfg.found = Object.assign({ logos: [], photos: [] }, cfg.found || {});
+    paintTreatments(); paintTeam(); paintHours(); paintReviews(); paintLogo(); paintPhotos(); paintFound(); paintFonts(); paintHints();
+    $('find-log').innerHTML = ''; $('find-out').textContent = '';
     $('log').innerHTML = ''; $('live').hidden = !cfg.published;
     if (cfg.published) { $('live-a').href = liveUrl(); $('live-a').textContent = liveUrl(true); }
     $('qf-out').textContent = '';
@@ -1029,6 +1281,7 @@
   bindFields();
   document.body.dataset.dev = settings.dev || 'phone';
   paintSeg('dev-seg', document.body.dataset.dev);
+  paintSeg('view-seg', 'page');
 
   loadTemplates().then(function () {
     return allDrafts();

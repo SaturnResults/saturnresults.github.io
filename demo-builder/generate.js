@@ -78,6 +78,8 @@
       'good': '#1E6B44', 'good-wash': '#E5F2EA', 'bad': '#B42318',
       'flag': '#8A5A00', 'flag-wash': '#FCF4E4', 'flag-line': '#EBD9AE',
       'star': '#E39B0B', 'foot-bg': mix(paper, accent, 0.05),
+      /* chart marks must hold 3:1 against the white card they sit on */
+      'bar': readable(accent, '#FFFFFF', 3), 'bar-soft': mix(readable(accent, '#FFFFFF', 3), '#FFFFFF', 0.45),
       'lift': '0 1px 2px rgba(22,25,29,.05), 0 10px 28px -14px rgba(22,25,29,.2)'
     };
     var hero = brand.hero || 'light';
@@ -218,29 +220,19 @@
 
   /* ── the page ─────────────────────────────────────────────────────────── */
 
-  /* refs: where each image will be served from — { logo, photos[], og } */
-  var build = function (cfg, refs, tpl, opts) {
-    opts = opts || {};
-    refs = refs || { logo: null, photos: [] };
+  /* what the booking page and the dashboard share: palette, type, mark,
+     the treatment rows and the config their scripts read */
+  var shared = function (cfg, refs, cssText, opts) {
     var brand = cfg.brand || {};
     var tk = tokens({ accent: brand.accent, paper: brand.paper, hero: brand.hero });
     var spec = cfg.fontSpec || {};
     var head = (brand.head || '').trim(), body = (brand.body || '').trim();
     var name = (cfg.name || '').trim() || 'Your clinic';
-    var site = url(cfg.website);
-    var ar = area(cfg);
     var team = (cfg.team || []).filter(function (p) { return p.name && p.name.trim(); });
-    var photos = (refs.photos || []).filter(Boolean);
-    var year = new Date().getFullYear();
-    var intro = (cfg.copy && cfg.copy.intro || '').trim() || autoIntro(cfg);
-    var reassure = (cfg.copy && cfg.copy.reassure || '').trim() || DEFAULTS.reassure;
-    var note = (cfg.copy && cfg.copy.note || '').trim();
-    var hrs = hoursOf(cfg);
-    var what = catsPhrase(cfg);
 
     var vars = Object.keys(tk).map(function (k) { return '--' + k + ':' + tk[k]; });
     vars.push('--display:' + stack(head, true), '--ui:' + stack(body), '--display-w:' + (head ? displayWeight(spec[head]) : 600));
-    var css = ':root{' + vars.join(';') + ';color-scheme:light}\n[hidden]{display:none!important}\n' + tpl.css;
+    var css = ':root{' + vars.join(';') + ';color-scheme:light}\n[hidden]{display:none!important}\n' + cssText;
 
     var fonts = [];
     [head, body].forEach(function (f) {
@@ -273,14 +265,47 @@
       if (t.note && t.note.trim()) o.note = t.note.trim();
       return o;
     });
+    var treatmentsScript = [
+      '<script>',
+      '/* Treatments, exactly as the clinic lists them. Change a price or a length',
+      '   here and save; nothing else needs touching. mins = minutes, price = £',
+      '   (null when not listed), from = shown as "from £…", was = the price before',
+      '   a discount, note = a condition shown with that treatment. */',
+      'var TREATMENTS = [',
+      rows.map(function (r) { return '  ' + json(r); }).join(',\n'),
+      '];',
+      '</script>'
+    ].join('\n');
 
     var runtime = {
       slug: cfg.slug || '', name: name, phone: (cfg.phone || '').trim(),
       hours: runtimeHours(cfg),
-      team: team.map(function (p) { return { name: p.name.trim(), role: (p.role || '').trim(), cats: p.cats || [] }; }),
-      note: note, reassure: reassure,
-      builder: opts.source || null
+      team: team.map(function (p) { return { name: p.name.trim(), role: (p.role || '').trim(), cats: p.cats || [] }; })
     };
+    return { tk: tk, name: name, team: team, css: css, fontLinks: fontLinks, favicon: favicon, mark: mark,
+      rows: rows, treatmentsScript: treatmentsScript, runtime: runtime };
+  };
+
+  /* refs: where each image will be served from — { logo, photos[], og } */
+  var build = function (cfg, refs, tpl, opts) {
+    opts = opts || {};
+    refs = refs || { logo: null, photos: [] };
+    var X = shared(cfg, refs, tpl.css, opts);
+    var tk = X.tk, name = X.name, team = X.team, css = X.css, fontLinks = X.fontLinks, favicon = X.favicon, mark = X.mark;
+    var site = url(cfg.website);
+    var ar = area(cfg);
+    var photos = (refs.photos || []).filter(Boolean);
+    var year = new Date().getFullYear();
+    var intro = (cfg.copy && cfg.copy.intro || '').trim() || autoIntro(cfg);
+    var reassure = (cfg.copy && cfg.copy.reassure || '').trim() || DEFAULTS.reassure;
+    var note = (cfg.copy && cfg.copy.note || '').trim();
+    var hrs = hoursOf(cfg);
+    var what = catsPhrase(cfg);
+    var reviews = (cfg.reviewList || []).filter(function (r) { return r.text && r.text.trim(); }).slice(0, 9);
+    var source = (cfg.reviewSource || '').trim();
+    var listing = url(cfg.listing);
+
+    var runtime = Object.assign(X.runtime, { note: note, reassure: reassure, builder: opts.source || null });
 
     /* ── trust strip ── */
     var trust = [];
@@ -320,15 +345,7 @@
       '<meta charset="utf-8">',
       '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">',
       '<title>Book · ' + esc(name) + '</title>',
-      '<script>',
-      '/* Treatments, exactly as the clinic lists them. Change a price or a length',
-      '   here and save; nothing else needs touching. mins = minutes, price = £',
-      '   (null when not listed), from = shown as "from £…", was = the price before',
-      '   a discount, note = a condition shown with that treatment. */',
-      'var TREATMENTS = [',
-      rows.map(function (r) { return '  ' + json(r); }).join(',\n'),
-      '];',
-      '</script>',
+      X.treatmentsScript,
       '<meta name="description" content="' + esc(desc) + '">',
       '<meta name="robots" content="noindex, nofollow">',
       '<meta name="demo-build" content="' + esc(opts.buildId || '') + '">',
@@ -347,6 +364,7 @@
       '  <a class="logo" href="' + esc(site || '#top') + '" aria-label="' + esc(name) + (site ? ' website' : '') + '">' + mark() + '</a>',
       '  <nav class="nav" aria-label="Main">',
       '    <a href="#book">Treatments</a>');
+    if (reviews.length) H.push('    <a href="#reviews">Reviews</a>');
     if (photos.length) H.push('    <a href="#gallery">Gallery</a>');
     H.push('    <a href="#find">Find us</a>',
       '  </nav>',
@@ -410,8 +428,31 @@
       '  </dl>',
       '  <div class="row"><button class="btn btn-p" id="again" type="button">Book another</button>' +
         (cfg.address ? '<a class="btn" href="' + esc(mapsHref(cfg)) + '" target="_blank" rel="noopener">Get directions</a>' : '') + '</div>',
+      '  <p class="owner">Showing this to the clinic? <a href="dashboard/">See this booking land in their dashboard</a></p>',
       '</div></div></section>',
       '');
+    if (reviews.length) {
+      var pct = Math.max(0, Math.min(100, (parseFloat(cfg.rating) || 0) / 5 * 100));
+      H.push('<section class="reviews" id="reviews"><div class="shell">',
+        '  <div class="rv-head">',
+        '    <div><span class="sec-k">Reviews</span><h2 class="sec-h">What clients say</h2></div>');
+      if (cfg.rating || cfg.reviews) {
+        H.push('    <p class="rv-score">' + (cfg.rating ? '<span class="stars5" role="img" aria-label="' + esc(cfg.rating) + ' out of 5"><span style="width:' + pct + '%"></span></span><b>' + esc(cfg.rating) + '</b>' : '') +
+          '<span>' + (cfg.reviews ? (cfg.rating ? 'from ' : '') + esc(cfg.reviews) + ' reviews' : 'rating') + (source ? ' on ' + esc(source) : '') + '</span></p>');
+      }
+      H.push('  </div>',
+        '  <div class="rv-list">',
+        reviews.map(function (r) {
+          var meta = [r.treatment, r.when].map(function (x) { return (x || '').trim(); }).filter(Boolean).join(' · ');
+          return '    <figure class="rvc">' +
+            (r.rating ? '<span class="stars5 sm" role="img" aria-label="' + r.rating + ' out of 5"><span style="width:' + (r.rating / 5 * 100) + '%"></span></span>' : '') +
+            '<blockquote>' + esc(r.text.trim()) + '</blockquote>' +
+            '<figcaption><b>' + esc((r.name || '').trim() || 'Anonymous') + '</b>' + (meta ? '<span>' + esc(meta) + '</span>' : '') + '</figcaption></figure>';
+        }).join('\n'),
+        '  </div>');
+      if (listing && source) H.push('  <a class="rv-more" href="' + esc(listing) + '" target="_blank" rel="noopener">Read ' + (cfg.reviews ? 'all ' + esc(cfg.reviews) + ' ' : 'more ') + 'reviews on ' + esc(source) + '</a>');
+      H.push('</div></section>', '');
+    }
     if (photos.length) {
       H.push('<section class="gallery" id="gallery"><div class="shell">',
         '  <span class="sec-k">The clinic</span>',
@@ -446,13 +487,67 @@
       '  </div>',
       '  <div class="f-bot"><span>&copy; ' + year + ' ' + esc(name) + '</span>' +
         (policy.length ? '<span class="sp">' + policy.map(function (p) { return '<a href="' + esc(p[1]) + '">' + p[0] + '</a>'; }).join('') + '</span>' : '') + '</div>',
-      '  <p class="demo">Design demo built by <a href="https://saturnresults.co.uk">Saturn Results</a> for ' + esc(name) + '. Times shown are examples; nothing is booked.</p>',
+      '  <p class="demo">Design demo built by <a href="https://saturnresults.co.uk">Saturn Results</a> for ' + esc(name) + '. Times shown are examples; nothing is booked. <a href="dashboard/">The clinic’s dashboard</a></p>',
       '</div></footer>',
       '',
       '<script type="application/json" id="demo-config">' + json(runtime) + '</script>',
       '<script>', tpl.js, '</script>',
       '</body>',
       '</html>', '');
+    return H.join('\n');
+  };
+
+  /* ── the dashboard ────────────────────────────────────────────────────── */
+
+  var buildDash = function (cfg, refs, tpl, opts) {
+    opts = opts || {};
+    refs = refs || { logo: null, photos: [] };
+    var X = shared(cfg, refs, tpl.dcss, opts);
+    var name = X.name, tk = X.tk;
+    var bookUrl = opts.url ? opts.url.replace(/dashboard\/?$/, '') : SITE + '/results/' + (cfg.slug || 'your-clinic') + '/';
+    var runtime = Object.assign(X.runtime, { owner: (cfg.owner || '').trim().split(' ')[0] });
+    var H = [
+      '<!doctype html>',
+      '<html lang="en-GB">',
+      '<head>',
+      '<meta charset="utf-8">',
+      '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">',
+      '<title>Dashboard · ' + esc(name) + '</title>',
+      X.treatmentsScript,
+      '<meta name="robots" content="noindex, nofollow">',
+      '<meta name="demo-build" content="' + esc(opts.buildId || '') + '">',
+      '<meta name="theme-color" content="' + tk['hero-bg'] + '">',
+      '<meta property="og:title" content="Dashboard · ' + esc(name) + '">',
+      '<meta property="og:description" content="Your bookings, takings and diary in one place.">'
+    ];
+    if (refs.og) H.push('<meta property="og:image" content="' + esc(refs.og) + '">');
+    H.push('<link rel="icon" href="' + X.favicon + '">');
+    if (X.fontLinks) H.push(X.fontLinks);
+    H.push('<style>', X.css, '</style>', '</head>', '<body id="dash">',
+      '<header class="dh"><div class="shell dh-in">',
+      '  <a class="logo" href="../" aria-label="' + esc(name) + ' booking page">' + X.mark() + '</a>',
+      '  <span class="dh-tag">Dashboard</span>',
+      '  <a class="dh-view" href="../">Booking page</a>',
+      '</div></header>',
+      '<div class="ribbon"><div class="shell">An example of the dashboard ' + esc(name) + ' would get. The clients and figures are made up from your real treatments and prices. <a href="../">Book something</a> and it lands here.</div></div>',
+      '<main class="shell dash">',
+      '  <section class="hello"><h1 id="hello">Good morning</h1><p id="today-line">&nbsp;</p></section>',
+      '  <div class="new" id="new" role="status" hidden></div>',
+      '  <section class="tiles" id="tiles" aria-label="At a glance"></section>',
+      '  <div class="grid">',
+      '    <section class="card diary" id="diary"><div class="card-h"><h2>Diary</h2></div><div class="days" id="days"></div><div class="agenda" id="agenda"></div><div class="cols" id="cols"></div></section>',
+      '    <section class="card"><div class="card-h"><h2>Latest bookings</h2><span>Texts go out for you</span></div><ol class="feed" id="feed"></ol></section>',
+      '    <section class="card"><div class="card-h"><h2 id="chart-t">Takings by week</h2><span>Last 8 weeks</span></div><div class="chart" id="chart"></div></section>',
+      '    <section class="card"><div class="card-h"><h2>Most booked</h2><span>Last 30 days</span></div><ol class="top" id="top"></ol></section>',
+      '    <section class="card link"><div class="card-h"><h2>Your booking link</h2></div>',
+      '      <div class="url"><code id="url">' + esc(bookUrl.replace(/^https?:\/\//, '')) + '</code><button class="btn" id="copy" type="button">Copy</button></div>',
+      '      <p>Put it in your Instagram bio, your Google profile and your WhatsApp status. Every booking lands here.</p></section>',
+      '  </div>',
+      '</main>',
+      '<footer class="dfoot"><div class="shell">Design demo built by <a href="https://saturnresults.co.uk">Saturn Results</a> for ' + esc(name) + '. Every client and figure on this page is an example; nothing is real.</div></footer>',
+      '<script type="application/json" id="demo-config">' + json(runtime) + '</script>',
+      '<script>', tpl.djs, '</script>',
+      '</body>', '</html>', '');
     return H.join('\n');
   };
 
@@ -469,6 +564,8 @@
     if (bad) g.push(['bad', bad + ' opening-hours day' + (bad > 1 ? 's' : '') + ' can’t be read']);
     if (cfg.hoursAssumed) g.push(['warn', 'Opening hours not found, so Mon–Sat 9am–6pm assumed']);
     if (!cfg.rating && !cfg.reviews) g.push(['info', 'Rating and review count left out']);
+    if (!(cfg.reviewList || []).filter(function (r) { return r.text; }).length) g.push(['info', 'No reviews, so the reviews section is left out']);
+    if (cfg.listed && t.length < cfg.listed) g.push(['warn', 'Their listing has ' + cfg.listed + ' treatments; ' + t.length + ' are in the demo']);
     if (!(cfg.accreditations || '').trim()) g.push(['info', 'No accreditations stated']);
     if (!cfg.logo) g.push(['info', 'No logo, so the name is set as a text wordmark']);
     if (!(cfg.photos || []).length) g.push(['info', 'No photos, so the gallery is left out']);
@@ -493,7 +590,7 @@
   };
 
   var api = {
-    SITE: SITE, DEFAULTS: DEFAULTS, build: build, tokens: tokens, gaps: gaps, slugify: slugify,
+    SITE: SITE, DEFAULTS: DEFAULTS, build: build, buildDash: buildDash, tokens: tokens, gaps: gaps, slugify: slugify,
     autoIntro: autoIntro, area: area, fontHref: fontHref, url: url, contrast: contrast, rgb: rgb
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
