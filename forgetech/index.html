@@ -102,14 +102,24 @@ h1 .p{color:var(--forge)}
 .half__list svg{width:15px;height:15px;flex:none;margin-top:4px}
 .half--saturn .half__list svg{color:var(--saturn)}
 .half--forge .half__list svg{color:var(--forge)}
+/* A solid pill rather than a coloured text link: the card is clickable but
+   people need something that plainly looks pressable. margin-top:auto pins it
+   to the bottom so both cards line up however long the headings run.
+   Dark text on each accent, because white on either of these fails AA. */
 .half__go{
-  display:inline-flex;align-items:center;gap:9px;margin-top:26px;
-  font-size:15.5px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  margin-top:auto;min-height:52px;padding:0 22px;border-radius:999px;
+  font-size:15.5px;font-weight:600;text-align:center;
+  transition:filter .2s var(--ease),box-shadow .2s var(--ease);
 }
-.half--saturn .half__go{color:var(--saturn)}
-.half--forge .half__go{color:var(--forge)}
-.half__go svg{width:15px;height:15px;flex:none;transition:transform .2s var(--ease)}
+.half__go span{min-width:0}
+.half--saturn .half__go{background:var(--saturn);color:#17102b;box-shadow:0 8px 22px -12px rgba(167,139,250,.9)}
+.half--forge .half__go{background:var(--forge);color:#1f0803;box-shadow:0 8px 22px -12px rgba(232,88,72,.9)}
+.half:hover .half__go{filter:brightness(1.08)}
+.half__go svg{width:16px;height:16px;flex:none;transition:transform .2s var(--ease)}
 .half:hover .half__go svg{transform:translateX(4px)}
+/* the lists stop short of the button so the pill is not crowded */
+.half__list{margin-bottom:26px}
 
 .foot{margin-top:38px;font-size:14px;color:var(--fg-3)}
 .foot a{color:var(--fg-2)}
@@ -151,7 +161,7 @@ h1 .p{color:var(--forge)}
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>SEO, ads and content</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Booking systems that fill the diary</li>
       </ul>
-      <span class="half__go">Visit Saturn Results
+      <span class="half__go"><span>Visit Saturn Results</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </span>
     </a>
@@ -166,7 +176,7 @@ h1 .p{color:var(--forge)}
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Taking payment online and in person</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Setup handled for you<span class="sr-only"> (opens the ForgeTech Consulting site in a new tab)</span></li>
       </ul>
-      <span class="half__go">Visit ForgeTech Consulting
+      <span class="half__go"><span>Visit ForgeTech Consulting</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </span>
     </a>
