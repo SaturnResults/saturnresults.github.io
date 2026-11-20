@@ -324,7 +324,11 @@
     var d = m[0].replace(/[^\d+]/g, '');
     if (/^\+44/.test(d)) d = '0' + d.slice(3);
     if (!/^0\d{9,10}$/.test(d)) return null;
-    return /^07/.test(d) ? d.slice(0, 5) + ' ' + d.slice(5) : (/^02/.test(d) ? d.slice(0, 3) + ' ' + d.slice(3, 7) + ' ' + d.slice(7) : d.slice(0, 5) + ' ' + d.slice(5));
+    /* written the way they're said: 07700 900123, 020 7946 0018, 0161 536 2714 */
+    if (/^07/.test(d)) return d.slice(0, 5) + ' ' + d.slice(5);
+    if (/^02/.test(d)) return d.slice(0, 3) + ' ' + d.slice(3, 7) + ' ' + d.slice(7);
+    if (/^(01\d1|011\d|0[389])/.test(d) && d.length === 11) return d.slice(0, 4) + ' ' + d.slice(4, 7) + ' ' + d.slice(7);
+    return d.slice(0, 5) + ' ' + d.slice(5);
   };
 
   /* ── reviews ──────────────────────────────────────────────────────────── */
