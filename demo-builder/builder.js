@@ -875,7 +875,12 @@
       var isDefault = !cfg.brand.accent || cfg.brand.accent.toUpperCase() === G.DEFAULTS.accent;
       if (isDefault && themeHex && G.rgb(themeHex)) {
         var c = G.rgb(themeHex), mx = Math.max.apply(null, c), mn = Math.min.apply(null, c);
-        if (mx - mn > 40) { cfg.brand.accent = themeHex.toUpperCase(); step('').ok('Brand colour from their site'); }
+        if (mx - mn > 40) {
+          cfg.brand.accent = themeHex.toUpperCase();
+          /* a white logo was given a dark header for want of a colour; their own colour suits it better */
+          if (cfg.logo && cfg.brand.hero === 'dark') cfg.brand.hero = 'brand';
+          step('').ok('Brand colour from their site');
+        }
       }
       var want = Math.max(0, 8 - cfg.photos.length), used = {};
       cfg.photos.forEach(function (ph) { if (ph.from) used[ph.from] = 1; });

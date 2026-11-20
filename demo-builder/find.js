@@ -4,8 +4,9 @@
    A static page can't read another site, so two free public services do the
    fetching: r.jina.ai renders a page and hands back its text, images and
    links; images.weserv.nl re-serves an image with the CORS header a canvas
-   needs, for sites whose own servers leave it off. Only public pages go
-   through them. Everything found is a suggestion the builder shows and the
+   needs, for sites whose own servers leave it off, and i0.wp.com (WordPress's
+   image CDN) does the same for the few, like Treatwell's photo server, that
+   turn weserv away. Only public pages go through them. Everything found is a suggestion the builder shows and the
    person can undo.
    ─────────────────────────────────────────────────────────────────────────── */
 (function (root) {
@@ -15,7 +16,8 @@
   var reader = function (url, kind, fresh) {
     var h = { 'Accept': 'application/json', 'X-With-Images-Summary': 'all' };
     if (kind === 'listing') h['X-Return-Format'] = 'text';
-    else h['X-With-Links-Summary'] = 'all';
+    /* a website comes back as HTML: its colour settings are in the CSS */
+    else { h['X-With-Links-Summary'] = 'all'; h['X-Return-Format'] = 'html'; }
     /* a cached snapshot of a site built in JavaScript can be empty */
     if (fresh) h['X-No-Cache'] = 'true';
     return fetch('https://r.jina.ai/' + url, { headers: h }).then(function (r) {
@@ -36,7 +38,7 @@
     }).filter(function (i) { return /^https?:\/\//.test(i.url); });
   };
   var JUNK = /\.(svg|ico|gif)(\?|$)|icon|sprite|avatar|badge|placeholder|spinner|loader|pixel|tracking|emoji|flag|payment|trustpilot|google-?play|app-?store|onetrust|mapbox|staticmap|review_photos|powered/i;
-  var sameImage = function (u) { return u.replace(/[?#].*$/, '').replace(/\/v1\/(fill|fit|crop)\/.*$/, ''); };
+  var sameImage = function (u) { return u.replace(/^http:/, 'https:').replace(/[?#].*$/, '').replace(/\/v1\/(fill|fit|crop)\/.*$/, ''); };
   var uniq = function (xs) {
     var seen = {}, out = [];
     xs.forEach(function (u) { var k = sameImage(u); if (u && !seen[k]) { seen[k] = 1; out.push(u); } });
@@ -48,6 +50,7 @@
     if (/squarespace-cdn\.com/.test(u)) return u.replace(/\?.*$/, '') + '?format=1500w';
     if (/ik\.imagekit\.io/.test(u)) return u.replace(/\?tr=[^&]*/, '?tr=w-1600');
     if (/[?&]size=\d+x\d+/.test(u)) return u.replace(/([?&])size=\d+x\d+&?/, '$1').replace(/[?&]$/, '');   /* Booksy */
+    if (/\/wp-content\/uploads\//.test(u)) return u.replace(/-\d{2,4}x\d{2,4}(\.\w+)(\?.*)?$/, '$1');   /* WordPress: "-120x65.png" is a thumbnail */
     return u;
   };
 
@@ -97,6 +100,26 @@
     return d.slice(0, 5) + ' ' + d.slice(5);
   };
 
+  /* The colours a site's theme was set up with: WordPress (Astra, Elementor,
+     block themes) and most page builders keep them as CSS variables named
+     primary, accent, global colour 0 and so on. Greys, near-whites and the
+     page builders' untouched defaults are skipped. Order is preference. */
+  var BRAND_VAR = /--(?:e-global-color-(?:primary|accent|secondary|astglobalcolor[0-2])|ast-global-color-[0-2]|wp--preset--color--(?:primary|accent|secondary|brand|tertiary)|(?:color-|colour-)?(?:primary|accent|brand|theme|main)(?:-color|-colour)?|global-color-[0-2]|theme-color-[0-2])\s*:\s*(#[0-9a-f]{6}\b|#[0-9a-f]{3}\b)/gi;
+  var DEFAULT_SWATCH = /^#(6ec1e4|54595f|7a7a7a|61ce70|0073aa|2271b1|0693e3|cf2e2e|ff6900|fcb900|7bdcb5|00d084|8ed1fc|abb8c3|f78da7|9b51e0|0274be|3a3a3a|046bd2|1e293b)$/i;
+  var cssColours = function (html) {
+    var out = [], m;
+    BRAND_VAR.lastIndex = 0;
+    while ((m = BRAND_VAR.exec(html))) {
+      var hex = m[1].length === 4 ? '#' + m[1].slice(1).split('').map(function (c) { return c + c; }).join('') : m[1];
+      hex = hex.toUpperCase();
+      var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+      var mx = Math.max(r, g, b), mn = Math.min(r, g, b), L = (mx + mn) / 510;
+      if (mx - mn <= 40 || L < 0.12 || L > 0.88 || DEFAULT_SWATCH.test(hex) || out.indexOf(hex) >= 0) continue;
+      out.push(hex);
+    }
+    return out;
+  };
+
   var website = function (url, hint) {
     return reader(url, 'site', true).then(function (d) {
       var out = { logos: [], photos: [], links: {}, fonts: [], theme: '', email: '', phone: '', title: d.title || '' };
@@ -111,17 +134,22 @@
         var both = i.url + ' ' + i.alt, sc = 0;
         if (/googleusercontent|gravatar|profile picture|avatar/i.test(both)) return;
         if (core.length > 3 && file.indexOf(core) >= 0) sc += 4;
+        /* "naturaldetox" in the file of naturaldetoxtherapy.co.uk */
+        else if (core.length > 9 && file.indexOf(core.slice(0, 9)) >= 0) sc += 2;
         if (nameKey.length > 3 && (alnum(i.alt) === nameKey || alnum(i.alt).indexOf(nameKey) >= 0)) sc += 3;
         if (/logo/i.test(both)) sc += 3;
         if (n < 2) sc += 2;
         if (/\.(svg|png|webp)(\?|$)/i.test(i.url)) sc += 1;
         if (THIRD.test(both.replace(/[-_]/g, ' '))) sc -= 6;
-        if (/[-_](light|white|inverse|reversed|wht)\b/i.test(i.url)) sc -= 3;
+        /* a white logo loses to a dark one, but still beats none: it goes on a coloured header */
+        if (/[-_](light|white|inverse|reversed|wht)\b/i.test(i.url)) sc -= 1;
         if (/\.(jpe?g)(\?|$)/i.test(i.url) && !/logo/i.test(both)) sc -= 2;
         if (sc >= 4) scored.push({ u: i.url, sc: sc, n: n });
       });
       scored.sort(function (a, b) { return b.sc - a.sc || a.n - b.n; });
-      out.logos = scored.map(function (x) { return x.u; });
+      /* the full-size file first where the page only shows a thumbnail */
+      out.logos = [];
+      scored.forEach(function (x) { out.logos.push(bigger(x.u), x.u); });
       if (meta['og:logo']) out.logos.push(meta['og:logo']);
       /* their own touch icon, as a last resort; never the hosting platform's */
       var mine = function (u) { var h = hostOf(u); return h && (h === host || h.slice(-host.length - 1) === '.' + host); };
@@ -140,7 +168,8 @@
       });
       out.photos = uniq(out.photos);
 
-      out.theme = meta['theme-color'] || meta['msapplication-TileColor'] || '';
+      out.colours = cssColours(d.html || d.content || '');
+      out.theme = meta['theme-color'] || meta['msapplication-TileColor'] || out.colours[0] || '';
 
       Object.keys(ext.stylesheet || {}).concat(Object.keys(ext.preload || {})).forEach(function (u) {
         var m = /fonts\.googleapis\.com\/css2?\?(.+)$/.exec(u);
@@ -174,7 +203,10 @@
     return 'https://images.weserv.nl/?url=' + encodeURIComponent(u) +
       (kind === 'logo' ? '&output=png' : '&output=jpg&q=86&w=' + (w || 1600) + '&we');
   };
-  var thumb = function (u) { return proxy(u, 'photo', 240); };
+  /* Treatwell turns weserv away, so its trays go through WordPress's CDN */
+  var thumb = function (u) {
+    return /treatwell\.net\//.test(u) ? 'https://i0.wp.com/' + u.replace(/^https?:\/\//, '') + '?w=240&ssl=1' : proxy(u, 'photo', 240);
+  };
 
   /* their own server first, then the proxy; whichever lets us read it */
   var blobOf = function (u, kind) {
@@ -187,7 +219,11 @@
         return b;
       });
     };
-    return grab(u).catch(function () { return grab(proxy(u, kind)); });
+    var photon = 'https://i0.wp.com/' + u.replace(/^https?:\/\//, '') + (/^https:/.test(u) ? (u.indexOf('?') < 0 ? '?' : '&') + 'ssl=1' : '');
+    return grab(u).catch(function () { return grab(proxy(u, kind)); }).catch(function () {
+      if (/\.svg(\?|$)/i.test(u)) throw new Error('couldn’t copy it');
+      return grab(photon);
+    });
   };
 
   /* the brand colour: the commonest saturated hue in the logo, skipping
